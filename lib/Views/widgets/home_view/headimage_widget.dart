@@ -12,7 +12,7 @@ class HeadImageWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Column(children: [
         Flexible(
-          flex: 2,
+          flex: 1,
           child: Container(
             width: double.infinity,
             child: ClipRRect(
@@ -23,17 +23,15 @@ class HeadImageWidget extends StatelessWidget {
                 )),
           ),
         ),
-        Flexible(
-            flex: 1,
-            child: SizedBox(
-                child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Text(
-                title,
-                style: Theme.of(context).textTheme.headlineLarge,
-                textAlign: TextAlign.start,
-              ),
-            )))
+        SizedBox(
+            child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: Text(
+            title,
+            style: Theme.of(context).textTheme.headlineLarge,
+            textAlign: TextAlign.start,
+          ),
+        ))
       ]),
     );
   }

@@ -1,8 +1,10 @@
 import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
+import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/home_page.dart';
 import 'package:dummy_app/Views/widgets/home_view/categoryhome_listtile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class CategoryHomeWidget extends StatelessWidget {
@@ -17,7 +19,6 @@ class CategoryHomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size scSize = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Container(
 //category home widget column startted
@@ -27,9 +28,9 @@ class CategoryHomeWidget extends StatelessWidget {
 //part 1//categoryname + More Button section
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Container(
-                height: scSize.height * 0.1,
+                height: GenericVars.scSize.height * 0.07,
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: const BoxDecoration(
@@ -60,39 +61,41 @@ class CategoryHomeWidget extends StatelessWidget {
 //part 2//HeadImagePreview
             Container(
               width: double.infinity,
-              height: scSize.height * 0.3,
-              child: Center(
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(5),
-                    child: Image.network(photoModels[0].url)),
-              ),
+              height: GenericVars.scSize.height * 0.3,
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: Image.network(
+                    photoModels[0].url,
+                    fit: BoxFit.fitWidth,
+                  )),
             ),
 
 //part 3//Category News Lists
-            SingleChildScrollView(
-              child: Container(
-                height: scSize.height * 0.5,
-                child: ListView.builder(
-                    //physics: NeverScrollableScrollPhysics(),
-                    itemCount: 5,
-                    shrinkWrap: true,
-                    itemBuilder: (ctx, index) {
-                      if (index < 5) {
-                        return Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                          child: CategoryHomeListTile(
-                              imagePath: photoModels[index].url,
-                              newsTitle: photoModels[index]
-                                  .description, //postModels[index].title
-                              newsDate:
-                                  DateFormat.yMEd().format(DateTime.now())),
-                        );
-                      } else {
-                        return Text("No list");
-                      }
-                    }),
-              ),
+            Container(
+              height: GenericVars.scSize.height * 0.33,
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: ListView.builder(
+                  //physics: NeverScrollableScrollPhysics(),
+                  itemCount: 5,
+                  shrinkWrap: true,
+                  itemBuilder: (ctx, index) {
+                    if (index < 5) {
+                      return Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                        child: CategoryHomeListTile(
+                            categoryName: categoryName,
+                            imagePath: photoModels[index].url,
+                            newsTitle: photoModels[index].description,
+                            newsDescription: postModels[index].body,
+                            /*postModels[index].title, */
+                            newsDate: DateFormat.yMEd().format(DateTime.now())),
+                      );
+                    } else {
+                      return Text("No list");
+                    }
+                  }),
             )
           ],
         ),
