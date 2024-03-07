@@ -6,9 +6,7 @@ import 'package:dummy_app/Views/widgets/home_view/categoryhome_widget.dart';
 import 'package:dummy_app/Views/widgets/home_view/headimage_widget.dart';
 import 'package:dummy_app/Views/widgets/home_view/recentcategoryhome_widget.dart';
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatelessWidget {
@@ -64,22 +62,23 @@ class HomeView extends StatelessWidget {
         future: photoController.loadAllItems(),
         builder: (ctx, photosnapShot) => (photosnapShot.connectionState ==
                 ConnectionState.waiting)
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator(),
               )
             : FutureBuilder(
                 future: postController.loadAllItems(),
                 builder: (ctx, postSnapShot) =>
                     (postSnapShot.connectionState == ConnectionState.waiting)
-                        ? Center(
+                        ? const Center(
                             child: CircularProgressIndicator(),
                           )
                         : Scrollbar(
                             thumbVisibility: true,
+//main section started
                             child: SingleChildScrollView(
                               scrollDirection: Axis.vertical,
                               child: Column(children: [
-                                //main news + headline
+//main news + headline
                                 Container(
                                   width: double.infinity,
                                   height: GenericVars.scSize.height * 0.5,
@@ -87,6 +86,7 @@ class HomeView extends StatelessWidget {
                                       title: postController.Items[0].title,
                                       url: photoController.Items[0].url),
                                 ),
+//Recent news Section
                                 RecentCategoryHomeWidget(
                                     photoModels: photoController.Items,
                                     postModels: postController.Items),
@@ -95,7 +95,7 @@ class HomeView extends StatelessWidget {
                                         GenericVars.newspaperCategories[0],
                                     photoModels: photoController.Items,
                                     postModels: postController.Items), */
-
+//Category News List
                                 Column(
                                   children: List.generate(
                                     GenericVars.newspaperCategories.length,

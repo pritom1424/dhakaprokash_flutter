@@ -27,7 +27,7 @@ class HeadImageWidget extends StatelessWidget {
             flex: 1,
             child: SizedBox(
                 child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Text(
                 title,
                 style: Theme.of(context).textTheme.headlineLarge,

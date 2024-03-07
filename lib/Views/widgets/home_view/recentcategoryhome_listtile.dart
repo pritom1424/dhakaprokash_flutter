@@ -20,7 +20,8 @@ class RecentCategoryHomeListTile extends StatelessWidget {
           .push(MaterialPageRoute(builder: (ctx) => HomePage())),
       child: Container(
         decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(width: 1, color: Colors.grey)),
+          border:
+              const Border(bottom: BorderSide(width: 1, color: Colors.grey)),
           borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
@@ -33,9 +34,12 @@ class RecentCategoryHomeListTile extends StatelessWidget {
         ),
         height: scSize.height * 0.2,
         width: double.infinity,
+//Recent Category News Row Started
         child: Row(
           children: [
+//Recent Category News Row Started
             Expanded(
+//Recent Category News Image
               child: Container(
                   child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
@@ -45,6 +49,7 @@ class RecentCategoryHomeListTile extends StatelessWidget {
                 ),
               )),
             ),
+//Category News Descriptions+ Date+ category type
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),

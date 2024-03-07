@@ -12,7 +12,7 @@ class FollowSocialWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
-            padding: EdgeInsets.only(bottom: 5),
+            padding: const EdgeInsets.only(bottom: 5),
             child: Text("Follow", style: TextStyle(fontSize: fontSize))),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

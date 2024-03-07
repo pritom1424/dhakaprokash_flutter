@@ -2,9 +2,7 @@ import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
 import 'package:dummy_app/Views/pages/home_page.dart';
 import 'package:dummy_app/Views/widgets/home_view/categoryhome_listtile.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class CategoryHomeWidget extends StatelessWidget {
@@ -22,22 +20,23 @@ class CategoryHomeWidget extends StatelessWidget {
     Size scSize = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Container(
+//category home widget column startted
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //categoryname bar
+//part 1//categoryname + More Button section
 
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               child: Container(
                 height: scSize.height * 0.1,
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: const BoxDecoration(
                     border: Border.symmetric(
                         horizontal: BorderSide(
                             width: 1,
-                            color: const Color.fromARGB(255, 151, 144, 144)))),
+                            color: Color.fromARGB(255, 151, 144, 144)))),
                 child: Row(
                   children: [
                     Text(
@@ -57,6 +56,8 @@ class CategoryHomeWidget extends StatelessWidget {
                 ),
               ),
             ),
+
+//part 2//HeadImagePreview
             Container(
               width: double.infinity,
               height: scSize.height * 0.3,
@@ -66,6 +67,8 @@ class CategoryHomeWidget extends StatelessWidget {
                     child: Image.network(photoModels[0].url)),
               ),
             ),
+
+//part 3//Category News Lists
             SingleChildScrollView(
               child: Container(
                 height: scSize.height * 0.5,
@@ -82,7 +85,8 @@ class CategoryHomeWidget extends StatelessWidget {
                               imagePath: photoModels[index].url,
                               newsTitle: photoModels[index]
                                   .description, //postModels[index].title
-                              newsDate: DateFormat.yMEd().format(DateTime.now())),
+                              newsDate:
+                                  DateFormat.yMEd().format(DateTime.now())),
                         );
                       } else {
                         return Text("No list");

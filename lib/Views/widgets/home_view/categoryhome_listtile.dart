@@ -24,18 +24,21 @@ class CategoryHomeListTile extends StatelessWidget {
         height: scSize.height * 0.2,
         width: double.infinity,
         decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(width: 1, color: Colors.grey)),
+          border:
+              const Border(bottom: BorderSide(width: 1, color: Colors.grey)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
               spreadRadius: 5,
               blurRadius: 7,
-              offset: Offset(0, 3), // changes position of shadow
+              offset: const Offset(0, 3), // changes position of shadow
             ),
           ],
         ),
+//Category News Row Started
         child: Row(
           children: [
+//Category News Image
             Expanded(
               child: Container(
                   decoration:
@@ -45,6 +48,7 @@ class CategoryHomeListTile extends StatelessWidget {
                     fit: BoxFit.cover,
                   )),
             ),
+//Category News Description s+ Date
             Expanded(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),

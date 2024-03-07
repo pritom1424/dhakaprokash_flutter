@@ -14,16 +14,16 @@ class CategoryWidgets extends StatelessWidget {
       children: List.generate(
           foundCategories.length,
           (index) => Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   border:
                       Border(top: BorderSide(width: 0.2, color: Colors.grey))),
               child: TextButton(
                 onPressed: () {},
+                style: ButtonStyle(),
                 child: Text(
                   foundCategories[index],
                   textAlign: TextAlign.center,
                 ),
-                style: ButtonStyle(),
               ))),
     );
 

@@ -3,7 +3,6 @@ import 'package:dummy_app/Models/post_model.dart';
 import 'package:dummy_app/Views/pages/home_page.dart';
 import 'package:dummy_app/Views/widgets/home_view/recentcategoryhome_listtile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class RecentCategoryHomeWidget extends StatelessWidget {
@@ -17,20 +16,21 @@ class RecentCategoryHomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size scSize = MediaQuery.of(context).size;
     return SingleChildScrollView(
+//recent category home widget column startted
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          //categoryname bar
+//part1 //recent categoryname + More button
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: Container(
               // height: scSize.height * 0.1,
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   border: Border.symmetric(
                       horizontal: BorderSide(
                           width: 1,
-                          color: const Color.fromARGB(255, 151, 144, 144)))),
+                          color: Color.fromARGB(255, 151, 144, 144)))),
               child: Row(
                 children: [
                   Text(
@@ -40,8 +40,8 @@ class RecentCategoryHomeWidget extends StatelessWidget {
                   Spacer(),
                   TextButton.icon(
                     onPressed: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (ctx) => HomePage()));
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (ctx) => HomePage()));
                     },
                     icon: Icon(Icons.arrow_right),
                     label: Text("More"),
@@ -50,7 +50,7 @@ class RecentCategoryHomeWidget extends StatelessWidget {
               ),
             ),
           ),
-
+//part2 //recent categorylists
           Container(
             height: scSize.height * 0.5,
             child: ListView.builder(
@@ -60,7 +60,8 @@ class RecentCategoryHomeWidget extends StatelessWidget {
                 itemBuilder: (ctx, index) {
                   if (index < 5) {
                     return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5, vertical: 10),
                       child: RecentCategoryHomeListTile(
                         imagePath: photoModels[index].url,
                         newsTitle: photoModels[index]
