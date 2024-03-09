@@ -79,10 +79,13 @@ class RecentCategoryHomeListTile extends StatelessWidget {
                     Row(children: [
                       Text(
                         newsDate,
-                        style: Theme.of(context).textTheme.labelMedium,
+                        style: Theme.of(context).textTheme.labelSmall,
                       ),
                       Spacer(),
-                      Text(newsCategory)
+                      Text(
+                        newsCategory,
+                        style: Theme.of(context).textTheme.labelSmall,
+                      )
                     ])
                   ],
                 ),

@@ -72,7 +72,7 @@ class RecentCategoryHomeWidget extends StatelessWidget {
                           DateTime.now(),
                         ),
 //recent code set to national
-                        newsCategory: "National",
+                        newsCategory: "Local News",
                       ),
                     );
                   } else {

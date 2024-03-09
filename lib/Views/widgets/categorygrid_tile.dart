@@ -5,9 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class CategoryHomeListTile extends StatelessWidget {
+class CategoryGridTile extends StatelessWidget {
   final String imagePath, newsTitle, newsDate, newsDescription, categoryName;
-  const CategoryHomeListTile(
+  const CategoryGridTile(
       {super.key,
       required this.imagePath,
       required this.newsTitle,
@@ -29,7 +29,7 @@ class CategoryHomeListTile extends StatelessWidget {
                 )));
       },
       child: Container(
-        height: scSize.height * 0.2,
+        height: scSize.height * 0.3,
         width: double.infinity,
         decoration: BoxDecoration(
           border:
@@ -44,7 +44,7 @@ class CategoryHomeListTile extends StatelessWidget {
           ],
         ),
 //Category News Row Started
-        child: Row(
+        child: Column(
           children: [
 //Category News Image
             Expanded(
@@ -53,7 +53,7 @@ class CategoryHomeListTile extends StatelessWidget {
                       BoxDecoration(borderRadius: BorderRadius.circular(20)),
                   child: Image.network(
                     imagePath,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fitWidth,
                     filterQuality: FilterQuality.low,
                     loadingBuilder: (context, child, loadingProgress) =>
                         (loadingProgress == null)
@@ -68,19 +68,16 @@ class CategoryHomeListTile extends StatelessWidget {
                   )),
             ),
 //Category News Description s+ Date
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      StringLimiter().limitString(newsTitle, 50),
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                    Text(newsDate)
-                  ],
-                ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    StringLimiter().limitString(newsTitle, 50),
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                ],
               ),
             ),
           ],

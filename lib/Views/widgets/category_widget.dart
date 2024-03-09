@@ -2,16 +2,15 @@ import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/home_page.dart';
-import 'package:dummy_app/Views/widgets/home_view/categoryhome_listtile.dart';
+import 'package:dummy_app/Views/widgets/categorylist_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
-class CategoryHomeWidget extends StatelessWidget {
+class CategoryWidget extends StatelessWidget {
   final String categoryName;
   final List<PhotoModel> photoModels;
   final List<PostModel> postModels;
-  const CategoryHomeWidget(
+  const CategoryWidget(
       {super.key,
       required this.photoModels,
       required this.postModels,
@@ -92,7 +91,7 @@ class CategoryHomeWidget extends StatelessWidget {
                       return Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                        child: CategoryHomeListTile(
+                        child: CategoryListTile(
                             categoryName: categoryName,
                             imagePath: photoModels[index].url,
                             newsTitle: photoModels[index].description,

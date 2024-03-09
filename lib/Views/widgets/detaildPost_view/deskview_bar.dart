@@ -18,9 +18,9 @@ class DeskViewBar extends StatelessWidget {
       onTap: () => Navigator.of(context)
           .push(MaterialPageRoute(builder: (ctx) => DeskView())),
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             border: Border.symmetric(
-                horizontal: BorderSide(color: Colors.grey, width: 1))),
+                horizontal: BorderSide(color: Colors.grey, width: 0.4))),
         child: Row(
           children: [
             Container(
