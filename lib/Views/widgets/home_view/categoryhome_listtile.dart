@@ -1,5 +1,5 @@
 import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
-import 'package:dummy_app/Views/pages/detailedpost_view.dart';
+import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
 import 'package:dummy_app/Views/pages/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +54,17 @@ class CategoryHomeListTile extends StatelessWidget {
                   child: Image.network(
                     imagePath,
                     fit: BoxFit.cover,
+                    filterQuality: FilterQuality.low,
+                    loadingBuilder: (context, child, loadingProgress) =>
+                        (loadingProgress == null)
+                            ? child
+                            : Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 40),
+                                child: Image.asset(
+                                  "assets/images/dhakaprokash_logo.png",
+                                ),
+                              ),
                   )),
             ),
 //Category News Description s+ Date

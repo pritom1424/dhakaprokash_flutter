@@ -8,11 +8,10 @@ class HeadImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 10),
-      child: Column(children: [
-        Flexible(
-          flex: 1,
+    return Column(children: [
+      Flexible(
+        flex: 1,
+        child: Center(
           child: Container(
             width: double.infinity,
             child: ClipRRect(
@@ -20,19 +19,33 @@ class HeadImageWidget extends StatelessWidget {
                 child: Image.network(
                   url,
                   fit: BoxFit.fitWidth,
-                )),
+                  filterQuality: FilterQuality.low,
+                  loadingBuilder: (context, child, loadingProgress) =>
+                      loadingProgress == null
+                          ? child
+                          : Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 40),
+                              child: Image.asset(
+                                "assets/images/dhakaprokash_logo.png",
+                              ),
+                            ),
+                )
+
+                /* Image.network(
+                  url,
+                  fit: BoxFit.fitWidth,
+                )*/
+                ),
           ),
         ),
-        SizedBox(
-            child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5),
+      ),
+      SizedBox(
           child: Text(
-            title,
-            style: Theme.of(context).textTheme.headlineLarge,
-            textAlign: TextAlign.start,
-          ),
-        ))
-      ]),
-    );
+        title,
+        style: Theme.of(context).textTheme.headlineLarge,
+        textAlign: TextAlign.start,
+      ))
+    ]);
   }
 }

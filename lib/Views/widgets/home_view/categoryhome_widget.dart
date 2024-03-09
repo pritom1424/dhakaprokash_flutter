@@ -27,34 +27,31 @@ class CategoryHomeWidget extends StatelessWidget {
           children: [
 //part 1//categoryname + More Button section
 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Container(
-                height: GenericVars.scSize.height * 0.07,
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                decoration: const BoxDecoration(
-                    border: Border.symmetric(
-                        horizontal: BorderSide(
-                            width: 1,
-                            color: Color.fromARGB(255, 151, 144, 144)))),
-                child: Row(
-                  children: [
-                    Text(
-                      categoryName,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Spacer(),
-                    TextButton.icon(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (ctx) => HomePage()));
-                      },
-                      icon: Icon(Icons.arrow_right),
-                      label: Text("More"),
-                    ),
-                  ],
-                ),
+            Container(
+              height: GenericVars.scSize.height * 0.07,
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: const BoxDecoration(
+                  border: Border.symmetric(
+                      horizontal: BorderSide(
+                          width: 1,
+                          color: Color.fromARGB(255, 151, 144, 144)))),
+              child: Row(
+                children: [
+                  Text(
+                    categoryName,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                  Spacer(),
+                  TextButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (ctx) => HomePage()));
+                    },
+                    icon: Icon(Icons.arrow_right),
+                    label: Text("More"),
+                  ),
+                ],
               ),
             ),
 
@@ -62,19 +59,30 @@ class CategoryHomeWidget extends StatelessWidget {
             Container(
               width: double.infinity,
               height: GenericVars.scSize.height * 0.3,
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+              padding: const EdgeInsets.symmetric(vertical: 5),
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Image.network(
                     photoModels[0].url,
                     fit: BoxFit.fitWidth,
+                    filterQuality: FilterQuality.low,
+                    loadingBuilder: (context, child, loadingProgress) =>
+                        (loadingProgress == null)
+                            ? child
+                            : Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 40),
+                                child: Image.asset(
+                                  "assets/images/dhakaprokash_logo.png",
+                                ),
+                              ),
                   )),
             ),
 
 //part 3//Category News Lists
             Container(
               height: GenericVars.scSize.height * 0.33,
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              // padding: EdgeInsets.symmetric(horizontal: 15),
               child: ListView.builder(
                   //physics: NeverScrollableScrollPhysics(),
                   itemCount: 5,

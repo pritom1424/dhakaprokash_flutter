@@ -1,5 +1,9 @@
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
+import 'package:dummy_app/Views/widgets/detaildPost_view/deskview_bar.dart';
+import 'package:dummy_app/Views/widgets/detaildPost_view/followpost_bar.dart';
+import 'package:dummy_app/Views/widgets/detaildPost_view/posttag_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class MainPostTile extends StatelessWidget {
   final String url, title, boldDescription, description;
@@ -19,13 +23,17 @@ class MainPostTile extends StatelessWidget {
           child: ListView(children: [
             //title
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
               child: Text(
                 title,
                 style: Theme.of(context).textTheme.headlineLarge,
                 textAlign: TextAlign.start,
               ),
             ),
+            const Padding(
+                padding: EdgeInsets.symmetric(vertical: 2),
+                child: DeskViewBar()),
+            const FollowPostBar(iconRadius: 15),
             //News Post Image
             Container(
               padding: EdgeInsets.symmetric(vertical: 5),
@@ -36,6 +44,7 @@ class MainPostTile extends StatelessWidget {
                   child: Image.network(
                     url,
                     fit: BoxFit.fitWidth,
+                    filterQuality: FilterQuality.low,
                   )),
             ),
             //Main News Post

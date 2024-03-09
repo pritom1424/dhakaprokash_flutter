@@ -2,9 +2,9 @@ import 'package:dummy_app/Controllers/photo_controller.dart';
 import 'package:dummy_app/Controllers/post_controller.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/app_drawer.dart';
-import 'package:dummy_app/Views/pages/favoritesnews_view.dart';
-import 'package:dummy_app/Views/pages/latestnews_view.dart';
-import 'package:dummy_app/Views/pages/popularnews_view.dart';
+import 'package:dummy_app/Views/pages/favorites_view/favoritesnews_view.dart';
+import 'package:dummy_app/Views/pages/latest_view/latestnews_view.dart';
+import 'package:dummy_app/Views/pages/popular_view/popularnews_view.dart';
 import 'package:dummy_app/Views/widgets/home_view/categoryhome_widget.dart';
 import 'package:dummy_app/Views/widgets/home_view/headimage_widget.dart';
 import 'package:dummy_app/Views/widgets/home_view/recentcategoryhome_widget.dart';
@@ -110,58 +110,46 @@ class _HomeViewState extends State<HomeView> {
 //main section started
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
-                          child: Column(children: [
-//main news + headline
-                            Container(
-                              width: double.infinity,
-                              height: GenericVars.scSize.height * 0.4,
-                              padding: EdgeInsets.symmetric(vertical: 5),
-                              child: HeadImageWidget(
-                                  title: postController.Items[0].title,
-                                  url: photoController.Items[0].url),
-                            ),
-//Recent news Section
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 5),
-                              child: RecentCategoryHomeWidget(
-                                  photoModels: photoController.Items,
-                                  postModels: postController.Items),
-                            ),
-                            /* CategoryHomeWidget(
-                                  categoryName:
-                                      GenericVars.newspaperCategories[0],
-                                  photoModels: photoController.Items,
-                                  postModels: postController.Items), */
-//Category News List
-                            Column(
-                              children: List.generate(
-                                GenericVars.newspaperCategories.length,
-                                (index) => Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 5),
-                                  child: CategoryHomeWidget(
-                                      categoryName: GenericVars
-                                          .newspaperCategories[index],
-                                      photoModels: photoController.Items,
-                                      postModels: postController.Items),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            child: Column(children: [
+                              //main news + headline
+                              Container(
+                                width: double.infinity,
+                                height: GenericVars.scSize.height * 0.4,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
+                                child: HeadImageWidget(
+                                    title: postController.Items[0].title,
+                                    url: photoController.Items[0].url),
+                              ),
+                              //Recent news Section
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5),
+                                child: RecentCategoryHomeWidget(
+                                    photoModels: photoController.Items,
+                                    postModels: postController.Items),
+                              ),
+
+                              //Category News List
+                              Column(
+                                children: List.generate(
+                                  GenericVars.newspaperCategories.length,
+                                  (index) => Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    child: CategoryHomeWidget(
+                                        categoryName: GenericVars
+                                            .newspaperCategories[index],
+                                        photoModels: photoController.Items,
+                                        postModels: postController.Items),
+                                  ),
                                 ),
                               ),
-                            ),
 
-                            /* ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: GenericVars.newspaperCategories.length,
-                            itemBuilder: (ctx, i) => CategoryHomeWidget(
-                                categoryName:
-                                    GenericVars.newspaperCategories[i],
-                                photoModels: photoController.Items,
-                                postModels: postController.Items),
-                          ), */
-                            HomePageFooter()
-
-                            // lates category news in list
-                            //featured news
-                            //all categories news in grid with two posts
-                          ]),
+                              HomePageFooter()
+                            ]),
+                          ),
                         ),
                       );
               }),

@@ -22,7 +22,7 @@ class RecentCategoryHomeWidget extends StatelessWidget {
         children: [
 //part1 //recent categoryname + More button
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Container(
               // height: scSize.height * 0.1,
               width: double.infinity,
@@ -53,7 +53,7 @@ class RecentCategoryHomeWidget extends StatelessWidget {
 //part2 //recent categorylists
           Container(
             height: scSize.height * 0.33,
-            padding: EdgeInsets.symmetric(horizontal: 15),
+            //  padding: EdgeInsets.symmetric(horizontal: 15),
             child: ListView.builder(
                 //physics: NeverScrollableScrollPhysics(),
                 itemCount: 5,
@@ -71,7 +71,8 @@ class RecentCategoryHomeWidget extends StatelessWidget {
                         newsDate: DateFormat.yMEd().format(
                           DateTime.now(),
                         ),
-                        newsCategory: "Saradesh",
+//recent code set to national
+                        newsCategory: "National",
                       ),
                     );
                   } else {
