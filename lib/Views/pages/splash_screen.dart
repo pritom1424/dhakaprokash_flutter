@@ -16,7 +16,7 @@ class SplasScreen extends StatefulWidget {
 class _SplasScreenState extends State<SplasScreen> {
   @override
   void initState() {
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (ctx) => HomeView()));
     });

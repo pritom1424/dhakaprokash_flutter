@@ -16,6 +16,15 @@ class AppbarDefault extends StatelessWidget implements PreferredSize {
           fit: BoxFit.fitWidth,
         ),
       ),
+      actions: [
+        // Notification Icon
+        IconButton(
+          icon: Icon(Icons.logout),
+          onPressed: () {
+            // Handle notification icon tap
+          },
+        ),
+      ],
     );
   }
 

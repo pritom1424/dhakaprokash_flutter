@@ -7,6 +7,7 @@ import 'package:dummy_app/Views/widgets/category_widget.dart';
 import 'package:dummy_app/Views/widgets/home_view/headimage_widget.dart';
 import 'package:dummy_app/Views/widgets/home_view/recentcategoryhome_widget.dart';
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
+import 'package:dummy_app/Views/widgets/loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,17 +28,13 @@ class CategoryView extends StatelessWidget {
           future: photoController.loadAllItems(),
           builder: (ctx, photosnapShot) => (photosnapShot.connectionState ==
                   ConnectionState.waiting)
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
+              ? LoaderWidget()
               : FutureBuilder(
                   future: postController.loadAllItems(),
                   builder: (ctx, postSnapShot) {
                     return (postSnapShot.connectionState ==
                             ConnectionState.waiting)
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
+                        ? LoaderWidget()
                         : Scrollbar(
                             thumbVisibility: true,
 //main section started

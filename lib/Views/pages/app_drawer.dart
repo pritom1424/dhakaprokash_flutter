@@ -49,6 +49,7 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      width: 250,
       child: Scaffold(
         appBar: AppBar(
           title: Text(

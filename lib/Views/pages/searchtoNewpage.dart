@@ -10,7 +10,7 @@ class SearchToNewPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "New Page",
+          "search page",
           style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),

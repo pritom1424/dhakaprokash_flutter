@@ -13,8 +13,10 @@ import 'package:dummy_app/Views/widgets/category_widget.dart';
 import 'package:dummy_app/Views/widgets/home_view/headimage_widget.dart';
 import 'package:dummy_app/Views/widgets/home_view/recentcategoryhome_widget.dart';
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
+import 'package:dummy_app/Views/widgets/loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
@@ -60,6 +62,7 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
         appBar: (_selectedNavIndex != 4) ? AppbarDefault() : null,
         drawer: AppDrawer(),
+
 //navigation bar
         bottomNavigationBar: BottomNavigationBar(
             currentIndex: _selectedNavIndex,
@@ -99,17 +102,13 @@ class _HomeViewState extends State<HomeView> {
           future: photoController.loadAllItems(),
           builder: (ctx, photosnapShot) => (photosnapShot.connectionState ==
                   ConnectionState.waiting)
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
+              ? const LoaderWidget()
               : FutureBuilder(
                   future: postController.loadAllItems(),
                   builder: (ctx, postSnapShot) {
                     return (postSnapShot.connectionState ==
                             ConnectionState.waiting)
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
+                        ? const LoaderWidget()
                         : _NavViews(
                             photoController, postController)[_selectedNavIndex];
                   }),
@@ -124,9 +123,9 @@ class _HomeViewState extends State<HomeView> {
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(children: [
-            //main news + headline
+//main news + headline
             Container(
               width: double.infinity,
               height: GenericVars.scSize.height * 0.4,

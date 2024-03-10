@@ -18,28 +18,28 @@ class PostView extends StatelessWidget {
         ),
         body: FutureBuilder(
             future: postController.loadItems(),
-            builder: (ctx, snapShot) =>
-                (snapShot.connectionState == ConnectionState.waiting)
-                    ? const CircularProgressIndicator()
-                    : ListView.builder(
-                        itemCount: postController.visibleItems.length + 1,
-                        itemBuilder: (ctx, index) {
-                          if (index < postController.visibleItems.length) {
-                            return PostTile(postController.visibleItems[index]);
-                          } else {
-                            if (postController.showButton == true) {
-                              return ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.amber,
-                                      foregroundColor: Colors.white),
-                                  onPressed: () {
-                                    postController.loadMoreItems();
-                                  },
-                                  child: const Text("ReadMore "));
-                            } else {
-                              return Text(ApiConstant.visibleItemCount.toString());
-                            }
-                          }
-                        })));
+            builder: (ctx, snapShot) => (snapShot.connectionState ==
+                    ConnectionState.waiting)
+                ? const CircularProgressIndicator()
+                : ListView.builder(
+                    itemCount: postController.visibleItems.length + 1,
+                    itemBuilder: (ctx, index) {
+                      if (index < postController.visibleItems.length) {
+                        return PostTile(postController.visibleItems[index]);
+                      } else {
+                        if (postController.showButton == true) {
+                          return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.amber,
+                                  foregroundColor: Colors.white),
+                              onPressed: () {
+                                postController.loadMoreItems();
+                              },
+                              child: const Text("ReadMore"));
+                        } else {
+                          return Text(ApiConstant.visibleItemCount.toString());
+                        }
+                      }
+                    })));
   }
 }

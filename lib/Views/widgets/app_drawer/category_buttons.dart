@@ -6,6 +6,17 @@ import 'package:flutter/material.dart';
 class CategoryButton extends StatelessWidget {
   final List<String> foundCategories;
   const CategoryButton({super.key, required this.foundCategories});
+  Color getColor(Set<MaterialState> states) {
+    const Set<MaterialState> interactiveStates = <MaterialState>{
+      MaterialState.pressed,
+      MaterialState.hovered,
+      MaterialState.focused,
+    };
+    if (states.any(interactiveStates.contains)) {
+      return Colors.blue;
+    }
+    return Colors.black54;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +42,11 @@ class CategoryButton extends StatelessWidget {
                             builder: (ctx) => CategoryView(
                                 categoryName: foundCategories[index])));
                   },
-                  style: ButtonStyle(),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.white),
+                    foregroundColor:
+                        MaterialStateProperty.resolveWith(getColor),
+                  ),
                   label: Text(
                     foundCategories[index],
                     textAlign: TextAlign.start,
