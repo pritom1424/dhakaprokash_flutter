@@ -1,4 +1,5 @@
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
+import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:flutter/material.dart';
 
 class PostTagTile extends StatelessWidget {
@@ -30,7 +31,12 @@ class PostTagTile extends StatelessWidget {
                                     color: const Color.fromARGB(
                                         255, 193, 222, 235))),
                             child: TextButton(
-                                onPressed: () {}, child: Text(tagList[index])),
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (ctx) => CategoryView(
+                                          categoryName: tagList[index])));
+                                },
+                                child: Text(tagList[index])),
                           ),
                         ))),
           );

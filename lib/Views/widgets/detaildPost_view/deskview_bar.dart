@@ -1,4 +1,5 @@
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
+import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:dummy_app/Views/pages/deskview/desk_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +16,12 @@ class DeskViewBar extends StatelessWidget {
     String publishedDate =
         DateFormat("d MMM, yyyy| hh:mm a").format(DateTime.now());
     return GestureDetector(
-      onTap: () => Navigator.of(context)
-          .push(MaterialPageRoute(builder: (ctx) => DeskView())),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (ctx) => CategoryView(categoryName: title))),
       child: Container(
         decoration: const BoxDecoration(
             border: Border.symmetric(
-                horizontal: BorderSide(color: Colors.grey, width: 0.4))),
+                horizontal: BorderSide(color: Colors.grey, width: 0.3))),
         child: Row(
           children: [
             Container(

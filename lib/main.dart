@@ -31,6 +31,12 @@ class MyApp extends StatelessWidget {
       home: SplasScreen(),
       theme: ThemeData().copyWith(
           textTheme: ThemeData().textTheme.copyWith(
+              titleLarge: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontFamily: "QuickSand",
+                color: kColorScheme.onSecondaryContainer,
+                fontSize: 35,
+              ),
               bodyLarge: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontFamily: "QuickSand",

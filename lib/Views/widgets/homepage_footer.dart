@@ -1,3 +1,4 @@
+import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/follow_social.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +9,8 @@ class HomePageFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size scSize = MediaQuery.of(context).size;
     return Container(
-      height: scSize.height * 0.5,
+      height: GenericVars.scSize.height * 0.5,
       color: Color.fromARGB(255, 235, 233, 227),
       child: ListView(
         physics: NeverScrollableScrollPhysics(),
@@ -21,8 +21,8 @@ class HomePageFooter extends StatelessWidget {
               children: [
                 Image.asset(
                   "assets/images/dhakaprokash_logo.png",
-                  width: scSize.width * 0.5,
-                  height: scSize.height * 0.1,
+                  width: GenericVars.scSize.width * 0.5,
+                  height: GenericVars.scSize.height * 0.1,
                 ),
                 Text("93,Kazi Nazrul Islam Avenue")
               ],

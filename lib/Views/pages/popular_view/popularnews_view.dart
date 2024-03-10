@@ -52,7 +52,8 @@ class PopularNewsView extends StatelessWidget {
                 (index) => Padding(
                   padding: EdgeInsets.symmetric(vertical: 5),
                   child: CategoryWidget(
-                    categoryName: GenericVars.newspaperCategories[index],
+                    categoryName:
+                        GenericVars.newspaperCategories.keys.toList()[index],
                     photoModels: phController.Items,
                     postModels: pcontroller.Items,
                     listHeight: 0.33,

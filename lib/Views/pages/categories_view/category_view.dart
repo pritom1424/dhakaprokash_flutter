@@ -2,6 +2,7 @@ import 'package:dummy_app/Controllers/photo_controller.dart';
 import 'package:dummy_app/Controllers/post_controller.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/app_drawer.dart';
+import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/category_widget.dart';
 import 'package:dummy_app/Views/widgets/home_view/headimage_widget.dart';
 import 'package:dummy_app/Views/widgets/home_view/recentcategoryhome_widget.dart';
@@ -21,16 +22,7 @@ class CategoryView extends StatelessWidget {
     PostController postController = Provider.of<PostController>(context);
     PhotoController photoController = Provider.of<PhotoController>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Container(
-          padding: EdgeInsets.only(left: 30),
-          child: Image.asset(
-            "assets/images/dhakaprokash_logo.png",
-            width: GenericVars.scSize.width * 0.5,
-            height: GenericVars.scSize.height * 0.2,
-          ),
-        ),
-      ),
+      appBar: AppbarDefault(),
       body: FutureBuilder(
           future: photoController.loadAllItems(),
           builder: (ctx, photosnapShot) => (photosnapShot.connectionState ==

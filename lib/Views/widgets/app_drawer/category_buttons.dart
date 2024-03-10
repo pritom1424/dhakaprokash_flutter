@@ -12,15 +12,18 @@ class CategoryButton extends StatelessWidget {
     return GridView.count(
       physics: NeverScrollableScrollPhysics(),
       crossAxisCount: 2,
-      crossAxisSpacing: 20,
+      crossAxisSpacing: 5,
       childAspectRatio: 3 / 2,
       children: List.generate(
           foundCategories.length,
           (index) => Container(
+              alignment: Alignment.centerLeft,
               decoration: const BoxDecoration(
                   border:
                       Border(top: BorderSide(width: 0.2, color: Colors.grey))),
-              child: TextButton(
+              child: TextButton.icon(
+                  icon: Icon(
+                      GenericVars.newspaperCategories.values.toList()[index]),
                   onPressed: () {
                     Navigator.push(
                         context,
@@ -29,9 +32,10 @@ class CategoryButton extends StatelessWidget {
                                 categoryName: foundCategories[index])));
                   },
                   style: ButtonStyle(),
-                  child: Text(
+                  label: Text(
                     foundCategories[index],
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(fontSize: 12),
                   )))),
     );
 

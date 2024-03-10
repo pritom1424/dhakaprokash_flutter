@@ -19,7 +19,7 @@ class _AppDrawerState extends State<AppDrawer> {
   TextEditingController textEditingController = TextEditingController();
   @override
   void initState() {
-    _foundCategories = GenericVars.newspaperCategories;
+    _foundCategories = GenericVars.newspaperCategories.keys.toList();
     // TODO: implement initState
     super.initState();
   }
@@ -35,9 +35,10 @@ class _AppDrawerState extends State<AppDrawer> {
     List<String> results = [];
     if (enteredKeyword.isEmpty) {
       // if the search field is empty or only contains white-space, we'll display all users
-      _foundCategories = GenericVars.newspaperCategories;
+      _foundCategories = GenericVars.newspaperCategories.keys.toList();
     } else {
-      _foundCategories = GenericVars.newspaperCategories
+      _foundCategories = GenericVars.newspaperCategories.keys
+          .toList()
           .where((user) =>
               user.toLowerCase().contains(enteredKeyword.toLowerCase()))
           .toList();

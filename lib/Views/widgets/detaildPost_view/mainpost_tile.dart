@@ -1,4 +1,5 @@
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
+import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/deskview_bar.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/followpost_bar.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/posttag_tile.dart';
@@ -25,7 +26,10 @@ class MainPostTile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 2),
           alignment: Alignment.centerLeft,
           child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (ctx) => CategoryView(categoryName: categoryname)));
+            },
             child: Text(
               categoryname,
               style: const TextStyle(

@@ -2,6 +2,7 @@ import 'package:dummy_app/Controllers/photo_controller.dart';
 import 'package:dummy_app/Controllers/post_controller.dart';
 import 'package:dummy_app/Utils/dummy_tags.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
+import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/categorygrid_widget.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/mainpost_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/posttag_tile.dart';
@@ -29,16 +30,7 @@ class DetailedPostView extends StatelessWidget {
     PostController postController = Provider.of<PostController>(context);
     PhotoController photoController = Provider.of<PhotoController>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Container(
-          padding: EdgeInsets.only(left: 30),
-          child: Image.asset(
-            "assets/images/dhakaprokash_logo.png",
-            width: GenericVars.scSize.width * 0.5,
-            height: GenericVars.scSize.height * 0.2,
-          ),
-        ),
-      ),
+      appBar: AppbarDefault(),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 15),
