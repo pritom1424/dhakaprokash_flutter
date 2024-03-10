@@ -33,7 +33,7 @@ class CategoryGridTile extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           border:
-              const Border(bottom: BorderSide(width: 1, color: Colors.grey)),
+              const Border(bottom: BorderSide(width: 0.3, color: Colors.grey)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),

@@ -1,6 +1,7 @@
 import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
+import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:dummy_app/Views/pages/home_page.dart';
 import 'package:dummy_app/Views/widgets/categorygrid_tile.dart';
 import 'package:dummy_app/Views/widgets/categorylist_tile.dart';
@@ -38,7 +39,7 @@ class CategoryGridWidget extends StatelessWidget {
               decoration: const BoxDecoration(
                   border: Border.symmetric(
                       horizontal: BorderSide(
-                          width: 1,
+                          width: 0.3,
                           color: Color.fromARGB(255, 151, 144, 144)))),
               child: Row(
                 children: [
@@ -49,8 +50,9 @@ class CategoryGridWidget extends StatelessWidget {
                   Spacer(),
                   TextButton.icon(
                     onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (ctx) => HomePage()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) =>
+                              CategoryView(categoryName: categoryName)));
                     },
                     icon: Icon(Icons.arrow_right),
                     label: Text("More"),

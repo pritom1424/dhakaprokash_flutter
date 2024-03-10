@@ -39,8 +39,10 @@ class PopularNewsView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: RecentCategoryHomeWidget(
-                  photoModels: phController.Items,
-                  postModels: pcontroller.Items),
+                categoryName: "Recent",
+                photoModels: phController.Items,
+                postModels: pcontroller.Items,
+              ),
             ),
 
             //Category News List
@@ -50,9 +52,12 @@ class PopularNewsView extends StatelessWidget {
                 (index) => Padding(
                   padding: EdgeInsets.symmetric(vertical: 5),
                   child: CategoryWidget(
-                      categoryName: GenericVars.newspaperCategories[index],
-                      photoModels: phController.Items,
-                      postModels: pcontroller.Items),
+                    categoryName: GenericVars.newspaperCategories[index],
+                    photoModels: phController.Items,
+                    postModels: pcontroller.Items,
+                    listHeight: 0.33,
+                    didMoreButtonShow: true,
+                  ),
                 ),
               ),
             ),

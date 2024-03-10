@@ -94,9 +94,12 @@ class DetailedPostView extends StatelessWidget {
                             children: [
 //same category more articles
                               CategoryWidget(
-                                  photoModels: photoController.Items,
-                                  postModels: postController.Items,
-                                  categoryName: "More Articles"),
+                                photoModels: photoController.Items,
+                                postModels: postController.Items,
+                                categoryName: "More Articles",
+                                listHeight: 0.33,
+                                didMoreButtonShow: true,
+                              ),
 //recent category second articles grid list
                               CategoryGridWidget(
                                 photoModels: photoController.Items,
@@ -147,9 +150,12 @@ class DetailedPostView extends StatelessWidget {
                               ),
                               // more list of recent categories. here for demo took entertainment as recent category
                               CategoryWidget(
-                                  photoModels: photoController.Items,
-                                  postModels: postController.Items,
-                                  categoryName: "entertainment"),
+                                photoModels: photoController.Items,
+                                postModels: postController.Items,
+                                categoryName: "entertainment",
+                                listHeight: 0.33,
+                                didMoreButtonShow: true,
+                              ),
 // recent news in grid with much items
                               CategoryGridWidget(
                                 photoModels: photoController.Items,

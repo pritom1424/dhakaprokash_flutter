@@ -1,6 +1,7 @@
 import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
+import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:dummy_app/Views/pages/home_page.dart';
 import 'package:dummy_app/Views/widgets/categorylist_tile.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +11,16 @@ class CategoryWidget extends StatelessWidget {
   final String categoryName;
   final List<PhotoModel> photoModels;
   final List<PostModel> postModels;
-  const CategoryWidget(
-      {super.key,
-      required this.photoModels,
-      required this.postModels,
-      required this.categoryName});
+  final double listHeight;
+  final bool didMoreButtonShow;
+  const CategoryWidget({
+    super.key,
+    required this.photoModels,
+    required this.postModels,
+    required this.categoryName,
+    required this.listHeight,
+    required this.didMoreButtonShow,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,25 +39,31 @@ class CategoryWidget extends StatelessWidget {
               decoration: const BoxDecoration(
                   border: Border.symmetric(
                       horizontal: BorderSide(
-                          width: 1,
+                          width: 0.3,
                           color: Color.fromARGB(255, 151, 144, 144)))),
-              child: Row(
-                children: [
-                  Text(
-                    categoryName,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  Spacer(),
-                  TextButton.icon(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (ctx) => HomePage()));
-                    },
-                    icon: Icon(Icons.arrow_right),
-                    label: Text("More"),
-                  ),
-                ],
-              ),
+              child: (didMoreButtonShow)
+                  ? Row(
+                      children: [
+                        Text(
+                          categoryName,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        Spacer(),
+                        TextButton.icon(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) =>
+                                    CategoryView(categoryName: categoryName)));
+                          },
+                          icon: Icon(Icons.arrow_right),
+                          label: Text("More"),
+                        ),
+                      ],
+                    )
+                  : Text(
+                      categoryName,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
             ),
 
 //part 2//HeadImagePreview
@@ -80,7 +92,7 @@ class CategoryWidget extends StatelessWidget {
 
 //part 3//Category News Lists
             Container(
-              height: GenericVars.scSize.height * 0.33,
+              height: GenericVars.scSize.height * listHeight,
               // padding: EdgeInsets.symmetric(horizontal: 15),
               child: ListView.builder(
                   //physics: NeverScrollableScrollPhysics(),

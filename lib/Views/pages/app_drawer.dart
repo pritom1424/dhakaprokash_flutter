@@ -1,6 +1,6 @@
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/searchtoNewpage.dart';
-import 'package:dummy_app/Views/widgets/app_drawer/category_widgets.dart';
+import 'package:dummy_app/Views/widgets/app_drawer/category_buttons.dart';
 import 'package:dummy_app/Views/widgets/follow_social.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -62,6 +62,7 @@ class _AppDrawerState extends State<AppDrawer> {
             ),
             child: Column(
               children: [
+//search section
                 Container(
                   height: GenericVars.scSize.height * 0.1,
                   child: Row(
@@ -107,13 +108,15 @@ class _AppDrawerState extends State<AppDrawer> {
                     ],
                   ),
                 ),
+//category buttons grid
                 Container(
-                  height: GenericVars.scSize.height,
+                  height: GenericVars.scSize.height * 0.8,
                   width: double.infinity,
-                  child: CategoryWidgets(
+                  child: CategoryButton(
                     foundCategories: _foundCategories,
                   ),
                 ),
+//footer follow section
                 Container(
                     height: GenericVars.scSize.height * 0.1,
                     width: double.infinity,

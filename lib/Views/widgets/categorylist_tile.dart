@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 
 class CategoryListTile extends StatelessWidget {
   final String imagePath, newsTitle, newsDate, newsDescription, categoryName;
+
   const CategoryListTile(
       {super.key,
       required this.imagePath,
@@ -33,7 +34,7 @@ class CategoryListTile extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           border:
-              const Border(bottom: BorderSide(width: 1, color: Colors.grey)),
+              const Border(bottom: BorderSide(width: 0.3, color: Colors.grey)),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),

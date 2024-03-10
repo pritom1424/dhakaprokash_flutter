@@ -28,7 +28,7 @@ class RecentCategoryHomeListTile extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           border:
-              const Border(bottom: BorderSide(width: 1, color: Colors.grey)),
+              const Border(bottom: BorderSide(width: 0.3, color: Colors.grey)),
           borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
