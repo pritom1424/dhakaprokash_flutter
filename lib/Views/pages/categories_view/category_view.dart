@@ -8,6 +8,7 @@ import 'package:dummy_app/Views/widgets/home_view/headimage_widget.dart';
 import 'package:dummy_app/Views/widgets/home_view/recentcategoryhome_widget.dart';
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,26 +38,63 @@ class CategoryView extends StatelessWidget {
                         ? LoaderWidget()
                         : Scrollbar(
                             thumbVisibility: true,
-//main section started
-                            child: SingleChildScrollView(
+                            child: CustomScrollView(
+                              slivers: [
+                                SliverAppBar(
+                                  pinned: true,
+                                  title: Text(
+                                    categoryName,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium,
+                                  ),
+                                  automaticallyImplyLeading: false,
+                                ),
+                                SliverList(
+                                    delegate: SliverChildListDelegate([
+                                  Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 15),
+                                    child: Column(children: [
+                                      //Category News List
+
+                                      CategoryWidget(
+                                        photoModels: photoController.Items,
+                                        postModels: postController.Items,
+                                        categoryName: categoryName,
+                                        didMoreButtonShow: false,
+                                        didHeadSectionShow: false,
+                                        listItemLength: 8,
+                                        didFloat: false,
+                                      ),
+                                      HomePageFooter()
+                                    ]),
+                                  )
+                                ]))
+                              ],
+                            )
+
+                            /* SingleChildScrollView(
                               scrollDirection: Axis.vertical,
                               child: Container(
                                 padding: EdgeInsets.symmetric(horizontal: 15),
                                 child: Column(children: [
                                   //Category News List
-
+                                  Text(categoryName)
                                   CategoryWidget(
                                     photoModels: photoController.Items,
                                     postModels: postController.Items,
                                     categoryName: categoryName,
-                                    listHeight: 1,
                                     didMoreButtonShow: false,
+                                    didHeadSectionShow: false,
+                                    listItemLength: 8,
+                                    didFloat: false,
                                   ),
                                   HomePageFooter()
                                 ]),
                               ),
-                            ),
-                          );
+                            ), */
+                            );
                   })),
     );
   }

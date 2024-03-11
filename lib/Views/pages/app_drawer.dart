@@ -15,11 +15,11 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  List<String> _foundCategories = [];
+  //List<String> _foundCategories = [];
   TextEditingController textEditingController = TextEditingController();
   @override
   void initState() {
-    _foundCategories = GenericVars.newspaperCategories.keys.toList();
+    //_foundCategories = GenericVars.newspaperCategories.keys.toList();
     // TODO: implement initState
     super.initState();
   }
@@ -31,7 +31,7 @@ class _AppDrawerState extends State<AppDrawer> {
     super.dispose();
   }
 
-  void _runFilter(String enteredKeyword) {
+/*   void _runFilter(String enteredKeyword) {
     List<String> results = [];
     if (enteredKeyword.isEmpty) {
       // if the search field is empty or only contains white-space, we'll display all users
@@ -44,7 +44,7 @@ class _AppDrawerState extends State<AppDrawer> {
           .toList();
       // we use the toLowerCase() method to make it case-insensitive
     }
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
@@ -78,12 +78,12 @@ class _AppDrawerState extends State<AppDrawer> {
                                 style: const TextStyle(
                                     fontSize: 18,
                                     color: Color.fromARGB(255, 105, 102, 102)),
-                                onChanged: (value) {
+                                /*    onChanged: (value) {
                                   setState(() {
                                     // textEditingController.text = value;
                                   });
                                   return _runFilter(value);
-                                },
+                                }, */
                                 decoration: const InputDecoration(
                                     focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
@@ -115,8 +115,9 @@ class _AppDrawerState extends State<AppDrawer> {
                   height: GenericVars.scSize.height * 0.8,
                   width: double.infinity,
                   child: CategoryButton(
-                    foundCategories: _foundCategories,
-                  ),
+                      foundCategories: GenericVars.newspaperCategories.keys
+                          .toList() //_foundCategories,
+                      ),
                 ),
 //footer follow section
                 Container(

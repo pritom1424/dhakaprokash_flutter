@@ -4,6 +4,7 @@ import 'package:dummy_app/Views/pages/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 class CategoryGridTile extends StatelessWidget {
   final String imagePath, newsTitle, newsDate, newsDescription, categoryName;
@@ -28,59 +29,61 @@ class CategoryGridTile extends StatelessWidget {
                   description: newsDescription,
                 )));
       },
-      child: Container(
-        height: scSize.height * 0.3,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          border:
-              const Border(bottom: BorderSide(width: 0.3, color: Colors.grey)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
-//Category News Row Started
-        child: Column(
-          children: [
-//Category News Image
-            Expanded(
-              child: Container(
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                  child: Image.network(
-                    imagePath,
-                    fit: BoxFit.fitWidth,
-                    filterQuality: FilterQuality.low,
-                    loadingBuilder: (context, child, loadingProgress) =>
-                        (loadingProgress == null)
-                            ? child
-                            : Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 40),
-                                child: Image.asset(
-                                  "assets/images/dhakaprokash_logo.png",
+      child: Card(
+        elevation: 5,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+        child: Container(
+          height: scSize.height * 0.5,
+          width: double.infinity,
+
+          //Category News Row Started
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              //Category News Image
+              Expanded(
+                child: Container(
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                    child: Image.network(
+                      imagePath,
+                      fit: BoxFit.cover,
+                      filterQuality: FilterQuality.low,
+                      loadingBuilder: (context, child, loadingProgress) =>
+                          (loadingProgress == null)
+                              ? child
+                              : Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 40),
+                                  child: Image.asset(
+                                    "assets/images/dhakaprokash_logo.png",
+                                  ),
                                 ),
-                              ),
-                  )),
-            ),
-//Category News Description s+ Date
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    StringLimiter().limitString(newsTitle, 50),
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                ],
+                    )),
               ),
-            ),
-          ],
+              //Category News Description s+ Date
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        StringLimiter().limitString(newsTitle, 50),
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
+                      Text(StringLimiter().limitString(newsTitle, 80)),
+                      Text(
+                        DateFormat.yMEd().format(DateTime.now()),
+                        style: Theme.of(context).textTheme.labelSmall,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -89,8 +89,10 @@ class DetailedPostView extends StatelessWidget {
                                 photoModels: photoController.Items,
                                 postModels: postController.Items,
                                 categoryName: "More Articles",
-                                listHeight: 0.33,
                                 didMoreButtonShow: true,
+                                didHeadSectionShow: true,
+                                listItemLength: 2,
+                                didFloat: false,
                               ),
 //recent category second articles grid list
                               CategoryGridWidget(
@@ -145,8 +147,10 @@ class DetailedPostView extends StatelessWidget {
                                 photoModels: photoController.Items,
                                 postModels: postController.Items,
                                 categoryName: "entertainment",
-                                listHeight: 0.33,
                                 didMoreButtonShow: true,
+                                didHeadSectionShow: true,
+                                listItemLength: 2,
+                                didFloat: false,
                               ),
 // recent news in grid with much items
                               CategoryGridWidget(

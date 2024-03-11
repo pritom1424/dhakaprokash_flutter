@@ -5,18 +5,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class CategoryListTile extends StatelessWidget {
-  final String imagePath, newsTitle, newsDate, newsDescription, categoryName;
+class CategoryAvatarListTile extends StatelessWidget {
+  final String imagePath,
+      newsTitle,
+      newsDate,
+      newsDescription,
+      categoryName,
+      name;
   final double itemHeight;
 
-  const CategoryListTile(
+  const CategoryAvatarListTile(
       {super.key,
       required this.imagePath,
       required this.newsTitle,
       required this.newsDescription,
       required this.newsDate,
       required this.categoryName,
-      required this.itemHeight});
+      required this.itemHeight,
+      required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +56,19 @@ class CategoryListTile extends StatelessWidget {
 //Category News Row Started
         child: Row(
           children: [
+            //Category News Image
+            Expanded(
+              flex: 3,
+              child: CircleAvatar(
+                radius: 50,
+                backgroundImage: NetworkImage(imagePath),
+                child: Container(
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                ),
+              ),
+            ),
+
 //Category News Descriptions + Date
             Expanded(
               flex: 5,
@@ -64,34 +83,17 @@ class CategoryListTile extends StatelessWidget {
                       style: Theme.of(context).textTheme.headlineMedium,
                       //  textAlign: TextAlign.justify,
                     ),
-                    Text(
-                      newsDate,
-                      style: Theme.of(context).textTheme.labelSmall,
-                    )
+                    Row(children: [
+                      Text(
+                        '$name| ',
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                      Text(
+                        newsDate,
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ),
+                    ])
                   ],
-                ),
-              ),
-            ),
-//Category News Image
-            Expanded(
-              flex: 4,
-              child:
-                  // padding: EdgeInsets.all(0),
-                  ClipRRect(
-                child: Image.network(
-                  imagePath,
-                  fit: BoxFit.fill,
-                  filterQuality: FilterQuality.low,
-                  loadingBuilder: (context, child, loadingProgress) =>
-                      (loadingProgress == null)
-                          ? child
-                          : Container(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: Image.asset(
-                                "assets/images/dhakaprokash_logo.png",
-                              ),
-                            ),
                 ),
               ),
             ),

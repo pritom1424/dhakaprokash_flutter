@@ -81,11 +81,11 @@ class RecentCategoryHomeListTile extends StatelessWidget {
                         newsDate,
                         style: Theme.of(context).textTheme.labelSmall,
                       ),
-                      Spacer(),
+                      /* Spacer(),
                       Text(
                         newsCategory,
                         style: Theme.of(context).textTheme.labelSmall,
-                      )
+                      ) */
                     ])
                   ],
                 ),

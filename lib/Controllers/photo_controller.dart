@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:dummy_app/Models/photo_model.dart';
@@ -8,6 +9,7 @@ import 'package:http/http.dart' as http;
 class PhotoController with ChangeNotifier {
   List<PhotoModel> _items = [];
   List<PhotoModel> visibleItems = [];
+  List<PhotoModel> _searchItems = [];
   // int visibleItemCount = 5;
   bool showButton = false;
 
@@ -33,8 +35,24 @@ class PhotoController with ChangeNotifier {
         .toList();
   }
 
+  Future<void> loadSearchAllItems(String endPoint) async {
+    final uri = Uri.http("api.slingacademy.com", "v1/sample-data/$endPoint");
+    //Uri.http("jsonplaceholder.typicode.com", "/photos");
+    final response = await http.get(uri);
+
+    final jsonMap = json.decode(response.body);
+
+    _searchItems = (jsonMap['photos'] as List)
+        .map((itm) => PhotoModel.fromJson(itm))
+        .toList();
+  }
+
   List<PhotoModel> get Items {
     return _items;
+  }
+
+  List<PhotoModel> get SearchItems {
+    return _searchItems;
   }
 
   void getVisibileItems() {

@@ -31,42 +31,50 @@ class MyApp extends StatelessWidget {
       home: SplasScreen(),
       theme: ThemeData().copyWith(
           textTheme: ThemeData().textTheme.copyWith(
-              titleLarge: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontFamily: "QuickSand",
-                color: kColorScheme.onSecondaryContainer,
-                fontSize: 35,
-              ),
-              bodyLarge: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontFamily: "QuickSand",
-                color: kColorScheme.onSecondaryContainer,
-                fontSize: 25,
-              ),
-              bodyMedium: TextStyle(
-                fontWeight: FontWeight.normal,
-                fontFamily: "QuickSand",
-                color: kColorScheme.onSecondaryContainer,
-                fontSize: 15,
-              ),
-              headlineMedium: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontFamily: "QuickSand",
-                color: kColorScheme.onSecondaryContainer,
-                fontSize: 15,
-              ),
-              headlineLarge: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontFamily: "QuickSand",
-                color: kColorScheme.onSecondaryContainer,
-                fontSize: 25,
-              ),
-              labelMedium: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontFamily: "QuickSand",
-                color: kColorScheme.onSecondaryContainer,
-                fontSize: 12,
-              ))),
+                titleLarge: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "QuickSand",
+                  color: kColorScheme.onSecondaryContainer,
+                  fontSize: 35,
+                ),
+                bodyLarge: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "QuickSand",
+                  color: kColorScheme.onSecondaryContainer,
+                  fontSize: 25,
+                ),
+                bodyMedium: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontFamily: "QuickSand",
+                  color: kColorScheme.onSecondaryContainer,
+                  fontSize: 15,
+                ),
+                headlineMedium: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "QuickSand",
+                  color: kColorScheme.onSecondaryContainer,
+                  fontSize: 20,
+                ),
+                headlineLarge: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "QuickSand",
+                  color: kColorScheme.onSecondaryContainer,
+                  fontSize: 25,
+                ),
+                labelMedium: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "QuickSand",
+                  color: kColorScheme.onSecondaryContainer,
+                  fontSize: 12,
+                ),
+                labelSmall: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontFamily: "QuickSand",
+                  color: Colors.black87,
+                  fontSize: 12,
+                ),
+              )),
+
       //
     );
   }
