@@ -8,6 +8,7 @@ import 'package:dummy_app/Views/pages/categories_view/sports_view.dart';
 import 'package:dummy_app/Views/pages/contact_view/contact_view.dart';
 import 'package:dummy_app/Views/pages/favorites_view/favoritesnews_view.dart';
 import 'package:dummy_app/Views/pages/latest_view/latestnews_view.dart';
+import 'package:dummy_app/Views/pages/my%20app/myapp_view.dart';
 import 'package:dummy_app/Views/pages/popular_view/popularnews_view.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/category_avatar_widget.dart';
@@ -17,6 +18,7 @@ import 'package:dummy_app/Views/widgets/home_view/headimage_widget.dart';
 import 'package:dummy_app/Views/widgets/home_view/recentcategoryhome_widget.dart';
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
+import 'package:dummy_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -35,10 +37,6 @@ class _HomeViewState extends State<HomeView> {
   List<Widget> _NavViews(PhotoController pcontrol, PostController postControl) {
     return [
       homeBaseWidget(postControl, pcontrol),
-      LatestNewsView(
-        pcontroller: postControl,
-        phController: pcontrol,
-      ),
       PopularNewsView(
         pcontroller: postControl,
         phController: pcontrol,
@@ -47,7 +45,8 @@ class _HomeViewState extends State<HomeView> {
         pcontroller: postControl,
         phController: pcontrol,
       ),
-      ContactView()
+      ContactView(),
+      MyAppView()
     ];
   }
 
@@ -82,11 +81,6 @@ class _HomeViewState extends State<HomeView> {
               ),
               BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.timelapse,
-                  ),
-                  label: 'latest'),
-              BottomNavigationBarItem(
-                  icon: Icon(
                     Icons.trending_up,
                   ),
                   label: 'popular'),
@@ -99,7 +93,12 @@ class _HomeViewState extends State<HomeView> {
                   icon: Icon(
                     Icons.contact_page,
                   ),
-                  label: 'Contact')
+                  label: 'Contact'),
+              BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.face,
+                  ),
+                  label: 'My App'),
             ]),
         body: FutureBuilder(
           future: photoController.loadAllItems(),
