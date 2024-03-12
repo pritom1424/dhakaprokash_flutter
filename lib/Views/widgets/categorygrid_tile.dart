@@ -1,4 +1,5 @@
 import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
+import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
 import 'package:dummy_app/Views/pages/home_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,17 +9,22 @@ import 'package:intl/intl.dart';
 
 class CategoryGridTile extends StatelessWidget {
   final String imagePath, newsTitle, newsDate, newsDescription, categoryName;
+  final double cellHeight;
+  final bool didDescriptionShow;
+  final double elevation;
   const CategoryGridTile(
       {super.key,
       required this.imagePath,
       required this.newsTitle,
       required this.newsDescription,
       required this.newsDate,
-      required this.categoryName});
+      required this.categoryName,
+      required this.cellHeight,
+      required this.didDescriptionShow,
+      required this.elevation});
 
   @override
   Widget build(BuildContext context) {
-    Size scSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -30,24 +36,26 @@ class CategoryGridTile extends StatelessWidget {
                 )));
       },
       child: Card(
-        elevation: 5,
+        elevation: elevation,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
         child: Container(
-          height: scSize.height * 0.5,
+          height: GenericVars.scSize.height * cellHeight,
           width: double.infinity,
 
           //Category News Row Started
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               //Category News Image
               Expanded(
                 child: Container(
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                     child: Image.network(
                       imagePath,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fitWidth,
                       filterQuality: FilterQuality.low,
                       loadingBuilder: (context, child, loadingProgress) =>
                           (loadingProgress == null)
@@ -63,17 +71,20 @@ class CategoryGridTile extends StatelessWidget {
               ),
               //Category News Description s+ Date
               Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      //title
                       Text(
-                        StringLimiter().limitString(newsTitle, 50),
+                        StringLimiter().limitString(newsTitle, 20),
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
-                      Text(StringLimiter().limitString(newsTitle, 80)),
+                      //description
+                      if (didDescriptionShow)
+                        Text(StringLimiter().limitString(newsTitle, 80)),
                       Text(
                         DateFormat.yMEd().format(DateTime.now()),
                         style: Theme.of(context).textTheme.labelSmall,

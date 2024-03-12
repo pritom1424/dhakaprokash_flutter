@@ -140,11 +140,18 @@ class _HomeViewState extends State<HomeView> {
             ),
 //For you
             CategoryGridWidget(
-                photoModels: phController.Items,
-                postModels: pcontroller.Items,
-                categoryName: "For you",
-                itemCount: 4,
-                gridHeight: 0.4),
+              photoModels: phController.Items,
+              postModels: pcontroller.Items,
+              categoryName: "For you",
+              itemCount: 4,
+              cellHeight: 0.4,
+              didAxisHorizontal: true,
+              crossAxisCount: 1,
+              mainAxisSpacing: 10,
+              didDescriptionShow: true,
+              isScroll: true,
+              elevation: 5,
+            ),
 //tab widget
 
 //sports
@@ -191,11 +198,18 @@ class _HomeViewState extends State<HomeView> {
 
 //life style
             CategoryGridWidget(
-                photoModels: phController.Items,
-                postModels: pcontroller.Items,
-                categoryName: "Lifestyle",
-                itemCount: 4,
-                gridHeight: 0.4),
+              photoModels: phController.Items,
+              postModels: pcontroller.Items,
+              categoryName: "Lifestyle",
+              itemCount: 4,
+              cellHeight: 0.4,
+              didAxisHorizontal: true,
+              crossAxisCount: 1,
+              mainAxisSpacing: 10,
+              didDescriptionShow: true,
+              isScroll: true,
+              elevation: 5,
+            ),
 //motamot special widget
 
             CategoryAvatatarWidget(
@@ -220,7 +234,13 @@ class _HomeViewState extends State<HomeView> {
               postModels: pcontroller.Items,
               categoryName: "Video",
               itemCount: 5,
-              gridHeight: 0.4,
+              didAxisHorizontal: true,
+              crossAxisCount: 1,
+              mainAxisSpacing: 10,
+              didDescriptionShow: true,
+              cellHeight: 0.4,
+              isScroll: true,
+              elevation: 5,
             ),
 // education
             CategoryWidget(

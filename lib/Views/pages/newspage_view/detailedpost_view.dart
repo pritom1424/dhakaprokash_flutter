@@ -32,15 +32,11 @@ class DetailedPostView extends StatelessWidget {
     return Scaffold(
       appBar: AppbarDefault(),
       body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-//main Post  (headline + image + article)
-              Container(
-                height: GenericVars.scSize.height * 0.8,
+        child: Column(
+          children: [
+            SingleChildScrollView(
+              child: Container(
+                height: GenericVars.scSize.height,
                 padding: EdgeInsets.only(bottom: 10),
                 child: MainPostTile(
                   url: url,
@@ -50,124 +46,69 @@ class DetailedPostView extends StatelessWidget {
                   categoryname: categoryName,
                 ),
               ),
-//news tags bar
-              Container(
-                padding: const EdgeInsets.only(
-                    top: 10), //symmetric(horizontal: 10, vertical: 5),
-                height: GenericVars.scSize.height * 0.2,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                    border: Border(
-                        top: BorderSide(width: 0.4, color: Colors.grey))),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "$categoryName",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    PostTagTile(
-                      tagList: tags,
-                    ),
-                  ],
-                ),
-              ),
-//second part after main post included all lists
-              FutureBuilder(
-                  future: postController.loadAllItems(),
-                  builder: (ctx, postSnapShot) {
-                    return (postSnapShot.connectionState ==
-                            ConnectionState.waiting)
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : Column(
-                            children: [
-//same category more articles
-                              CategoryWidget(
-                                photoModels: photoController.Items,
-                                postModels: postController.Items,
-                                categoryName: "More Articles",
-                                didMoreButtonShow: true,
-                                didHeadSectionShow: true,
-                                listItemLength: 2,
-                                didFloat: false,
-                              ),
-//recent category second articles grid list
-                              CategoryGridWidget(
-                                photoModels: photoController.Items,
-                                postModels: postController.Items,
-                                itemCount: 4,
-                                categoryName: "Recent",
-                                gridHeight: 0.3,
-                              ),
-//recent category articles
-//main tile of recent
-                              Container(
-                                height: GenericVars.scSize.height * 0.8,
-                                padding: EdgeInsets.only(bottom: 10, top: 20),
-                                child: MainPostTile(
-                                  url: url,
-                                  title: title,
-                                  description: description,
-                                  boldDescription: description,
-                                  categoryname:
-                                      "Entertainment", // for test only
-                                ),
-                              ),
-//tag tile of recent
-                              Container(
-                                padding: const EdgeInsets.only(
-                                    top:
-                                        10), //symmetric(horizontal: 10, vertical: 5),
-                                height: GenericVars.scSize.height * 0.2,
-                                width: double.infinity,
-                                decoration: const BoxDecoration(
-                                    border: Border(
-                                        top: BorderSide(
-                                            width: 0.4, color: Colors.grey))),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Entertainment", //for test
-                                      style:
-                                          Theme.of(context).textTheme.bodyLarge,
-                                    ),
-                                    PostTagTile(
-                                      tagList: tags,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              // more list of recent categories. here for demo took entertainment as recent category
-                              CategoryWidget(
-                                photoModels: photoController.Items,
-                                postModels: postController.Items,
-                                categoryName: "entertainment",
-                                didMoreButtonShow: true,
-                                didHeadSectionShow: true,
-                                listItemLength: 2,
-                                didFloat: false,
-                              ),
-// recent news in grid with much items
-                              CategoryGridWidget(
-                                photoModels: photoController.Items,
-                                postModels: postController.Items,
-                                categoryName: "Recent",
-                                itemCount: 10,
-                                gridHeight: 0.8,
-                              ),
-                            ],
-                          );
-                  }),
-              HomePageFooter()
-            ],
-          ),
+            ),
+            FutureBuilder(
+                future: postController.loadAllItems(),
+                builder: (ctx, postSnapShot) {
+                  return (postSnapShot.connectionState ==
+                          ConnectionState.waiting)
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : CategoryGridWidget(
+                          photoModels: photoController.Items,
+                          postModels: postController.Items,
+                          categoryName: categoryName,
+                          itemCount: 4,
+                          cellHeight: 0.23,
+                          didDescriptionShow: false,
+                          didAxisHorizontal: false,
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 10,
+                          isScroll: false,
+                          elevation: 0,
+                        );
+                })
+          ],
         ),
       ),
     );
   }
 }
+/*  Container(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: ListView(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                children: [
+          //main Post  (headline + image + article)
+                  
+          //news tags bar
+          
+          //second part after main post included all lists
+                  FutureBuilder(
+                      future: postController.loadAllItems(),
+                      builder: (ctx, postSnapShot) {
+                        return (postSnapShot.connectionState ==
+                                ConnectionState.waiting)
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : CategoryGridWidget(
+                                photoModels: photoController.Items,
+                                postModels: postController.Items,
+                                categoryName: categoryName,
+                                itemCount: 4,
+                                cellHeight: 0.23,
+                                didDescriptionShow: false,
+                                didAxisHorizontal: false,
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 10,
+                                isScroll: false,
+                                elevation: 0,
+                              );
+                      }),
+                  HomePageFooter()
+                ],
+              ),
+            ), */

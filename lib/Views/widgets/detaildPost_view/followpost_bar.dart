@@ -7,16 +7,16 @@ class FollowPostBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const Column(children: [
+        /* const Column(children: [
           Text("3",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           Text(
             "Shares",
             style: TextStyle(fontSize: 12),
           )
-        ]),
+        ]), */
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -1,6 +1,5 @@
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
-import 'package:dummy_app/Views/widgets/follow_social.dart';
 import 'package:flutter/material.dart';
 
 class CategoryButton extends StatelessWidget {

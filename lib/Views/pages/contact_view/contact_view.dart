@@ -28,10 +28,6 @@ class ContactView extends StatelessWidget {
       }
     }
 
-    launchTest(String url) async {
-      if (!await launchUrl(Uri.parse(url))) throw 'Could not launch $url';
-    }
-
     return Scaffold(
       //appBar: AppbarDefault(0.6),
       body: Container(

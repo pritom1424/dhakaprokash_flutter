@@ -15,14 +15,27 @@ class CategoryGridWidget extends StatelessWidget {
   final List<PhotoModel> photoModels;
   final List<PostModel> postModels;
   final int itemCount;
-  final double gridHeight;
+
+  final bool didAxisHorizontal;
+  final int crossAxisCount;
+  final double mainAxisSpacing;
+  final double cellHeight;
+  final bool didDescriptionShow;
+  final bool isScroll;
+  final double elevation;
   const CategoryGridWidget(
       {super.key,
       required this.photoModels,
       required this.postModels,
       required this.categoryName,
       required this.itemCount,
-      required this.gridHeight});
+      required this.didAxisHorizontal,
+      required this.crossAxisCount,
+      required this.mainAxisSpacing,
+      required this.cellHeight,
+      required this.didDescriptionShow,
+      required this.isScroll,
+      required this.elevation});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +54,7 @@ class CategoryGridWidget extends StatelessWidget {
             child: Container(
               height: GenericVars.scSize.height * 0.07,
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              // padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: const BoxDecoration(
                   border: Border.symmetric(
                       horizontal: BorderSide(
@@ -64,31 +77,32 @@ class CategoryGridWidget extends StatelessWidget {
 
           //part 3//Category News Lists
           Container(
-              height: GenericVars.scSize.height * gridHeight,
-              //gridHeight
-              // padding: EdgeInsets.symmetric(vertical: 2),
-              child: GridView.count(
-                  //physics: NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  crossAxisCount: 1,
-                  shrinkWrap: true,
-                  mainAxisSpacing: 10,
-                  children: List.generate(
-                    itemCount,
-                    (index) {
-                      if (index < itemCount) {
-                        return CategoryGridTile(
-                            categoryName: categoryName,
-                            imagePath: photoModels[index].url,
-                            newsTitle: photoModels[index].description,
-                            newsDescription: postModels[index].body,
-                            /*postModels[index].title, */
-                            newsDate: DateFormat.yMEd().format(DateTime.now()));
-                      } else {
-                        return Text("No list");
-                      }
-                    },
-                  )))
+              height: (didAxisHorizontal)
+                  ? GenericVars.scSize.height * cellHeight
+                  : GenericVars.scSize.height *
+                      cellHeight *
+                      (itemCount / crossAxisCount).ceil(),
+              child: GridView.builder(
+                  itemCount: itemCount,
+                  physics: (isScroll)
+                      ? AlwaysScrollableScrollPhysics()
+                      : NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: crossAxisCount,
+                    mainAxisSpacing: mainAxisSpacing,
+                  ),
+                  scrollDirection:
+                      (didAxisHorizontal) ? Axis.horizontal : Axis.vertical,
+                  itemBuilder: (ctx, index) => CategoryGridTile(
+                      categoryName: categoryName,
+                      imagePath: photoModels[index].url,
+                      newsTitle: photoModels[index].description,
+                      newsDescription: postModels[index].body,
+                      cellHeight: cellHeight,
+                      didDescriptionShow: didDescriptionShow,
+                      elevation: elevation,
+                      /*postModels[index].title, */
+                      newsDate: DateFormat.yMEd().format(DateTime.now()))))
         ],
       ),
     );

@@ -9,7 +9,9 @@ class PostTagTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return tagList.isEmpty
-        ? Text("No tags")
+        ? SizedBox(
+            height: 0,
+          )
         : Container(
             height: GenericVars.scSize.height * 0.12,
             width: double.infinity,

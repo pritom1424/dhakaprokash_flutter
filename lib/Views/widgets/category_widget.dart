@@ -88,10 +88,12 @@ class CategoryWidget extends StatelessWidget {
               },
               child: Container(
                 decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(
-                            width: 0.3,
-                            color: Color.fromARGB(255, 136, 135, 135)))),
+                    border: (didFloat)
+                        ? Border(
+                            bottom: BorderSide(
+                                width: 0.3,
+                                color: Color.fromARGB(255, 136, 135, 135)))
+                        : Border(bottom: BorderSide(width: 0))),
                 width: double.infinity,
                 height: (didFloat)
                     ? GenericVars.scSize.height * 0.45
@@ -127,35 +129,35 @@ class CategoryWidget extends StatelessWidget {
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10),
-                              child: Card(
-                                elevation: 5,
-                                child: Container(
-                                  height: GenericVars.scSize.height * 0.15,
-                                  width: double.infinity,
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                  color: Colors.white,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Text(categoryName),
-                                      Text(
-                                        "${StringLimiter().limitString(photoModels[0].title, 25)} . . .",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headlineMedium,
-                                      ),
-                                      Text(
-                                        DateFormat.yMEd()
-                                            .format(DateTime.now()),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall,
-                                      )
-                                    ],
-                                  ),
+                              child: Container(
+                                height: GenericVars.scSize.height * 0.15,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      width: 1,
+                                      color: Color.fromARGB(255, 129, 127, 127),
+                                    )),
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(categoryName),
+                                    Text(
+                                      "${StringLimiter().limitString(photoModels[0].title, 25)} . . .",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium,
+                                    ),
+                                    Text(
+                                      DateFormat.yMEd().format(DateTime.now()),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall,
+                                    )
+                                  ],
                                 ),
                               ),
                             ),

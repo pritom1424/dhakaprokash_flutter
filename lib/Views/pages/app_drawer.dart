@@ -48,13 +48,26 @@ class _AppDrawerState extends State<AppDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    String iconPath = "assets/images/dhakaprokash_icon.png";
     return Drawer(
       width: 250,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(
-            "Categories",
-            style: Theme.of(context).textTheme.headlineLarge,
+          title: Row(
+            children: [
+              Container(
+                height: GenericVars.scSize.height * 0.03,
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                child: Image.asset(
+                  iconPath,
+                  filterQuality: FilterQuality.low,
+                ),
+              ),
+              Text(
+                "Categories",
+                style: Theme.of(context).textTheme.headlineLarge,
+              ),
+            ],
           ),
         ),
         body: SingleChildScrollView(

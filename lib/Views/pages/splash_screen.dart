@@ -28,15 +28,21 @@ class _SplasScreenState extends State<SplasScreen> {
   Widget build(BuildContext context) {
     Size scSize = MediaQuery.of(context).size;
     return Scaffold(
-      body: Center(
-        child: SizedBox(
-          width: scSize.width * 0.8,
-          height: scSize.height * 0.2,
-          child: Image.asset(
-            "assets/images/dhakaprokash_logo.png",
-            fit: BoxFit.contain,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: SizedBox(
+              width: scSize.width * 0.8,
+              height: scSize.height * 0.2,
+              child: Image.asset(
+                "assets/images/dhakaprokash_logo.png",
+                fit: BoxFit.contain,
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
