@@ -72,17 +72,16 @@ class _AppDrawerState extends State<AppDrawer> {
                               padding: EdgeInsets.symmetric(vertical: 20),
                               child: TextField(
                                 controller: textEditingController,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 18,
-                                    color: const Color.fromARGB(
-                                        255, 105, 102, 102)),
+                                    color: Color.fromARGB(255, 105, 102, 102)),
                                 onChanged: (value) {
                                   setState(() {
                                     // textEditingController.text = value;
                                   });
                                   return _runFilter(value);
                                 },
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                     focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                             width: 1, color: Colors.grey)),
@@ -93,24 +92,23 @@ class _AppDrawerState extends State<AppDrawer> {
                                         borderSide: BorderSide(
                                             width: 1, color: Colors.grey))),
                               ))),
-                      Flexible(
-                          flex: 1,
-                          child: Container(
-                            color: Colors.grey,
-                            child: IconButton(
-                                color: Colors.white,
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (ctx) => SearchToNewPage(
-                                          textEditingController.text)));
-                                },
-                                icon: Icon(Icons.search)),
-                          ))
+                      Container(
+                        color: Colors.grey,
+                        height: GenericVars.scSize.height * 0.05,
+                        child: IconButton(
+                            color: Colors.white,
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (ctx) => SearchToNewPage(
+                                      textEditingController.text)));
+                            },
+                            icon: Icon(Icons.search)),
+                      )
                     ],
                   ),
                 ),
                 Container(
-                  height: GenericVars.scSize.height * 0.7,
+                  height: GenericVars.scSize.height,
                   width: double.infinity,
                   child: CategoryWidgets(
                     foundCategories: _foundCategories,

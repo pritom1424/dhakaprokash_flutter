@@ -1,14 +1,16 @@
 import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
+import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
 import 'package:dummy_app/Views/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class RecentCategoryHomeListTile extends StatelessWidget {
-  final String imagePath, newsTitle, newsDate, newsCategory;
+  final String imagePath, newsTitle, newsDate, newsCategory, newsDescription;
   const RecentCategoryHomeListTile(
       {super.key,
       required this.imagePath,
       required this.newsTitle,
+      required this.newsDescription,
       required this.newsDate,
       required this.newsCategory});
 
@@ -16,8 +18,13 @@ class RecentCategoryHomeListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     Size scSize = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () => Navigator.of(context)
-          .push(MaterialPageRoute(builder: (ctx) => HomePage())),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (ctx) => DetailedPostView(
+                categoryName: newsCategory,
+                title: newsTitle,
+                description: newsDescription,
+                url: imagePath,
+              ))),
       child: Container(
         decoration: BoxDecoration(
           border:
@@ -46,6 +53,17 @@ class RecentCategoryHomeListTile extends StatelessWidget {
                 child: Image.network(
                   imagePath,
                   fit: BoxFit.cover,
+                  filterQuality: FilterQuality.low,
+                  loadingBuilder: (context, child, loadingProgress) =>
+                      (loadingProgress == null)
+                          ? child
+                          : Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 40),
+                              child: Image.asset(
+                                "assets/images/dhakaprokash_logo.png",
+                              ),
+                            ),
                 ),
               )),
             ),

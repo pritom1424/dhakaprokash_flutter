@@ -22,7 +22,7 @@ class RecentCategoryHomeWidget extends StatelessWidget {
         children: [
 //part1 //recent categoryname + More button
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Container(
               // height: scSize.height * 0.1,
               width: double.infinity,
@@ -52,7 +52,8 @@ class RecentCategoryHomeWidget extends StatelessWidget {
           ),
 //part2 //recent categorylists
           Container(
-            height: scSize.height * 0.5,
+            height: scSize.height * 0.33,
+            //  padding: EdgeInsets.symmetric(horizontal: 15),
             child: ListView.builder(
                 //physics: NeverScrollableScrollPhysics(),
                 itemCount: 5,
@@ -66,10 +67,12 @@ class RecentCategoryHomeWidget extends StatelessWidget {
                         imagePath: photoModels[index].url,
                         newsTitle: photoModels[index]
                             .description, //postModels[index].title
+                        newsDescription: postModels[index].body,
                         newsDate: DateFormat.yMEd().format(
                           DateTime.now(),
                         ),
-                        newsCategory: "Saradesh",
+//recent code set to national
+                        newsCategory: "National",
                       ),
                     );
                   } else {

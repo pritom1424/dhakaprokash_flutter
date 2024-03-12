@@ -11,7 +11,9 @@ class HomePageFooter extends StatelessWidget {
     Size scSize = MediaQuery.of(context).size;
     return Container(
       height: scSize.height * 0.5,
+      color: Color.fromARGB(255, 235, 233, 227),
       child: ListView(
+        physics: NeverScrollableScrollPhysics(),
         children: [
           Container(
             padding: EdgeInsets.symmetric(vertical: 5),
