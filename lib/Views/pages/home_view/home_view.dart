@@ -34,9 +34,10 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   int _selectedNavIndex = 0;
 
-  List<Widget> _NavViews(PhotoController pcontrol, PostController postControl) {
+  List<Widget> _NavViews(PhotoController pcontrol, PostController postControl,
+      ScrollController scrollController) {
     return [
-      homeBaseWidget(postControl, pcontrol),
+      homeBaseWidget(postControl, pcontrol, scrollController),
       PopularNewsView(
         pcontroller: postControl,
         phController: pcontrol,
@@ -61,7 +62,28 @@ class _HomeViewState extends State<HomeView> {
     GenericVars.scSize = MediaQuery.of(context).size;
     PostController postController = Provider.of<PostController>(context);
     PhotoController photoController = Provider.of<PhotoController>(context);
+    ScrollController _scrollController = ScrollController();
     return Scaffold(
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            // Scroll to the top logic here
+            _scrollController.animateTo(
+              0.0,
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+            );
+            /*   setState(() {
+              _scrollController.animateTo(
+                0.0,
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeInOut,
+              );
+            }); */
+          },
+          label: Text('Top'),
+          icon: Icon(Icons.arrow_upward),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         appBar: (_selectedNavIndex != 4) ? AppbarDefault() : null,
         drawer: AppDrawer(),
 
@@ -102,28 +124,30 @@ class _HomeViewState extends State<HomeView> {
             ]),
         body: FutureBuilder(
           future: photoController.loadAllItems(),
-          builder: (ctx, photosnapShot) => (photosnapShot.connectionState ==
-                  ConnectionState.waiting)
-              ? const LoaderWidget()
-              : FutureBuilder(
-                  future: postController.loadAllItems(),
-                  builder: (ctx, postSnapShot) {
-                    return (postSnapShot.connectionState ==
-                            ConnectionState.waiting)
-                        ? const LoaderWidget()
-                        : _NavViews(
-                            photoController, postController)[_selectedNavIndex];
-                  }),
+          builder: (ctx, photosnapShot) =>
+              (photosnapShot.connectionState == ConnectionState.waiting)
+                  ? const LoaderWidget()
+                  : FutureBuilder(
+                      future: postController.loadAllItems(),
+                      builder: (ctx, postSnapShot) {
+                        return (postSnapShot.connectionState ==
+                                ConnectionState.waiting)
+                            ? const LoaderWidget()
+                            : _NavViews(photoController, postController,
+                                _scrollController)[_selectedNavIndex];
+                      }),
         ));
   }
 
-  Widget homeBaseWidget(
-      PostController pcontroller, PhotoController phController) {
+  Widget homeBaseWidget(PostController pcontroller,
+      PhotoController phController, ScrollController scrollController) {
     return Scrollbar(
       thumbVisibility: true,
+      controller: scrollController,
 //main section started
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
+        controller: scrollController,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(children: [

@@ -5,6 +5,7 @@ import 'package:dummy_app/Views/pages/home_view/home_view.dart';
 import 'package:dummy_app/Views/pages/splash_screen.dart';
 import 'package:dummy_app/search_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 var kColorScheme = ColorScheme.fromSeed(

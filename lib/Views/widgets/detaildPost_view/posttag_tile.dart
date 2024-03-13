@@ -3,44 +3,45 @@ import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:flutter/material.dart';
 
 class PostTagTile extends StatelessWidget {
+  final int crossAxisCount;
   final List<String> tagList;
-  const PostTagTile({super.key, required this.tagList});
+  const PostTagTile(
+      {super.key, required this.tagList, required this.crossAxisCount});
 
   @override
   Widget build(BuildContext context) {
+    final double cellHeight = 0.06;
     return tagList.isEmpty
         ? SizedBox(
             height: 0,
           )
         : Container(
-            height: GenericVars.scSize.height * 0.12,
+            height: GenericVars.scSize.height *
+                cellHeight *
+                (tagList.length / crossAxisCount)
+                    .ceil(), //  (itemCount / crossAxisCount).ceil(),
             width: double.infinity,
             child: GridView.count(
-                crossAxisCount: 2,
-                childAspectRatio: 7 / 2,
-                mainAxisSpacing: 0,
-                crossAxisSpacing: 5,
-                //physics: NeverScrollableScrollPhysics(),
+                crossAxisCount: crossAxisCount,
+                childAspectRatio: 9 / 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 20,
+                physics: NeverScrollableScrollPhysics(),
                 children: List.generate(
                     tagList.length,
-                    (index) => Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 193, 222, 235),
-                                border: Border.all(
-                                    width: 1,
-                                    color: const Color.fromARGB(
-                                        255, 193, 222, 235))),
-                            child: TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (ctx) => CategoryView(
-                                          categoryName: tagList[index])));
-                                },
-                                child: Text(tagList[index])),
-                          ),
-                        ))),
+                    (index) => TextButton(
+                        style: TextButton.styleFrom(
+                            shape: LinearBorder(side: BorderSide.none),
+                            fixedSize: Size(cellHeight * (9 / 2), cellHeight),
+                            padding: EdgeInsets.all(0),
+                            backgroundColor:
+                                const Color.fromARGB(255, 193, 222, 235)),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (ctx) =>
+                                  CategoryView(categoryName: tagList[index])));
+                        },
+                        child: Text(tagList[index])))),
           );
   }
 }
