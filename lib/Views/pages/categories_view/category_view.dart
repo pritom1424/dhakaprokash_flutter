@@ -69,16 +69,6 @@ class CategoryView extends StatelessWidget {
                                     ]),
                                   )
                                 ])),
-                                SliverAppBar(
-                                  pinned: true,
-                                  title: Text(
-                                    categoryName,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineMedium,
-                                  ),
-                                  automaticallyImplyLeading: false,
-                                ),
                               ],
                             ));
                   })),

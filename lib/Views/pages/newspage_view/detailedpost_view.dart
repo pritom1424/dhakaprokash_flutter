@@ -56,14 +56,21 @@ class DetailedPostView extends StatelessWidget {
                 child: Text(
                   description +
                       description +
+                      "\n\n" +
                       description +
+                      "\n" +
                       description +
+                      "\n\n" +
                       description +
+                      "\n" +
                       description +
+                      "\n\n" +
                       description +
+                      "\n" +
                       description +
+                      "\n\n" +
                       description +
-                      description +
+                      "\n" +
                       description,
                   style: TextStyle(
                     fontSize: 16,

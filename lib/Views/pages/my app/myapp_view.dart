@@ -14,13 +14,15 @@ class MyAppView extends StatelessWidget {
         body: Container(
           height: GenericVars.scSize.height,
           width: GenericVars.scSize.width,
+          padding: EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 decoration: BoxDecoration(
                     border: Border.symmetric(
-                        horizontal: BorderSide(width: 1, color: Colors.grey))),
+                        horizontal:
+                            BorderSide(width: 0.5, color: Colors.grey))),
                 height: GenericVars.scSize.height * 0.15,
                 child: Row(
                   children: [

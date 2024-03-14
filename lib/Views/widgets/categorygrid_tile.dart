@@ -37,7 +37,8 @@ class CategoryGridTile extends StatelessWidget {
       },
       child: Card(
         elevation: elevation,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+        shadowColor: Colors.black45,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         child: Container(
           height: GenericVars.scSize.height * cellHeight,
           width: double.infinity,
@@ -53,20 +54,23 @@ class CategoryGridTile extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Image.network(
-                      imagePath,
-                      fit: BoxFit.fitWidth,
-                      filterQuality: FilterQuality.low,
-                      loadingBuilder: (context, child, loadingProgress) =>
-                          (loadingProgress == null)
-                              ? child
-                              : Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 40),
-                                  child: Image.asset(
-                                    "assets/images/dhakaprokash_logo.png",
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Image.network(
+                        imagePath,
+                        fit: BoxFit.fitWidth,
+                        filterQuality: FilterQuality.low,
+                        loadingBuilder: (context, child, loadingProgress) =>
+                            (loadingProgress == null)
+                                ? child
+                                : Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 40),
+                                    child: Image.asset(
+                                      "assets/images/dhakaprokash_logo.png",
+                                    ),
                                   ),
-                                ),
+                      ),
                     )),
               ),
               //Category News Description s+ Date

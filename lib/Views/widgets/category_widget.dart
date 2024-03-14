@@ -88,16 +88,18 @@ class CategoryWidget extends StatelessWidget {
               },
               child: Container(
                 decoration: BoxDecoration(
-                    border: (didFloat)
+                    border: (!didFloat)
                         ? Border(
                             bottom: BorderSide(
                                 width: 0.3,
                                 color: Color.fromARGB(255, 136, 135, 135)))
-                        : Border(bottom: BorderSide(width: 0))),
+                        : Border(
+                            bottom: BorderSide(
+                                width: 0, color: Colors.transparent))),
                 width: double.infinity,
                 height: (didFloat)
                     ? GenericVars.scSize.height * 0.45
-                    : GenericVars.scSize.height * 0.55,
+                    : GenericVars.scSize.height * 0.50,
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: (didFloat)
                     ? Stack(
@@ -135,7 +137,7 @@ class CategoryWidget extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(
-                                      width: 1,
+                                      width: 0.5,
                                       color: Color.fromARGB(255, 129, 127, 127),
                                     )),
                                 padding: EdgeInsets.symmetric(horizontal: 10),
@@ -165,35 +167,53 @@ class CategoryWidget extends StatelessWidget {
                         ],
                       )
                     : Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          ClipRRect(
-                              borderRadius: BorderRadius.circular(5),
-                              child: Image.network(
-                                photoModels[0].url,
-                                fit: BoxFit.fitWidth,
-                                filterQuality: FilterQuality.low,
-                                loadingBuilder: (context, child,
-                                        loadingProgress) =>
-                                    (loadingProgress == null)
-                                        ? child
-                                        : Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 40),
-                                            child: Image.asset(
-                                              "assets/images/dhakaprokash_logo.png",
+                          Expanded(
+                            flex: 5,
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child: Image.network(
+                                  photoModels[0].url,
+                                  fit: BoxFit.fill,
+                                  filterQuality: FilterQuality.low,
+                                  loadingBuilder: (context, child,
+                                          loadingProgress) =>
+                                      (loadingProgress == null)
+                                          ? child
+                                          : Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 40),
+                                              child: Image.asset(
+                                                "assets/images/dhakaprokash_logo.png",
+                                              ),
                                             ),
-                                          ),
-                              )),
-                          Text(
-                            photoModels[0].title,
-                            style: Theme.of(context).textTheme.bodyLarge,
+                                )),
                           ),
-                          Text(photoModels[0].description),
-                          Text(
-                            DateFormat.yMEd().format(DateTime.now()),
-                            style: Theme.of(context).textTheme.labelSmall,
+                          Expanded(
+                            flex: 3,
+                            child: Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    photoModels[0].title,
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge,
+                                  ),
+                                  Text(photoModels[0].description),
+                                  Text(
+                                    DateFormat.yMEd().format(DateTime.now()),
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall,
+                                  )
+                                ],
+                              ),
+                            ),
                           )
                         ],
                       ),

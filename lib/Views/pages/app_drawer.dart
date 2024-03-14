@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/searchtoNewpage.dart';
 import 'package:dummy_app/Views/widgets/app_drawer/category_buttons.dart';
@@ -50,100 +52,93 @@ class _AppDrawerState extends State<AppDrawer> {
   Widget build(BuildContext context) {
     String iconPath = "assets/images/dhakaprokash_icon.png";
     return Drawer(
-      width: 250,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Row(
-            children: [
-              Container(
-                height: GenericVars.scSize.height * 0.03,
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                child: Image.asset(
-                  iconPath,
-                  filterQuality: FilterQuality.low,
-                ),
-              ),
-              Text(
-                "Categories",
-                style: Theme.of(context).textTheme.headlineLarge,
-              ),
-            ],
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 5,
-            ),
-            child: Column(
+        width: 250,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Row(
               children: [
-//search section
                 Container(
-                  height: GenericVars.scSize.height * 0.1,
-                  child: Row(
-                    children: [
-                      Flexible(
-                          flex: 4,
-                          child: Container(
-                              padding: EdgeInsets.symmetric(vertical: 20),
-                              child: TextField(
-                                controller: textEditingController,
-                                style: const TextStyle(
-                                    fontSize: 18,
-                                    color: Color.fromARGB(255, 105, 102, 102)),
-                                /*    onChanged: (value) {
+                  height: GenericVars.scSize.height * 0.03,
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  child: Image.asset(
+                    iconPath,
+                    filterQuality: FilterQuality.low,
+                  ),
+                ),
+                Text(
+                  "Categories",
+                  style: Theme.of(context).textTheme.headlineLarge,
+                ),
+              ],
+            ),
+          ),
+          body: SingleChildScrollView(
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 10,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+//search section
+                  Container(
+                      height: GenericVars.scSize.height * 0.1,
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom:
+                                  BorderSide(width: 0.3, color: Colors.grey))),
+                      child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          child: TextField(
+                            controller: textEditingController,
+                            style: const TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 105, 102, 102)),
+                            /*    onChanged: (value) {
                                   setState(() {
                                     // textEditingController.text = value;
                                   });
                                   return _runFilter(value);
                                 }, */
-                                decoration: const InputDecoration(
-                                    focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: Colors.grey)),
-                                    contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 5),
-                                    hintText: "typing...",
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            width: 1, color: Colors.grey))),
-                              ))),
-                      Container(
-                        color: Colors.grey,
-                        height: GenericVars.scSize.height * 0.05,
-                        child: IconButton(
-                            color: Colors.white,
-                            onPressed: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (ctx) => SearchToNewPage(
-                                      textEditingController.text)));
-                            },
-                            icon: Icon(Icons.search)),
-                      )
-                    ],
-                  ),
-                ),
+                            decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 1, color: Colors.grey)),
+                                contentPadding:
+                                    EdgeInsets.symmetric(horizontal: 5),
+                                hintText: "typing...",
+                                prefixIcon: IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (ctx) => SearchToNewPage(
+                                                  textEditingController.text)));
+                                    },
+                                    icon: Icon(Icons.search)),
+                                hintStyle: TextStyle(color: Colors.grey),
+                                enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 1, color: Colors.grey))),
+                          ))),
+                  /*Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (ctx) => SearchToNewPage(
+                                        textEditingController.text))); */
 //category buttons grid
-                Container(
-                  height: GenericVars.scSize.height * 0.8,
-                  width: double.infinity,
-                  child: CategoryButton(
+                  CategoryButton(
                       foundCategories: GenericVars.newspaperCategories.keys
                           .toList() //_foundCategories,
                       ),
-                ),
 //footer follow section
-                Container(
-                    height: GenericVars.scSize.height * 0.1,
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                    child: FollowSocialWidget(
-                        fontSize: 18, iconRadius: 14)) //footer
-              ],
+                  Container(
+                      height: GenericVars.scSize.height * 0.1,
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(vertical: 5),
+                      child: FollowSocialWidget(fontSize: 18, iconRadius: 14))
+                  //footer
+                ],
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

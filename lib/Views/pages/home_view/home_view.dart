@@ -64,26 +64,30 @@ class _HomeViewState extends State<HomeView> {
     PhotoController photoController = Provider.of<PhotoController>(context);
     ScrollController _scrollController = ScrollController();
     return Scaffold(
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            // Scroll to the top logic here
-            _scrollController.animateTo(
-              0.0,
-              duration: Duration(milliseconds: 500),
-              curve: Curves.easeInOut,
-            );
-            /*   setState(() {
+        floatingActionButton: (_selectedNavIndex == 0)
+            ? FloatingActionButton.extended(
+                onPressed: () {
+                  // Scroll to the top logic here
+                  _scrollController.animateTo(
+                    0.0,
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                  /*   setState(() {
               _scrollController.animateTo(
                 0.0,
                 duration: Duration(milliseconds: 500),
                 curve: Curves.easeInOut,
               );
             }); */
-          },
-          label: Text('Top'),
-          icon: Icon(Icons.arrow_upward),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+                },
+                label: Text('Top'),
+                icon: Icon(Icons.arrow_upward),
+              )
+            : null,
+        floatingActionButtonLocation: (_selectedNavIndex == 0)
+            ? FloatingActionButtonLocation.endFloat
+            : null,
         appBar: (_selectedNavIndex != 4) ? AppbarDefault() : null,
         drawer: AppDrawer(),
 
@@ -149,7 +153,7 @@ class _HomeViewState extends State<HomeView> {
         scrollDirection: Axis.vertical,
         controller: scrollController,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(children: [
 //main news + headline+recent lists
             CategoryWidget(

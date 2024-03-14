@@ -19,6 +19,6 @@ class GenericVars {
     "Opinion/Editorial": Icons.comment,
     "Education": Icons.school,
     "Weather": Icons.wb_sunny,
-    //"Recent News": Icons.access_time,
+    // "Recent News": Icons.access_time,
   };
 }

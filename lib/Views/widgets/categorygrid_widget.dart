@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 
-class CategoryGridWidget extends StatelessWidget {
+class CategoryGridWidget extends StatefulWidget {
   final String categoryName;
   final List<PhotoModel> photoModels;
   final List<PostModel> postModels;
@@ -38,7 +38,52 @@ class CategoryGridWidget extends StatelessWidget {
       required this.elevation});
 
   @override
+  State<CategoryGridWidget> createState() => _CategoryGridWidgetState();
+}
+
+class _CategoryGridWidgetState extends State<CategoryGridWidget> {
+  late ScrollController scController;
+  @override
+  void initState() {
+    scController = ScrollController();
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scController.dispose();
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    GridView gridWidget() {
+      return GridView.builder(
+          controller: scController,
+          itemCount: widget.itemCount,
+          physics: (widget.isScroll)
+              ? AlwaysScrollableScrollPhysics()
+              : NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: widget.crossAxisCount,
+            mainAxisSpacing: widget.mainAxisSpacing,
+          ),
+          scrollDirection:
+              (widget.didAxisHorizontal) ? Axis.horizontal : Axis.vertical,
+          itemBuilder: (ctx, index) => CategoryGridTile(
+              categoryName: widget.categoryName,
+              imagePath: widget.photoModels[index].url,
+              newsTitle: widget.photoModels[index].description,
+              newsDescription: widget.postModels[index].body,
+              cellHeight: widget.cellHeight,
+              didDescriptionShow: widget.didDescriptionShow,
+              elevation: widget.elevation,
+              /*postModels[index].title, */
+              newsDate: DateFormat.yMEd().format(DateTime.now())));
+    }
+
     return Container(
       //category home widget column startted
       child: Column(
@@ -49,7 +94,8 @@ class CategoryGridWidget extends StatelessWidget {
           GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => CategoryView(categoryName: categoryName)));
+                  builder: (ctx) =>
+                      CategoryView(categoryName: widget.categoryName)));
             },
             child: Container(
               height: GenericVars.scSize.height * 0.07,
@@ -63,7 +109,7 @@ class CategoryGridWidget extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    categoryName,
+                    widget.categoryName,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Icon(
@@ -77,32 +123,20 @@ class CategoryGridWidget extends StatelessWidget {
 
           //part 3//Category News Lists
           Container(
-              height: (didAxisHorizontal)
-                  ? GenericVars.scSize.height * cellHeight
-                  : GenericVars.scSize.height *
-                      cellHeight *
-                      (itemCount / crossAxisCount).ceil(),
-              child: GridView.builder(
-                  itemCount: itemCount,
-                  physics: (isScroll)
-                      ? AlwaysScrollableScrollPhysics()
-                      : NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: crossAxisCount,
-                    mainAxisSpacing: mainAxisSpacing,
-                  ),
-                  scrollDirection:
-                      (didAxisHorizontal) ? Axis.horizontal : Axis.vertical,
-                  itemBuilder: (ctx, index) => CategoryGridTile(
-                      categoryName: categoryName,
-                      imagePath: photoModels[index].url,
-                      newsTitle: photoModels[index].description,
-                      newsDescription: postModels[index].body,
-                      cellHeight: cellHeight,
-                      didDescriptionShow: didDescriptionShow,
-                      elevation: elevation,
-                      /*postModels[index].title, */
-                      newsDate: DateFormat.yMEd().format(DateTime.now()))))
+            height: (widget.didAxisHorizontal)
+                ? GenericVars.scSize.height * widget.cellHeight
+                : GenericVars.scSize.height *
+                    widget.cellHeight *
+                    (widget.itemCount / widget.crossAxisCount).ceil(),
+            child: widget.isScroll
+                ? Scrollbar(
+                    thickness: 5,
+                    radius: Radius.circular(10),
+                    controller: scController,
+                    thumbVisibility: true,
+                    child: gridWidget())
+                : gridWidget(),
+          )
         ],
       ),
     );
