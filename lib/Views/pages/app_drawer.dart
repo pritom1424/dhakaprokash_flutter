@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/searchtoNewpage.dart';
+import 'package:dummy_app/Views/widgets/app_drawer/category_buttonList.dart';
 import 'package:dummy_app/Views/widgets/app_drawer/category_buttons.dart';
 import 'package:dummy_app/Views/widgets/follow_social.dart';
 import 'package:flutter/cupertino.dart';
@@ -67,7 +68,11 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
                 Text(
                   "Categories",
-                  style: Theme.of(context).textTheme.headlineLarge,
+                  style: TextStyle(
+                      fontSize: 25,
+                      fontFamily: "Roboto",
+                      fontWeight: FontWeight
+                          .normal), //Theme.of(context).textTheme.headlineLarge
                 ),
               ],
             ),
@@ -106,7 +111,7 @@ class _AppDrawerState extends State<AppDrawer> {
                                         width: 1, color: Colors.grey)),
                                 contentPadding:
                                     EdgeInsets.symmetric(horizontal: 5),
-                                hintText: "typing...",
+                                hintText: "Search...",
                                 prefixIcon: IconButton(
                                     onPressed: () {
                                       Navigator.of(context).push(
@@ -124,10 +129,13 @@ class _AppDrawerState extends State<AppDrawer> {
                                     builder: (ctx) => SearchToNewPage(
                                         textEditingController.text))); */
 //category buttons grid
-                  CategoryButton(
+                  CategoryButtonList(
+                      foundCategories:
+                          GenericVars.newspaperCategories.keys.toList()),
+                  /*   CategoryButton(
                       foundCategories: GenericVars.newspaperCategories.keys
                           .toList() //_foundCategories,
-                      ),
+                      ), */
 //footer follow section
                   Container(
                       height: GenericVars.scSize.height * 0.1,

@@ -41,9 +41,12 @@ class PopularNewsView extends StatelessWidget {
                                 pinned: true,
                                 title: Text(
                                   "Popular",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium,
+                                  style: TextStyle(
+                                      fontSize: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium!
+                                          .fontSize,
+                                      color: Colors.blue),
                                 ),
                                 automaticallyImplyLeading: false,
                               ),

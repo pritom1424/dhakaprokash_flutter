@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           textTheme: ThemeData().textTheme.copyWith(
                 titleLarge: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontFamily: "QuickSand",
+                  //fontFamily: "QuickSand",
                   color: kColorScheme.onSecondaryContainer,
                   fontSize: 35,
                 ),
