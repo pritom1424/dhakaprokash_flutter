@@ -15,6 +15,9 @@ var kColorScheme = ColorScheme.fromSeed(
   seedColor: const Color.fromARGB(255, 169, 162, 255),
 );
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => PostController()),

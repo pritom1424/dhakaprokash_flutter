@@ -163,6 +163,7 @@ class EmailRegField extends StatelessWidget {
       return SizedBox(
         height: GenericVars.scSize.height * 0.07,
         child: TextFormField(
+          style: TextStyle(fontSize: 18),
           autofocus: false,
           keyboardType: TextInputType.emailAddress,
           focusNode: focusNode,
@@ -200,6 +201,7 @@ class PasswordRegField extends StatelessWidget {
             return SizedBox(
               height: GenericVars.scSize.height * 0.07,
               child: TextFormField(
+                style: TextStyle(fontSize: 18),
                 autofocus: false,
                 obscureText: _obSecurePassword.value,
                 focusNode: focusNode,
@@ -240,6 +242,7 @@ class NameRegField extends StatelessWidget {
       return SizedBox(
         height: GenericVars.scSize.height * 0.07,
         child: TextFormField(
+          style: TextStyle(fontSize: 18),
           autofocus: false,
           keyboardType: TextInputType.name,
           focusNode: focusNode,
@@ -253,7 +256,6 @@ class NameRegField extends StatelessWidget {
             Utils.fieldFocusChange(context, focusNode, passwordFocusNode);
           },
           onChanged: (value) {
-            print(value);
             provider.setName(value);
           },
         ),
@@ -274,6 +276,7 @@ class PhoneRegField extends StatelessWidget {
       return SizedBox(
         height: GenericVars.scSize.height * 0.07,
         child: TextFormField(
+          style: TextStyle(fontSize: 18),
           autofocus: false,
           keyboardType: TextInputType.number,
           focusNode: focusNode,
