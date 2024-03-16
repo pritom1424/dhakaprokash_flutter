@@ -21,4 +21,6 @@ class GenericVars {
     "Weather": Icons.wb_sunny,
     // "Recent News": Icons.access_time,
   };
+  static String currentSearchString = "";
+  static String currenFontFamily = "Raleway";
 }

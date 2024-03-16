@@ -132,7 +132,7 @@ class _MainPostTileState extends State<MainPostTile> {
               borderRadius: BorderRadius.circular(5),
               child: Image.network(
                 widget.url,
-                fit: BoxFit.fitWidth,
+                fit: BoxFit.contain,
                 filterQuality: FilterQuality.low,
               ),
             ),

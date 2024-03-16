@@ -1,4 +1,5 @@
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
+import 'package:dummy_app/Views/pages/login_page.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,10 @@ class MyAppView extends StatelessWidget {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (ctx) => LoginForm()));
+                      },
                       child: Text("Login"),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.deepOrange,

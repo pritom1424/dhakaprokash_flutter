@@ -6,10 +6,12 @@ import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/app_drawer.dart';
 import 'package:dummy_app/Views/pages/categories_view/sports_view.dart';
 import 'package:dummy_app/Views/pages/contact_view/contact_view.dart';
+import 'package:dummy_app/Views/pages/custom_appdrawer.dart';
 import 'package:dummy_app/Views/pages/favorites_view/favoritesnews_view.dart';
 import 'package:dummy_app/Views/pages/latest_view/latestnews_view.dart';
 import 'package:dummy_app/Views/pages/my%20app/myapp_view.dart';
 import 'package:dummy_app/Views/pages/popular_view/popularnews_view.dart';
+import 'package:dummy_app/Views/pages/searchtoNewpage.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/category_avatar_widget.dart';
 import 'package:dummy_app/Views/widgets/category_widget.dart';
@@ -46,6 +48,7 @@ class _HomeViewState extends State<HomeView> {
         pcontroller: postControl,
         phController: pcontrol,
       ),
+      SearchToNewPage(),
       ContactView(),
       MyAppView()
     ];
@@ -65,7 +68,7 @@ class _HomeViewState extends State<HomeView> {
     ScrollController _scrollController = ScrollController();
     return Scaffold(
         floatingActionButton: (_selectedNavIndex == 0)
-            ? FloatingActionButton.extended(
+            ? FloatingActionButton(
                 onPressed: () {
                   // Scroll to the top logic here
                   _scrollController.animateTo(
@@ -73,6 +76,7 @@ class _HomeViewState extends State<HomeView> {
                     duration: Duration(milliseconds: 500),
                     curve: Curves.easeInOut,
                   );
+
                   /*   setState(() {
               _scrollController.animateTo(
                 0.0,
@@ -81,15 +85,14 @@ class _HomeViewState extends State<HomeView> {
               );
             }); */
                 },
-                label: Text('Top'),
-                icon: Icon(Icons.arrow_upward),
+                child: Icon(Icons.arrow_upward),
               )
             : null,
         floatingActionButtonLocation: (_selectedNavIndex == 0)
             ? FloatingActionButtonLocation.endFloat
             : null,
-        appBar: (_selectedNavIndex != 4) ? AppbarDefault() : null,
-        drawer: AppDrawer(),
+        appBar: (_selectedNavIndex != 5) ? AppbarDefault() : null,
+        drawer: CustomAppDrawer(), //AppDrawer(),
 
 //navigation bar
         bottomNavigationBar: BottomNavigationBar(
@@ -116,31 +119,36 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   label: 'favorites'),
               BottomNavigationBarItem(
+                  icon: Icon(Icons.search), label: 'search'),
+              BottomNavigationBarItem(
                   icon: Icon(
                     Icons.contact_page,
                   ),
                   label: 'Contact'),
               BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.face,
+                    Icons.login_sharp,
                   ),
                   label: 'My App'),
             ]),
-        body: FutureBuilder(
-          future: photoController.loadAllItems(),
-          builder: (ctx, photosnapShot) =>
-              (photosnapShot.connectionState == ConnectionState.waiting)
-                  ? const LoaderWidget()
-                  : FutureBuilder(
-                      future: postController.loadAllItems(),
-                      builder: (ctx, postSnapShot) {
-                        return (postSnapShot.connectionState ==
-                                ConnectionState.waiting)
-                            ? const LoaderWidget()
-                            : _NavViews(photoController, postController,
-                                _scrollController)[_selectedNavIndex];
-                      }),
-        ));
+        body: (_selectedNavIndex != 3)
+            ? FutureBuilder(
+                future: photoController.loadAllItems(),
+                builder: (ctx, photosnapShot) =>
+                    (photosnapShot.connectionState == ConnectionState.waiting)
+                        ? const LoaderWidget()
+                        : FutureBuilder(
+                            future: postController.loadAllItems(),
+                            builder: (ctx, postSnapShot) {
+                              return (postSnapShot.connectionState ==
+                                      ConnectionState.waiting)
+                                  ? const LoaderWidget()
+                                  : _NavViews(photoController, postController,
+                                      _scrollController)[_selectedNavIndex];
+                            }),
+              )
+            : _NavViews(photoController, postController, _scrollController)[
+                _selectedNavIndex]);
   }
 
   Widget homeBaseWidget(PostController pcontroller,

@@ -10,18 +10,40 @@ class CategoryButtonList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: GenericVars.scSize.height * 0.7,
-        child: ListView(
-          shrinkWrap: true,
-          children: List.generate(
+      height: GenericVars.scSize.height * 0.7,
+      child: ListView(
+        shrinkWrap: true,
+        children: List.generate(
             foundCategories.length,
             (index) => Container(
-                height: GenericVars.scSize.height * 0.07,
-                alignment: Alignment.centerLeft,
-                decoration: const BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(width: 0.3, color: Colors.grey))),
-                child: TextButton.icon(
+                  // height: GenericVars.scSize.height * 0.07,
+                  alignment: Alignment.centerLeft,
+                  decoration: const BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(width: 0.3, color: Colors.grey))),
+                  child: ListTile(
+                    leading: Icon(
+                        color: Colors.grey,
+                        GenericVars.newspaperCategories.values.toList()[index]),
+                    title: Text(
+                      foundCategories[index],
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                          fontFamily: GenericVars.currenFontFamily),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (ctx) => CategoryView(
+                                  categoryName: foundCategories[index])));
+                    },
+                  ),
+                )
+
+            /*  TextButton.icon(
                     icon: Icon(
                         color: Colors.black,
                         GenericVars.newspaperCategories.values.toList()[index]),
@@ -52,8 +74,8 @@ class CategoryButtonList extends StatelessWidget {
                         fontSize: 18,
                         fontWeight: FontWeight.normal,
                       ),
-                    ))
-                /*     Row(
+                    )) */
+            /*     Row(
                 children: [
                   Icon(
                     GenericVars.newspaperCategories.values.toList()[index],
@@ -66,9 +88,9 @@ class CategoryButtonList extends StatelessWidget {
                   )
                 ],
               ) */
-                ),
-          ),
-        ));
+            ),
+      ),
+    );
 
     /* ListView.builder(
         physics: NeverScrollableScrollPhysics(),

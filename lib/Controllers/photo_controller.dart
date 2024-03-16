@@ -36,6 +36,7 @@ class PhotoController with ChangeNotifier {
   }
 
   Future<void> loadSearchAllItems(String endPoint) async {
+    _searchItems = [];
     final uri = Uri.http("api.slingacademy.com", "v1/sample-data/$endPoint");
     //Uri.http("jsonplaceholder.typicode.com", "/photos");
     final response = await http.get(uri);

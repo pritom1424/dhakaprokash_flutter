@@ -116,8 +116,8 @@ class _AppDrawerState extends State<AppDrawer> {
                                     onPressed: () {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
-                                              builder: (ctx) => SearchToNewPage(
-                                                  textEditingController.text)));
+                                              builder: (ctx) =>
+                                                  SearchToNewPage()));
                                     },
                                     icon: Icon(Icons.search)),
                                 hintStyle: TextStyle(color: Colors.grey),
