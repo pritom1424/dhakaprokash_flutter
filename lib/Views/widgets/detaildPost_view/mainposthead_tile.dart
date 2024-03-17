@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class MainPostTile extends StatefulWidget {
+class MainHeadPostTile extends StatefulWidget {
   final String url, title, boldDescription, description, categoryname;
   final bool isBookmark;
-  const MainPostTile({
+  const MainHeadPostTile({
     super.key,
     required this.url,
     required this.title,
@@ -23,10 +23,10 @@ class MainPostTile extends StatefulWidget {
   });
 
   @override
-  State<MainPostTile> createState() => _MainPostTileState();
+  State<MainHeadPostTile> createState() => _MainHeadPostTileState();
 }
 
-class _MainPostTileState extends State<MainPostTile> {
+class _MainHeadPostTileState extends State<MainHeadPostTile> {
   late bool currentBookmark;
   String mailSchema = "mailto";
   String websiteSchema = "https";

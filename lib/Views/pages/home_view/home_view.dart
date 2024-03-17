@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/photo_controller.dart';
 import 'package:dummy_app/Controllers/post_controller.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
@@ -12,6 +13,7 @@ import 'package:dummy_app/Views/pages/latest_view/latestnews_view.dart';
 import 'package:dummy_app/Views/pages/my%20app/myapp_view.dart';
 import 'package:dummy_app/Views/pages/popular_view/popularnews_view.dart';
 import 'package:dummy_app/Views/pages/searchtoNewpage.dart';
+import 'package:dummy_app/Views/pages/test.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/category_avatar_widget.dart';
 import 'package:dummy_app/Views/widgets/category_widget.dart';
@@ -163,6 +165,12 @@ class _HomeViewState extends State<HomeView> {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(children: [
+            /*  ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (ctx) => TestPage()));
+                },
+                child: Text("debug")), */
 //main news + headline+recent lists
             CategoryWidget(
               photoModels: phController.Items,

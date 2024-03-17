@@ -4,7 +4,8 @@ import 'package:dummy_app/Utils/dummy_tags.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/categorygrid_widget.dart';
-import 'package:dummy_app/Views/widgets/detaildPost_view/mainpost_tile.dart';
+import 'package:dummy_app/Views/widgets/detaildPost_view/main_article_tile.dart';
+import 'package:dummy_app/Views/widgets/detaildPost_view/mainposthead_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/posttag_tile.dart';
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,11 +39,11 @@ class DetailedPostView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              //main post tile
+//main post head tile
               Container(
                 height: GenericVars.scSize.height * 0.6,
                 padding: EdgeInsets.only(bottom: 10),
-                child: MainPostTile(
+                child: MainHeadPostTile(
                   url: url,
                   title: title,
                   description: description,
@@ -51,35 +52,40 @@ class DetailedPostView extends StatelessWidget {
                   isBookmark: false,
                 ),
               ),
+//main post decription
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                child: Text(
-                  description +
-                      description +
-                      "\n\n" +
-                      description +
-                      "\n" +
-                      description +
-                      "\n\n" +
-                      description +
-                      "\n" +
-                      description +
-                      "\n\n" +
-                      description +
-                      "\n" +
-                      description +
-                      "\n\n" +
-                      description +
-                      "\n" +
-                      description,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                  textAlign: TextAlign.justify,
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                  child: MainArticleTile(
+                    articleItems: [
+                      Text(
+                        description +
+                            description +
+                            "\n\n" +
+                            description +
+                            "\n" +
+                            description,
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.justify,
 
-                  // overflow: TextOverflow.visible,
-                ),
-              ),
+                        // overflow: TextOverflow.visible,
+                      ),
+                      Image.network(url),
+                      Text(description +
+                          "\n\n" +
+                          description +
+                          description +
+                          "\n\n" +
+                          description +
+                          "\n" +
+                          description +
+                          "\n\n" +
+                          description +
+                          "\n")
+                    ],
+                  )),
+//post tag tile
               Container(
                 padding: const EdgeInsets.only(
                     top: 10), //symmetric(horizontal: 10, vertical: 5),
@@ -93,6 +99,7 @@ class DetailedPostView extends StatelessWidget {
                   crossAxisCount: 2,
                 ),
               ),
+//comment button
               Container(
                 height: GenericVars.scSize.height * 0.07,
                 padding: EdgeInsets.symmetric(vertical: 10),
@@ -107,6 +114,7 @@ class DetailedPostView extends StatelessWidget {
                   ),
                 ),
               ),
+// news grid
               FutureBuilder(
                   future: postController.loadAllItems(),
                   builder: (ctx, postSnapShot) {
