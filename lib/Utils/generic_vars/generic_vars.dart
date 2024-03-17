@@ -22,5 +22,5 @@ class GenericVars {
     // "Recent News": Icons.access_time,
   };
   static String currentSearchString = "";
-  static String currenFontFamily = "Raleway";
+  static String currenFontFamily = "NotoSerif-Regular"; //"Raleway";
 }

@@ -27,7 +27,7 @@ class CategoryAvatatarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double itemHeight = 0.2;
+    final double itemHeight = 0.18;
 
     return Container(
       //category home widget column startted

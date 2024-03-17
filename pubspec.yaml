@@ -93,6 +93,10 @@ flutter:
     - family: RobotoMono
       fonts:
         - asset: assets/fonts/RobotoMono-Regular.ttf
+
+    - family: NotoSerif-Regular
+      fonts:
+        - asset: assets/fonts/NotoSerif-Regular.ttf    
       #  - asset: assets/fonts/RobotoMono-Bold.ttf
        #   weight: 700
   #   - family: Trajan Pro

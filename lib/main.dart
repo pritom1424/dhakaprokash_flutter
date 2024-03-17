@@ -1,3 +1,4 @@
+import 'package:dummy_app/Controllers/login_controller.dart';
 import 'package:dummy_app/Controllers/photo_controller.dart';
 import 'package:dummy_app/Controllers/post_controller.dart';
 import 'package:dummy_app/Controllers/registration_controller.dart';

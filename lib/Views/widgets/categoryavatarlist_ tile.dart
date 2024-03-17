@@ -54,50 +54,57 @@ class CategoryAvatarListTile extends StatelessWidget {
           ], */
         ),
 //Category News Row Started
-        child: Row(
-          children: [
-            //Category News Image
-            Expanded(
-              flex: 3,
-              child: CircleAvatar(
-                radius: 50,
-                backgroundImage: NetworkImage(imagePath),
-                child: Container(
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 15),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //Category News Image
+              Expanded(
+                flex: 3,
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundImage: NetworkImage(imagePath),
+                  child: Container(
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                  ),
                 ),
               ),
-            ),
 
-//Category News Descriptions + Date
-            Expanded(
-              flex: 5,
-              child: Container(
-                padding: EdgeInsets.only(right: 5),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      StringLimiter().limitString(newsTitle, 50),
-                      style: Theme.of(context).textTheme.headlineMedium,
-                      //  textAlign: TextAlign.justify,
-                    ),
-                    Row(children: [
+              //Category News Descriptions + Date
+              Expanded(
+                flex: 5,
+                child: Container(
+                  padding: EdgeInsets.only(right: 5),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text(
-                        '$name| ',
-                        style: Theme.of(context).textTheme.labelSmall,
+                        StringLimiter().limitString(newsTitle, 50),
+                        style: Theme.of(context).textTheme.headlineMedium,
+                        //  textAlign: TextAlign.justify,
                       ),
-                      Text(
-                        newsDate,
-                        style: Theme.of(context).textTheme.labelSmall,
+                      SizedBox(
+                        height: 20,
                       ),
-                    ])
-                  ],
+                      Row(children: [
+                        Text(
+                          '$name| ',
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                        Text(
+                          newsDate,
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                      ])
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
