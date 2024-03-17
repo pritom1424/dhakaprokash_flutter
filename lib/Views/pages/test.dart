@@ -13,14 +13,25 @@ class TestPage extends StatelessWidget {
       appBar: AppbarDefault(),
       body: FutureBuilder(
           future: HomepageController().loadAllItems(),
-          builder: (ctx, snapshot) =>
-              (snapshot.connectionState == ConnectionState.waiting)
-                  ? CircularProgressIndicator()
-                  : SingleChildScrollView(
-                      child: Center(
-                        child: Text(snapshot.data!.body),
-                      ),
-                    )),
+          builder: (ctx, snapshot) => (snapshot.connectionState ==
+                  ConnectionState.waiting)
+              ? CircularProgressIndicator()
+              : SingleChildScrollView(
+                  child: Center(
+                    child: (snapshot.data!.isNotEmpty && snapshot.data != null)
+                        ? SingleChildScrollView(
+                            child: Column(
+                            children: List.generate(
+                                snapshot.data!.length,
+                                (index) => ListTile(
+                                        title: Container(
+                                      child: Image.network(
+                                          "https://admin.dhakaprokash24.com/media/content/images${snapshot.data![index].imgBgPath.toString()}"),
+                                    ))),
+                          ))
+                        : Container(),
+                  ),
+                )),
     );
   }
 }

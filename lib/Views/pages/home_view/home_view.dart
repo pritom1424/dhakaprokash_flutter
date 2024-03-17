@@ -14,6 +14,7 @@ import 'package:dummy_app/Views/pages/my%20app/myapp_view.dart';
 import 'package:dummy_app/Views/pages/popular_view/popularnews_view.dart';
 import 'package:dummy_app/Views/pages/searchtoNewpage.dart';
 import 'package:dummy_app/Views/pages/test.dart';
+import 'package:dummy_app/Views/pages/video_test.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/category_avatar_widget.dart';
 import 'package:dummy_app/Views/widgets/category_widget.dart';
@@ -22,6 +23,7 @@ import 'package:dummy_app/Views/widgets/home_view/headimage_widget.dart';
 import 'package:dummy_app/Views/widgets/home_view/recentcategoryhome_widget.dart';
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
+import 'package:dummy_app/Views/widgets/speechscreen_widget.dart';
 import 'package:dummy_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -80,12 +82,12 @@ class _HomeViewState extends State<HomeView> {
                   );
 
                   /*   setState(() {
-              _scrollController.animateTo(
-                0.0,
-                duration: Duration(milliseconds: 500),
-                curve: Curves.easeInOut,
-              );
-            }); */
+            _scrollController.animateTo(
+              0.0,
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeInOut,
+            );
+                          }); */
                 },
                 child: Icon(Icons.arrow_upward),
               )
@@ -165,12 +167,13 @@ class _HomeViewState extends State<HomeView> {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(children: [
-            /*  ElevatedButton(
+            ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (ctx) => TestPage()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) =>
+                          SpeechScreen() /*VideoTest() TestPage() */));
                 },
-                child: Text("debug")), */
+                child: Text("debug")),
 //main news + headline+recent lists
             CategoryWidget(
               photoModels: phController.Items,

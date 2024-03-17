@@ -84,9 +84,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       color: Color.fromARGB(255, 218, 236, 252),
                     ),
                     child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          padding: EdgeInsets.symmetric(horizontal: 5),
                           child: CircleAvatar(
                             radius: 15,
                             backgroundImage:
@@ -120,9 +121,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       color: Color.fromARGB(255, 218, 236, 252),
                     ),
                     child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          padding: EdgeInsets.symmetric(horizontal: 5),
                           child: CircleAvatar(
                             radius: 15,
                             backgroundImage:

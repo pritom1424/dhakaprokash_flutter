@@ -11,15 +11,15 @@ String dhakaProkashToJson(List<DhakaProkash> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class DhakaProkash {
-  int contentId;
-  int contentType;
-  String imgBgPath;
-  String contentHeading;
+  int? contentId;
+  int? contentType;
+  String? imgBgPath;
+  String? contentHeading;
   dynamic contentSubHeading;
-  String contentDetails;
-  String bnCatName;
-  String catSlug;
-  DateTime createdAt;
+  String? contentDetails;
+  String? bnCatName;
+  String? catSlug;
+  DateTime? createdAt;
   String? subcatSlug;
 
   DhakaProkash({
@@ -57,7 +57,7 @@ class DhakaProkash {
         "content_details": contentDetails,
         "bn_cat_name": bnCatName,
         "cat_slug": catSlug,
-        "created_at": createdAt.toIso8601String(),
+        "created_at": createdAt!.toIso8601String(),
         "subcat_slug": subcatSlug,
       };
 }
