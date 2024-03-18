@@ -38,7 +38,7 @@ class PhotoView extends StatelessWidget {
                               },
                               child: const Text("ReadMore"));
                         } else {
-                          return Text(
+                          return const Text(
                               "You have reached to the end of the page");
                         }
                       }

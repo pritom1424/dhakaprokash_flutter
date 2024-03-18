@@ -5,15 +5,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class CategoryHomeListTile extends StatelessWidget {
+class CategoryListTile extends StatelessWidget {
   final String imagePath, newsTitle, newsDate, newsDescription, categoryName;
-  const CategoryHomeListTile(
+  final double itemHeight;
+
+  const CategoryListTile(
       {super.key,
       required this.imagePath,
       required this.newsTitle,
       required this.newsDescription,
       required this.newsDate,
-      required this.categoryName});
+      required this.categoryName,
+      required this.itemHeight});
 
   @override
   Widget build(BuildContext context) {
@@ -29,57 +32,66 @@ class CategoryHomeListTile extends StatelessWidget {
                 )));
       },
       child: Container(
-        height: scSize.height * 0.2,
+        height: scSize.height * itemHeight,
         width: double.infinity,
         decoration: BoxDecoration(
-          border:
-              const Border(bottom: BorderSide(width: 1, color: Colors.grey)),
-          boxShadow: [
+          border: const Border(
+              bottom: BorderSide(
+                  width: 0.3, color: Color.fromARGB(255, 136, 135, 135))),
+          /* boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.3),
               spreadRadius: 5,
               blurRadius: 7,
               offset: const Offset(0, 3), // changes position of shadow
             ),
-          ],
+          ], */
         ),
 //Category News Row Started
         child: Row(
           children: [
-//Category News Image
+//Category News Descriptions + Date
             Expanded(
+              flex: 5,
               child: Container(
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                  child: Image.network(
-                    imagePath,
-                    fit: BoxFit.cover,
-                    filterQuality: FilterQuality.low,
-                    loadingBuilder: (context, child, loadingProgress) =>
-                        (loadingProgress == null)
-                            ? child
-                            : Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 40),
-                                child: Image.asset(
-                                  "assets/images/dhakaprokash_logo.png",
-                                ),
-                              ),
-                  )),
-            ),
-//Category News Description s+ Date
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.only(right: 5),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       StringLimiter().limitString(newsTitle, 50),
                       style: Theme.of(context).textTheme.headlineMedium,
+                      //  textAlign: TextAlign.justify,
                     ),
-                    Text(newsDate)
+                    Text(
+                      newsDate,
+                      style: Theme.of(context).textTheme.labelSmall,
+                    )
                   ],
+                ),
+              ),
+            ),
+//Category News Image
+            Expanded(
+              flex: 4,
+              child:
+                  // padding: EdgeInsets.all(0),
+                  ClipRRect(
+                child: Image.network(
+                  imagePath,
+                  fit: BoxFit.fill,
+                  filterQuality: FilterQuality.low,
+                  loadingBuilder: (context, child, loadingProgress) =>
+                      (loadingProgress == null)
+                          ? child
+                          : Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Image.asset(
+                                "assets/images/dhakaprokash_logo.png",
+                              ),
+                            ),
                 ),
               ),
             ),

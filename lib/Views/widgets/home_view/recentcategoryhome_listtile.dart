@@ -28,7 +28,7 @@ class RecentCategoryHomeListTile extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           border:
-              const Border(bottom: BorderSide(width: 1, color: Colors.grey)),
+              const Border(bottom: BorderSide(width: 0.3, color: Colors.grey)),
           borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
@@ -79,10 +79,13 @@ class RecentCategoryHomeListTile extends StatelessWidget {
                     Row(children: [
                       Text(
                         newsDate,
-                        style: Theme.of(context).textTheme.labelMedium,
+                        style: Theme.of(context).textTheme.labelSmall,
                       ),
-                      Spacer(),
-                      Text(newsCategory)
+                      /* Spacer(),
+                      Text(
+                        newsCategory,
+                        style: Theme.of(context).textTheme.labelSmall,
+                      ) */
                     ])
                   ],
                 ),
