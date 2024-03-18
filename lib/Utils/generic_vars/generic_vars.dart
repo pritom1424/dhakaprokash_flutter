@@ -23,4 +23,6 @@ class GenericVars {
   };
   static String currentSearchString = "";
   static String currenFontFamily = "NotoSerif-Regular"; //"Raleway";
+
+  static double scrollOffset = 0;
 }

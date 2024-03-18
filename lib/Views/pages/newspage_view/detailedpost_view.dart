@@ -41,8 +41,8 @@ class DetailedPostView extends StatelessWidget {
             children: [
 //main post head tile
               Container(
-                height: GenericVars.scSize.height * 0.6,
-                padding: EdgeInsets.only(bottom: 10),
+                //   height: GenericVars.scSize.height * 0.6,
+
                 child: MainHeadPostTile(
                   url: url,
                   title: title,

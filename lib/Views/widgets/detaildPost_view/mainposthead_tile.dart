@@ -55,7 +55,7 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
   @override
   Widget build(BuildContext context) {
     List<String> tags = DummyTags().categoryTags[widget.categoryname] ?? [];
-    return ListView(physics: NeverScrollableScrollPhysics(), children: [
+    return Column(/* physics: NeverScrollableScrollPhysics(),  */ children: [
       //category name
 
       Container(
@@ -79,7 +79,7 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
           )),
 //title
       Padding(
-        padding: EdgeInsets.symmetric(vertical: 5),
+        padding: const EdgeInsets.symmetric(vertical: 5),
         child: Text(
           widget.title,
           style: Theme.of(context).textTheme.headlineLarge,
