@@ -22,6 +22,7 @@ class PopularNewsView extends StatelessWidget {
   Widget build(BuildContext context) {
     PostController postController = Provider.of<PostController>(context);
     PhotoController photoController = Provider.of<PhotoController>(context);
+
     return FutureBuilder(
         future: photoController.loadAllItems(),
         builder: (ctx, photosnapShot) => (photosnapShot.connectionState ==

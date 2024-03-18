@@ -53,6 +53,7 @@ class _HomeViewState extends State<HomeView> {
 
   List<Widget> _NavViews(PhotoController pcontrol, PostController postControl,
       ScrollController scrollController) {
+    _showScrollToTop = false;
     return [
       homeBaseWidget(postControl, pcontrol, scrollController),
       PopularNewsView(
@@ -79,6 +80,7 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     _scrollController = ScrollController();
     _scrollController.addListener(_updateScrollOffset);
+    _showScrollToTop = false;
 
     // TODO: implement initState
     super.initState();
