@@ -49,6 +49,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplasScreen(),
+
       theme: ThemeData().copyWith(
           textTheme: ThemeData().textTheme.copyWith(
                 titleLarge: TextStyle(

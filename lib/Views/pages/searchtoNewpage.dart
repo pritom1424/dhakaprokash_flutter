@@ -180,8 +180,6 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
                                             child: CategoryWidget(
                                                 photoModels:
                                                     photoController.SearchItems,
-                                                postModels:
-                                                    postController.Items,
                                                 categoryName: "Search",
                                                 didMoreButtonShow: false,
                                                 didHeadSectionShow: false,

@@ -13,7 +13,8 @@ class VideoPlayerWidget extends StatefulWidget {
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   late final YoutubePlayerController _controller = YoutubePlayerController(
       initialVideoId: widget.videoId,
-      flags: YoutubePlayerFlags(autoPlay: true, mute: false, isLive: true));
+      flags: YoutubePlayerFlags(
+          autoPlay: true, mute: false, isLive: false, loop: false));
 
   @override
   void initState() {

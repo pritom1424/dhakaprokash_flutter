@@ -11,11 +11,10 @@ import 'package:provider/provider.dart';
 
 class FavoritesNewsView extends StatelessWidget {
   final PhotoController phController;
-  final PostController pcontroller;
+
   const FavoritesNewsView({
     super.key,
     required this.phController,
-    required this.pcontroller,
   });
 
   @override
@@ -59,7 +58,6 @@ class FavoritesNewsView extends StatelessWidget {
 
                                     CategoryWidget(
                                       photoModels: photoController.Items,
-                                      postModels: postController.Items,
                                       categoryName: "Favorites",
                                       didMoreButtonShow: false,
                                       didHeadSectionShow: false,

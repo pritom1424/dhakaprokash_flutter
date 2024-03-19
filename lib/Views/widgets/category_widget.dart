@@ -15,7 +15,6 @@ import 'package:intl/intl.dart';
 class CategoryWidget extends StatelessWidget {
   final String categoryName;
   final List<PhotoModel> photoModels;
-  final List<PostModel> postModels;
 
   final bool didMoreButtonShow;
   final bool didHeadSectionShow;
@@ -25,7 +24,6 @@ class CategoryWidget extends StatelessWidget {
   const CategoryWidget({
     super.key,
     required this.photoModels,
-    required this.postModels,
     required this.categoryName,
     required this.didMoreButtonShow,
     required this.didHeadSectionShow,
@@ -148,7 +146,8 @@ class CategoryWidget extends StatelessWidget {
                                   children: [
                                     Text(categoryName),
                                     Text(
-                                      "${StringLimiter().limitString(photoModels[0].title, 25)} . . .",
+                                      photoModels[0].title,
+                                      //"${StringLimiter().limitString(photoModels[0].title, 25)}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .headlineMedium,
@@ -171,7 +170,7 @@ class CategoryWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Expanded(
-                            flex: 5,
+                            flex: 5, //(GenericVars.scSize.height<600?3:5)
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
                                 child: Image.network(
@@ -193,7 +192,7 @@ class CategoryWidget extends StatelessWidget {
                                 )),
                           ),
                           Expanded(
-                            flex: 3,
+                            flex: 3, //(GenericVars.scSize.height<600?2:3)
                             child: Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -233,8 +232,8 @@ class CategoryWidget extends StatelessWidget {
                     return CategoryListTile(
                         categoryName: categoryName,
                         imagePath: photoModels[index].url,
-                        newsTitle: photoModels[index].description,
-                        newsDescription: postModels[index].body,
+                        newsTitle: photoModels[index].title,
+                        newsDescription: photoModels[index].description,
                         itemHeight: itemHeight,
                         /*postModels[index].title, */
                         newsDate: DateFormat.yMEd().format(DateTime.now()));

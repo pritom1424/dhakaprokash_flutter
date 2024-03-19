@@ -44,6 +44,7 @@ dependencies:
   speech_to_text: ^6.6.0
   highlight_text: ^1.7.0
   avatar_glow: ^3.0.1
+  flutter_widget_from_html_core: ^0.14.11
 
 
 

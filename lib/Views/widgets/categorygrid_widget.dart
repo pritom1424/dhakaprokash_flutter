@@ -13,7 +13,7 @@ import 'package:intl/intl.dart';
 class CategoryGridWidget extends StatefulWidget {
   final String categoryName;
   final List<PhotoModel> photoModels;
-  final List<PostModel> postModels;
+
   final int itemCount;
 
   final bool didAxisHorizontal;
@@ -26,7 +26,6 @@ class CategoryGridWidget extends StatefulWidget {
   const CategoryGridWidget(
       {super.key,
       required this.photoModels,
-      required this.postModels,
       required this.categoryName,
       required this.itemCount,
       required this.didAxisHorizontal,
@@ -75,8 +74,8 @@ class _CategoryGridWidgetState extends State<CategoryGridWidget> {
           itemBuilder: (ctx, index) => CategoryGridTile(
               categoryName: widget.categoryName,
               imagePath: widget.photoModels[index].url,
-              newsTitle: widget.photoModels[index].description,
-              newsDescription: widget.postModels[index].body,
+              newsTitle: widget.photoModels[index].title,
+              newsDescription: widget.photoModels[index].description,
               cellHeight: widget.cellHeight,
               didDescriptionShow: widget.didDescriptionShow,
               elevation: widget.elevation,

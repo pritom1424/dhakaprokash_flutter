@@ -1,37 +1,29 @@
-import 'dart:ffi';
-
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/photo_controller.dart';
 import 'package:dummy_app/Controllers/post_controller.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-import 'package:dummy_app/Utils/scroll_controller.dart';
-import 'package:dummy_app/Views/pages/app_drawer.dart';
-import 'package:dummy_app/Views/pages/categories_view/sports_view.dart';
+
 import 'package:dummy_app/Views/pages/contact_view/contact_view.dart';
 import 'package:dummy_app/Views/pages/custom_appdrawer.dart';
 import 'package:dummy_app/Views/pages/favorites_view/favoritesnews_view.dart';
-import 'package:dummy_app/Views/pages/latest_view/latestnews_view.dart';
 import 'package:dummy_app/Views/pages/my%20app/myapp_view.dart';
 import 'package:dummy_app/Views/pages/popular_view/popularnews_view.dart';
 import 'package:dummy_app/Views/pages/searchtoNewpage.dart';
-import 'package:dummy_app/Views/pages/test.dart';
-import 'package:dummy_app/Views/pages/video_test.dart';
+
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/category_avatar_widget.dart';
 import 'package:dummy_app/Views/widgets/category_widget%20copy.dart';
 import 'package:dummy_app/Views/widgets/category_widget.dart';
 import 'package:dummy_app/Views/widgets/categorygrid_widget%20copy.dart';
 import 'package:dummy_app/Views/widgets/categorygrid_widget.dart';
-import 'package:dummy_app/Views/widgets/home_view/headimage_widget.dart';
-import 'package:dummy_app/Views/widgets/home_view/recentcategoryhome_widget.dart';
+import 'package:dummy_app/Views/widgets/categoryvideo_widget.dart';
+
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
-import 'package:dummy_app/Views/widgets/speechscreen_widget.dart';
-import 'package:dummy_app/main.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/date_symbol_data_file.dart';
+
 import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
@@ -51,17 +43,17 @@ class _HomeViewState extends State<HomeView> {
     return [homeBaseWidgetCopy(homepageController, scrollController)];
   }
 
-  List<Widget> _NavViews(PhotoController pcontrol, PostController postControl,
-      ScrollController scrollController) {
+  List<Widget> _NavViews(
+      PhotoController pcontrol,
+      ScrollController scrollController,
+      HomepageController homepageController) {
     _showScrollToTop = false;
     return [
-      homeBaseWidget(postControl, pcontrol, scrollController),
+      homeBaseWidget(pcontrol, scrollController, homepageController),
       PopularNewsView(
-        pcontroller: postControl,
         phController: pcontrol,
       ),
       FavoritesNewsView(
-        pcontroller: postControl,
         phController: pcontrol,
       ),
       SearchToNewPage(),
@@ -194,16 +186,18 @@ class _HomeViewState extends State<HomeView> {
                     (photosnapShot.connectionState == ConnectionState.waiting)
                         ? const LoaderWidget()
                         : FutureBuilder(
-                            future: postController.loadAllItems(),
-                            builder: (ctx, postSnapShot) {
-                              return (postSnapShot.connectionState ==
+                            future: homepageController.loadAllItems(),
+                            builder: (ctx, homePageSnapShot) {
+                              return (homePageSnapShot.connectionState ==
                                       ConnectionState.waiting)
                                   ? const LoaderWidget()
-                                  : _NavViews(photoController, postController,
-                                      _scrollController)[_selectedNavIndex];
+                                  : _NavViews(
+                                      photoController,
+                                      _scrollController,
+                                      homepageController)[_selectedNavIndex];
                             }),
               )
-            : _NavViews(photoController, postController, _scrollController)[
+            : _NavViews(photoController, _scrollController, homepageController)[
                 _selectedNavIndex]);
   }
 
@@ -239,14 +233,12 @@ class _HomeViewState extends State<HomeView> {
             CategoryGridWidgetCopy(
               dhakaprokashModels: hcontroller.Items,
               categoryName: "For you",
-              itemCount: 4,
-              cellHeight: 0.4,
-              didAxisHorizontal: true,
-              crossAxisCount: 1,
-              mainAxisSpacing: 10,
+              itemCount: 6,
+              didAxisHorizontal: false,
+              crossAxisCount: 2,
               didDescriptionShow: true,
-              isScroll: true,
-              elevation: 5,
+              isScroll: false,
+              elevation: 0,
             ),
             //tab widget
 
@@ -293,10 +285,8 @@ class _HomeViewState extends State<HomeView> {
               dhakaprokashModels: hcontroller.Items,
               categoryName: "Lifestyle",
               itemCount: 4,
-              cellHeight: 0.4,
               didAxisHorizontal: true,
               crossAxisCount: 1,
-              mainAxisSpacing: 10,
               didDescriptionShow: true,
               isScroll: true,
               elevation: 5,
@@ -324,9 +314,7 @@ class _HomeViewState extends State<HomeView> {
               itemCount: 5,
               didAxisHorizontal: true,
               crossAxisCount: 1,
-              mainAxisSpacing: 10,
               didDescriptionShow: true,
-              cellHeight: 0.4,
               isScroll: true,
               elevation: 5,
             ),
@@ -418,8 +406,10 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Widget homeBaseWidget(PostController pcontroller,
-      PhotoController phController, ScrollController scrollController) {
+  Widget homeBaseWidget(
+      PhotoController phController,
+      ScrollController scrollController,
+      HomepageController homepageController) {
     return Scrollbar(
       thumbVisibility: true,
       controller: scrollController,
@@ -437,20 +427,45 @@ class _HomeViewState extends State<HomeView> {
                           SpeechScreen() /*VideoTest() TestPage() */));
                 },
                 child: Text("debug")), */
+
+            CategoryWidgetCopy(
+                dhakaprokashModels: homepageController.Items,
+                categoryName: 'Recent',
+                didMoreButtonShow: false,
+                didHeadSectionShow: true,
+                listItemLength: 5,
+                didFloat: false),
+
+            CategoryVideoWidget(
+                dhakaprokashModels: homepageController.Items,
+                categoryName: "Video",
+                didMoreButtonShow: false,
+                didHeadSectionShow: true,
+                listItemLength: 5,
+                didFloat: false),
+
+            CategoryGridWidgetCopy(
+              dhakaprokashModels: homepageController.Items.sublist(5),
+              categoryName: "More",
+              itemCount: 6,
+              didAxisHorizontal: false,
+              crossAxisCount: 2,
+              didDescriptionShow: false,
+              isScroll: false,
+              elevation: 0,
+            ),
             //main news + headline+recent lists
-            CategoryWidget(
+            /* CategoryWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "Recent",
               didMoreButtonShow: false,
               didHeadSectionShow: true,
               listItemLength: 10,
               didFloat: false,
-            ),
+            ), */
             //For you
             CategoryGridWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "For you",
               itemCount: 4,
               cellHeight: 0.4,
@@ -466,7 +481,6 @@ class _HomeViewState extends State<HomeView> {
             //sports
             CategoryWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "Sports",
               didMoreButtonShow: true,
               didHeadSectionShow: true,
@@ -476,7 +490,6 @@ class _HomeViewState extends State<HomeView> {
             //national news
             CategoryWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "National News",
               didMoreButtonShow: true,
               didHeadSectionShow: true,
@@ -486,7 +499,6 @@ class _HomeViewState extends State<HomeView> {
             //international news
             CategoryWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "International News",
               didMoreButtonShow: true,
               didHeadSectionShow: true,
@@ -497,7 +509,6 @@ class _HomeViewState extends State<HomeView> {
             //bindon special widget
             CategoryWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "Entertainment",
               didMoreButtonShow: true,
               didHeadSectionShow: true,
@@ -508,7 +519,6 @@ class _HomeViewState extends State<HomeView> {
             //life style
             CategoryGridWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "Lifestyle",
               itemCount: 4,
               cellHeight: 0.4,
@@ -523,14 +533,12 @@ class _HomeViewState extends State<HomeView> {
 
             CategoryAvatatarWidget(
                 photoModels: phController.Items,
-                postModels: pcontroller.Items,
                 categoryName: "Opinion/Editorial",
                 didMoreButtonShow: true,
                 listItemLength: 5),
 
             CategoryWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "Business",
               didMoreButtonShow: true,
               didHeadSectionShow: true,
@@ -540,7 +548,6 @@ class _HomeViewState extends State<HomeView> {
             //video section
             CategoryGridWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "Video",
               itemCount: 5,
               didAxisHorizontal: true,
@@ -554,7 +561,6 @@ class _HomeViewState extends State<HomeView> {
             // education
             CategoryWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "Education",
               didMoreButtonShow: true,
               didHeadSectionShow: true,
@@ -564,7 +570,6 @@ class _HomeViewState extends State<HomeView> {
             //job
             CategoryWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "Job",
               didMoreButtonShow: true,
               didHeadSectionShow: true,
@@ -574,7 +579,6 @@ class _HomeViewState extends State<HomeView> {
             //science
             CategoryWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "Technology",
               didMoreButtonShow: true,
               didHeadSectionShow: true,
@@ -584,7 +588,6 @@ class _HomeViewState extends State<HomeView> {
             // gadgets
             CategoryWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "Gadgets",
               didMoreButtonShow: true,
               didHeadSectionShow: true,
@@ -594,7 +597,6 @@ class _HomeViewState extends State<HomeView> {
             //onno alo
             CategoryWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "Onno ALo",
               didMoreButtonShow: true,
               didHeadSectionShow: true,
@@ -604,7 +606,6 @@ class _HomeViewState extends State<HomeView> {
             //dur porobash
             CategoryWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "Dur Porobash",
               didMoreButtonShow: true,
               didHeadSectionShow: true,
@@ -614,7 +615,6 @@ class _HomeViewState extends State<HomeView> {
             //nagorik shongbad
             CategoryWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "Nagorik News",
               didMoreButtonShow: true,
               didHeadSectionShow: true,
@@ -624,7 +624,6 @@ class _HomeViewState extends State<HomeView> {
             //Religion
             CategoryWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "Religion",
               didMoreButtonShow: true,
               didHeadSectionShow: true,
@@ -634,7 +633,6 @@ class _HomeViewState extends State<HomeView> {
             // Health
             CategoryWidget(
               photoModels: phController.Items,
-              postModels: pcontroller.Items,
               categoryName: "Health",
               didMoreButtonShow: true,
               didHeadSectionShow: true,

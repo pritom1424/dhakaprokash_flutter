@@ -1,9 +1,7 @@
 import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
-import 'package:dummy_app/Views/pages/home_page.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CategoryListTile extends StatelessWidget {
   final String imagePath, newsTitle, newsDate, newsDescription, categoryName;
@@ -52,17 +50,18 @@ class CategoryListTile extends StatelessWidget {
           children: [
 //Category News Descriptions + Date
             Expanded(
-              flex: 5,
+              //flex: 5,
               child: Container(
-                padding: EdgeInsets.only(right: 5),
+                padding: EdgeInsets.only(right: 5, top: 5),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      //newsTitle,
                       StringLimiter().limitString(newsTitle, 50),
                       style: Theme.of(context).textTheme.headlineMedium,
-                      //  textAlign: TextAlign.justify,
+                      textAlign: TextAlign.left,
                     ),
                     Text(
                       newsDate,
@@ -74,13 +73,13 @@ class CategoryListTile extends StatelessWidget {
             ),
 //Category News Image
             Expanded(
-              flex: 4,
+              //  flex: 4,
               child:
                   // padding: EdgeInsets.all(0),
                   ClipRRect(
                 child: Image.network(
                   imagePath,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.fitHeight,
                   filterQuality: FilterQuality.low,
                   loadingBuilder: (context, child, loadingProgress) =>
                       (loadingProgress == null)

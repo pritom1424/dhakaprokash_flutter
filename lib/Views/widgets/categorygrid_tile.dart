@@ -83,7 +83,7 @@ class CategoryGridTile extends StatelessWidget {
                     children: [
                       //title
                       Text(
-                        StringLimiter().limitString(newsTitle, 20),
+                        "${StringLimiter().limitString(newsTitle, 25)}",
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                       //description

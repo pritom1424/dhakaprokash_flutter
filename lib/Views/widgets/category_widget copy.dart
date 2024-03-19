@@ -11,6 +11,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:intl/date_symbol_data_file.dart';
 import 'package:intl/intl.dart';
 
 class CategoryWidgetCopy extends StatelessWidget {
@@ -150,7 +152,8 @@ class CategoryWidgetCopy extends StatelessWidget {
                                   children: [
                                     Text(categoryName),
                                     Text(
-                                      "${StringLimiter().limitString(dhakaprokashModels[0].contentHeading!, 25)} . . .",
+                                      dhakaprokashModels[0].contentHeading!,
+                                      // "${StringLimiter().limitString(dhakaprokashModels[0].contentHeading!, 25)} . . .",
                                       style: Theme.of(context)
                                           .textTheme
                                           .headlineMedium,
@@ -173,12 +176,11 @@ class CategoryWidgetCopy extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Expanded(
-                            flex: 5,
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
                                 child: Image.network(
                                   "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[0].imgBgPath.toString()}",
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.fitWidth,
                                   filterQuality: FilterQuality.low,
                                   loadingBuilder: (context, child,
                                           loadingProgress) =>
@@ -195,7 +197,6 @@ class CategoryWidgetCopy extends StatelessWidget {
                                 )),
                           ),
                           Expanded(
-                            flex: 3,
                             child: Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,9 +208,17 @@ class CategoryWidgetCopy extends StatelessWidget {
                                     style:
                                         Theme.of(context).textTheme.bodyLarge,
                                   ),
-                                  Text(dhakaprokashModels[0].contentDetails!),
+                                  HtmlWidget(
+                                    StringLimiter().limitString(
+                                        dhakaprokashModels[0].contentDetails!,
+                                        120),
+                                    textStyle: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
                                   Text(
-                                    DateFormat.yMEd().format(DateTime.now()),
+                                    DateFormat.yMEd().format(
+                                        dhakaprokashModels[0].createdAt!),
                                     style:
                                         Theme.of(context).textTheme.labelSmall,
                                   )
@@ -224,27 +233,25 @@ class CategoryWidgetCopy extends StatelessWidget {
 
 //part 3//Category News Lists
           Container(
-            height: GenericVars.scSize.height * itemHeight * listItemLength,
+            height:
+                GenericVars.scSize.height * itemHeight * (listItemLength - 1),
             // padding: EdgeInsets.symmetric(horizontal: 15),
             child: ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: listItemLength,
+                itemCount: listItemLength - 1,
                 shrinkWrap: true,
                 itemBuilder: (ctx, index) {
-                  if (index < listItemLength) {
-                    return CategoryListTile(
-                        categoryName: categoryName,
-                        imagePath:
-                            "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index].imgBgPath.toString()}",
-                        newsTitle: dhakaprokashModels[index].contentHeading!,
-                        newsDescription:
-                            dhakaprokashModels[index].contentDetails!,
-                        itemHeight: itemHeight,
-                        /*postModels[index].title, */
-                        newsDate: DateFormat.yMEd().format(DateTime.now()));
-                  } else {
-                    return Container();
-                  }
+                  return CategoryListTile(
+                      categoryName: categoryName,
+                      imagePath:
+                          "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index + 1].imgBgPath.toString()}",
+                      newsTitle: dhakaprokashModels[index + 1].contentHeading!,
+                      newsDescription:
+                          dhakaprokashModels[index + 1].contentDetails!,
+                      itemHeight: itemHeight,
+                      /*postModels[index].title, */
+                      newsDate: DateFormat.yMEd()
+                          .format(dhakaprokashModels[index + 1].createdAt!));
                 }),
           )
         ],
