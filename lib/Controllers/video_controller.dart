@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class VideoProvider with ChangeNotifier {
-  bool _isVideoPause = false;
+  bool _isVideoPause = true;
   String _currentVideoLink = "";
 
   void pauseVideoState() {
