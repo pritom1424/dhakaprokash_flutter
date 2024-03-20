@@ -1,7 +1,9 @@
+import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CategoryListTile extends StatelessWidget {
   final String imagePath, newsTitle, newsDate, newsDescription, categoryName;
@@ -21,6 +23,9 @@ class CategoryListTile extends StatelessWidget {
     Size scSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
+        Provider.of<VideoProvider>(context, listen: false).pauseVideoState();
+        print(
+            "Video Pause: ${Provider.of<VideoProvider>(context, listen: false).IsVideoPause}");
         Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => DetailedPostView(
                   categoryName: categoryName,

@@ -10,14 +10,12 @@ import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MainHeadPostTile extends StatefulWidget {
-  final String url, title, boldDescription, description, categoryname;
+  final String url, title, categoryname;
   final bool isBookmark;
   const MainHeadPostTile({
     super.key,
     required this.url,
     required this.title,
-    required this.boldDescription,
-    required this.description,
     required this.categoryname,
     required this.isBookmark,
   });

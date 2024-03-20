@@ -1,3 +1,5 @@
+import 'package:dummy_app/Controllers/homepage_controller.dart';
+import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Models/dhaka_prokash_data.dart';
 
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
@@ -8,6 +10,7 @@ import 'package:dummy_app/Views/pages/newspage_view/detailedvideopost_view.dart'
 import 'package:dummy_app/Views/widgets/videoplayer_widget.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -21,6 +24,7 @@ class CategoryVideoWidget extends StatelessWidget {
   final bool didHeadSectionShow;
   final int listItemLength;
   final bool didFloat;
+  final bool didPause;
 
   const CategoryVideoWidget({
     super.key,
@@ -30,6 +34,7 @@ class CategoryVideoWidget extends StatelessWidget {
     required this.didHeadSectionShow,
     required this.listItemLength,
     required this.didFloat,
+    required this.didPause,
   });
 
   @override
@@ -89,7 +94,9 @@ class CategoryVideoWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(child: VideoPlayerWidget(videoId: vId!)),
+                  Expanded(
+                      child:
+                          VideoPlayerWidget(isPause: didPause, videoId: vId!)),
                   /*  Expanded(
                     child: Container(
                       child: Column(
@@ -131,6 +138,8 @@ class CategoryVideoWidget extends StatelessWidget {
                                     width: 0.4, color: Colors.grey))),
                         child: ListTile(
                           onTap: () {
+                            Provider.of<VideoProvider>(context, listen: false)
+                                .pauseVideoState();
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

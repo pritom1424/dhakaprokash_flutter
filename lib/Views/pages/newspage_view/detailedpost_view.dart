@@ -51,8 +51,6 @@ class DetailedPostView extends StatelessWidget {
                 child: MainHeadPostTile(
                   url: url,
                   title: title,
-                  description: description,
-                  boldDescription: description,
                   categoryname: categoryName,
                   isBookmark: false,
                 ),
@@ -63,26 +61,6 @@ class DetailedPostView extends StatelessWidget {
                   child: MainArticleTile(
                     articleItems: [
                       HtmlWidget(description),
-                      /*   Text(
-                        description,
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.justify,
-                        // overflow: TextOverflow.visible,
-                      ), */
-                      /*    Image.network(url),
-                      Text(description +
-                          "\n\n" +
-                          description +
-                          description +
-                          "\n\n" +
-                          description +
-                          "\n" +
-                          description +
-                          "\n\n" +
-                          description +
-                          "\n") */
                     ],
                   )),
 //post tag tile

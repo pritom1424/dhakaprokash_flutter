@@ -1,8 +1,10 @@
+import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/videoplayer_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class DetailedVideoPostView extends StatefulWidget {
@@ -19,34 +21,30 @@ class DetailedVideoPostView extends StatefulWidget {
 }
 
 class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
+  late String currentUrl;
   @override
   void initState() {
-    GenericVars.currentPageVideoLink = widget.videoUrl;
-    print("init call");
+    currentUrl = widget.videoUrl;
+    VideoProvider provider = Provider.of<VideoProvider>(context, listen: false);
+    provider.setCurrentVideoLink(widget.videoUrl);
     // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    /*  Provider.of<VideoProvider>(context, listen: false)
+        .CurrentVideoLink(videoUrl); */
+
     double itemHeight = 0.09;
     int listItemLength = 3;
-    String currentURl = GenericVars.currentPageVideoLink;
-    //print("youtube url: ${GenericVars.currentPageVideoLink}");
-/*     List<Map<String, String>> currentList =
-        GenericVars.getVideoData.sublist(listItemLength + 1); */
-
-    /* currentList.insert(
-        currentList.indexWhere(
-            (element) => element['url'] == GenericVars.currentPageVideoLink),
-        currentList[currentList.length]); */
     return Scaffold(
       appBar: AppbarDefault(),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   border: Border(
                       bottom: BorderSide(
                           width: 0.3,
@@ -59,9 +57,24 @@ class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
+//video player
                       child: VideoPlayerWidget(
-                          videoId: YoutubePlayer.convertUrlToId(currentURl)!)),
-                  SizedBox(
+                          isPause: false,
+                          videoId: YoutubePlayer.convertUrlToId(
+                              Provider.of<VideoProvider>(context)
+                                  .CurrentVideoLink)!)
+
+                      /* Consumer<VideoProvider>(
+                      builder: (ctx, snap, ch) {
+                        print("current video link ${snap.CurrentVideoLink}");
+                        return VideoPlayerWidget(
+                            isPause: false,
+                            videoId: YoutubePlayer.convertUrlToId(
+                                snap.CurrentVideoLink)!);
+                      },
+                    ), */
+                      ),
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
@@ -75,34 +88,33 @@ class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
                           listItemLength,
                           (index) => Container(
                                 height: GenericVars.scSize.height * itemHeight,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     border: Border(
                                         top: BorderSide(
                                             width: 0.4, color: Colors.grey))),
+//List Tile Started
                                 child: ListTile(
                                   onTap: () {
-                                    GenericVars.currentPageVideoLink =
-                                        GenericVars.getVideoData[index + 1]
-                                            ['url']!;
-                                    setState(() {});
+                                    Provider.of<VideoProvider>(context,
+                                            listen: false)
+                                        .setCurrentVideoLink(GenericVars
+                                            .getVideoData[index + 1]['url']!);
                                   },
                                   contentPadding:
                                       EdgeInsets.symmetric(vertical: 2),
-                                  leading: CircleAvatar(
+                                  leading: const CircleAvatar(
                                     backgroundImage: AssetImage(
                                         "assets/images/video_play_icon.png"),
                                     radius: 20,
                                   ),
-                                  title: Expanded(
-                                    child: Container(
-                                      child: Text(
-                                        GenericVars.getVideoData[index + 1]
-                                            ['title']!,
-                                        softWrap: true,
-                                      ),
+                                  title: Container(
+                                    child: Text(
+                                      GenericVars.getVideoData[index + 1]
+                                          ['title']!,
+                                      softWrap: true,
                                     ),
                                   ),
-                                  titleTextStyle: TextStyle(
+                                  titleTextStyle: const TextStyle(
                                       fontSize: 20,
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal),

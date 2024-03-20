@@ -1,3 +1,5 @@
+import 'package:dummy_app/Controllers/homepage_controller.dart';
+import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Models/dhaka_prokash_data.dart';
 import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
@@ -10,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class CategoryGridWidgetCopy extends StatefulWidget {
   final String categoryName;
@@ -94,6 +97,8 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetCopy> {
 
           GestureDetector(
             onTap: () {
+              Provider.of<VideoProvider>(context, listen: false)
+                  .pauseVideoState();
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (ctx) =>
                       CategoryView(categoryName: widget.categoryName)));

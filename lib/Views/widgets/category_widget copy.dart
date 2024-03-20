@@ -1,3 +1,5 @@
+import 'package:dummy_app/Controllers/homepage_controller.dart';
+import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Models/dhaka_prokash_data.dart';
 import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
@@ -14,6 +16,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:intl/date_symbol_data_file.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class CategoryWidgetCopy extends StatelessWidget {
   final String categoryName;
@@ -81,6 +84,8 @@ class CategoryWidgetCopy extends StatelessWidget {
           if (didHeadSectionShow)
             GestureDetector(
               onTap: () {
+                Provider.of<VideoProvider>(context, listen: false)
+                    .pauseVideoState();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
                           categoryName: categoryName,

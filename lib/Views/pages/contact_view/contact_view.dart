@@ -111,7 +111,7 @@ class ContactView extends StatelessWidget {
                       launchLink(websiteSchema, 'https://dhakaprokash24.com');
                     },
                     child: Text(
-                      'newsroom@dhakaprokash24.com',
+                      'dhakaprokash24.com',
                       style: TextStyle(
                           color: const Color.fromARGB(255, 24, 110, 180)),
                     )),

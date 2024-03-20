@@ -13,7 +13,7 @@ class VideoTest extends StatelessWidget {
         "https://www.youtube.com/watch?v=HKvtByXSNG4");
     return Scaffold(
       // appBar: AppbarDefault(),
-      body: Center(child: VideoPlayerWidget(videoId: vId!)),
+      body: Center(child: Text("")), //VideoPlayerWidget(videoId: vId!)
     );
   }
 }

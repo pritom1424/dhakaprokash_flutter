@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppbarDefault extends StatelessWidget implements PreferredSize {
   final double widthSize;
-  const AppbarDefault([this.widthSize = 0.35]);
+  const AppbarDefault([this.widthSize = 0.45]);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class AppbarDefault extends StatelessWidget implements PreferredSize {
         width: GenericVars.scSize.width * widthSize,
         child: Image.asset(
           "assets/images/dhakaprokash_logo.png",
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.fill,
         ),
       ),
       actions: [

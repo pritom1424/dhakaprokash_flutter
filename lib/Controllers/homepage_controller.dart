@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 class HomepageController with ChangeNotifier {
   List<DhakaProkash> _items = [];
+
   Future<List<DhakaProkash>> loadAllItems() async {
     final url = Uri.parse(
         "https://dhakaprokash24.com/api/prismaapi/home/specialtopcontent");

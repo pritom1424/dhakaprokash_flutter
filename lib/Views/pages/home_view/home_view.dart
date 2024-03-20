@@ -1,6 +1,7 @@
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/photo_controller.dart';
 import 'package:dummy_app/Controllers/post_controller.dart';
+import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 
 import 'package:dummy_app/Views/pages/contact_view/contact_view.dart';
@@ -38,10 +39,10 @@ class _HomeViewState extends State<HomeView> {
   bool _showScrollToTop = false;
   late ScrollController _scrollController;
   final ValueNotifier<double> _scrollOffset = ValueNotifier<double>(0.0);
-  List<Widget> _navViewsNew(HomepageController homepageController,
-      ScrollController scrollController) {
-    return [homeBaseWidgetCopy(homepageController, scrollController)];
-  }
+  // List<Widget> _navViewsNew(HomepageController homepageController,
+  //     ScrollController scrollController) {
+  //   return [homeBaseWidgetCopy(homepageController, scrollController)];
+  // }
 
   List<Widget> _NavViews(
       PhotoController pcontrol,
@@ -97,7 +98,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     GenericVars.scSize = MediaQuery.of(context).size;
-    PostController postController = Provider.of<PostController>(context);
+    //PostController postController = Provider.of<PostController>(context);
     PhotoController photoController = Provider.of<PhotoController>(context);
     HomepageController homepageController =
         Provider.of<HomepageController>(context);
@@ -201,211 +202,6 @@ class _HomeViewState extends State<HomeView> {
                 _selectedNavIndex]);
   }
 
-  Widget homeBaseWidgetCopy(
-      HomepageController hcontroller, ScrollController scontroller) {
-    return Scrollbar(
-      thumbVisibility: true,
-      controller: scontroller,
-      //main section started
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        controller: scontroller,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(children: [
-            /*  ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) =>
-                          SpeechScreen() /*VideoTest() TestPage() */));
-                },
-                child: Text("debug")), */
-            //main news + headline+recent lists
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Recent",
-              didMoreButtonShow: false,
-              didHeadSectionShow: true,
-              listItemLength: 10,
-              didFloat: false,
-            ),
-            //For you
-            CategoryGridWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "For you",
-              itemCount: 6,
-              didAxisHorizontal: false,
-              crossAxisCount: 2,
-              didDescriptionShow: true,
-              isScroll: false,
-              elevation: 0,
-            ),
-            //tab widget
-
-            //sports
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Sports",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: false,
-            ),
-            //national news
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "National News",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: false,
-            ),
-            //international news
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "International News",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: false,
-            ),
-
-            //bindon special widget
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Entertainment",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: true,
-            ),
-
-            //life style
-            CategoryGridWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Lifestyle",
-              itemCount: 4,
-              didAxisHorizontal: true,
-              crossAxisCount: 1,
-              didDescriptionShow: true,
-              isScroll: true,
-              elevation: 5,
-            ),
-            //motamot special widget
-
-            /*   CategoryAvatatarWidgetCopy(
-                 dhakaprokashModels: hcontroller.Items,
-                categoryName: "Opinion/Editorial",
-                didMoreButtonShow: true,
-                listItemLength: 5), */
-
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Business",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ),
-            //video section
-            CategoryGridWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Video",
-              itemCount: 5,
-              didAxisHorizontal: true,
-              crossAxisCount: 1,
-              didDescriptionShow: true,
-              isScroll: true,
-              elevation: 5,
-            ),
-            // education
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Education",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //job
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Job",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //science
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Technology",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            // gadgets
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Gadgets",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //onno alo
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Onno ALo",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ),
-            //dur porobash
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Dur Porobash",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //nagorik shongbad
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Nagorik News",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //Religion
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Religion",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ),
-            // Health
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Health",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ),
-            HomePageFooter()
-          ]),
-        ),
-      ),
-    );
-  }
-
   Widget homeBaseWidget(
       PhotoController phController,
       ScrollController scrollController,
@@ -437,6 +233,7 @@ class _HomeViewState extends State<HomeView> {
                 didFloat: false),
 
             CategoryVideoWidget(
+                didPause: Provider.of<VideoProvider>(context).IsVideoPause,
                 dhakaprokashModels: homepageController.Items,
                 categoryName: "Video",
                 didMoreButtonShow: false,
@@ -646,3 +443,211 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 }
+
+
+
+
+ /* Widget homeBaseWidgetCopy(
+      HomepageController hcontroller, ScrollController scontroller) {
+    return Scrollbar(
+      thumbVisibility: true,
+      controller: scontroller,
+      //main section started
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        controller: scontroller,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(children: [
+            /*  ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) =>
+                          SpeechScreen() /*VideoTest() TestPage() */));
+                },
+                child: Text("debug")), */
+            //main news + headline+recent lists
+            CategoryWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "Recent",
+              didMoreButtonShow: false,
+              didHeadSectionShow: true,
+              listItemLength: 10,
+              didFloat: false,
+            ),
+            //For you
+            CategoryGridWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "For you",
+              itemCount: 6,
+              didAxisHorizontal: false,
+              crossAxisCount: 2,
+              didDescriptionShow: true,
+              isScroll: false,
+              elevation: 0,
+            ),
+            //tab widget
+
+            //sports
+            CategoryWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "Sports",
+              didMoreButtonShow: true,
+              didHeadSectionShow: true,
+              listItemLength: 4,
+              didFloat: false,
+            ),
+            //national news
+            CategoryWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "National News",
+              didMoreButtonShow: true,
+              didHeadSectionShow: true,
+              listItemLength: 4,
+              didFloat: false,
+            ),
+            //international news
+            CategoryWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "International News",
+              didMoreButtonShow: true,
+              didHeadSectionShow: true,
+              listItemLength: 4,
+              didFloat: false,
+            ),
+
+            //bindon special widget
+            CategoryWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "Entertainment",
+              didMoreButtonShow: true,
+              didHeadSectionShow: true,
+              listItemLength: 4,
+              didFloat: true,
+            ),
+
+            //life style
+            CategoryGridWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "Lifestyle",
+              itemCount: 4,
+              didAxisHorizontal: true,
+              crossAxisCount: 1,
+              didDescriptionShow: true,
+              isScroll: true,
+              elevation: 5,
+            ),
+            //motamot special widget
+
+            /*   CategoryAvatatarWidgetCopy(
+                 dhakaprokashModels: hcontroller.Items,
+                categoryName: "Opinion/Editorial",
+                didMoreButtonShow: true,
+                listItemLength: 5), */
+
+            CategoryWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "Business",
+              didMoreButtonShow: true,
+              didHeadSectionShow: true,
+              listItemLength: 3,
+              didFloat: false,
+            ),
+            //video section
+            CategoryGridWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "Video",
+              itemCount: 5,
+              didAxisHorizontal: true,
+              crossAxisCount: 1,
+              didDescriptionShow: true,
+              isScroll: true,
+              elevation: 5,
+            ),
+            // education
+            CategoryWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "Education",
+              didMoreButtonShow: true,
+              didHeadSectionShow: true,
+              listItemLength: 2,
+              didFloat: false,
+            ),
+            //job
+            CategoryWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "Job",
+              didMoreButtonShow: true,
+              didHeadSectionShow: true,
+              listItemLength: 2,
+              didFloat: false,
+            ),
+            //science
+            CategoryWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "Technology",
+              didMoreButtonShow: true,
+              didHeadSectionShow: true,
+              listItemLength: 2,
+              didFloat: false,
+            ),
+            // gadgets
+            CategoryWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "Gadgets",
+              didMoreButtonShow: true,
+              didHeadSectionShow: true,
+              listItemLength: 2,
+              didFloat: false,
+            ),
+            //onno alo
+            CategoryWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "Onno ALo",
+              didMoreButtonShow: true,
+              didHeadSectionShow: true,
+              listItemLength: 3,
+              didFloat: false,
+            ),
+            //dur porobash
+            CategoryWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "Dur Porobash",
+              didMoreButtonShow: true,
+              didHeadSectionShow: true,
+              listItemLength: 2,
+              didFloat: false,
+            ),
+            //nagorik shongbad
+            CategoryWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "Nagorik News",
+              didMoreButtonShow: true,
+              didHeadSectionShow: true,
+              listItemLength: 2,
+              didFloat: false,
+            ),
+            //Religion
+            CategoryWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "Religion",
+              didMoreButtonShow: true,
+              didHeadSectionShow: true,
+              listItemLength: 3,
+              didFloat: false,
+            ),
+            // Health
+            CategoryWidgetCopy(
+              dhakaprokashModels: hcontroller.Items,
+              categoryName: "Health",
+              didMoreButtonShow: true,
+              didHeadSectionShow: true,
+              listItemLength: 3,
+              didFloat: false,
+            ),
+            HomePageFooter()
+          ]),
+        ),
+      ),
+    );
+  } */
