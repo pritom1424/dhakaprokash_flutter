@@ -1,3 +1,4 @@
+import 'package:dummy_app/Views/widgets/categorylist_tile.dart';
 import 'package:flutter/material.dart';
 
 class GenericVars {
@@ -55,5 +56,7 @@ class GenericVars {
       "url": "https://youtu.be/mtNSv33biI8?si=dFrZRufrmjFSSlOl"
     },
   ];
+
+  static List<CategoryListTile> favoritesList = [];
 }
 //পর্যটন

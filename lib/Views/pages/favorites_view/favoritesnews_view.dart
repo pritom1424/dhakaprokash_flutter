@@ -1,5 +1,6 @@
 import 'package:dummy_app/Controllers/photo_controller.dart';
 import 'package:dummy_app/Controllers/post_controller.dart';
+import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/category_widget.dart';
@@ -21,56 +22,55 @@ class FavoritesNewsView extends StatelessWidget {
   Widget build(BuildContext context) {
     PostController postController = Provider.of<PostController>(context);
     PhotoController photoController = Provider.of<PhotoController>(context);
-    return FutureBuilder(
-        future: photoController.loadAllItems(),
-        builder: (ctx, photosnapShot) => (photosnapShot.connectionState ==
-                ConnectionState.waiting)
-            ? LoaderWidget()
-            : FutureBuilder(
-                future: postController.loadAllItems(),
-                builder: (ctx, postSnapShot) {
-                  return (postSnapShot.connectionState ==
-                          ConnectionState.waiting)
-                      ? LoaderWidget()
-                      : Scrollbar(
-                          thumbVisibility: true,
-                          child: CustomScrollView(
-                            slivers: [
-                              SliverAppBar(
-                                pinned: true,
-                                title: Text(
-                                  "Favorites",
-                                  style: TextStyle(
-                                      fontSize: Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium!
-                                          .fontSize,
-                                      color: Colors.blue),
-                                ),
-                                automaticallyImplyLeading: false,
-                              ),
-                              SliverList(
-                                  delegate: SliverChildListDelegate([
-                                Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 15),
-                                  child: Column(children: [
-                                    //Category News List
-
-                                    CategoryWidget(
-                                      photoModels: photoController.Items,
-                                      categoryName: "Favorites",
-                                      didMoreButtonShow: false,
-                                      didHeadSectionShow: false,
-                                      listItemLength: 8,
-                                      didFloat: false,
-                                    ),
-                                    HomePageFooter()
-                                  ]),
-                                )
-                              ]))
-                            ],
-                          ));
-                }));
+    return Scrollbar(
+        thumbVisibility: true,
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              pinned: true,
+              title: Text(
+                "Favorites",
+                style: TextStyle(
+                    fontSize:
+                        Theme.of(context).textTheme.headlineMedium!.fontSize,
+                    color: Colors.blue),
+              ),
+              automaticallyImplyLeading: false,
+            ),
+            SliverList(
+                delegate: SliverChildListDelegate([
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: (GenericVars.favoritesList.isNotEmpty)
+                    ? Column(
+                        children: List.generate(
+                            GenericVars.favoritesList.length,
+                            (index) => GenericVars.favoritesList[
+                                index]) /* [
+                          //Category News List
+                         
+        
+                          /* CategoryWidget(
+                            photoModels: photoController.Items,
+                            categoryName: "Favorites",
+                            didMoreButtonShow: false,
+                            didHeadSectionShow: false,
+                            listItemLength: 8,
+                            didFloat: false,
+                          ), */
+                          HomePageFooter()
+                        ] */
+                        )
+                    : Center(
+                        child: Text(
+                          "no favorites",
+                          style: TextStyle(color: Colors.grey, fontSize: 18),
+                        ),
+                      ),
+              )
+            ]))
+          ],
+        ));
   }
 }
 /* */

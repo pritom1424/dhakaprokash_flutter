@@ -1,3 +1,4 @@
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/photo_controller.dart';
 import 'package:dummy_app/Controllers/post_controller.dart';
@@ -21,6 +22,7 @@ import 'package:dummy_app/Views/widgets/categoryvideo_widget.dart';
 
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
+import 'package:dummy_app/Views/widgets/navbar_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_file.dart';
@@ -39,6 +41,7 @@ class _HomeViewState extends State<HomeView> {
   bool _showScrollToTop = false;
   late ScrollController _scrollController;
   final ValueNotifier<double> _scrollOffset = ValueNotifier<double>(0.0);
+  bool didNavButtonGlow = false;
   // List<Widget> _navViewsNew(HomepageController homepageController,
   //     ScrollController scrollController) {
   //   return [homeBaseWidgetCopy(homepageController, scrollController)];
@@ -66,6 +69,7 @@ class _HomeViewState extends State<HomeView> {
   void _onNavigationTap(int index) {
     setState(() {
       _selectedNavIndex = index;
+      didNavButtonGlow = true;
     });
   }
 
@@ -111,7 +115,7 @@ class _HomeViewState extends State<HomeView> {
                   visible: _showScrollToTop,
                   child: FloatingActionButton(
                     onPressed: () {
-                      // Scroll to the top logic here
+// Scroll to the top logic here
                       _scrollController.animateTo(
                         0.0,
                         duration: Duration(milliseconds: 500),
@@ -130,42 +134,185 @@ class _HomeViewState extends State<HomeView> {
         drawer: CustomAppDrawer(), //AppDrawer(),
 
 //navigation bar
-        bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _selectedNavIndex,
-            onTap: _onNavigationTap,
-            type: BottomNavigationBarType.fixed,
-            selectedItemColor: Colors.green,
-            unselectedItemColor: Colors.blue,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
+        bottomNavigationBar: NavBarWidget(
+          currentIndex: _selectedNavIndex,
+          onTap: _onNavigationTap,
+        ) /* Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.6),
+                    spreadRadius: 5,
+                    blurRadius: 8,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+                color: Color.fromARGB(255, 255, 255, 255),
+                borderRadius: BorderRadius.all(Radius.circular(
+                    10)) /* BorderRadius.only(
+                    topLeft: Radius.circular(30), topRight: Radius.circular(30)) */
                 ),
-                label: 'home',
-              ),
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.trending_up,
+            child: BottomNavigationBar(
+                iconSize: 20,
+                selectedFontSize: 12,
+                unselectedFontSize: 10,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                currentIndex: _selectedNavIndex,
+                onTap: _onNavigationTap,
+                type: BottomNavigationBarType.fixed,
+                selectedItemColor: Colors.deepPurple,
+                unselectedItemColor: Colors.black,
+                unselectedLabelStyle: TextStyle(color: Colors.white),
+                unselectedIconTheme: IconThemeData(color: Colors.white),
+                selectedIconTheme: IconThemeData(color: Colors.yellow),
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Container(
+                      decoration: BoxDecoration(
+                          color: Color(0xFF1D6ECC),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.3),
+                              spreadRadius: 3,
+                              blurRadius: 5,
+                              offset: const Offset(
+                                  0, 3), // changes position of shadow
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(20)),
+                      child: const Padding(
+                        padding: EdgeInsets.all(6),
+                        child: Icon(
+                          Icons.home,
+                        ),
+                      ),
+                    ),
+                    label: 'home',
                   ),
-                  label: 'popular'),
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.star,
-                  ),
-                  label: 'favorites'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.search), label: 'search'),
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.contact_page,
-                  ),
-                  label: 'Contact'),
-              BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.login_sharp,
-                  ),
-                  label: 'My App'),
-            ]),
+                  BottomNavigationBarItem(
+                      icon: AvatarGlow(
+                        duration: (didNavButtonGlow && _selectedNavIndex == 1)
+                            ? Duration(milliseconds: 800)
+                            : Duration(seconds: 0),
+                        glowCount: 2,
+                        animate: (didNavButtonGlow && _selectedNavIndex == 1),
+                        repeat: false,
+                        glowColor: Colors.blue,
+                        curve: Curves.ease,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Color(0xFF1D6ECC),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 3,
+                                  blurRadius: 5,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Padding(
+                            padding: EdgeInsets.all(6.0),
+                            child: Icon(
+                              Icons.trending_up,
+                            ),
+                          ),
+                        ),
+                      ),
+                      label: 'popular'),
+                  BottomNavigationBarItem(
+                      icon: Container(
+                        decoration: BoxDecoration(
+                            color: Color(0xFF1D6ECC),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 3,
+                                blurRadius: 5,
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(20)),
+                        child: const Padding(
+                          padding: EdgeInsets.all(6.0),
+                          child: Icon(
+                            Icons.star,
+                          ),
+                        ),
+                      ),
+                      label: 'favorites'),
+                  BottomNavigationBarItem(
+                      icon: Container(
+                          decoration: BoxDecoration(
+                              color: Color(0xFF1D6ECC),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 3,
+                                  blurRadius: 5,
+                                  offset: const Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(20)),
+                          child: const Padding(
+                            padding: EdgeInsets.all(6.0),
+                            child: Icon(Icons.search),
+                          )),
+                      label: 'search'),
+                  BottomNavigationBarItem(
+                      icon: Container(
+                        decoration: BoxDecoration(
+                            color: Color(0xFF1D6ECC),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 3,
+                                blurRadius: 5,
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(20)),
+                        child: const Padding(
+                          padding: EdgeInsets.all(6.0),
+                          child: Icon(
+                            Icons.contact_page,
+                          ),
+                        ),
+                      ),
+                      label: 'Contact'),
+                  BottomNavigationBarItem(
+                      icon: Container(
+                        decoration: BoxDecoration(
+                            color: Color(0xFF1D6ECC),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 3,
+                                blurRadius: 5,
+                                offset:
+                                    Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                            borderRadius: BorderRadius.circular(20)),
+                        child: const Padding(
+                          padding: EdgeInsets.all(6.0),
+                          child: Icon(
+                            Icons.login_sharp,
+                          ),
+                        ),
+                      ),
+                      label: 'My App'),
+                ]),
+          ),
+        ) */
+        ,
         body: (_selectedNavIndex != 3)
             ? /* FutureBuilder(
                 future: homepageController.loadAllItems(),

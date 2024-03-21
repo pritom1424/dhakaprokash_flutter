@@ -20,13 +20,14 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailedPostView extends StatelessWidget {
-  final String url, title, description, categoryName;
+  final String url, title, description, categoryName, date;
   const DetailedPostView(
       {super.key,
       required this.url,
       required this.title,
       required this.description,
-      required this.categoryName});
+      required this.categoryName,
+      required this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +50,12 @@ class DetailedPostView extends StatelessWidget {
                 //   height: GenericVars.scSize.height * 0.6,
 
                 child: MainHeadPostTile(
+                  date: date,
                   url: url,
                   title: title,
                   categoryname: categoryName,
                   isBookmark: false,
+                  description: description,
                 ),
               ),
 //main post decription

@@ -45,9 +45,19 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     super.dispose();
   }
 
+  void ChangeVideo() {
+    _controller.pause();
+
+    _controller.load(widget.videoId);
+  }
+
   @override
   Widget build(BuildContext context) {
     print("youtube video id: ${widget.videoId}");
+    print("youtube video id init: ${_controller.initialVideoId}");
+    if (widget.videoId != _controller.initialVideoId) {
+      ChangeVideo();
+    }
     return YoutubePlayer(
       onReady: () {
         (widget.isPause) ? _controller.pause() : _controller.play();

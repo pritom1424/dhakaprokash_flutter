@@ -88,6 +88,8 @@ class CategoryWidgetCopy extends StatelessWidget {
                     .pauseVideoState();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
+                          date: DateFormat.yMEd()
+                              .format(dhakaprokashModels[0].createdAt!),
                           categoryName: categoryName,
                           url:
                               "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[0].imgBgPath.toString()}",

@@ -28,6 +28,7 @@ class CategoryListTile extends StatelessWidget {
             "Video Pause: ${Provider.of<VideoProvider>(context, listen: false).IsVideoPause}");
         Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => DetailedPostView(
+                  date: newsDate,
                   categoryName: categoryName,
                   url: imagePath,
                   title: newsTitle,

@@ -33,6 +33,7 @@ class CategoryGridTile extends StatelessWidget {
         Provider.of<VideoProvider>(context, listen: false).pauseVideoState();
         Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => DetailedPostView(
+                  date: newsDate,
                   categoryName: categoryName,
                   url: imagePath,
                   title: newsTitle,

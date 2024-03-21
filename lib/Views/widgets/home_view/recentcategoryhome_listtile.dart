@@ -3,6 +3,7 @@ import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
 import 'package:dummy_app/Views/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 class RecentCategoryHomeListTile extends StatelessWidget {
   final String imagePath, newsTitle, newsDate, newsCategory, newsDescription;
@@ -24,6 +25,7 @@ class RecentCategoryHomeListTile extends StatelessWidget {
                 title: newsTitle,
                 description: newsDescription,
                 url: imagePath,
+                date: DateFormat.yMEd().format(DateTime.now()),
               ))),
       child: Container(
         decoration: BoxDecoration(

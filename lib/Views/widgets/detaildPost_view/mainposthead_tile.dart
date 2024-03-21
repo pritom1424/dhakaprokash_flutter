@@ -1,6 +1,7 @@
 import 'package:dummy_app/Utils/dummy_tags.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
+import 'package:dummy_app/Views/widgets/categorylist_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/deskview_bar.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/followpost_bar.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/posttag_tile.dart';
@@ -10,7 +11,7 @@ import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MainHeadPostTile extends StatefulWidget {
-  final String url, title, categoryname;
+  final String url, title, categoryname, description, date;
   final bool isBookmark;
   const MainHeadPostTile({
     super.key,
@@ -18,6 +19,8 @@ class MainHeadPostTile extends StatefulWidget {
     required this.title,
     required this.categoryname,
     required this.isBookmark,
+    required this.description,
+    required this.date,
   });
 
   @override
@@ -109,6 +112,16 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
                     onPressed: () {
                       setState(() {
                         currentBookmark = !currentBookmark;
+                        (currentBookmark)
+                            ? GenericVars.favoritesList.add(CategoryListTile(
+                                imagePath: widget.url,
+                                newsTitle: widget.title,
+                                newsDescription: widget.description,
+                                newsDate: widget.date,
+                                categoryName: widget.categoryname,
+                                itemHeight: 0.17))
+                            : GenericVars.favoritesList.removeWhere(
+                                (element) => element.imagePath == widget.url);
                       });
                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

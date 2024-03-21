@@ -78,6 +78,7 @@ class CategoryWidget extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
+                          date: DateFormat.yMEd().format(DateTime.now()),
                           categoryName: categoryName,
                           url: photoModels[0].url,
                           title: photoModels[0].title,
