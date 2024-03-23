@@ -95,7 +95,7 @@ class CategoryGridTile extends StatelessWidget {
                       if (didDescriptionShow)
                         Text(StringLimiter().limitString(newsTitle, 80)),
                       Text(
-                        DateFormat.yMEd().format(DateTime.now()),
+                        newsDate,
                         style: Theme.of(context).textTheme.labelSmall,
                       )
                     ],

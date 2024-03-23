@@ -4,6 +4,8 @@ import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/videoplayer_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -66,43 +68,90 @@ class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
     return Scaffold(
       appBar: AppbarDefault(),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                          width: 0.3,
-                          color: Color.fromARGB(255, 136, 135, 135)))),
-              width: double.infinity,
-              height: GenericVars.scSize.height * 0.7,
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-//video player
-                      child: VideoPlayerWidget(
-                          isPause: false,
-                          videoId: YoutubePlayer.convertUrlToId(
-                              Provider.of<VideoProvider>(context)
-                                  .CurrentVideoLink)!)
-
-                      /* Consumer<VideoProvider>(
-                      builder: (ctx, snap, ch) {
-                        print("current video link ${snap.CurrentVideoLink}");
-                        return VideoPlayerWidget(
-                            isPause: false,
-                            videoId: YoutubePlayer.convertUrlToId(
-                                snap.CurrentVideoLink)!);
-                      },
-                    ), */
-                      ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
+        child: Container(
+          decoration: const BoxDecoration(
+              border: Border(
+                  bottom: BorderSide(
+                      width: 0.3, color: Color.fromARGB(255, 136, 135, 135)))),
+          width: double.infinity,
+          height: GenericVars.scSize.height * 0.7,
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                  //video player
+                  child: VideoPlayerWidget(
+                      isPause: false,
+                      videoId: YoutubePlayer.convertUrlToId(
+                          Provider.of<VideoProvider>(context)
+                              .CurrentVideoLink)!)),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Text(
+                  Provider.of<VideoProvider>(context).currentTitle,
+                  // widget.videoTitle,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ),
+              Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    DateFormat.yMEd().format(DateTime.now()),
+                    style: TextStyle(color: Colors.grey),
+                  )),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                height:
+                    GenericVars.scSize.height * itemHeight * (listItemLength),
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: List.generate(
+                      listItemLength,
+                      (index) => Container(
+                            height: GenericVars.scSize.height * itemHeight,
+                            decoration: const BoxDecoration(
+                                border: Border(
+                                    top: BorderSide(
+                                        width: 0.4, color: Colors.grey))),
+                            //List Tile Started
+                            child: ListTile(
+                              onTap: () {
+                                Provider.of<VideoProvider>(context,
+                                        listen: false)
+                                    .setCurrentVideoLink(
+                                        currentContainer[index]['url']!);
+                                currentContainer = currentElementList(
+                                    currentContainer[index]['url']!, 3);
+                              },
+                              contentPadding: EdgeInsets.symmetric(vertical: 2),
+                              leading: const CircleAvatar(
+                                backgroundImage: AssetImage(
+                                    "assets/images/video_play_icon.png"),
+                                radius: 20,
+                              ),
+                              title: Container(
+                                child: Text(
+                                  currentContainer[index]['title']!,
+                                  softWrap: true,
+                                ),
+                              ),
+                              titleTextStyle: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontFamily: GenericVars.currenFontFamily),
+                            ),
+                          )),
+                ),
+              ),
+              /* Consumer<VideoProvider>(
+                builder: (ctx, snapshot, ch) {
+                  return Container(
                     height: GenericVars.scSize.height *
                         itemHeight *
                         (listItemLength),
@@ -112,20 +161,28 @@ class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
                       children: List.generate(
                           listItemLength,
                           (index) => Container(
-                                height: GenericVars.scSize.height * itemHeight,
+                                height:
+                                    GenericVars.scSize.height * itemHeight,
                                 decoration: const BoxDecoration(
                                     border: Border(
                                         top: BorderSide(
-                                            width: 0.4, color: Colors.grey))),
+                                            width: 0.4,
+                                            color: Colors.grey))),
                                 //List Tile Started
                                 child: ListTile(
                                   onTap: () {
                                     Provider.of<VideoProvider>(context,
                                             listen: false)
                                         .setCurrentVideoLink(
-                                            currentContainer[index]['url']!);
-                                    currentContainer = currentElementList(
-                                        currentContainer[index]['url']!, 3);
+                                            currentContainer[index]
+                                                ['url']!);
+                                    currentContainer =
+                                        GenericVars.getVideoData;
+                                    currentContainer.removeWhere(
+                                        (element) =>
+                                            element['url'] ==
+                                            currentContainer[index]
+                                                ['url']!);
                                   },
                                   contentPadding:
                                       EdgeInsets.symmetric(vertical: 2),
@@ -147,90 +204,32 @@ class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
                                 ),
                               )),
                     ),
+                  );
+                },
+              ) */
+              /*  Expanded(
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          dhakaprokashModels[0].contentHeading!,
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
+                        Text(StringLimiter().limitString(
+                            dhakaprokashModels[0].contentDetails!, 97)),
+                        Text(
+                          DateFormat.yMEd()
+                              .format(dhakaprokashModels[0].createdAt!),
+                          style: Theme.of(context).textTheme.labelSmall,
+                        )
+                      ],
+                    ),
                   ),
-                  /* Consumer<VideoProvider>(
-                    builder: (ctx, snapshot, ch) {
-                      return Container(
-                        height: GenericVars.scSize.height *
-                            itemHeight *
-                            (listItemLength),
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: List.generate(
-                              listItemLength,
-                              (index) => Container(
-                                    height:
-                                        GenericVars.scSize.height * itemHeight,
-                                    decoration: const BoxDecoration(
-                                        border: Border(
-                                            top: BorderSide(
-                                                width: 0.4,
-                                                color: Colors.grey))),
-                                    //List Tile Started
-                                    child: ListTile(
-                                      onTap: () {
-                                        Provider.of<VideoProvider>(context,
-                                                listen: false)
-                                            .setCurrentVideoLink(
-                                                currentContainer[index]
-                                                    ['url']!);
-                                        currentContainer =
-                                            GenericVars.getVideoData;
-                                        currentContainer.removeWhere(
-                                            (element) =>
-                                                element['url'] ==
-                                                currentContainer[index]
-                                                    ['url']!);
-                                      },
-                                      contentPadding:
-                                          EdgeInsets.symmetric(vertical: 2),
-                                      leading: const CircleAvatar(
-                                        backgroundImage: AssetImage(
-                                            "assets/images/video_play_icon.png"),
-                                        radius: 20,
-                                      ),
-                                      title: Container(
-                                        child: Text(
-                                          currentContainer[index]['title']!,
-                                          softWrap: true,
-                                        ),
-                                      ),
-                                      titleTextStyle: const TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                  )),
-                        ),
-                      );
-                    },
-                  ) */
-                  /*  Expanded(
-                      child: Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              dhakaprokashModels[0].contentHeading!,
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                            Text(StringLimiter().limitString(
-                                dhakaprokashModels[0].contentDetails!, 97)),
-                            Text(
-                              DateFormat.yMEd()
-                                  .format(dhakaprokashModels[0].createdAt!),
-                              style: Theme.of(context).textTheme.labelSmall,
-                            )
-                          ],
-                        ),
-                      ),
-                    ) */
-                ],
-              ),
-            )
-          ],
+                ) */
+            ],
+          ),
         ),
       ),
     );

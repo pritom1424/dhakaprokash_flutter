@@ -101,7 +101,25 @@ flutter:
 
     - family: NotoSerif-Regular
       fonts:
-        - asset: assets/fonts/NotoSerif-Regular.ttf    
+        - asset: assets/fonts/NotoSerif-Regular.ttf
+    
+    - family: Mukti
+      fonts:
+        - asset: assets/fonts/Mukti.ttf
+
+    - family: SolaimanLipi
+      fonts:
+      - asset: assets/fonts/SolaimanLipi.ttf
+
+    - family: Shurjo-un-regular
+      fonts:
+      - asset: assets/fonts/Shurjo-un-regular.ttf
+
+    - family: Helvetica
+      fonts:
+      - asset: assets/fonts/Helvetica.ttf
+
+        
       #  - asset: assets/fonts/RobotoMono-Bold.ttf
        #   weight: 700
   #   - family: Trajan Pro

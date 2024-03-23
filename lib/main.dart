@@ -1,3 +1,4 @@
+import 'package:dummy_app/Controllers/detailpage_controller.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/login_controller.dart';
 import 'package:dummy_app/Controllers/photo_controller.dart';
@@ -37,6 +38,7 @@ void main() {
         create: (_) => ScrollControl(),
       ),
       ChangeNotifierProvider(create: (_) => VideoProvider()),
+      ChangeNotifierProvider(create: (_) => DetailPageController()),
     ],
     child: const MyApp(),
   ));
@@ -70,7 +72,7 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
-                  fontSize: 15,
+                  fontSize: 18,
                 ),
                 headlineMedium: TextStyle(
                   fontWeight: FontWeight.normal,

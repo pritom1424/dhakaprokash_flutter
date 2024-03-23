@@ -99,9 +99,11 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
         ),
       ), */
 //desk view
-          const Padding(
+          Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
-              child: DeskViewBar()),
+              child: DeskViewBar(
+                date: widget.date,
+              )),
 //follow bar
           Container(
               height: GenericVars.scSize.height * 0.05,

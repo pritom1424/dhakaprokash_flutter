@@ -166,7 +166,8 @@ class CategoryVideoWidget extends StatelessWidget {
                           titleTextStyle: TextStyle(
                               fontSize: 20,
                               color: Colors.black,
-                              fontWeight: FontWeight.normal),
+                              fontWeight: FontWeight.normal,
+                              fontFamily: GenericVars.currenFontFamily),
                         ),
                       )),
             ),

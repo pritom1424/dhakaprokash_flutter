@@ -4,6 +4,7 @@ import 'package:dummy_app/Models/dhaka_prokash_data.dart';
 import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
 import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
+import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:dummy_app/Views/pages/home_page.dart';
@@ -166,7 +167,9 @@ class CategoryWidgetCopy extends StatelessWidget {
                                           .headlineMedium,
                                     ),
                                     Text(
-                                      DateFormat.yMEd().format(DateTime.now()),
+                                      DateFormatter().defaultFormat(
+                                          dhakaprokashModels[0].createdAt ??
+                                              DateTime.now()),
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelSmall,
@@ -216,16 +219,20 @@ class CategoryWidgetCopy extends StatelessWidget {
                                         Theme.of(context).textTheme.bodyLarge,
                                   ),
                                   HtmlWidget(
-                                    StringLimiter().limitString(
-                                        dhakaprokashModels[0].contentDetails!,
-                                        120),
-                                    textStyle: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
+                                      StringLimiter().limitString(
+                                          dhakaprokashModels[0].contentDetails!,
+                                          120),
+                                      customStylesBuilder: (element) =>
+                                          {'font-weight': 'normal'},
+                                      textStyle: TextStyle(
+                                          fontFamily: "Helvetica",
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                          color: Colors.black38)),
                                   Text(
-                                    DateFormat.yMEd().format(
-                                        dhakaprokashModels[0].createdAt!),
+                                    DateFormatter().defaultFormat(
+                                        dhakaprokashModels[0].createdAt ??
+                                            DateTime.now()),
                                     style:
                                         Theme.of(context).textTheme.labelSmall,
                                   )
@@ -249,16 +256,18 @@ class CategoryWidgetCopy extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (ctx, index) {
                   return CategoryListTile(
-                      categoryName: categoryName,
-                      imagePath:
-                          "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index + 1].imgBgPath.toString()}",
-                      newsTitle: dhakaprokashModels[index + 1].contentHeading!,
-                      newsDescription:
-                          dhakaprokashModels[index + 1].contentDetails!,
-                      itemHeight: itemHeight,
-                      /*postModels[index].title, */
-                      newsDate: DateFormat.yMEd()
-                          .format(dhakaprokashModels[index + 1].createdAt!));
+                    categoryName: categoryName,
+                    imagePath:
+                        "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index + 1].imgBgPath.toString()}",
+                    newsTitle: dhakaprokashModels[index + 1].contentHeading!,
+                    newsDescription:
+                        dhakaprokashModels[index + 1].contentDetails!,
+                    itemHeight: itemHeight,
+                    /*postModels[index].title, */
+                    newsDate: DateFormatter().defaultFormat(
+                        dhakaprokashModels[index + 1].createdAt ??
+                            DateTime.now()),
+                  );
                 }),
           )
         ],

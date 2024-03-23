@@ -23,7 +23,8 @@ class GenericVars {
     // "Recent News": Icons.access_time,
   };
   static String currentSearchString = "";
-  static String currenFontFamily = "NotoSerif-Regular"; //"Raleway";
+  static String currenFontFamily = "Helvetica"; //"Shurjo-un-regular";
+  //"SolaimanLipi"; //"Raleway"//"NotoSerif-Regular";
 
   static double scrollOffset = 0;
 

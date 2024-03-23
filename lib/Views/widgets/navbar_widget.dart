@@ -28,11 +28,12 @@ class NavBarWidget extends StatelessWidget {
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
-          unselectedItemColor: Colors.grey[300],
-          selectedItemColor: Colors.blue,
+          unselectedItemColor: Color.fromARGB(255, 174, 243, 220),
+          selectedItemColor: Color.fromARGB(255, 15, 120, 240),
           showUnselectedLabels: false,
           showSelectedLabels: false,
           currentIndex: currentIndex,
+          iconSize: 25,
           onTap: onTap, //_onItemTapped
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -41,7 +42,7 @@ class NavBarWidget extends StatelessWidget {
                 ),
                 label: ""),
             BottomNavigationBarItem(
-              icon: Icon(Icons.trending_up_rounded),
+              icon: Icon(Icons.bar_chart),
               label: "",
             ),
             BottomNavigationBarItem(

@@ -1,4 +1,5 @@
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
+import 'package:dummy_app/Views/widgets/loader_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -19,21 +20,14 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   @override
   void initState() {
-    // _controller.dispose();
-    // _controller.pause();
     _controller = YoutubePlayerController(
         initialVideoId: widget.videoId,
         flags: const YoutubePlayerFlags(
             autoPlay: false, mute: false, isLive: false, loop: false));
 
-    /*   _controller.dispose();
-    _controller.pause(); */
-
     _controller.initialVideoId;
     _controller.load(widget.videoId);
-    _controller.addListener(() {
-      print("test video");
-    });
+    _controller.addListener(() {});
 
     super.initState();
   }
@@ -53,10 +47,11 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print("youtube video id: ${widget.videoId}");
-    print("youtube video id init: ${_controller.initialVideoId}");
     if (widget.videoId != _controller.initialVideoId) {
       ChangeVideo();
+    } else if (widget.videoId == _controller.initialVideoId) {
+      _controller.pause();
+      _controller.load(widget.videoId);
     }
     return YoutubePlayer(
       onReady: () {

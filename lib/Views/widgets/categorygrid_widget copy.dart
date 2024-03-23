@@ -3,6 +3,7 @@ import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Models/dhaka_prokash_data.dart';
 import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
+import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:dummy_app/Views/pages/home_page.dart';
@@ -76,16 +77,20 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetCopy> {
           scrollDirection:
               (widget.didAxisHorizontal) ? Axis.horizontal : Axis.vertical,
           itemBuilder: (ctx, index) => CategoryGridTile(
-              categoryName: widget.categoryName,
-              imagePath:
-                  "https://admin.dhakaprokash24.com/media/content/images/${widget.dhakaprokashModels[index].imgBgPath.toString()}",
-              newsTitle: widget.dhakaprokashModels[index].contentHeading!,
-              newsDescription: widget.dhakaprokashModels[index].contentDetails!,
-              cellHeight: cellHeight,
-              didDescriptionShow: widget.didDescriptionShow,
-              elevation: widget.elevation,
-              /*postModels[index].title, */
-              newsDate: DateFormat.yMEd().format(DateTime.now())));
+                categoryName: widget.categoryName,
+                imagePath:
+                    "https://admin.dhakaprokash24.com/media/content/images/${widget.dhakaprokashModels[index].imgBgPath.toString()}",
+                newsTitle: widget.dhakaprokashModels[index].contentHeading!,
+                newsDescription:
+                    widget.dhakaprokashModels[index].contentDetails!,
+                cellHeight: cellHeight,
+                didDescriptionShow: widget.didDescriptionShow,
+                elevation: widget.elevation,
+                /*postModels[index].title, */
+                newsDate: DateFormatter().defaultFormat(
+                    widget.dhakaprokashModels[index].createdAt ??
+                        DateTime.now()),
+              ));
     }
 
     return Container(

@@ -205,7 +205,8 @@ class CategoryWidget extends StatelessWidget {
                                     style:
                                         Theme.of(context).textTheme.bodyLarge,
                                   ),
-                                  Text(photoModels[0].description),
+                                  Text(StringLimiter().limitString(
+                                      photoModels[0].description, 50)),
                                   Text(
                                     DateFormat.yMEd().format(DateTime.now()),
                                     style:

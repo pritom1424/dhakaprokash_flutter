@@ -1,3 +1,4 @@
+import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:dummy_app/Views/pages/deskview/desk_view.dart';
@@ -7,14 +8,15 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
 class DeskViewBar extends StatelessWidget {
-  const DeskViewBar({super.key});
+  final String date;
+  const DeskViewBar({super.key, required this.date});
 
   @override
   Widget build(BuildContext context) {
     String iconPath = "assets/images/dhakaprokash_icon.png";
     String title = "Dhaka Prokash Desk";
-    String publishedDate =
-        DateFormat("d MMM, yyyy| hh:mm a").format(DateTime.now());
+    String publishedDate = date;
+
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
           builder: (ctx) => CategoryView(categoryName: title))),
@@ -34,6 +36,7 @@ class DeskViewBar extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,

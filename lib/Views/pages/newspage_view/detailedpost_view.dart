@@ -1,3 +1,4 @@
+import 'package:dummy_app/Controllers/detailpage_controller.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/photo_controller.dart';
 import 'package:dummy_app/Controllers/post_controller.dart';
@@ -6,6 +7,7 @@ import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/categorygrid_widget%20copy.dart';
 import 'package:dummy_app/Views/widgets/categorygrid_widget.dart';
+import 'package:dummy_app/Views/widgets/detaildPost_view/comment_section.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/main_article_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/mainposthead_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/posttag_tile.dart';
@@ -31,6 +33,7 @@ class DetailedPostView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<DetailPageController>(context, listen: false).notCommentClick();
     //for test only
     List<String> tags = DummyTags().categoryTags[categoryName] ?? [];
     PostController postController = Provider.of<PostController>(context);
@@ -66,34 +69,41 @@ class DetailedPostView extends StatelessWidget {
                       HtmlWidget(description),
                     ],
                   )),
-//post tag tile
-              Container(
-                padding: const EdgeInsets.only(
-                    top: 10), //symmetric(horizontal: 10, vertical: 5),
-                //  height: (tags.isEmpty) ? 0 : GenericVars.scSize.height * 0.2,
+//Line divider
+              Divider(),
 
-                decoration: const BoxDecoration(
-                    border: Border(
-                        top: BorderSide(width: 0.4, color: Colors.grey))),
-                child: PostTagTile(
-                  tagList: tags,
-                  crossAxisCount: 2,
-                ),
+//post tag tile
+              PostTagTile(
+                tagList: tags,
+                crossAxisCount: 2,
               ),
 //comment button
-              Container(
-                height: GenericVars.scSize.height * 0.07,
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: SizedBox.expand(
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text("Comment",
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white),
-                  ),
-                ),
+
+              Consumer<DetailPageController>(
+                builder: (ctx, snap, _) => (snap.IsCommentClick)
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: CommentSectionWidget(),
+                      )
+                    : Container(
+                        height: GenericVars.scSize.height * 0.07,
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: SizedBox.expand(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Provider.of<DetailPageController>(context,
+                                      listen: false)
+                                  .commentClick();
+                            },
+                            child: Text("Comment",
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white)),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue,
+                                foregroundColor: Colors.white),
+                          ),
+                        ),
+                      ),
               ),
 // news grid
               /* FutureBuilder(
