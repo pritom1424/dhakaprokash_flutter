@@ -124,8 +124,7 @@ class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
                                             listen: false)
                                         .setCurrentVideoLink(
                                             currentContainer[index]['url']!);
-                                    currentContainer = currentElementList(
-                                        currentContainer[index]['url']!, 3);
+                                    currentContainer = currentElementList(currentContainer[index]['url']!, 3);
                                   },
                                   contentPadding:
                                       EdgeInsets.symmetric(vertical: 2),

@@ -19,18 +19,26 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   @override
   void initState() {
-    // _controller.dispose();
-    // _controller.pause();
-    _controller = YoutubePlayerController(
-        initialVideoId: widget.videoId,
-        flags: const YoutubePlayerFlags(
-            autoPlay: false, mute: false, isLive: false, loop: false));
+
+    print("youtube video id : ${widget.videoId}");
+
+    // if (widget.videoId != _controller.initialVideoId) {
+    //   print(">>>>>>>>>>>>>>>>>>>>>>> if");
+    //   ChangeVideo();
+    // }
+
+      _controller = YoutubePlayerController(
+          initialVideoId: widget.videoId,
+          flags:  const YoutubePlayerFlags(
+              autoPlay: false, mute: false, isLive: false, loop: false));
+      _controller.initialVideoId;
+      _controller.load(widget.videoId);
 
     /*   _controller.dispose();
     _controller.pause(); */
 
-    _controller.initialVideoId;
-    _controller.load(widget.videoId);
+
+    print("youtube video id initstate: ${widget.videoId}");
     _controller.addListener(() {
       print("test video");
     });
@@ -41,22 +49,27 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   @override
   void dispose() {
     _controller.dispose();
-
     super.dispose();
   }
 
   void ChangeVideo() {
-    _controller.pause();
-
-    _controller.load(widget.videoId);
+    setState(() {
+      _controller.pause();
+      _controller.load(widget.videoId);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     print("youtube video id: ${widget.videoId}");
-    print("youtube video id init: ${_controller.initialVideoId}");
+    print("youtube video id build: ${_controller.initialVideoId}");
+
     if (widget.videoId != _controller.initialVideoId) {
       ChangeVideo();
+    }
+    else if(widget.videoId == _controller.initialVideoId){
+      _controller.pause();
+      _controller.load(widget.videoId);
     }
     return YoutubePlayer(
       onReady: () {
@@ -67,5 +80,6 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       width: GenericVars.scSize.width * 1,
       aspectRatio: 16 / 9,
     );
+
   }
 }
