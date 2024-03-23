@@ -1,3 +1,6 @@
+import 'package:dummy_app/Controllers/homepage_controller.dart';
+import 'package:dummy_app/Controllers/video_controller.dart';
+import 'package:dummy_app/Models/dhaka_prokash_data.dart';
 import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
 import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
@@ -10,20 +13,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:intl/date_symbol_data_file.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-class CategoryWidget extends StatelessWidget {
+class CategoryWidgetCopy extends StatelessWidget {
   final String categoryName;
-  final List<PhotoModel> photoModels;
+  /*  final List<PhotoModel> photoModels;
+  final List<PostModel> postModels; */
+  final List<DhakaProkash> dhakaprokashModels;
 
   final bool didMoreButtonShow;
   final bool didHeadSectionShow;
   final int listItemLength;
   final bool didFloat;
 
-  const CategoryWidget({
+  const CategoryWidgetCopy({
     super.key,
-    required this.photoModels,
+    required this.dhakaprokashModels,
     required this.categoryName,
     required this.didMoreButtonShow,
     required this.didHeadSectionShow,
@@ -76,13 +84,17 @@ class CategoryWidget extends StatelessWidget {
           if (didHeadSectionShow)
             GestureDetector(
               onTap: () {
+                Provider.of<VideoProvider>(context, listen: false)
+                    .pauseVideoState();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
-                          date: DateFormat.yMEd().format(DateTime.now()),
+                          date: DateFormat.yMEd()
+                              .format(dhakaprokashModels[0].createdAt!),
                           categoryName: categoryName,
-                          url: photoModels[0].url,
-                          title: photoModels[0].title,
-                          description: photoModels[0].description,
+                          url:
+                              "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[0].imgBgPath.toString()}",
+                          title: dhakaprokashModels[0].contentHeading!,
+                          description: dhakaprokashModels[0].contentDetails!,
                         )));
               },
               child: Container(
@@ -108,7 +120,7 @@ class CategoryWidget extends StatelessWidget {
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
                                 child: Image.network(
-                                  photoModels[0].url,
+                                  "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[0].imgBgPath.toString()}",
                                   fit: BoxFit.fitWidth,
                                   filterQuality: FilterQuality.low,
                                   loadingBuilder: (context, child,
@@ -147,8 +159,8 @@ class CategoryWidget extends StatelessWidget {
                                   children: [
                                     Text(categoryName),
                                     Text(
-                                      photoModels[0].title,
-                                      //"${StringLimiter().limitString(photoModels[0].title, 25)}",
+                                      dhakaprokashModels[0].contentHeading!,
+                                      // "${StringLimiter().limitString(dhakaprokashModels[0].contentHeading!, 25)} . . .",
                                       style: Theme.of(context)
                                           .textTheme
                                           .headlineMedium,
@@ -171,12 +183,11 @@ class CategoryWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Expanded(
-                            flex: 5, //(GenericVars.scSize.height<600?3:5)
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
                                 child: Image.network(
-                                  photoModels[0].url,
-                                  fit: BoxFit.fill,
+                                  "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[0].imgBgPath.toString()}",
+                                  fit: BoxFit.fitWidth,
                                   filterQuality: FilterQuality.low,
                                   loadingBuilder: (context, child,
                                           loadingProgress) =>
@@ -193,7 +204,6 @@ class CategoryWidget extends StatelessWidget {
                                 )),
                           ),
                           Expanded(
-                            flex: 3, //(GenericVars.scSize.height<600?2:3)
                             child: Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,13 +211,21 @@ class CategoryWidget extends StatelessWidget {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Text(
-                                    photoModels[0].title,
+                                    dhakaprokashModels[0].contentHeading!,
                                     style:
                                         Theme.of(context).textTheme.bodyLarge,
                                   ),
-                                  Text(photoModels[0].description),
+                                  HtmlWidget(
+                                    StringLimiter().limitString(
+                                        dhakaprokashModels[0].contentDetails!,
+                                        120),
+                                    textStyle: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
                                   Text(
-                                    DateFormat.yMEd().format(DateTime.now()),
+                                    DateFormat.yMEd().format(
+                                        dhakaprokashModels[0].createdAt!),
                                     style:
                                         Theme.of(context).textTheme.labelSmall,
                                   )
@@ -222,25 +240,25 @@ class CategoryWidget extends StatelessWidget {
 
 //part 3//Category News Lists
           Container(
-            height: GenericVars.scSize.height * itemHeight * listItemLength,
+            height:
+                GenericVars.scSize.height * itemHeight * (listItemLength - 1),
             // padding: EdgeInsets.symmetric(horizontal: 15),
             child: ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: listItemLength,
+                itemCount: listItemLength - 1,
                 shrinkWrap: true,
                 itemBuilder: (ctx, index) {
-                  if (index < listItemLength) {
-                    return CategoryListTile(
-                        categoryName: categoryName,
-                        imagePath: photoModels[index].url,
-                        newsTitle: photoModels[index].title,
-                        newsDescription: photoModels[index].description,
-                        itemHeight: itemHeight,
-                        /*postModels[index].title, */
-                        newsDate: DateFormat.yMEd().format(DateTime.now()));
-                  } else {
-                    return Container();
-                  }
+                  return CategoryListTile(
+                      categoryName: categoryName,
+                      imagePath:
+                          "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index + 1].imgBgPath.toString()}",
+                      newsTitle: dhakaprokashModels[index + 1].contentHeading!,
+                      newsDescription:
+                          dhakaprokashModels[index + 1].contentDetails!,
+                      itemHeight: itemHeight,
+                      /*postModels[index].title, */
+                      newsDate: DateFormat.yMEd()
+                          .format(dhakaprokashModels[index + 1].createdAt!));
                 }),
           )
         ],

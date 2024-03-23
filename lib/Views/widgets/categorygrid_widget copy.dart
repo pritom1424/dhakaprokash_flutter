@@ -1,3 +1,6 @@
+import 'package:dummy_app/Controllers/homepage_controller.dart';
+import 'package:dummy_app/Controllers/video_controller.dart';
+import 'package:dummy_app/Models/dhaka_prokash_data.dart';
 import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
@@ -9,39 +12,40 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-class CategoryGridWidget extends StatefulWidget {
+class CategoryGridWidgetCopy extends StatefulWidget {
   final String categoryName;
-  final List<PhotoModel> photoModels;
-
+  final List<DhakaProkash> dhakaprokashModels;
   final int itemCount;
 
   final bool didAxisHorizontal;
   final int crossAxisCount;
-  final double mainAxisSpacing;
-  final double cellHeight;
+
   final bool didDescriptionShow;
   final bool isScroll;
   final double elevation;
-  const CategoryGridWidget(
-      {super.key,
-      required this.photoModels,
-      required this.categoryName,
-      required this.itemCount,
-      required this.didAxisHorizontal,
-      required this.crossAxisCount,
-      required this.mainAxisSpacing,
-      required this.cellHeight,
-      required this.didDescriptionShow,
-      required this.isScroll,
-      required this.elevation});
+
+  const CategoryGridWidgetCopy({
+    super.key,
+    required this.dhakaprokashModels,
+    required this.categoryName,
+    required this.itemCount,
+    required this.didAxisHorizontal,
+    required this.crossAxisCount,
+    required this.didDescriptionShow,
+    required this.isScroll,
+    required this.elevation,
+  });
 
   @override
-  State<CategoryGridWidget> createState() => _CategoryGridWidgetState();
+  State<CategoryGridWidgetCopy> createState() => _CategoryGridWidgetState();
 }
 
-class _CategoryGridWidgetState extends State<CategoryGridWidget> {
+class _CategoryGridWidgetState extends State<CategoryGridWidgetCopy> {
   late ScrollController scController;
+  double cellHeight = 0.23;
+  double mainAxisSpacing = 10;
   @override
   void initState() {
     scController = ScrollController();
@@ -67,16 +71,17 @@ class _CategoryGridWidgetState extends State<CategoryGridWidget> {
               : NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: widget.crossAxisCount,
-            mainAxisSpacing: widget.mainAxisSpacing,
+            mainAxisSpacing: mainAxisSpacing,
           ),
           scrollDirection:
               (widget.didAxisHorizontal) ? Axis.horizontal : Axis.vertical,
           itemBuilder: (ctx, index) => CategoryGridTile(
               categoryName: widget.categoryName,
-              imagePath: widget.photoModels[index].url,
-              newsTitle: widget.photoModels[index].title,
-              newsDescription: widget.photoModels[index].description,
-              cellHeight: widget.cellHeight,
+              imagePath:
+                  "https://admin.dhakaprokash24.com/media/content/images/${widget.dhakaprokashModels[index].imgBgPath.toString()}",
+              newsTitle: widget.dhakaprokashModels[index].contentHeading!,
+              newsDescription: widget.dhakaprokashModels[index].contentDetails!,
+              cellHeight: cellHeight,
               didDescriptionShow: widget.didDescriptionShow,
               elevation: widget.elevation,
               /*postModels[index].title, */
@@ -92,6 +97,8 @@ class _CategoryGridWidgetState extends State<CategoryGridWidget> {
 
           GestureDetector(
             onTap: () {
+              Provider.of<VideoProvider>(context, listen: false)
+                  .pauseVideoState();
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (ctx) =>
                       CategoryView(categoryName: widget.categoryName)));
@@ -123,9 +130,9 @@ class _CategoryGridWidgetState extends State<CategoryGridWidget> {
           //part 3//Category News Lists
           Container(
             height: (widget.didAxisHorizontal)
-                ? GenericVars.scSize.height * widget.cellHeight
+                ? GenericVars.scSize.height * cellHeight
                 : GenericVars.scSize.height *
-                    widget.cellHeight *
+                    cellHeight *
                     (widget.itemCount / widget.crossAxisCount).ceil(),
             child: widget.isScroll
                 ? Scrollbar(

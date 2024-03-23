@@ -1,8 +1,10 @@
+import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/photo_controller.dart';
 import 'package:dummy_app/Controllers/post_controller.dart';
 import 'package:dummy_app/Utils/dummy_tags.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
+import 'package:dummy_app/Views/widgets/categorygrid_widget%20copy.dart';
 import 'package:dummy_app/Views/widgets/categorygrid_widget.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/main_article_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/mainposthead_tile.dart';
@@ -12,18 +14,20 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailedPostView extends StatelessWidget {
-  final String url, title, description, categoryName;
+  final String url, title, description, categoryName, date;
   const DetailedPostView(
       {super.key,
       required this.url,
       required this.title,
       required this.description,
-      required this.categoryName});
+      required this.categoryName,
+      required this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,8 @@ class DetailedPostView extends StatelessWidget {
     List<String> tags = DummyTags().categoryTags[categoryName] ?? [];
     PostController postController = Provider.of<PostController>(context);
     PhotoController photoController = Provider.of<PhotoController>(context);
+    HomepageController homepageController =
+        Provider.of<HomepageController>(context);
     return Scaffold(
       appBar: AppbarDefault(),
       body: Padding(
@@ -41,15 +47,15 @@ class DetailedPostView extends StatelessWidget {
             children: [
 //main post head tile
               Container(
-                height: GenericVars.scSize.height * 0.6,
-                padding: EdgeInsets.only(bottom: 10),
+                //   height: GenericVars.scSize.height * 0.6,
+
                 child: MainHeadPostTile(
+                  date: date,
                   url: url,
                   title: title,
-                  description: description,
-                  boldDescription: description,
                   categoryname: categoryName,
                   isBookmark: false,
+                  description: description,
                 ),
               ),
 //main post decription
@@ -57,32 +63,7 @@ class DetailedPostView extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                   child: MainArticleTile(
                     articleItems: [
-                      Text(
-                        description +
-                            description +
-                            "\n\n" +
-                            description +
-                            "\n" +
-                            description,
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.justify,
-
-                        // overflow: TextOverflow.visible,
-                      ),
-                      Image.network(url),
-                      Text(description +
-                          "\n\n" +
-                          description +
-                          description +
-                          "\n\n" +
-                          description +
-                          "\n" +
-                          description +
-                          "\n\n" +
-                          description +
-                          "\n")
+                      HtmlWidget(description),
                     ],
                   )),
 //post tag tile
@@ -115,7 +96,7 @@ class DetailedPostView extends StatelessWidget {
                 ),
               ),
 // news grid
-              FutureBuilder(
+              /* FutureBuilder(
                   future: postController.loadAllItems(),
                   builder: (ctx, postSnapShot) {
                     return (postSnapShot.connectionState ==
@@ -125,7 +106,6 @@ class DetailedPostView extends StatelessWidget {
                           )
                         : CategoryGridWidget(
                             photoModels: photoController.Items,
-                            postModels: postController.Items,
                             categoryName: categoryName,
                             itemCount: 4,
                             cellHeight: 0.23,
@@ -136,6 +116,25 @@ class DetailedPostView extends StatelessWidget {
                             isScroll: false,
                             elevation: 0,
                           );
+                  }) ,*/
+
+              FutureBuilder(
+                  future: homepageController.loadAllItems(),
+                  builder: (ctx, postSnapShot) {
+                    return (postSnapShot.connectionState ==
+                            ConnectionState.waiting)
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : CategoryGridWidgetCopy(
+                            dhakaprokashModels: homepageController.Items,
+                            categoryName: categoryName,
+                            itemCount: 4,
+                            didAxisHorizontal: false,
+                            crossAxisCount: 2,
+                            didDescriptionShow: false,
+                            isScroll: false,
+                            elevation: 0);
                   }),
               HomePageFooter()
             ],

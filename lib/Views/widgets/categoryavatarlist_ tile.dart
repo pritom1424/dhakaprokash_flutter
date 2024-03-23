@@ -31,6 +31,7 @@ class CategoryAvatarListTile extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => DetailedPostView(
+                  date: newsDate,
                   categoryName: categoryName,
                   url: imagePath,
                   title: newsTitle,
@@ -55,7 +56,9 @@ class CategoryAvatarListTile extends StatelessWidget {
         ),
 //Category News Row Started
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 15),
+          padding: EdgeInsets.only(
+            top: 15,
+          ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

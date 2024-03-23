@@ -1,3 +1,5 @@
+import 'package:dummy_app/Controllers/homepage_controller.dart';
+import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class CategoryGridTile extends StatelessWidget {
   final String imagePath, newsTitle, newsDate, newsDescription, categoryName;
@@ -27,8 +30,10 @@ class CategoryGridTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        Provider.of<VideoProvider>(context, listen: false).pauseVideoState();
         Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => DetailedPostView(
+                  date: newsDate,
                   categoryName: categoryName,
                   url: imagePath,
                   title: newsTitle,
@@ -83,7 +88,7 @@ class CategoryGridTile extends StatelessWidget {
                     children: [
                       //title
                       Text(
-                        StringLimiter().limitString(newsTitle, 20),
+                        "${StringLimiter().limitString(newsTitle, 25)}",
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                       //description

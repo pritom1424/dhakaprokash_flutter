@@ -11,17 +11,17 @@ import 'package:provider/provider.dart';
 
 class PopularNewsView extends StatelessWidget {
   final PhotoController phController;
-  final PostController pcontroller;
+
   const PopularNewsView({
     super.key,
     required this.phController,
-    required this.pcontroller,
   });
 
   @override
   Widget build(BuildContext context) {
     PostController postController = Provider.of<PostController>(context);
     PhotoController photoController = Provider.of<PhotoController>(context);
+
     return FutureBuilder(
         future: photoController.loadAllItems(),
         builder: (ctx, photosnapShot) => (photosnapShot.connectionState ==
@@ -59,7 +59,6 @@ class PopularNewsView extends StatelessWidget {
 
                                     CategoryWidget(
                                       photoModels: photoController.Items,
-                                      postModels: postController.Items,
                                       categoryName: "Popular",
                                       didMoreButtonShow: false,
                                       didHeadSectionShow: false,

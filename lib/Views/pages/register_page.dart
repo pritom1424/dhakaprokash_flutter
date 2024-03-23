@@ -30,6 +30,12 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Sign Up",
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -71,8 +77,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 SizedBox(
                   height: 30,
                 ),
-                GestureDetector(
-                  onTap: () {},
+                InkWell(
+                  onTap: () {
+                    print("google");
+                  },
                   child: Container(
                     height: GenericVars.scSize.height * 0.07,
                     decoration: BoxDecoration(
@@ -86,16 +94,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          child: CircleAvatar(
-                            radius: 15,
-                            backgroundImage:
-                                AssetImage("assets/images/google_icon.png"),
-                          ),
+                        CircleAvatar(
+                          radius: 13,
+                          backgroundImage:
+                              AssetImage("assets/images/google_icon.png"),
                         ),
                         SizedBox(
-                          width: 10,
+                          width: 5,
                         ),
                         Text(
                           "Continue With Google",
@@ -105,11 +110,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
-                GestureDetector(
-                  onTap: () {},
+                InkWell(
+                  onTap: () {
+                    print('facebook');
+                  },
                   child: Container(
                     height: GenericVars.scSize.height * 0.07,
                     decoration: BoxDecoration(
@@ -123,16 +130,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          child: CircleAvatar(
-                            radius: 15,
-                            backgroundImage:
-                                AssetImage("assets/images/facebook-icon.png"),
-                          ),
+                        CircleAvatar(
+                          radius: 13,
+                          backgroundImage:
+                              AssetImage("assets/images/facebook-icon.png"),
                         ),
                         SizedBox(
-                          width: 10,
+                          width: 5,
                         ),
                         Text(
                           "Continue With Facebook",

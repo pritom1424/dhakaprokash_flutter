@@ -30,6 +30,7 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
   @override
   void initState() {
     _speech = stt.SpeechToText();
+
     // TODO: implement initState
     super.initState();
   }
@@ -51,19 +52,32 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
         onStatus: (val) => print('onStatus: $val'),
         onError: (val) => print('onError: $val'),
       );
+      var locals = await _speech!.locales();
+      locals.forEach((element) {
+        print(element.name);
+      });
       if (available) {
+        //_isListening = true;
         setState(() => _isListening = true);
+
         _speech!.listen(
-          onResult: (val) => setState(() {
-            _text = val.recognizedWords;
-            if (val.hasConfidenceRating && val.confidence > 0) {
-              _confidence = val.confidence;
-            }
-          }),
-        );
+            onResult: (val) => setState(() {
+                  _text = val.recognizedWords;
+
+                  didShowList = true;
+                  _isListening = false;
+                  didGlow = false;
+                  GenericVars.currentSearchString = _text;
+                  textEditingController.clear();
+                  textEditingController.text = _text;
+                  if (val.hasConfidenceRating && val.confidence > 0) {
+                    _confidence = val.confidence;
+                  }
+                }));
       }
     } else {
       setState(() => _isListening = false);
+
       _speech!.stop();
     }
   }
@@ -92,10 +106,11 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
                       textEditingController.text = value;
                     }, */
                     decoration: InputDecoration(
-                        focusedBorder: OutlineInputBorder(
+                        focusedBorder: const OutlineInputBorder(
                             borderSide:
                                 BorderSide(width: 1, color: Colors.grey)),
-                        contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 5),
                         hintText: "Search...",
                         suffixIcon: AvatarGlow(
                           glowRadiusFactor: 0.1,
@@ -165,8 +180,6 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
                                             child: CategoryWidget(
                                                 photoModels:
                                                     photoController.SearchItems,
-                                                postModels:
-                                                    postController.Items,
                                                 categoryName: "Search",
                                                 didMoreButtonShow: false,
                                                 didHeadSectionShow: false,

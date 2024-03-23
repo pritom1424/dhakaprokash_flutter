@@ -11,7 +11,6 @@ import 'package:intl/intl.dart';
 class CategoryAvatatarWidget extends StatelessWidget {
   final String categoryName;
   final List<PhotoModel> photoModels;
-  final List<PostModel> postModels;
 
   final bool didMoreButtonShow;
   final int listItemLength;
@@ -19,7 +18,6 @@ class CategoryAvatatarWidget extends StatelessWidget {
   const CategoryAvatatarWidget({
     super.key,
     required this.photoModels,
-    required this.postModels,
     required this.categoryName,
     required this.didMoreButtonShow,
     required this.listItemLength,
@@ -27,7 +25,7 @@ class CategoryAvatatarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double itemHeight = 0.18;
+    final double itemHeight = 0.16;
 
     return Container(
       //category home widget column startted
@@ -80,8 +78,8 @@ class CategoryAvatatarWidget extends StatelessWidget {
                         name: "name",
                         categoryName: categoryName,
                         imagePath: photoModels[index].url,
-                        newsTitle: photoModels[index].description,
-                        newsDescription: postModels[index].body,
+                        newsTitle: photoModels[index].title,
+                        newsDescription: photoModels[index].description,
                         itemHeight: itemHeight,
                         /*postModels[index].title, */
                         newsDate: DateFormat.yMEd().format(DateTime.now()));

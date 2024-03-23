@@ -61,7 +61,6 @@ class CategoryView extends StatelessWidget {
 
                                       CategoryWidget(
                                         photoModels: photoController.Items,
-                                        postModels: postController.Items,
                                         categoryName: categoryName,
                                         didMoreButtonShow: false,
                                         didHeadSectionShow: false,
