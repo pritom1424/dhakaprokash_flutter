@@ -77,6 +77,9 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetCopy> {
           scrollDirection:
               (widget.didAxisHorizontal) ? Axis.horizontal : Axis.vertical,
           itemBuilder: (ctx, index) => CategoryGridTile(
+                tags: widget.dhakaprokashModels[index].tags,
+                imageCaption:
+                    widget.dhakaprokashModels[index].imgbgCaption ?? "",
                 categoryName: widget.categoryName,
                 imagePath:
                     "https://admin.dhakaprokash24.com/media/content/images/${widget.dhakaprokashModels[index].imgBgPath.toString()}",
@@ -87,9 +90,8 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetCopy> {
                 didDescriptionShow: widget.didDescriptionShow,
                 elevation: widget.elevation,
                 /*postModels[index].title, */
-                newsDate: DateFormatter().defaultFormat(
-                    widget.dhakaprokashModels[index].createdAt ??
-                        DateTime.now()),
+                dateTime: widget.dhakaprokashModels[index].createdAt ??
+                    DateTime.now(),
               ));
     }
 

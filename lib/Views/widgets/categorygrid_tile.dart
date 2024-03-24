@@ -1,6 +1,7 @@
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
+import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
 import 'package:dummy_app/Views/pages/home_page.dart';
@@ -11,20 +12,29 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CategoryGridTile extends StatelessWidget {
-  final String imagePath, newsTitle, newsDate, newsDescription, categoryName;
+  final String imagePath,
+      newsTitle,
+      newsDescription,
+      categoryName,
+      imageCaption;
+  final DateTime dateTime;
   final double cellHeight;
   final bool didDescriptionShow;
   final double elevation;
+  final List<String> tags;
+
   const CategoryGridTile(
       {super.key,
       required this.imagePath,
       required this.newsTitle,
       required this.newsDescription,
-      required this.newsDate,
+      required this.dateTime,
       required this.categoryName,
       required this.cellHeight,
       required this.didDescriptionShow,
-      required this.elevation});
+      required this.elevation,
+      required this.imageCaption,
+      required this.tags});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +43,9 @@ class CategoryGridTile extends StatelessWidget {
         Provider.of<VideoProvider>(context, listen: false).pauseVideoState();
         Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => DetailedPostView(
-                  date: newsDate,
+                  tags: tags,
+                  imageCaption: imageCaption,
+                  date: DateFormatter().defaultFormatWithTime(dateTime),
                   categoryName: categoryName,
                   url: imagePath,
                   title: newsTitle,
@@ -95,7 +107,7 @@ class CategoryGridTile extends StatelessWidget {
                       if (didDescriptionShow)
                         Text(StringLimiter().limitString(newsTitle, 80)),
                       Text(
-                        newsDate,
+                        DateFormatter().defaultFormat(dateTime),
                         style: Theme.of(context).textTheme.labelSmall,
                       )
                     ],

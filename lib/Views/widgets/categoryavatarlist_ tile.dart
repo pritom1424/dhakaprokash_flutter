@@ -31,6 +31,8 @@ class CategoryAvatarListTile extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => DetailedPostView(
+                  tags: [],
+                  imageCaption: "caption",
                   date: newsDate,
                   categoryName: categoryName,
                   url: imagePath,

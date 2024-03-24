@@ -21,6 +21,8 @@ class RecentCategoryHomeListTile extends StatelessWidget {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
           builder: (ctx) => DetailedPostView(
+                tags: [],
+                imageCaption: "caption",
                 categoryName: newsCategory,
                 title: newsTitle,
                 description: newsDescription,

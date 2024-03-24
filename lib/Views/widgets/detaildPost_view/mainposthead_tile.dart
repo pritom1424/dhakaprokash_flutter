@@ -11,8 +11,9 @@ import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MainHeadPostTile extends StatefulWidget {
-  final String url, title, categoryname, description, date;
+  final String url, title, categoryname, description, date, imageCaption;
   final bool isBookmark;
+  final List<String> tags;
   const MainHeadPostTile({
     super.key,
     required this.url,
@@ -21,6 +22,8 @@ class MainHeadPostTile extends StatefulWidget {
     required this.isBookmark,
     required this.description,
     required this.date,
+    required this.imageCaption,
+    required this.tags,
   });
 
   @override
@@ -55,7 +58,6 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> tags = DummyTags().categoryTags[widget.categoryname] ?? [];
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         /* physics: NeverScrollableScrollPhysics(),  */ children: [
@@ -116,10 +118,12 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
                         currentBookmark = !currentBookmark;
                         (currentBookmark)
                             ? GenericVars.favoritesList.add(CategoryListTile(
+                                tags: widget.tags,
+                                imageCaption: widget.imageCaption,
                                 imagePath: widget.url,
                                 newsTitle: widget.title,
                                 newsDescription: widget.description,
-                                newsDate: widget.date,
+                                dateTime: DateTime.parse(widget.date),
                                 categoryName: widget.categoryname,
                                 itemHeight: 0.17))
                             : GenericVars.favoritesList.removeWhere(
@@ -142,7 +146,7 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
             width: double.infinity,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(5),
@@ -152,11 +156,14 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
                     filterQuality: FilterQuality.low,
                   ),
                 ),
-                Text(
-                  "subtitle| pic: collected",
-                  style: TextStyle(
-                      color: Color.fromARGB(255, 128, 125, 125), fontSize: 15),
+                Padding(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Text(
+                    widget.imageCaption,
+                    style: TextStyle(color: Colors.black, fontSize: 15),
+                  ),
                 ),
+                Divider()
               ],
             ),
           ),

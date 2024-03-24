@@ -21,6 +21,8 @@ class DhakaProkash {
   String? catSlug;
   DateTime? createdAt;
   String? subcatSlug;
+  String? imgbgCaption;
+  List<String> tags;
 
   DhakaProkash({
     required this.contentId,
@@ -32,21 +34,24 @@ class DhakaProkash {
     required this.bnCatName,
     required this.catSlug,
     required this.createdAt,
+    required this.imgbgCaption,
+    required this.tags,
     this.subcatSlug,
   });
 
   factory DhakaProkash.fromJson(Map<String, dynamic> json) => DhakaProkash(
-        contentId: json["content_id"],
-        contentType: json["content_type"],
-        imgBgPath: json["img_bg_path"],
-        contentHeading: json["content_heading"],
-        contentSubHeading: json["content_sub_heading"],
-        contentDetails: json["content_details"],
-        bnCatName: json["bn_cat_name"],
-        catSlug: json["cat_slug"],
-        createdAt: DateTime.parse(json["created_at"]),
-        subcatSlug: json["subcat_slug"],
-      );
+      contentId: json["content_id"],
+      contentType: json["content_type"],
+      imgBgPath: json["img_bg_path"],
+      contentHeading: json["content_heading"],
+      contentSubHeading: json["content_sub_heading"],
+      contentDetails: json["content_details"],
+      bnCatName: json["bn_cat_name"],
+      catSlug: json["cat_slug"],
+      createdAt: DateTime.parse(json["created_at"]),
+      subcatSlug: json["subcat_slug"],
+      imgbgCaption: json["img_bg_caption"],
+      tags: json['tags'].toString().split(','));
 
   Map<String, dynamic> toJson() => {
         "content_id": contentId,
@@ -59,5 +64,7 @@ class DhakaProkash {
         "cat_slug": catSlug,
         "created_at": createdAt!.toIso8601String(),
         "subcat_slug": subcatSlug,
+        "img_bg_caption": imgbgCaption,
+        'tags': tags
       };
 }

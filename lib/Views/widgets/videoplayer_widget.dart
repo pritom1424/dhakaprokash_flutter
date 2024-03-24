@@ -33,6 +33,13 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   }
 
   @override
+  void deactivate() {
+    _controller.pause();
+    // TODO: implement deactivate
+    super.deactivate();
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
 
@@ -51,6 +58,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       ChangeVideo();
     } else if (widget.videoId == _controller.initialVideoId) {
       _controller.pause();
+
       _controller.load(widget.videoId);
     }
     return YoutubePlayer(
@@ -61,6 +69,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       controller: _controller,
       width: GenericVars.scSize.width * 1,
       aspectRatio: 16 / 9,
+      bufferIndicator: LoaderWidget(),
     );
   }
 }

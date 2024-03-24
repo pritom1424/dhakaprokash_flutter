@@ -89,8 +89,12 @@ class CategoryWidgetCopy extends StatelessWidget {
                     .pauseVideoState();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
-                          date: DateFormat.yMEd()
-                              .format(dhakaprokashModels[0].createdAt!),
+                          tags: dhakaprokashModels[0].tags,
+                          imageCaption:
+                              dhakaprokashModels[0].imgbgCaption ?? "",
+                          date: DateFormatter().defaultFormatWithTime(
+                              dhakaprokashModels[0].createdAt ??
+                                  DateTime.now()),
                           categoryName: categoryName,
                           url:
                               "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[0].imgBgPath.toString()}",
@@ -224,7 +228,7 @@ class CategoryWidgetCopy extends StatelessWidget {
                                           120),
                                       customStylesBuilder: (element) =>
                                           {'font-weight': 'normal'},
-                                      textStyle: TextStyle(
+                                      textStyle: const TextStyle(
                                           fontFamily: "Helvetica",
                                           fontWeight: FontWeight.w500,
                                           fontSize: 16,
@@ -256,6 +260,9 @@ class CategoryWidgetCopy extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (ctx, index) {
                   return CategoryListTile(
+                    tags: dhakaprokashModels[index + 1].tags,
+                    imageCaption:
+                        dhakaprokashModels[index + 1].imgbgCaption ?? "",
                     categoryName: categoryName,
                     imagePath:
                         "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index + 1].imgBgPath.toString()}",
@@ -264,9 +271,8 @@ class CategoryWidgetCopy extends StatelessWidget {
                         dhakaprokashModels[index + 1].contentDetails!,
                     itemHeight: itemHeight,
                     /*postModels[index].title, */
-                    newsDate: DateFormatter().defaultFormat(
-                        dhakaprokashModels[index + 1].createdAt ??
-                            DateTime.now()),
+                    dateTime: dhakaprokashModels[index + 1].createdAt ??
+                        DateTime.now(),
                   );
                 }),
           )

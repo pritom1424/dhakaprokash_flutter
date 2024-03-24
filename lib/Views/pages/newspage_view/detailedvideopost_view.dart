@@ -1,4 +1,5 @@
 import 'package:dummy_app/Controllers/video_controller.dart';
+import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/videoplayer_widget.dart';
@@ -98,7 +99,8 @@ class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
-                    DateFormat.yMEd().format(DateTime.now()),
+                    DateFormatter().defaultFormat(DateTime.now()),
+                    // DateFormat.yMEd().format(DateTime.now()),
                     style: TextStyle(color: Colors.grey),
                   )),
               const SizedBox(

@@ -18,10 +18,10 @@ class PostTagTile extends StatelessWidget {
                 cellHeight *
                 (tagList.length / crossAxisCount)
                     .ceil(), //  (itemCount / crossAxisCount).ceil(),
-            width: GenericVars.scSize.width * 0.75,
+            width: GenericVars.scSize.width * 1,
             child: GridView.count(
                 crossAxisCount: crossAxisCount,
-                childAspectRatio: 7 / 2,
+                childAspectRatio: 5 / 2,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
                 physics: NeverScrollableScrollPhysics(),
@@ -42,7 +42,8 @@ class PostTagTile extends StatelessWidget {
                               },
                               child: Text(
                                 tagList[index],
-                                style: TextStyle(fontSize: 17),
+                                softWrap: true,
+                                style: TextStyle(fontSize: 15),
                               )),
                         ))),
           );

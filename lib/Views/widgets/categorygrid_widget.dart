@@ -72,6 +72,8 @@ class _CategoryGridWidgetState extends State<CategoryGridWidget> {
           scrollDirection:
               (widget.didAxisHorizontal) ? Axis.horizontal : Axis.vertical,
           itemBuilder: (ctx, index) => CategoryGridTile(
+              tags: [],
+              imageCaption: "caption",
               categoryName: widget.categoryName,
               imagePath: widget.photoModels[index].url,
               newsTitle: widget.photoModels[index].title,
@@ -80,7 +82,7 @@ class _CategoryGridWidgetState extends State<CategoryGridWidget> {
               didDescriptionShow: widget.didDescriptionShow,
               elevation: widget.elevation,
               /*postModels[index].title, */
-              newsDate: DateFormat.yMEd().format(DateTime.now())));
+              dateTime: DateTime.now()));
     }
 
     return Container(

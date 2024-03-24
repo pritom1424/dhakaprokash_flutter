@@ -78,6 +78,8 @@ class CategoryWidget extends StatelessWidget {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
+                          tags: [],
+                          imageCaption: "caption",
                           date: DateFormat.yMEd().format(DateTime.now()),
                           categoryName: categoryName,
                           url: photoModels[0].url,
@@ -232,13 +234,15 @@ class CategoryWidget extends StatelessWidget {
                 itemBuilder: (ctx, index) {
                   if (index < listItemLength) {
                     return CategoryListTile(
+                        tags: [],
+                        imageCaption: "",
                         categoryName: categoryName,
                         imagePath: photoModels[index].url,
                         newsTitle: photoModels[index].title,
                         newsDescription: photoModels[index].description,
                         itemHeight: itemHeight,
                         /*postModels[index].title, */
-                        newsDate: DateFormat.yMEd().format(DateTime.now()));
+                        dateTime: DateTime.now());
                   } else {
                     return Container();
                   }

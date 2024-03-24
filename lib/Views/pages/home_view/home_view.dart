@@ -3,6 +3,7 @@ import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/photo_controller.dart';
 import 'package:dummy_app/Controllers/post_controller.dart';
 import 'package:dummy_app/Controllers/video_controller.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 
 import 'package:dummy_app/Views/pages/contact_view/contact_view.dart';
@@ -334,7 +335,8 @@ class _HomeViewState extends State<HomeView> {
                     (photosnapShot.connectionState == ConnectionState.waiting)
                         ? const LoaderWidget()
                         : FutureBuilder(
-                            future: homepageController.loadAllItems(),
+                            future: homepageController.loadAllItems(
+                                ApiConstant.homePageSpecialContentLink),
                             builder: (ctx, homePageSnapShot) {
                               return (homePageSnapShot.connectionState ==
                                       ConnectionState.waiting)

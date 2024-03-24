@@ -2,6 +2,7 @@ import 'package:dummy_app/Controllers/detailpage_controller.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/photo_controller.dart';
 import 'package:dummy_app/Controllers/post_controller.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
 import 'package:dummy_app/Utils/dummy_tags.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
@@ -22,20 +23,24 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailedPostView extends StatelessWidget {
-  final String url, title, description, categoryName, date;
-  const DetailedPostView(
-      {super.key,
-      required this.url,
-      required this.title,
-      required this.description,
-      required this.categoryName,
-      required this.date});
+  final String url, title, description, categoryName, date, imageCaption;
+  final List<String> tags;
+
+  const DetailedPostView({
+    super.key,
+    required this.url,
+    required this.title,
+    required this.description,
+    required this.categoryName,
+    required this.date,
+    required this.imageCaption,
+    required this.tags,
+  });
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<DetailPageController>(context, listen: false).notCommentClick();
     //for test only
-    List<String> tags = DummyTags().categoryTags[categoryName] ?? [];
+    Provider.of<DetailPageController>(context, listen: false).notCommentClick();
     PostController postController = Provider.of<PostController>(context);
     PhotoController photoController = Provider.of<PhotoController>(context);
     HomepageController homepageController =
@@ -53,6 +58,8 @@ class DetailedPostView extends StatelessWidget {
                 //   height: GenericVars.scSize.height * 0.6,
 
                 child: MainHeadPostTile(
+                  tags: tags,
+                  imageCaption: imageCaption,
                   date: date,
                   url: url,
                   title: title,
@@ -75,7 +82,7 @@ class DetailedPostView extends StatelessWidget {
 //post tag tile
               PostTagTile(
                 tagList: tags,
-                crossAxisCount: 2,
+                crossAxisCount: 3,
               ),
 //comment button
 
@@ -129,7 +136,8 @@ class DetailedPostView extends StatelessWidget {
                   }) ,*/
 
               FutureBuilder(
-                  future: homepageController.loadAllItems(),
+                  future: homepageController
+                      .loadAllItems(ApiConstant.homePageSpecialContentLink),
                   builder: (ctx, postSnapShot) {
                     return (postSnapShot.connectionState ==
                             ConnectionState.waiting)
@@ -154,6 +162,7 @@ class DetailedPostView extends StatelessWidget {
     );
   }
 }
+
 /*  Container(
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: ListView(
