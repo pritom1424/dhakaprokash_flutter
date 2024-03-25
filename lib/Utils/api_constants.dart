@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class ApiConstant {
   static int visibleItemCount = 5;
 
@@ -19,7 +17,7 @@ class ApiConstant {
   static String sportsCategoryLink =
       "https://dhakaprokash24.com/api/prismaapi/home/sports";
   static String entertainmentCategoryLink =
-      "https://www.dhakaprokash24.com/entertainment";
+      "https://dhakaprokash24.com/api/prismaapi/home/entertainment";
   static String saradeshCategoryLink =
       "https://dhakaprokash24.com/api/prismaapi/home/saradesh";
   static String courtLawLink =

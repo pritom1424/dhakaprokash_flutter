@@ -13,8 +13,7 @@ class TestPage extends StatelessWidget {
     return Scaffold(
       appBar: AppbarDefault(),
       body: FutureBuilder(
-          future: HomepageController()
-              .loadAllItems(ApiConstant.homePageSpecialContentLink),
+          future: HomepageController().loadAllSpItems(),
           builder: (ctx, snapshot) => (snapshot.connectionState ==
                   ConnectionState.waiting)
               ? CircularProgressIndicator()

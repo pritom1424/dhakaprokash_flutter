@@ -1,6 +1,6 @@
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/video_controller.dart';
-import 'package:dummy_app/Models/dhaka_prokash_data.dart';
+import 'package:dummy_app/Models/dhaka_prokash_sp_model.dart';
 import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
 import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
@@ -19,18 +19,18 @@ import 'package:intl/date_symbol_data_file.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class CategoryWidgetCopy extends StatelessWidget {
+class CategoryWidgetSpecial extends StatelessWidget {
   final String categoryName;
   /*  final List<PhotoModel> photoModels;
   final List<PostModel> postModels; */
-  final List<DhakaProkash> dhakaprokashModels;
+  final List<DhakaProkashSpecialModel> dhakaprokashModels;
 
   final bool didMoreButtonShow;
   final bool didHeadSectionShow;
   final int listItemLength;
   final bool didFloat;
 
-  const CategoryWidgetCopy({
+  const CategoryWidgetSpecial({
     super.key,
     required this.dhakaprokashModels,
     required this.categoryName,
@@ -89,7 +89,7 @@ class CategoryWidgetCopy extends StatelessWidget {
                     .pauseVideoState();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
-                          tags: dhakaprokashModels[0].tags,
+                          tags: dhakaprokashModels[0].tags ?? [],
                           imageCaption:
                               dhakaprokashModels[0].imgbgCaption ?? "",
                           date: DateFormatter().defaultFormatWithTime(
@@ -260,7 +260,7 @@ class CategoryWidgetCopy extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (ctx, index) {
                   return CategoryListTile(
-                    tags: dhakaprokashModels[index + 1].tags,
+                    tags: dhakaprokashModels[index + 1].tags ?? [],
                     imageCaption:
                         dhakaprokashModels[index + 1].imgbgCaption ?? "",
                     categoryName: categoryName,

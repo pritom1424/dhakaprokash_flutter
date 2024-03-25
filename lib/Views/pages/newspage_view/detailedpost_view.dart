@@ -6,7 +6,7 @@ import 'package:dummy_app/Utils/api_constants.dart';
 import 'package:dummy_app/Utils/dummy_tags.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
-import 'package:dummy_app/Views/widgets/categorygrid_widget%20copy.dart';
+import 'package:dummy_app/Views/widgets/categorygrid_widget_sp.dart';
 import 'package:dummy_app/Views/widgets/categorygrid_widget.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/comment_section.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/main_article_tile.dart';
@@ -40,7 +40,11 @@ class DetailedPostView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //for test only
-    Provider.of<DetailPageController>(context, listen: false).notCommentClick();
+    if (Provider.of<DetailPageController>(context, listen: false)
+        .IsCommentClick) {
+      Provider.of<DetailPageController>(context, listen: false)
+          .notCommentClick();
+    }
     PostController postController = Provider.of<PostController>(context);
     PhotoController photoController = Provider.of<PhotoController>(context);
     HomepageController homepageController =
@@ -136,15 +140,14 @@ class DetailedPostView extends StatelessWidget {
                   }) ,*/
 
               FutureBuilder(
-                  future: homepageController
-                      .loadAllItems(ApiConstant.homePageSpecialContentLink),
+                  future: homepageController.loadAllSpItems(),
                   builder: (ctx, postSnapShot) {
                     return (postSnapShot.connectionState ==
                             ConnectionState.waiting)
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
-                        : CategoryGridWidgetCopy(
+                        : CategoryGridWidgetSpecial(
                             dhakaprokashModels: homepageController.Items,
                             categoryName: categoryName,
                             itemCount: 4,

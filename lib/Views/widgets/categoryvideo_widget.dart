@@ -1,6 +1,6 @@
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/video_controller.dart';
-import 'package:dummy_app/Models/dhaka_prokash_data.dart';
+import 'package:dummy_app/Models/dhaka_prokash_sp_model.dart';
 
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
@@ -18,7 +18,7 @@ class CategoryVideoWidget extends StatelessWidget {
   final String categoryName;
   /*  final List<PhotoModel> photoModels;
   final List<PostModel> postModels; */
-  final List<DhakaProkash> dhakaprokashModels;
+  final List<DhakaProkashSpecialModel> dhakaprokashModels;
 
   final bool didMoreButtonShow;
   final bool didHeadSectionShow;

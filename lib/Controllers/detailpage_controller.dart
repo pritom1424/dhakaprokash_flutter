@@ -10,7 +10,7 @@ class DetailPageController with ChangeNotifier {
 
   void notCommentClick() {
     _isCommentClick = false;
-    notifyListeners();
+    // notifyListeners();
   }
 
   bool get IsCommentClick {

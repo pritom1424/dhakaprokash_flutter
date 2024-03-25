@@ -3,7 +3,6 @@ import 'package:dummy_app/Controllers/post_controller.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 
 import 'package:dummy_app/Views/widgets/app_bar.dart';
-import 'package:dummy_app/Views/widgets/category_widget.dart';
 
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
@@ -45,22 +44,7 @@ class FavoritesNewsView extends StatelessWidget {
                     ? Column(
                         children: List.generate(
                             GenericVars.favoritesList.length,
-                            (index) => GenericVars.favoritesList[
-                                index]) /* [
-                          //Category News List
-                         
-        
-                          /* CategoryWidget(
-                            photoModels: photoController.Items,
-                            categoryName: "Favorites",
-                            didMoreButtonShow: false,
-                            didHeadSectionShow: false,
-                            listItemLength: 8,
-                            didFloat: false,
-                          ), */
-                          HomePageFooter()
-                        ] */
-                        )
+                            (index) => GenericVars.favoritesList[index]))
                     : Center(
                         child: Text(
                           "no favorites",

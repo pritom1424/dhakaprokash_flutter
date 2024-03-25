@@ -8,10 +8,11 @@ import 'package:dummy_app/Views/pages/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class CategoryGridTile extends StatelessWidget {
+class CategoryGridTile extends StatefulWidget {
   final String imagePath,
       newsTitle,
       newsDescription,
@@ -37,27 +38,36 @@ class CategoryGridTile extends StatelessWidget {
       required this.tags});
 
   @override
+  State<CategoryGridTile> createState() => _CategoryGridTileState();
+}
+
+class _CategoryGridTileState extends State<CategoryGridTile> {
+  @override
   Widget build(BuildContext context) {
+    String removeHtmlContent(String htmlContent, String targetContent) {
+      return htmlContent.replaceAllMapped(RegExp(targetContent), (match) => '');
+    }
+
     return GestureDetector(
       onTap: () {
         Provider.of<VideoProvider>(context, listen: false).pauseVideoState();
         Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => DetailedPostView(
-                  tags: tags,
-                  imageCaption: imageCaption,
-                  date: DateFormatter().defaultFormatWithTime(dateTime),
-                  categoryName: categoryName,
-                  url: imagePath,
-                  title: newsTitle,
-                  description: newsDescription,
+                  tags: widget.tags,
+                  imageCaption: widget.imageCaption,
+                  date: DateFormatter().defaultFormatWithTime(widget.dateTime),
+                  categoryName: widget.categoryName,
+                  url: widget.imagePath,
+                  title: widget.newsTitle,
+                  description: widget.newsDescription,
                 )));
       },
       child: Card(
-        elevation: elevation,
+        elevation: widget.elevation,
         shadowColor: Colors.black45,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         child: Container(
-          height: GenericVars.scSize.height * cellHeight,
+          height: GenericVars.scSize.height * widget.cellHeight,
           width: double.infinity,
 
           //Category News Row Started
@@ -74,7 +84,7 @@ class CategoryGridTile extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(5),
                       child: Image.network(
-                        imagePath,
+                        widget.imagePath,
                         fit: BoxFit.fitWidth,
                         filterQuality: FilterQuality.low,
                         loadingBuilder: (context, child, loadingProgress) =>
@@ -99,15 +109,24 @@ class CategoryGridTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //title
+
                       Text(
-                        "${StringLimiter().limitString(newsTitle, 25)}",
-                        style: Theme.of(context).textTheme.headlineMedium,
+                        //newsTitle.substring(0, 30),
+                        "${StringLimiter().limitString(widget.newsTitle, 30)}",
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       //description
-                      if (didDescriptionShow)
-                        Text(StringLimiter().limitString(newsTitle, 80)),
+                      if (widget.didDescriptionShow)
+                        HtmlWidget(
+                          removeHtmlContent(
+                              widget.newsDescription.substring(0, 160),
+                              "<p style=\"text-align: justify;\">&nbsp;</p>\r\n<p style=\"text-align: justify;\">"),
+                          textStyle: TextStyle(
+                              fontWeight: FontWeight.w100, fontSize: 16),
+                        ),
+
                       Text(
-                        DateFormatter().defaultFormat(dateTime),
+                        DateFormatter().defaultFormat(widget.dateTime),
                         style: Theme.of(context).textTheme.labelSmall,
                       )
                     ],

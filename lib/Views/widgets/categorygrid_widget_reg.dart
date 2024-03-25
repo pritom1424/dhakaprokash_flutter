@@ -1,8 +1,10 @@
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/video_controller.dart';
-import 'package:dummy_app/Models/dhaka_prokash_data.dart';
+import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
+import 'package:dummy_app/Models/dhaka_prokash_sp_model.dart';
 import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
+import 'package:dummy_app/Utils/dummy_tags.dart';
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
@@ -15,9 +17,9 @@ import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class CategoryGridWidgetCopy extends StatefulWidget {
+class CategoryGridWidgetRegular extends StatefulWidget {
   final String categoryName;
-  final List<DhakaProkash> dhakaprokashModels;
+  final List<DhakaProkashRegularModel> dhakaprokashModels;
   final int itemCount;
 
   final bool didAxisHorizontal;
@@ -26,24 +28,25 @@ class CategoryGridWidgetCopy extends StatefulWidget {
   final bool didDescriptionShow;
   final bool isScroll;
   final double elevation;
+  final double? itemHeight;
 
-  const CategoryGridWidgetCopy({
-    super.key,
-    required this.dhakaprokashModels,
-    required this.categoryName,
-    required this.itemCount,
-    required this.didAxisHorizontal,
-    required this.crossAxisCount,
-    required this.didDescriptionShow,
-    required this.isScroll,
-    required this.elevation,
-  });
+  const CategoryGridWidgetRegular(
+      {super.key,
+      required this.dhakaprokashModels,
+      required this.categoryName,
+      required this.itemCount,
+      required this.didAxisHorizontal,
+      required this.crossAxisCount,
+      required this.didDescriptionShow,
+      required this.isScroll,
+      required this.elevation,
+      this.itemHeight});
 
   @override
-  State<CategoryGridWidgetCopy> createState() => _CategoryGridWidgetState();
+  State<CategoryGridWidgetRegular> createState() => _CategoryGridWidgetState();
 }
 
-class _CategoryGridWidgetState extends State<CategoryGridWidgetCopy> {
+class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
   late ScrollController scController;
   double cellHeight = 0.23;
   double mainAxisSpacing = 10;
@@ -63,6 +66,7 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetCopy> {
 
   @override
   Widget build(BuildContext context) {
+    var tags = DummyTags().categoryTags[widget.categoryName];
     GridView gridWidget() {
       return GridView.builder(
           controller: scController,
@@ -77,16 +81,16 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetCopy> {
           scrollDirection:
               (widget.didAxisHorizontal) ? Axis.horizontal : Axis.vertical,
           itemBuilder: (ctx, index) => CategoryGridTile(
-                tags: widget.dhakaprokashModels[index].tags,
-                imageCaption:
-                    widget.dhakaprokashModels[index].imgbgCaption ?? "",
+                tags: tags ?? [], //widget.dhakaprokashModels[index].tags,
+                imageCaption: "caption",
+                // widget.dhakaprokashModels[index].imgbgCaption ?? "",
                 categoryName: widget.categoryName,
                 imagePath:
                     "https://admin.dhakaprokash24.com/media/content/images/${widget.dhakaprokashModels[index].imgBgPath.toString()}",
                 newsTitle: widget.dhakaprokashModels[index].contentHeading!,
                 newsDescription:
                     widget.dhakaprokashModels[index].contentDetails!,
-                cellHeight: cellHeight,
+                cellHeight: widget.itemHeight ?? cellHeight,
                 didDescriptionShow: widget.didDescriptionShow,
                 elevation: widget.elevation,
                 /*postModels[index].title, */
@@ -137,9 +141,9 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetCopy> {
           //part 3//Category News Lists
           Container(
             height: (widget.didAxisHorizontal)
-                ? GenericVars.scSize.height * cellHeight
+                ? GenericVars.scSize.height * (widget.itemHeight ?? cellHeight)
                 : GenericVars.scSize.height *
-                    cellHeight *
+                    (widget.itemHeight ?? cellHeight) *
                     (widget.itemCount / widget.crossAxisCount).ceil(),
             child: widget.isScroll
                 ? Scrollbar(
