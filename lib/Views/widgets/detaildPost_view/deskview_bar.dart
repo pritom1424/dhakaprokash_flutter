@@ -14,7 +14,10 @@ class DeskViewBar extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (ctx) => CategoryView(categoryName: title))),
+          builder: (ctx) => CategoryView(
+                categoryName: title,
+                categoryLink: null,
+              ))),
       child: Container(
         decoration: const BoxDecoration(
             border: Border.symmetric(

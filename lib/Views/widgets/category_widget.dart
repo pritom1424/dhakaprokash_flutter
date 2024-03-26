@@ -46,8 +46,11 @@ class CategoryWidget extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) =>
-                        CategoryView(categoryName: categoryName)));
+                    builder: (ctx) => CategoryView(
+                          categoryName: categoryName,
+                          categoryLink:
+                              GenericVars.newspaperCategoriesLink[categoryName],
+                        )));
               },
               child: Container(
                   height: GenericVars.scSize.height * 0.07,

@@ -70,8 +70,11 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
               child: TextButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) =>
-                          CategoryView(categoryName: widget.categoryname)));
+                      builder: (ctx) => CategoryView(
+                            categoryName: widget.categoryname,
+                            categoryLink: GenericVars
+                                .newspaperCategoriesLink[widget.categoryname],
+                          )));
                 },
                 child: Text(
                   widget.categoryname,

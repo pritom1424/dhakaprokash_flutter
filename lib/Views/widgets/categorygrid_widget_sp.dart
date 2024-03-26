@@ -107,8 +107,11 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetSpecial> {
               Provider.of<VideoProvider>(context, listen: false)
                   .pauseVideoState();
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) =>
-                      CategoryView(categoryName: widget.categoryName)));
+                  builder: (ctx) => CategoryView(
+                        categoryName: widget.categoryName,
+                        categoryLink: GenericVars
+                            .newspaperCategoriesLink[widget.categoryName],
+                      )));
             },
             child: Container(
               height: GenericVars.scSize.height * 0.07,

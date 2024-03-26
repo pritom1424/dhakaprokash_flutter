@@ -15,9 +15,9 @@ class PostTagTile extends StatelessWidget {
         ? SizedBox.shrink()
         : Container(
             height: GenericVars.scSize.height *
-                cellHeight *
-                (tagList.length / crossAxisCount)
-                    .ceil(), //  (itemCount / crossAxisCount).ceil(),
+                    cellHeight *
+                    (tagList.length / crossAxisCount).ceil() +
+                10, //  (itemCount / crossAxisCount).ceil(),
             width: GenericVars.scSize.width * 1,
             child: GridView.count(
                 crossAxisCount: crossAxisCount,
@@ -32,18 +32,21 @@ class PostTagTile extends StatelessWidget {
                               style: TextButton.styleFrom(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5)),
-                                  padding: EdgeInsets.all(10),
+                                  padding: EdgeInsets.all(5),
                                   backgroundColor:
                                       const Color.fromARGB(255, 193, 222, 235)),
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (ctx) => CategoryView(
-                                        categoryName: tagList[index])));
+                                          categoryName: tagList[index],
+                                          categoryLink: GenericVars
+                                              .newspaperCategoriesLink[null],
+                                        )));
                               },
                               child: Text(
                                 tagList[index],
                                 softWrap: true,
-                                style: TextStyle(fontSize: 15),
+                                style: TextStyle(fontSize: 12),
                               )),
                         ))),
           );

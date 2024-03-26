@@ -172,7 +172,7 @@ class _HomeViewState extends State<HomeView> {
           child: Column(children: [
             CategoryWidgetSpecial(
                 dhakaprokashModels: homepageController.Items,
-                categoryName: 'Recent',
+                categoryName: 'সর্বশেষ',
                 didMoreButtonShow: false,
                 didHeadSectionShow: true,
                 listItemLength: 5,
@@ -181,7 +181,7 @@ class _HomeViewState extends State<HomeView> {
             CategoryVideoWidget(
                 didPause: Provider.of<VideoProvider>(context).IsVideoPause,
                 dhakaprokashModels: homepageController.Items,
-                categoryName: "Video",
+                categoryName: "ভিজ্যুয়াল মিডিয়া",
                 didMoreButtonShow: false,
                 didHeadSectionShow: true,
                 listItemLength: 5,
@@ -189,7 +189,7 @@ class _HomeViewState extends State<HomeView> {
 
             CategoryGridWidgetSpecial(
               dhakaprokashModels: homepageController.Items.sublist(5),
-              categoryName: "More",
+              categoryName: "সর্বশেষ",
               itemCount: 6,
               didAxisHorizontal: false,
               crossAxisCount: 2,
@@ -209,7 +209,7 @@ class _HomeViewState extends State<HomeView> {
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
-                                categoryName: "National",
+                                categoryName: "জাতীয়",
                                 didMoreButtonShow: true,
                                 didHeadSectionShow: true,
                                 listItemLength: 4,
@@ -226,7 +226,7 @@ class _HomeViewState extends State<HomeView> {
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
-                                categoryName: "Politics",
+                                categoryName: "রাজনীতি",
                                 didMoreButtonShow: true,
                                 didHeadSectionShow: true,
                                 listItemLength: 4,
@@ -242,7 +242,7 @@ class _HomeViewState extends State<HomeView> {
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
-                                categoryName: "Economics",
+                                categoryName: "অর্থনীতি",
                                 didMoreButtonShow: true,
                                 didHeadSectionShow: true,
                                 listItemLength: 4,
@@ -258,7 +258,7 @@ class _HomeViewState extends State<HomeView> {
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
-                                categoryName: "International",
+                                categoryName: "সারাবিশ্ব",
                                 didMoreButtonShow: true,
                                 didHeadSectionShow: true,
                                 listItemLength: 4,
@@ -274,7 +274,7 @@ class _HomeViewState extends State<HomeView> {
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
-                                categoryName: "Crime",
+                                categoryName: "অপরাধ",
                                 didMoreButtonShow: true,
                                 didHeadSectionShow: true,
                                 listItemLength: 4,
@@ -290,7 +290,7 @@ class _HomeViewState extends State<HomeView> {
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
-                                categoryName: "Sports",
+                                categoryName: "খেলা",
                                 didMoreButtonShow: true,
                                 didHeadSectionShow: true,
                                 listItemLength: 4,
@@ -306,7 +306,7 @@ class _HomeViewState extends State<HomeView> {
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
-                                categoryName: "Entertainment",
+                                categoryName: "বিনোদন",
                                 didMoreButtonShow: false,
                                 didHeadSectionShow: true,
                                 listItemLength: 4,
@@ -323,7 +323,7 @@ class _HomeViewState extends State<HomeView> {
                         : (snap.hasData)
                             ? CategoryGridWidgetRegular(
                                 dhakaprokashModels: snap.data!,
-                                categoryName: "Lifestyle",
+                                categoryName: "লাইফস্টাইল",
                                 itemCount: 4,
                                 didAxisHorizontal: true,
                                 crossAxisCount: 1,
@@ -343,7 +343,7 @@ class _HomeViewState extends State<HomeView> {
                         : (snap.hasData)
                             ? CategoryGridWidgetRegular(
                                 dhakaprokashModels: snap.data!,
-                                categoryName: "Saradesh",
+                                categoryName: "সারাদেশ",
                                 itemCount: 6,
                                 didAxisHorizontal: false,
                                 crossAxisCount: 2,
@@ -364,7 +364,7 @@ class _HomeViewState extends State<HomeView> {
                         : (snap.hasData)
                             ? CategoryGridWidgetRegular(
                                 dhakaprokashModels: snap.data!,
-                                categoryName: "Court Law",
+                                categoryName: "আইন আদালত",
                                 itemCount: 4,
                                 didAxisHorizontal: true,
                                 crossAxisCount: 1,
@@ -384,7 +384,7 @@ class _HomeViewState extends State<HomeView> {
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
-                                categoryName: "Career",
+                                categoryName: "ক্যারিয়ার",
                                 didMoreButtonShow: true,
                                 didHeadSectionShow: true,
                                 listItemLength: 3,
@@ -400,7 +400,7 @@ class _HomeViewState extends State<HomeView> {
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
-                                categoryName: "Campus",
+                                categoryName: "ক্যাম্পাস",
                                 didMoreButtonShow: true,
                                 didHeadSectionShow: true,
                                 listItemLength: 3,
@@ -416,7 +416,7 @@ class _HomeViewState extends State<HomeView> {
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
-                                categoryName: "Health",
+                                categoryName: "স্বাস্থ্য",
                                 didMoreButtonShow: true,
                                 didHeadSectionShow: true,
                                 listItemLength: 3,

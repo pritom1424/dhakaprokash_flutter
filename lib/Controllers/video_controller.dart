@@ -5,6 +5,7 @@ class VideoProvider with ChangeNotifier {
   bool _isVideoPause = true;
   String _currentVideoLink = "";
   String currentTitle = "";
+  bool isLoading = true;
 
   void pauseVideoState() {
     _isVideoPause = true;
@@ -25,6 +26,11 @@ class VideoProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void changeLoadVideoState() {
+    isLoading = !isLoading;
+    //notifyListeners();
+  }
+
   String get CurrentVideoLink {
     return _currentVideoLink;
   }
@@ -35,5 +41,9 @@ class VideoProvider with ChangeNotifier {
 
   bool get IsVideoPause {
     return _isVideoPause;
+  }
+
+  bool get IsLoading {
+    return isLoading;
   }
 }

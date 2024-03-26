@@ -95,8 +95,11 @@ class _CategoryGridWidgetState extends State<CategoryGridWidget> {
           GestureDetector(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) =>
-                      CategoryView(categoryName: widget.categoryName)));
+                  builder: (ctx) => CategoryView(
+                        categoryName: widget.categoryName,
+                        categoryLink: GenericVars
+                            .newspaperCategoriesLink[widget.categoryName],
+                      )));
             },
             child: Container(
               height: GenericVars.scSize.height * 0.07,

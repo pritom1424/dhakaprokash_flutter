@@ -77,7 +77,9 @@ class DetailedPostView extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                   child: MainArticleTile(
                     articleItems: [
-                      HtmlWidget(description),
+                      HtmlWidget(
+                        description,
+                      ),
                     ],
                   )),
 //Line divider

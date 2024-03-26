@@ -55,8 +55,11 @@ class CategoryWidgetSpecial extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) =>
-                        CategoryView(categoryName: categoryName)));
+                    builder: (ctx) => CategoryView(
+                          categoryName: categoryName,
+                          categoryLink:
+                              GenericVars.newspaperCategoriesLink[categoryName],
+                        )));
               },
               child: Container(
                   height: GenericVars.scSize.height * 0.07,
@@ -95,7 +98,8 @@ class CategoryWidgetSpecial extends StatelessWidget {
                           date: DateFormatter().defaultFormatWithTime(
                               dhakaprokashModels[0].createdAt ??
                                   DateTime.now()),
-                          categoryName: categoryName,
+                          categoryName:
+                              dhakaprokashModels[0].category.catNameBn,
                           url:
                               "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[0].imgBgPath.toString()}",
                           title: dhakaprokashModels[0].contentHeading!,
@@ -263,7 +267,8 @@ class CategoryWidgetSpecial extends StatelessWidget {
                     tags: dhakaprokashModels[index + 1].tags ?? [],
                     imageCaption:
                         dhakaprokashModels[index + 1].imgbgCaption ?? "",
-                    categoryName: categoryName,
+                    categoryName:
+                        dhakaprokashModels[index + 1].category.catNameBn,
                     imagePath:
                         "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index + 1].imgBgPath.toString()}",
                     newsTitle: dhakaprokashModels[index + 1].contentHeading!,

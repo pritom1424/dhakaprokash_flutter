@@ -50,6 +50,9 @@ class CategoryButton extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (ctx) => CategoryView(
+                                categoryLink:
+                                    GenericVars.newspaperCategoriesLink[
+                                        foundCategories[index]],
                                 categoryName: foundCategories[index])));
                   },
                   style: TextButton.styleFrom(

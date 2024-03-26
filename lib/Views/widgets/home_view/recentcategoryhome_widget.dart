@@ -1,5 +1,6 @@
 import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
+import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:dummy_app/Views/pages/home_page.dart';
 import 'package:dummy_app/Views/widgets/home_view/recentcategoryhome_listtile.dart';
@@ -49,6 +50,8 @@ class RecentCategoryHomeWidget extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (ctx) => CategoryView(
+                                categoryLink: GenericVars
+                                    .newspaperCategoriesLink[categoryName],
                                 categoryName: categoryName,
                               )));
                     },

@@ -24,11 +24,16 @@ class CustomAppDrawer extends StatelessWidget {
                 //  Navigator.push(context, MaterialPageRoute(builder: (context) => UserProfile()),);
               },
               child: Container(
+                /*   decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image:
+                            AssetImage("assets/images/dhakaprokash_logo.png"))), */
                 padding: EdgeInsets.only(
                     top: MediaQuery.of(context).padding.top, bottom: 5),
                 child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    //  Image.asset("assets/images/dhakaprokash_logo.png"),
                     CircleAvatar(
                         radius: 52,
                         backgroundImage: AssetImage(
