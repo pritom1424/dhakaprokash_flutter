@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dummy_app/Models/dhaka_prokash_photo_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_sp_model.dart';
 import 'package:dummy_app/Utils/api_constants.dart';
@@ -32,6 +33,17 @@ class HomepageController with ChangeNotifier {
 
     List<DhakaProkashRegularModel> jsonResponse =
         dhakaProkashRegularModelFromJson(utf8.decode(response.bodyBytes));
+
+    return jsonResponse;
+  }
+
+  Future<List<DhakaProkashPhotoModel>> loadAllPhotoItems() async {
+    final url = Uri.parse(ApiConstant.photoGalleryCategoryLink);
+
+    final response = await http.get(url);
+
+    List<DhakaProkashPhotoModel> jsonResponse =
+        dhakaProkashPhotoModelFromJson(utf8.decode(response.bodyBytes));
 
     return jsonResponse;
   }

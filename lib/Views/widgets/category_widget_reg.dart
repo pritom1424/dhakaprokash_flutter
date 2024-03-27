@@ -42,7 +42,7 @@ class CategoryWidgetRegular extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double itemHeight = 0.17;
+    final double itemHeight = 0.13;
     var tags = DummyTags().categoryTags[categoryName];
     return Container(
       //category home widget column startted
@@ -74,7 +74,7 @@ class CategoryWidgetRegular extends StatelessWidget {
                     children: [
                       Text(
                         categoryName,
-                        style: Theme.of(context).textTheme.headlineMedium,
+                        style: Theme.of(context).textTheme.headlineLarge,
                       ),
                       Icon(
                         Icons.arrow_right,
@@ -118,8 +118,8 @@ class CategoryWidgetRegular extends StatelessWidget {
                 width: double.infinity,
                 height: (didFloat)
                     ? GenericVars.scSize.height * 0.35
-                    : GenericVars.scSize.height * 0.50,
-                padding: const EdgeInsets.symmetric(vertical: 5),
+                    : GenericVars.scSize.height * 0.40,
+                padding: const EdgeInsets.symmetric(vertical: 2),
                 child: (didFloat)
                     ? Stack(
                         children: [
@@ -171,7 +171,8 @@ class CategoryWidgetRegular extends StatelessWidget {
                                       // "${StringLimiter().limitString(dhakaprokashModels[0].contentHeading!, 25)} . . .",
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headlineMedium,
+                                          .titleMedium,
+                                      textAlign: TextAlign.justify,
                                     ),
                                     Text(
                                       DateFormatter().defaultFormat(
@@ -223,25 +224,26 @@ class CategoryWidgetRegular extends StatelessWidget {
                                   Text(
                                     dhakaprokashModels[0].contentHeading!,
                                     style:
-                                        Theme.of(context).textTheme.bodyLarge,
+                                        Theme.of(context).textTheme.titleMedium,
                                   ),
-                                  HtmlWidget(
-                                      StringLimiter().limitString(
-                                          dhakaprokashModels[0].contentDetails!,
-                                          120),
-                                      customStylesBuilder: (element) =>
-                                          {'font-weight': 'normal'},
-                                      textStyle: const TextStyle(
-                                          fontFamily: "Helvetica",
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16,
-                                          color: Colors.black38)),
                                   Text(
-                                    DateFormatter().defaultFormat(
-                                        dhakaprokashModels[0].createdAt ??
-                                            DateTime.now()),
-                                    style:
-                                        Theme.of(context).textTheme.labelSmall,
+                                    Bidi.stripHtmlIfNeeded(StringLimiter()
+                                            .limitString(
+                                                dhakaprokashModels[0]
+                                                    .contentDetails!,
+                                                120))
+                                        .trim(),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  FittedBox(
+                                    child: Text(
+                                      DateFormatter().defaultFormat(
+                                          dhakaprokashModels[0].createdAt ??
+                                              DateTime.now()),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall,
+                                    ),
                                   )
                                 ],
                               ),

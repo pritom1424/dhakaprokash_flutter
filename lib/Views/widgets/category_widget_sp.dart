@@ -42,7 +42,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double itemHeight = 0.17;
+    final double itemHeight = 0.13;
 
     return Container(
       //category home widget column startted
@@ -119,8 +119,8 @@ class CategoryWidgetSpecial extends StatelessWidget {
                 width: double.infinity,
                 height: (didFloat)
                     ? GenericVars.scSize.height * 0.45
-                    : GenericVars.scSize.height * 0.50,
-                padding: const EdgeInsets.symmetric(vertical: 5),
+                    : GenericVars.scSize.height * 0.40,
+                padding: const EdgeInsets.symmetric(vertical: 2),
                 child: (didFloat)
                     ? Stack(
                         children: [
@@ -160,7 +160,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                       width: 0.5,
                                       color: Color.fromARGB(255, 129, 127, 127),
                                     )),
-                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                padding: EdgeInsets.symmetric(horizontal: 2),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
@@ -169,6 +169,8 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                     Text(categoryName),
                                     Text(
                                       dhakaprokashModels[0].contentHeading!,
+                                      textAlign: TextAlign.justify,
+
                                       // "${StringLimiter().limitString(dhakaprokashModels[0].contentHeading!, 25)} . . .",
                                       style: Theme.of(context)
                                           .textTheme
@@ -224,19 +226,17 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                   Text(
                                     dhakaprokashModels[0].contentHeading!,
                                     style:
-                                        Theme.of(context).textTheme.bodyLarge,
+                                        Theme.of(context).textTheme.titleMedium,
+                                    textAlign: TextAlign.justify,
                                   ),
-                                  HtmlWidget(
+                                  Text(
+                                    Bidi.stripHtmlIfNeeded(
                                       StringLimiter().limitString(
                                           dhakaprokashModels[0].contentDetails!,
                                           120),
-                                      customStylesBuilder: (element) =>
-                                          {'font-weight': 'normal'},
-                                      textStyle: const TextStyle(
-                                          fontFamily: "Helvetica",
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16,
-                                          color: Colors.black38)),
+                                    ).trim(),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                   Text(
                                     DateFormatter().defaultFormat(
                                         dhakaprokashModels[0].createdAt ??

@@ -15,6 +15,7 @@ import 'package:dummy_app/Views/pages/searchtoNewpage.dart';
 
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/category_avatar_widget.dart';
+import 'package:dummy_app/Views/widgets/category_photo_grid_widget.dart';
 import 'package:dummy_app/Views/widgets/category_widget_reg.dart';
 import 'package:dummy_app/Views/widgets/category_widget_sp.dart';
 import 'package:dummy_app/Views/widgets/categorygrid_widget_reg.dart';
@@ -267,14 +268,14 @@ class _HomeViewState extends State<HomeView> {
             //health
             FutureBuilder(
                 future: homepageController
-                    .loadAllRegItems(ApiConstant.crimeCategoryLink),
+                    .loadAllRegItems(ApiConstant.specialReportCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
                         ? LoaderWidget()
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
-                                categoryName: "অপরাধ",
+                                categoryName: "বিশেষ প্রতিবেদন",
                                 didMoreButtonShow: true,
                                 didHeadSectionShow: true,
                                 listItemLength: 4,
@@ -313,26 +314,6 @@ class _HomeViewState extends State<HomeView> {
                                 didFloat: true)
                             : SizedBox.shrink()),
 
-//lifestyle
-            FutureBuilder(
-                future: homepageController
-                    .loadAllRegItems(ApiConstant.lifeStyleCategoryLink),
-                builder: (ctx, snap) =>
-                    (snap.connectionState == ConnectionState.waiting)
-                        ? LoaderWidget()
-                        : (snap.hasData)
-                            ? CategoryGridWidgetRegular(
-                                dhakaprokashModels: snap.data!,
-                                categoryName: "লাইফস্টাইল",
-                                itemCount: 4,
-                                didAxisHorizontal: true,
-                                crossAxisCount: 1,
-                                didDescriptionShow: true,
-                                isScroll: true,
-                                elevation: 5,
-                                itemHeight: 0.4,
-                              )
-                            : SizedBox.shrink()),
             //saradesh
             FutureBuilder(
                 future: homepageController
@@ -374,6 +355,133 @@ class _HomeViewState extends State<HomeView> {
                                 itemHeight: 0.4,
                               )
                             : SizedBox.shrink()),
+            //crime
+            FutureBuilder(
+                future: homepageController
+                    .loadAllRegItems(ApiConstant.crimeCategoryLink),
+                builder: (ctx, snap) =>
+                    (snap.connectionState == ConnectionState.waiting)
+                        ? LoaderWidget()
+                        : (snap.hasData)
+                            ? CategoryWidgetRegular(
+                                dhakaprokashModels: snap.data!,
+                                categoryName: "অপরাধ",
+                                didMoreButtonShow: true,
+                                didHeadSectionShow: true,
+                                listItemLength: 4,
+                                didFloat: false)
+                            : SizedBox.shrink()),
+
+//lifestyle
+            FutureBuilder(
+                future: homepageController
+                    .loadAllRegItems(ApiConstant.lifeStyleCategoryLink),
+                builder: (ctx, snap) =>
+                    (snap.connectionState == ConnectionState.waiting)
+                        ? LoaderWidget()
+                        : (snap.hasData)
+                            ? CategoryGridWidgetRegular(
+                                dhakaprokashModels: snap.data!,
+                                categoryName: "লাইফস্টাইল",
+                                itemCount: 4,
+                                didAxisHorizontal: true,
+                                crossAxisCount: 1,
+                                didDescriptionShow: true,
+                                isScroll: true,
+                                elevation: 5,
+                                itemHeight: 0.4,
+                              )
+                            : SizedBox.shrink()),
+            //religion
+            FutureBuilder(
+                future: homepageController
+                    .loadAllRegItems(ApiConstant.religionCategoryLink),
+                builder: (ctx, snap) =>
+                    (snap.connectionState == ConnectionState.waiting)
+                        ? LoaderWidget()
+                        : (snap.hasData)
+                            ? CategoryWidgetRegular(
+                                dhakaprokashModels: snap.data!,
+                                categoryName: "ধর্ম",
+                                didMoreButtonShow: true,
+                                didHeadSectionShow: true,
+                                listItemLength: 4,
+                                didFloat: false)
+                            : SizedBox.shrink()),
+            //health
+            FutureBuilder(
+                future: homepageController
+                    .loadAllRegItems(ApiConstant.healthCategoryLink),
+                builder: (ctx, snap) =>
+                    (snap.connectionState == ConnectionState.waiting)
+                        ? LoaderWidget()
+                        : (snap.hasData)
+                            ? CategoryGridWidgetRegular(
+                                dhakaprokashModels: snap.data!,
+                                categoryName: "স্বাস্থ্য",
+                                itemCount: 4,
+                                didAxisHorizontal: false,
+                                crossAxisCount: 2,
+                                didDescriptionShow: false,
+                                isScroll: false,
+                                elevation: 0,
+                                itemHeight: 0.23,
+                              )
+                            : SizedBox.shrink()),
+            //education
+            FutureBuilder(
+                future: homepageController
+                    .loadAllRegItems(ApiConstant.educationCategoryLink),
+                builder: (ctx, snap) =>
+                    (snap.connectionState == ConnectionState.waiting)
+                        ? LoaderWidget()
+                        : (snap.hasData)
+                            ? CategoryWidgetRegular(
+                                dhakaprokashModels: snap.data!,
+                                categoryName: "শিক্ষা",
+                                didMoreButtonShow: true,
+                                didHeadSectionShow: true,
+                                listItemLength: 4,
+                                didFloat: false)
+                            : SizedBox.shrink()),
+            //art-culture
+            FutureBuilder(
+                future: homepageController
+                    .loadAllRegItems(ApiConstant.artCategoryLink),
+                builder: (ctx, snap) =>
+                    (snap.connectionState == ConnectionState.waiting)
+                        ? LoaderWidget()
+                        : (snap.hasData)
+                            ? CategoryWidgetRegular(
+                                dhakaprokashModels: snap.data!,
+                                categoryName: "শিল্প-সংস্কৃতি",
+                                didMoreButtonShow: true,
+                                didHeadSectionShow: true,
+                                listItemLength: 4,
+                                didFloat: false)
+                            : SizedBox.shrink()),
+
+            //science-tech
+            FutureBuilder(
+                future: homepageController
+                    .loadAllRegItems(ApiConstant.scinenceTechCategoryLink),
+                builder: (ctx, snap) =>
+                    (snap.connectionState == ConnectionState.waiting)
+                        ? LoaderWidget()
+                        : (snap.hasData)
+                            ? CategoryGridWidgetRegular(
+                                dhakaprokashModels: snap.data!,
+                                categoryName: "বিজ্ঞান-তথ্যপ্রযুক্তি",
+                                itemCount: 4,
+                                didAxisHorizontal: false,
+                                crossAxisCount: 2,
+                                didDescriptionShow: false,
+                                isScroll: false,
+                                elevation: 0,
+                                itemHeight: 0.23,
+                              )
+                            : SizedBox.shrink()),
+
             //career
             FutureBuilder(
                 future: homepageController
@@ -387,7 +495,7 @@ class _HomeViewState extends State<HomeView> {
                                 categoryName: "ক্যারিয়ার",
                                 didMoreButtonShow: true,
                                 didHeadSectionShow: true,
-                                listItemLength: 3,
+                                listItemLength: 5,
                                 didFloat: false)
                             : SizedBox.shrink()),
             //campus
@@ -406,413 +514,154 @@ class _HomeViewState extends State<HomeView> {
                                 listItemLength: 3,
                                 didFloat: false)
                             : SizedBox.shrink()),
-            //health
+            //child
             FutureBuilder(
                 future: homepageController
-                    .loadAllRegItems(ApiConstant.healthCategoryLink),
+                    .loadAllRegItems(ApiConstant.childCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
                         ? LoaderWidget()
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
-                                categoryName: "স্বাস্থ্য",
+                                categoryName: "শিশু-কিশোর",
+                                didMoreButtonShow: true,
+                                didHeadSectionShow: true,
+                                listItemLength: 3,
+                                didFloat: false)
+                            : SizedBox.shrink()),
+            //motivation
+            FutureBuilder(
+                future: homepageController
+                    .loadAllRegItems(ApiConstant.motivationCategoryLink),
+                builder: (ctx, snap) =>
+                    (snap.connectionState == ConnectionState.waiting)
+                        ? LoaderWidget()
+                        : (snap.hasData)
+                            ? CategoryWidgetRegular(
+                                dhakaprokashModels: snap.data!,
+                                categoryName: "মোটিভেশন",
+                                didMoreButtonShow: true,
+                                didHeadSectionShow: true,
+                                listItemLength: 3,
+                                didFloat: false)
+                            : SizedBox.shrink()),
+            //prbash
+            FutureBuilder(
+                future: homepageController
+                    .loadAllRegItems(ApiConstant.probashCategoryLink),
+                builder: (ctx, snap) =>
+                    (snap.connectionState == ConnectionState.waiting)
+                        ? LoaderWidget()
+                        : (snap.hasData)
+                            ? CategoryWidgetRegular(
+                                dhakaprokashModels: snap.data!,
+                                categoryName: "প্রবাস",
+                                didMoreButtonShow: true,
+                                didHeadSectionShow: true,
+                                listItemLength: 3,
+                                didFloat: false)
+                            : SizedBox.shrink()),
+            //corporate
+            FutureBuilder(
+                future: homepageController
+                    .loadAllRegItems(ApiConstant.corporateCategoryLink),
+                builder: (ctx, snap) =>
+                    (snap.connectionState == ConnectionState.waiting)
+                        ? LoaderWidget()
+                        : (snap.hasData)
+                            ? CategoryWidgetRegular(
+                                dhakaprokashModels: snap.data!,
+                                categoryName: "কর্পোরেট",
+                                didMoreButtonShow: true,
+                                didHeadSectionShow: true,
+                                listItemLength: 3,
+                                didFloat: false)
+                            : SizedBox.shrink()),
+            //literature
+            FutureBuilder(
+                future: homepageController
+                    .loadAllRegItems(ApiConstant.literatureCategoryLink),
+                builder: (ctx, snap) =>
+                    (snap.connectionState == ConnectionState.waiting)
+                        ? LoaderWidget()
+                        : (snap.hasData)
+                            ? CategoryGridWidgetRegular(
+                                dhakaprokashModels: snap.data!,
+                                categoryName: "সাহিত্য",
+                                itemCount: 4,
+                                didAxisHorizontal: false,
+                                crossAxisCount: 2,
+                                didDescriptionShow: false,
+                                isScroll: false,
+                                elevation: 0,
+                                itemHeight: 0.23,
+                              )
+                            : SizedBox.shrink()),
+//motamot
+
+            FutureBuilder(
+                future: homepageController
+                    .loadAllRegItems(ApiConstant.opinionCategoryLink),
+                builder: (ctx, snap) =>
+                    (snap.connectionState == ConnectionState.waiting)
+                        ? LoaderWidget()
+                        : (snap.hasData)
+                            ? CategoryGridWidgetRegular(
+                                dhakaprokashModels: snap.data!,
+                                categoryName: "মতামত",
+                                itemCount: 4,
+                                didAxisHorizontal: true,
+                                crossAxisCount: 1,
+                                didDescriptionShow: true,
+                                isScroll: true,
+                                elevation: 5,
+                                itemHeight: 0.4,
+                              )
+                            : SizedBox.shrink()),
+
+//special article
+
+            FutureBuilder(
+                future: homepageController
+                    .loadAllRegItems(ApiConstant.specialArticleCategoryLink),
+                builder: (ctx, snap) =>
+                    (snap.connectionState == ConnectionState.waiting)
+                        ? LoaderWidget()
+                        : (snap.hasData)
+                            ? CategoryWidgetRegular(
+                                dhakaprokashModels: snap.data!,
+                                categoryName: "বিশেষ নিবন্ধ",
                                 didMoreButtonShow: true,
                                 didHeadSectionShow: true,
                                 listItemLength: 3,
                                 didFloat: false)
                             : SizedBox.shrink()),
 
-            //main news + headline+recent lists
-            /* CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Recent",
-              didMoreButtonShow: false,
-              didHeadSectionShow: true,
-              listItemLength: 10,
-              didFloat: false,
-            ), */
-            //For you
-            /*  CategoryGridWidget(
-              photoModels: phController.Items,
-              categoryName: "For you",
-              itemCount: 4,
-              cellHeight: 0.4,
-              didAxisHorizontal: true,
-              crossAxisCount: 1,
-              mainAxisSpacing: 10,
-              didDescriptionShow: true,
-              isScroll: true,
-              elevation: 5,
-            ), */
-            //tab widget
+            //photo gallery
+            FutureBuilder(
+                future: homepageController.loadAllPhotoItems(),
+                builder: (ctx, snap) =>
+                    (snap.connectionState == ConnectionState.waiting)
+                        ? LoaderWidget()
+                        : (snap.hasData)
+                            ? CategoryPhotoGridWidget(
+                                itemCount: snap.data!.length,
+                                dhakaprokashModels: snap.data!,
+                                didAxisHorizontal: true,
+                                crossAxisCount: 1,
+                                didDescriptionShow: true,
+                                isScroll: true,
+                                elevation: 5)
+                            : SizedBox.shrink()),
 
-            //sports
-            /* CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Sports",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: false,
-            ), */
-            //national news
-            /* CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "National News",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: false,
-            ), */
-            //international news
-            /* CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "International News",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: false,
-            ), */
-
-            //bindon special widget
-            /* CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Entertainment",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: true,
-            ), */
-
-            //life style
-            /*  CategoryGridWidget(
-              photoModels: phController.Items,
-              categoryName: "Lifestyle",
-              itemCount: 4,
-              cellHeight: 0.4,
-              didAxisHorizontal: true,
-              crossAxisCount: 1,
-              mainAxisSpacing: 10,
-              didDescriptionShow: true,
-              isScroll: true,
-              elevation: 5,
-            ), */
-            //motamot special widget
-
-            /*   CategoryAvatatarWidget(
-                photoModels: phController.Items,
-                categoryName: "Opinion/Editorial",
-                didMoreButtonShow: true,
-                listItemLength: 5), */
-
-            /*  CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Business",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ), */
-            //video section
-            /*  CategoryGridWidget(
-              photoModels: phController.Items,
-              categoryName: "Video",
-              itemCount: 5,
-              didAxisHorizontal: true,
-              crossAxisCount: 1,
-              mainAxisSpacing: 10,
-              didDescriptionShow: true,
-              cellHeight: 0.4,
-              isScroll: true,
-              elevation: 5,
-            ), */
-            // education
-            /*  CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Education",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ), */
-            //job
-            /* CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Job",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ), */
-            //science
-            /*  CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Technology",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ), */
-            // gadgets
-            /*    CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Gadgets",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ), */
-            //onno alo
-
-            //dur porobash
-            /*  CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Dur Porobash",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ), */
-            //nagorik shongbad
-            /*   CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Nagorik News",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ), */
-            //Religion
-            /*  CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Religion",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ), */
-            // Health
-            /*  CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Health",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ), */
-            HomePageFooter()
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: HomePageFooter(),
+            )
           ]),
         ),
       ),
     );
   }
 }
-
-
-
-
- /* Widget homeBaseWidgetCopy(
-      HomepageController hcontroller, ScrollController scontroller) {
-    return Scrollbar(
-      thumbVisibility: true,
-      controller: scontroller,
-      //main section started
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        controller: scontroller,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(children: [
-            /*  ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) =>
-                          SpeechScreen() /*VideoTest() TestPage() */));
-                },
-                child: Text("debug")), */
-            //main news + headline+recent lists
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Recent",
-              didMoreButtonShow: false,
-              didHeadSectionShow: true,
-              listItemLength: 10,
-              didFloat: false,
-            ),
-            //For you
-            CategoryGridWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "For you",
-              itemCount: 6,
-              didAxisHorizontal: false,
-              crossAxisCount: 2,
-              didDescriptionShow: true,
-              isScroll: false,
-              elevation: 0,
-            ),
-            //tab widget
-
-            //sports
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Sports",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: false,
-            ),
-            //national news
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "National News",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: false,
-            ),
-            //international news
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "International News",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: false,
-            ),
-
-            //bindon special widget
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Entertainment",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: true,
-            ),
-
-            //life style
-            CategoryGridWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Lifestyle",
-              itemCount: 4,
-              didAxisHorizontal: true,
-              crossAxisCount: 1,
-              didDescriptionShow: true,
-              isScroll: true,
-              elevation: 5,
-            ),
-            //motamot special widget
-
-            /*   CategoryAvatatarWidgetCopy(
-                 dhakaprokashModels: hcontroller.Items,
-                categoryName: "Opinion/Editorial",
-                didMoreButtonShow: true,
-                listItemLength: 5), */
-
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Business",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ),
-            //video section
-            CategoryGridWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Video",
-              itemCount: 5,
-              didAxisHorizontal: true,
-              crossAxisCount: 1,
-              didDescriptionShow: true,
-              isScroll: true,
-              elevation: 5,
-            ),
-            // education
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Education",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //job
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Job",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //science
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Technology",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            // gadgets
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Gadgets",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //onno alo
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Onno ALo",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ),
-            //dur porobash
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Dur Porobash",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //nagorik shongbad
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Nagorik News",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //Religion
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Religion",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ),
-            // Health
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Health",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ),
-            HomePageFooter()
-          ]),
-        ),
-      ),
-    );
-  } */

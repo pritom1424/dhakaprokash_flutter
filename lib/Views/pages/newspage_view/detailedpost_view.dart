@@ -94,8 +94,8 @@ class DetailedPostView extends StatelessWidget {
 
               Consumer<DetailPageController>(
                 builder: (ctx, snap, _) => (snap.IsCommentClick)
-                    ? Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                    ? const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
                         child: CommentSectionWidget(),
                       )
                     : Container(

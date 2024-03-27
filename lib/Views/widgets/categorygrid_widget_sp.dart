@@ -114,7 +114,7 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetSpecial> {
                       )));
             },
             child: Container(
-              height: GenericVars.scSize.height * 0.07,
+              height: GenericVars.scSize.height * 0.06,
               width: double.infinity,
               // padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: const BoxDecoration(

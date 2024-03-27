@@ -113,7 +113,7 @@ class _CategoryGridTileState extends State<CategoryGridTile> {
                       Text(
                         //newsTitle.substring(0, 30),
                         "${StringLimiter().limitString(widget.newsTitle, 30)}",
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: Theme.of(context).textTheme.titleSmall,
                       ),
                       //description
                       if (widget.didDescriptionShow)

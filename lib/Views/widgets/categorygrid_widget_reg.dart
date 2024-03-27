@@ -88,8 +88,8 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
                 imagePath:
                     "https://admin.dhakaprokash24.com/media/content/images/${widget.dhakaprokashModels[index].imgBgPath.toString()}",
                 newsTitle: widget.dhakaprokashModels[index].contentHeading!,
-                newsDescription:
-                    widget.dhakaprokashModels[index].contentDetails!,
+                newsDescription: Bidi.stripHtmlIfNeeded(
+                    widget.dhakaprokashModels[index].contentDetails!),
                 cellHeight: widget.itemHeight ?? cellHeight,
                 didDescriptionShow: widget.didDescriptionShow,
                 elevation: widget.elevation,
@@ -118,7 +118,7 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
                       )));
             },
             child: Container(
-              height: GenericVars.scSize.height * 0.07,
+              height: GenericVars.scSize.height * 0.06,
               width: double.infinity,
               // padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: const BoxDecoration(
@@ -130,7 +130,7 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
                 children: [
                   Text(
                     widget.categoryName,
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   Icon(
                     Icons.arrow_right,

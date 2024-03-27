@@ -68,7 +68,7 @@ class CategoryListTile extends StatelessWidget {
             Expanded(
               //flex: 5,
               child: Container(
-                padding: EdgeInsets.only(right: 5, top: 5),
+                padding: EdgeInsets.only(right: 5, top: 2),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +76,7 @@ class CategoryListTile extends StatelessWidget {
                     Text(
                       //newsTitle,
                       StringLimiter().limitString(newsTitle, 50),
-                      style: Theme.of(context).textTheme.headlineMedium,
+                      style: Theme.of(context).textTheme.titleSmall,
                       textAlign: TextAlign.left,
                     ),
                     Text(
