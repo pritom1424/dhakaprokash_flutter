@@ -4,6 +4,7 @@ import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_sp_model.dart';
 import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
+import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/dummy_tags.dart';
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
@@ -48,8 +49,8 @@ class CategoryGridWidgetRegular extends StatefulWidget {
 
 class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
   late ScrollController scController;
-  double cellHeight = 0.23;
-  double mainAxisSpacing = 10;
+  double cellHeight = 0.15;
+  double mainAxisSpacing = 5;
   @override
   void initState() {
     scController = ScrollController();
@@ -128,13 +129,25 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
                           color: Color.fromARGB(255, 151, 144, 144)))),
               child: Row(
                 children: [
+                  Icon(
+                    Icons.square,
+                    color: AppColors.categoryNameColor,
+                    size: 20,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
                   Text(
                     widget.categoryName,
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: TextStyle(
+                        fontSize:
+                            Theme.of(context).textTheme.titleMedium!.fontSize,
+                        color: AppColors.categoryNameColor,
+                        fontWeight: FontWeight.bold),
                   ),
                   Icon(
                     Icons.arrow_right,
-                    color: Colors.red,
+                    color: AppColors.categoryNameColor,
                   )
                 ],
               ),

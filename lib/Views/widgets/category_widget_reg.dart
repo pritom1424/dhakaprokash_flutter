@@ -4,6 +4,7 @@ import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_sp_model.dart';
 import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
+import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/dummy_tags.dart';
 import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
@@ -72,13 +73,27 @@ class CategoryWidgetRegular extends StatelessWidget {
                               color: Color.fromARGB(255, 151, 144, 144)))), */
                   child: Row(
                     children: [
+                      Icon(
+                        Icons.square,
+                        color: AppColors.categoryNameColor,
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Text(
                         categoryName,
-                        style: Theme.of(context).textTheme.headlineLarge,
+                        style: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .headlineMedium!
+                                .fontSize,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.categoryNameColor),
                       ),
                       Icon(
                         Icons.arrow_right,
-                        color: Colors.red,
+                        color: AppColors.categoryNameColor,
                       ),
                     ],
                   )),

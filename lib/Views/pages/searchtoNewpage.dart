@@ -111,6 +111,19 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
               child: Container(
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: TextField(
+                    onSubmitted: (value) {
+                      didShowList = true;
+                      textEditingController.text =
+                          textEditingController.text.trim();
+                      GenericVars.currentSearchString =
+                          textEditingController.text;
+                      FocusScopeNode currentFocus = FocusScope.of(context);
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
+
+                      setState(() {});
+                    },
                     controller: textEditingController,
                     style: const TextStyle(
                         fontSize: 18,
@@ -159,9 +172,10 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
                                   builder: (ctx) => SearchToNewPage(
                                       textEditingController.text))); */
                             },
-                            icon: Icon(Icons.search)),
-                        hintStyle: TextStyle(color: Colors.grey),
-                        enabledBorder: OutlineInputBorder(
+                            icon: const Icon(Icons.search)),
+                        hintStyle: const TextStyle(
+                            color: Colors.grey, fontWeight: FontWeight.normal),
+                        enabledBorder: const OutlineInputBorder(
                             borderSide:
                                 BorderSide(width: 1, color: Colors.grey))),
                   ))),

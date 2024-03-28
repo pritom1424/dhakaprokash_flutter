@@ -52,7 +52,7 @@ class DetailedPostView extends StatelessWidget {
     return Scaffold(
       appBar: AppbarDefault(),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 5),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

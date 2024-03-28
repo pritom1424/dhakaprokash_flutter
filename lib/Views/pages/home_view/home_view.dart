@@ -119,15 +119,23 @@ class _HomeViewState extends State<HomeView> {
                 builder: (ctx, offset, _) => Visibility(
                   visible: _showScrollToTop,
                   child: FloatingActionButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50)),
+                    backgroundColor: Color.fromARGB(255, 23, 115, 190),
+                    foregroundColor: Colors.white,
+                    elevation: 10,
                     onPressed: () {
 // Scroll to the top logic here
                       _scrollController.animateTo(
                         0.0,
-                        duration: Duration(milliseconds: 500),
+                        duration: const Duration(milliseconds: 500),
                         curve: Curves.easeInOut,
                       );
                     },
-                    child: Icon(Icons.arrow_upward),
+                    child: const Icon(
+                      size: 40,
+                      Icons.arrow_upward,
+                    ),
                   ),
                 ),
               )
@@ -137,7 +145,13 @@ class _HomeViewState extends State<HomeView> {
             : null,
         appBar: (_selectedNavIndex != 5) ? AppbarDefault() : null,
         drawer: CustomAppDrawer(), //AppDrawer(),
-
+        onDrawerChanged: (isOpened) {
+          if (isOpened) {
+            print('Drawer opened');
+          } else {
+            print('Drawer closed');
+          }
+        },
 //navigation bar
         bottomNavigationBar: NavBarWidget(
           currentIndex: _selectedNavIndex,
@@ -150,8 +164,12 @@ class _HomeViewState extends State<HomeView> {
                   return (homePageSnapShot.connectionState ==
                           ConnectionState.waiting)
                       ? const LoaderWidget()
-                      : _NavViews(photoController, _scrollController,
-                          homepageController)[_selectedNavIndex];
+                      : (homePageSnapShot.hasData)
+                          ? _NavViews(photoController, _scrollController,
+                              homepageController)[_selectedNavIndex]
+                          : Center(
+                              child: Text("No data"),
+                            );
                 })
             : _NavViews(photoController, _scrollController, homepageController)[
                 _selectedNavIndex]);
@@ -169,7 +187,7 @@ class _HomeViewState extends State<HomeView> {
         scrollDirection: Axis.vertical,
         controller: scrollController,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 5),
           child: Column(children: [
             CategoryWidgetSpecial(
                 dhakaprokashModels: homepageController.Items,

@@ -3,6 +3,7 @@ import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Models/dhaka_prokash_sp_model.dart';
 import 'package:dummy_app/Models/photo_model.dart';
 import 'package:dummy_app/Models/post_model.dart';
+import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
@@ -46,7 +47,7 @@ class CategoryGridWidgetSpecial extends StatefulWidget {
 class _CategoryGridWidgetState extends State<CategoryGridWidgetSpecial> {
   late ScrollController scController;
   double cellHeight = 0.23;
-  double mainAxisSpacing = 10;
+  double mainAxisSpacing = 2;
   @override
   void initState() {
     scController = ScrollController();
@@ -123,14 +124,26 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetSpecial> {
                           width: 0.3,
                           color: Color.fromARGB(255, 151, 144, 144)))),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    widget.categoryName,
-                    style: Theme.of(context).textTheme.bodyLarge,
+                  Icon(
+                    Icons.square,
+                    color: AppColors.categoryNameColor,
+                    size: 20,
                   ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(widget.categoryName,
+                      style: TextStyle(
+                          fontSize:
+                              Theme.of(context).textTheme.titleMedium!.fontSize,
+                          color: AppColors.categoryNameColor,
+                          fontWeight: FontWeight.bold)),
                   Icon(
                     Icons.arrow_right,
-                    color: Colors.red,
+                    color: AppColors.categoryNameColor,
                   )
                 ],
               ),

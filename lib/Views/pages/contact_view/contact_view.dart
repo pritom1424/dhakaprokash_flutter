@@ -19,11 +19,12 @@ class ContactView extends StatelessWidget {
       if (schema.contains(websiteSchema)) {
         if (!await launchUrl(Uri.parse(link))) throw 'Could not launch $link';
       } else {
-        if (await canLaunchUrl(launchUri)) {
+        if (!await launchUrl(launchUri)) throw 'Could not launch $link';
+        /* if (await canLaunchUrl(launchUri)) {
           await launchUrl(launchUri, mode: LaunchMode.externalApplication);
         } else {
           throw 'Could not launch $launchUri';
-        }
+        } */
       }
     }
 

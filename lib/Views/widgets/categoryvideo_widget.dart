@@ -1,6 +1,7 @@
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Models/dhaka_prokash_sp_model.dart';
+import 'package:dummy_app/Utils/app_colors.dart';
 
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
@@ -39,7 +40,7 @@ class CategoryVideoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double itemHeight = 0.09;
+    final double itemHeight = 0.06;
     final vId =
         YoutubePlayer.convertUrlToId(GenericVars.getVideoData[0]['url']!);
     return Container(
@@ -70,13 +71,21 @@ class CategoryVideoWidget extends StatelessWidget {
                               color: Color.fromARGB(255, 151, 144, 144)))), */
                   child: Row(
                     children: [
+                      Icon(
+                        Icons.square,
+                        color: AppColors.categoryNameColor,
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Text(
                         categoryName,
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                       Icon(
                         Icons.arrow_right,
-                        color: Colors.red,
+                        color: AppColors.categoryNameColor,
                       ),
                     ],
                   )),
@@ -158,7 +167,7 @@ class CategoryVideoWidget extends StatelessWidget {
                           leading: CircleAvatar(
                             backgroundImage:
                                 AssetImage("assets/images/video_play_icon.png"),
-                            radius: 20,
+                            radius: 15,
                           ),
                           title: Container(
                             child: Text(
@@ -167,7 +176,7 @@ class CategoryVideoWidget extends StatelessWidget {
                             ),
                           ),
                           titleTextStyle: TextStyle(
-                              fontSize: 20,
+                              fontSize: 15,
                               color: Colors.black,
                               fontWeight: FontWeight.normal,
                               fontFamily: GenericVars.currenFontFamily),

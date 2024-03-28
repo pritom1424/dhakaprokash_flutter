@@ -19,11 +19,12 @@ class HomePageFooter extends StatelessWidget {
       if (schema.contains(websiteSchema)) {
         if (!await launchUrl(Uri.parse(link))) throw 'Could not launch $link';
       } else {
-        if (await canLaunchUrl(launchUri)) {
+        if (!await launchUrl(launchUri)) throw 'Could not launch $link';
+        /* if (await canLaunchUrl(launchUri)) {
           await launchUrl(launchUri, mode: LaunchMode.externalApplication);
         } else {
           throw 'Could not launch $launchUri';
-        }
+        } */
       }
     }
 
@@ -104,6 +105,10 @@ class HomePageFooter extends StatelessWidget {
                 Padding(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child: Text("93, Kazi Nazrul Islam Avenue")),
+                Container(
+                  color: Colors.deepPurple,
+                  height: GenericVars.scSize.height * 0.05,
+                )
               ],
             ),
           ),

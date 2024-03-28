@@ -1,4 +1,5 @@
 import 'package:dummy_app/Models/dhaka_prokash_photo_model.dart';
+import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -63,13 +64,24 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                       width: 0.3, color: Color.fromARGB(255, 151, 144, 144)))),
           child: Row(
             children: [
+              Icon(
+                Icons.square,
+                color: AppColors.categoryNameColor,
+                size: 20,
+              ),
+              SizedBox(
+                width: 10,
+              ),
               Text(
                 "ফটো গ্যালারি",
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: TextStyle(
+                    fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
+                    color: AppColors.categoryNameColor,
+                    fontWeight: FontWeight.bold),
               ),
               Icon(
                 Icons.arrow_right,
-                color: Colors.red,
+                color: AppColors.categoryNameColor,
               )
             ],
           ),
