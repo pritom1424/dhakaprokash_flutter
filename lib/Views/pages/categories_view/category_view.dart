@@ -1,11 +1,7 @@
 import 'package:dummy_app/Controllers/homepage_controller.dart';
-import 'package:dummy_app/Controllers/photo_controller.dart';
-import 'package:dummy_app/Controllers/post_controller.dart';
 
 import 'package:dummy_app/Views/widgets/app_bar.dart';
-import 'package:dummy_app/Views/widgets/category_widget_reg.dart';
-
-import 'package:dummy_app/Views/widgets/category_widget_sp.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_reg.dart';
 
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
@@ -24,8 +20,6 @@ class CategoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PostController postController = Provider.of<PostController>(context);
-    PhotoController photoController = Provider.of<PhotoController>(context);
     HomepageController homepageController = Provider.of(context, listen: false);
     return Scaffold(
       appBar: AppbarDefault(),

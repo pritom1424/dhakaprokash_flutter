@@ -1,7 +1,7 @@
 import 'package:dummy_app/Utils/dummy_tags.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
-import 'package:dummy_app/Views/widgets/categorylist_tile.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/categorylist_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/deskview_bar.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/followpost_bar.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/posttag_tile.dart';

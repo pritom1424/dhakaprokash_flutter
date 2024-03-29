@@ -1,26 +1,21 @@
 import 'package:dummy_app/Controllers/detailpage_controller.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
-import 'package:dummy_app/Controllers/photo_controller.dart';
-import 'package:dummy_app/Controllers/post_controller.dart';
-import 'package:dummy_app/Utils/api_constants.dart';
-import 'package:dummy_app/Utils/dummy_tags.dart';
+
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
-import 'package:dummy_app/Views/widgets/categorygrid_widget_sp.dart';
-import 'package:dummy_app/Views/widgets/categorygrid_widget.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_sp.dart';
+
 import 'package:dummy_app/Views/widgets/detaildPost_view/comment_section.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/main_article_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/mainposthead_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/posttag_tile.dart';
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DetailedPostView extends StatelessWidget {
   final String url, title, description, categoryName, date, imageCaption;
@@ -45,8 +40,7 @@ class DetailedPostView extends StatelessWidget {
       Provider.of<DetailPageController>(context, listen: false)
           .notCommentClick();
     }
-    PostController postController = Provider.of<PostController>(context);
-    PhotoController photoController = Provider.of<PhotoController>(context);
+
     HomepageController homepageController =
         Provider.of<HomepageController>(context);
     return Scaffold(

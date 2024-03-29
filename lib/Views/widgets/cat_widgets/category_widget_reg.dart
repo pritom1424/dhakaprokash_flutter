@@ -1,37 +1,31 @@
-import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/video_controller.dart';
-import 'package:dummy_app/Models/dhaka_prokash_sp_model.dart';
-import 'package:dummy_app/Models/photo_model.dart';
-import 'package:dummy_app/Models/post_model.dart';
+import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
+
 import 'package:dummy_app/Utils/app_colors.dart';
+import 'package:dummy_app/Utils/dummy_tags.dart';
 import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
-import 'package:dummy_app/Views/pages/home_page.dart';
+
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
-import 'package:dummy_app/Views/widgets/categorylist_tile.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/categorylist_tile.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-import 'package:intl/date_symbol_data_file.dart';
+
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class CategoryWidgetSpecial extends StatelessWidget {
+class CategoryWidgetRegular extends StatelessWidget {
   final String categoryName;
-  /*  final List<PhotoModel> photoModels;
-  final List<PostModel> postModels; */
-  final List<DhakaProkashSpecialModel> dhakaprokashModels;
+  final List<DhakaProkashRegularModel> dhakaprokashModels;
 
   final bool didMoreButtonShow;
   final bool didHeadSectionShow;
   final int listItemLength;
   final bool didFloat;
 
-  const CategoryWidgetSpecial({
+  const CategoryWidgetRegular({
     super.key,
     required this.dhakaprokashModels,
     required this.categoryName,
@@ -44,7 +38,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double itemHeight = 0.13;
-
+    var tags = DummyTags().categoryTags[categoryName];
     return Container(
       //category home widget column startted
       child: Column(
@@ -73,6 +67,14 @@ class CategoryWidgetSpecial extends StatelessWidget {
                               color: Color.fromARGB(255, 151, 144, 144)))), */
                   child: Row(
                     children: [
+                      const Icon(
+                        Icons.square,
+                        color: AppColors.categoryNameColor,
+                        size: 20,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
                       Text(
                         categoryName,
                         style: TextStyle(
@@ -83,7 +85,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             color: AppColors.categoryNameColor),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.arrow_right,
                         color: AppColors.categoryNameColor,
                       ),
@@ -99,14 +101,13 @@ class CategoryWidgetSpecial extends StatelessWidget {
                     .pauseVideoState();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
-                          tags: dhakaprokashModels[0].tags ?? [],
+                          tags: tags ?? [], //dhakaprokashModels[0].tags,
                           imageCaption:
-                              dhakaprokashModels[0].imgbgCaption ?? "",
+                              "caption", //dhakaprokashModels[0].imgBgCaption ?? "",
                           date: DateFormatter().defaultFormatWithTime(
                               dhakaprokashModels[0].createdAt ??
                                   DateTime.now()),
-                          categoryName:
-                              dhakaprokashModels[0].category.catNameBn,
+                          categoryName: categoryName,
                           url:
                               "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[0].imgBgPath.toString()}",
                           title: dhakaprokashModels[0].contentHeading!,
@@ -125,7 +126,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                 width: 0, color: Colors.transparent))),
                 width: double.infinity,
                 height: (didFloat)
-                    ? GenericVars.scSize.height * 0.45
+                    ? GenericVars.scSize.height * 0.35
                     : GenericVars.scSize.height * 0.40,
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 child: (didFloat)
@@ -167,7 +168,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                       width: 0.5,
                                       color: Color.fromARGB(255, 129, 127, 127),
                                     )),
-                                padding: EdgeInsets.symmetric(horizontal: 2),
+                                padding: EdgeInsets.symmetric(horizontal: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
@@ -176,12 +177,11 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                     Text(categoryName),
                                     Text(
                                       dhakaprokashModels[0].contentHeading!,
-                                      textAlign: TextAlign.justify,
-
                                       // "${StringLimiter().limitString(dhakaprokashModels[0].contentHeading!, 25)} . . .",
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headlineMedium,
+                                          .titleMedium,
+                                      textAlign: TextAlign.justify,
                                     ),
                                     Text(
                                       DateFormatter().defaultFormat(
@@ -234,22 +234,25 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                     dhakaprokashModels[0].contentHeading!,
                                     style:
                                         Theme.of(context).textTheme.titleMedium,
-                                    textAlign: TextAlign.justify,
                                   ),
                                   Text(
-                                    Bidi.stripHtmlIfNeeded(
-                                      StringLimiter().limitString(
-                                          dhakaprokashModels[0].contentDetails!,
-                                          120),
-                                    ).trim(),
+                                    Bidi.stripHtmlIfNeeded(StringLimiter()
+                                            .limitString(
+                                                dhakaprokashModels[0]
+                                                    .contentDetails!,
+                                                120))
+                                        .trim(),
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  Text(
-                                    DateFormatter().defaultFormat(
-                                        dhakaprokashModels[0].createdAt ??
-                                            DateTime.now()),
-                                    style:
-                                        Theme.of(context).textTheme.labelSmall,
+                                  FittedBox(
+                                    child: Text(
+                                      DateFormatter().defaultFormat(
+                                          dhakaprokashModels[0].createdAt ??
+                                              DateTime.now()),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall,
+                                    ),
                                   )
                                 ],
                               ),
@@ -271,11 +274,10 @@ class CategoryWidgetSpecial extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (ctx, index) {
                   return CategoryListTile(
-                    tags: dhakaprokashModels[index + 1].tags ?? [],
-                    imageCaption:
-                        dhakaprokashModels[index + 1].imgbgCaption ?? "",
-                    categoryName:
-                        dhakaprokashModels[index + 1].category.catNameBn,
+                    tags: tags ?? [], //dhakaprokashModels[index + 1].tags,
+                    imageCaption: "caption",
+                    // dhakaprokashModels[index + 1].imgbgCaption ?? "",
+                    categoryName: categoryName,
                     imagePath:
                         "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index + 1].imgBgPath.toString()}",
                     newsTitle: dhakaprokashModels[index + 1].contentHeading!,

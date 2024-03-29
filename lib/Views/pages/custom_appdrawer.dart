@@ -1,9 +1,7 @@
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_drawer/category_buttonList.dart';
-import 'package:dummy_app/Views/widgets/follow_social.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CustomAppDrawer extends StatelessWidget {
   const CustomAppDrawer({super.key});

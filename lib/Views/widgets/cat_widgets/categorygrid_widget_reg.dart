@@ -1,24 +1,22 @@
-import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/video_controller.dart';
-import 'package:dummy_app/Models/dhaka_prokash_sp_model.dart';
-import 'package:dummy_app/Models/photo_model.dart';
-import 'package:dummy_app/Models/post_model.dart';
+import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
+
 import 'package:dummy_app/Utils/app_colors.dart';
-import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
+import 'package:dummy_app/Utils/dummy_tags.dart';
+
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
-import 'package:dummy_app/Views/pages/home_page.dart';
-import 'package:dummy_app/Views/widgets/categorygrid_tile.dart';
-import 'package:dummy_app/Views/widgets/categorylist_tile.dart';
-import 'package:flutter/cupertino.dart';
+
+import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_tile.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class CategoryGridWidgetSpecial extends StatefulWidget {
+class CategoryGridWidgetRegular extends StatefulWidget {
   final String categoryName;
-  final List<DhakaProkashSpecialModel> dhakaprokashModels;
+  final List<DhakaProkashRegularModel> dhakaprokashModels;
   final int itemCount;
 
   final bool didAxisHorizontal;
@@ -27,27 +25,28 @@ class CategoryGridWidgetSpecial extends StatefulWidget {
   final bool didDescriptionShow;
   final bool isScroll;
   final double elevation;
+  final double? itemHeight;
 
-  const CategoryGridWidgetSpecial({
-    super.key,
-    required this.dhakaprokashModels,
-    required this.categoryName,
-    required this.itemCount,
-    required this.didAxisHorizontal,
-    required this.crossAxisCount,
-    required this.didDescriptionShow,
-    required this.isScroll,
-    required this.elevation,
-  });
+  const CategoryGridWidgetRegular(
+      {super.key,
+      required this.dhakaprokashModels,
+      required this.categoryName,
+      required this.itemCount,
+      required this.didAxisHorizontal,
+      required this.crossAxisCount,
+      required this.didDescriptionShow,
+      required this.isScroll,
+      required this.elevation,
+      this.itemHeight});
 
   @override
-  State<CategoryGridWidgetSpecial> createState() => _CategoryGridWidgetState();
+  State<CategoryGridWidgetRegular> createState() => _CategoryGridWidgetState();
 }
 
-class _CategoryGridWidgetState extends State<CategoryGridWidgetSpecial> {
+class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
   late ScrollController scController;
-  double cellHeight = 0.23;
-  double mainAxisSpacing = 2;
+  double cellHeight = 0.15;
+  double mainAxisSpacing = 5;
   @override
   void initState() {
     scController = ScrollController();
@@ -64,6 +63,7 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetSpecial> {
 
   @override
   Widget build(BuildContext context) {
+    var tags = DummyTags().categoryTags[widget.categoryName];
     GridView gridWidget() {
       return GridView.builder(
           controller: scController,
@@ -78,16 +78,16 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetSpecial> {
           scrollDirection:
               (widget.didAxisHorizontal) ? Axis.horizontal : Axis.vertical,
           itemBuilder: (ctx, index) => CategoryGridTile(
-                tags: widget.dhakaprokashModels[index].tags ?? [],
-                imageCaption:
-                    widget.dhakaprokashModels[index].imgbgCaption ?? "",
+                tags: tags ?? [], //widget.dhakaprokashModels[index].tags,
+                imageCaption: "caption",
+                // widget.dhakaprokashModels[index].imgbgCaption ?? "",
                 categoryName: widget.categoryName,
                 imagePath:
                     "https://admin.dhakaprokash24.com/media/content/images/${widget.dhakaprokashModels[index].imgBgPath.toString()}",
                 newsTitle: widget.dhakaprokashModels[index].contentHeading!,
-                newsDescription:
-                    widget.dhakaprokashModels[index].contentDetails!,
-                cellHeight: cellHeight,
+                newsDescription: Bidi.stripHtmlIfNeeded(
+                    widget.dhakaprokashModels[index].contentDetails!),
+                cellHeight: widget.itemHeight ?? cellHeight,
                 didDescriptionShow: widget.didDescriptionShow,
                 elevation: widget.elevation,
                 /*postModels[index].title, */
@@ -124,8 +124,6 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetSpecial> {
                           width: 0.3,
                           color: Color.fromARGB(255, 151, 144, 144)))),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Icon(
                     Icons.square,
@@ -135,12 +133,14 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetSpecial> {
                   SizedBox(
                     width: 10,
                   ),
-                  Text(widget.categoryName,
-                      style: TextStyle(
-                          fontSize:
-                              Theme.of(context).textTheme.titleMedium!.fontSize,
-                          color: AppColors.categoryNameColor,
-                          fontWeight: FontWeight.bold)),
+                  Text(
+                    widget.categoryName,
+                    style: TextStyle(
+                        fontSize:
+                            Theme.of(context).textTheme.titleMedium!.fontSize,
+                        color: AppColors.categoryNameColor,
+                        fontWeight: FontWeight.bold),
+                  ),
                   Icon(
                     Icons.arrow_right,
                     color: AppColors.categoryNameColor,
@@ -153,9 +153,9 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetSpecial> {
           //part 3//Category News Lists
           Container(
             height: (widget.didAxisHorizontal)
-                ? GenericVars.scSize.height * cellHeight
+                ? GenericVars.scSize.height * (widget.itemHeight ?? cellHeight)
                 : GenericVars.scSize.height *
-                    cellHeight *
+                    (widget.itemHeight ?? cellHeight) *
                     (widget.itemCount / widget.crossAxisCount).ceil(),
             child: widget.isScroll
                 ? Scrollbar(

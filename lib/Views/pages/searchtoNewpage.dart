@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
-import 'package:dummy_app/Controllers/photo_controller.dart';
-import 'package:dummy_app/Controllers/post_controller.dart';
+
 import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-import 'package:dummy_app/Views/widgets/category_widget_reg.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_reg.dart';
 
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
 
@@ -97,8 +96,6 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
 
   @override
   Widget build(BuildContext context) {
-    PostController postController = Provider.of<PostController>(context);
-    PhotoController photoController = Provider.of<PhotoController>(context);
     HomepageController homepageController = Provider.of(context, listen: false);
 
     return Scaffold(

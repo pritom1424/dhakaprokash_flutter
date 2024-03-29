@@ -1,23 +1,22 @@
-import 'package:dummy_app/Models/photo_model.dart';
-import 'package:dummy_app/Models/post_model.dart';
+import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
+
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
-import 'package:dummy_app/Views/pages/home_page.dart';
-import 'package:dummy_app/Views/widgets/categoryavatarlist_%20tile.dart';
-import 'package:dummy_app/Views/widgets/categorylist_tile.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/categoryavatarlist_%20tile.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CategoryAvatatarWidget extends StatelessWidget {
   final String categoryName;
-  final List<PhotoModel> photoModels;
+  final List<DhakaProkashRegularModel> dhakaProkashRegModels;
 
   final bool didMoreButtonShow;
   final int listItemLength;
 
   const CategoryAvatatarWidget({
     super.key,
-    required this.photoModels,
+    required this.dhakaProkashRegModels,
     required this.categoryName,
     required this.didMoreButtonShow,
     required this.listItemLength,
@@ -80,9 +79,14 @@ class CategoryAvatatarWidget extends StatelessWidget {
                     return CategoryAvatarListTile(
                         name: "name",
                         categoryName: categoryName,
-                        imagePath: photoModels[index].url,
-                        newsTitle: photoModels[index].title,
-                        newsDescription: photoModels[index].description,
+                        imagePath: dhakaProkashRegModels[index].imgBgPath ??
+                            "assets/images/character_placeholder.png",
+                        newsTitle:
+                            dhakaProkashRegModels[index].contentHeading ??
+                                "not found",
+                        newsDescription:
+                            dhakaProkashRegModels[index].contentDetails ??
+                                "not found",
                         itemHeight: itemHeight,
                         /*postModels[index].title, */
                         newsDate: DateFormat.yMEd().format(DateTime.now()));

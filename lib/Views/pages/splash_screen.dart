@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:dummy_app/Controllers/post_controller.dart';
-import 'package:dummy_app/Views/pages/home_page.dart';
 import 'package:dummy_app/Views/pages/home_view/home_view.dart';
-import 'package:dummy_app/Views/pages/post_view.dart';
+
 import 'package:flutter/material.dart';
 
 class SplasScreen extends StatefulWidget {

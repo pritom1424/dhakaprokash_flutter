@@ -1,22 +1,18 @@
 import 'package:dummy_app/Controllers/detailpage_controller.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/login_controller.dart';
-import 'package:dummy_app/Controllers/photo_controller.dart';
-import 'package:dummy_app/Controllers/post_controller.dart';
+
 import 'package:dummy_app/Controllers/registration_controller.dart';
 import 'package:dummy_app/Controllers/video_controller.dart';
-import 'package:dummy_app/Models/post_model.dart';
 
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Utils/scroll_controller.dart';
-import 'package:dummy_app/Views/pages/home_view/home_view.dart';
-import 'package:dummy_app/Views/pages/login_page.dart';
+
 import 'package:dummy_app/Views/pages/splash_screen.dart';
-import 'package:dummy_app/search_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/date_symbol_data_file.dart';
-import 'package:intl/intl.dart';
+
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart' as ds;
 
@@ -30,8 +26,6 @@ void main() async {
   await ds.initializeDateFormatting('bn');
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (_) => PostController()),
-      ChangeNotifierProvider(create: (_) => PhotoController()),
       ChangeNotifierProvider(create: (_) => LoginProvider()),
       ChangeNotifierProvider(
         create: (_) => RegistrationProvider(),

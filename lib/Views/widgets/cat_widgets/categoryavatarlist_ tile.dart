@@ -1,9 +1,7 @@
 import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
-import 'package:dummy_app/Views/pages/home_page.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CategoryAvatarListTile extends StatelessWidget {
   final String imagePath,
