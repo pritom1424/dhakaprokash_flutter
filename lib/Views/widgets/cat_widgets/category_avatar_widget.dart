@@ -77,6 +77,7 @@ class CategoryAvatatarWidget extends StatelessWidget {
                 itemBuilder: (ctx, index) {
                   if (index < listItemLength) {
                     return CategoryAvatarListTile(
+                        id: dhakaProkashRegModels[index].contentId ?? -1,
                         name: "name",
                         categoryName: categoryName,
                         imagePath: dhakaProkashRegModels[index].imgBgPath ??
@@ -89,7 +90,7 @@ class CategoryAvatatarWidget extends StatelessWidget {
                                 "not found",
                         itemHeight: itemHeight,
                         /*postModels[index].title, */
-                        newsDate: DateFormat.yMEd().format(DateTime.now()));
+                        dateTime: DateTime.now());
                   } else {
                     return Container();
                   }

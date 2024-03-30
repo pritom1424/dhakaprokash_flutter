@@ -78,6 +78,7 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
           scrollDirection:
               (widget.didAxisHorizontal) ? Axis.horizontal : Axis.vertical,
           itemBuilder: (ctx, index) => CategoryGridTile(
+                id: widget.dhakaprokashModels[index].contentId ?? -1,
                 tags: tags ?? [], //widget.dhakaprokashModels[index].tags,
                 imageCaption: "caption",
                 // widget.dhakaprokashModels[index].imgbgCaption ?? "",

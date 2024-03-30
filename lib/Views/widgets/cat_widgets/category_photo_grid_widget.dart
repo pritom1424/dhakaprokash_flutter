@@ -1,9 +1,7 @@
 import 'package:dummy_app/Models/dhaka_prokash_photo_model.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CategoryPhotoGridWidget extends StatefulWidget {
   final List<DhakaProkashPhotoModel> dhakaprokashModels;
@@ -64,12 +62,12 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                       width: 0.3, color: Color.fromARGB(255, 151, 144, 144)))),
           child: Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.square,
                 color: AppColors.categoryNameColor,
                 size: 20,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Text(
@@ -79,7 +77,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                     color: AppColors.categoryNameColor,
                     fontWeight: FontWeight.bold),
               ),
-              Icon(
+              const Icon(
                 Icons.arrow_right,
                 color: AppColors.categoryNameColor,
               )
@@ -95,8 +93,8 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                 controller: scController,
                 itemCount: widget.itemCount,
                 physics: (widget.isScroll)
-                    ? AlwaysScrollableScrollPhysics()
-                    : NeverScrollableScrollPhysics(),
+                    ? const AlwaysScrollableScrollPhysics()
+                    : const NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: widget.crossAxisCount,
                   mainAxisSpacing: mainAxisSpacing,
@@ -141,7 +139,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                                   Flexible(
                                       flex: 1,
                                       child: Padding(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             horizontal: 5, vertical: 2),
                                         child: Text(
                                           widget.dhakaprokashModels[index]
@@ -152,7 +150,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                                 ],
                               ),
                             ),
-                            Align(
+                            const Align(
                                 alignment: Alignment.topLeft,
                                 child: CircleAvatar(
                                     backgroundColor: Colors.white60,

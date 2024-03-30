@@ -49,7 +49,7 @@ class CategoryView extends StatelessWidget {
                               SliverList(
                                   delegate: SliverChildListDelegate([
                                 Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  padding: EdgeInsets.symmetric(horizontal: 8),
                                   child: Column(children: [
                                     //Category News List
 

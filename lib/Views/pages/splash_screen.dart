@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dummy_app/Views/pages/home_view/home_view.dart';
+import 'package:dummy_app/Views/widgets/splash_screen/logo_anim.dart';
 
 import 'package:flutter/material.dart';
 
@@ -40,6 +41,7 @@ class _SplasScreenState extends State<SplasScreen> {
               ),
             ),
           ),
+          LogoAnimation()
         ],
       ),
     );

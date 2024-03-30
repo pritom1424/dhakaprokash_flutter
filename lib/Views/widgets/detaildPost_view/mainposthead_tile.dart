@@ -1,29 +1,32 @@
-import 'package:dummy_app/Utils/dummy_tags.dart';
+import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/categorylist_tile.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/favlist_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/deskview_bar.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/followpost_bar.dart';
-import 'package:dummy_app/Views/widgets/detaildPost_view/posttag_tile.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dummy_app/database/database_helper.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class MainHeadPostTile extends StatefulWidget {
-  final String url, title, categoryname, description, date, imageCaption;
-  final bool isBookmark;
-  final List<String> tags;
+  final String? url, title, categoryname, description, imageCaption;
+  final DateTime dateTime;
+
+  final List<String>? tags;
+  final int id;
   const MainHeadPostTile({
     super.key,
     required this.url,
     required this.title,
     required this.categoryname,
-    required this.isBookmark,
     required this.description,
-    required this.date,
     required this.imageCaption,
     required this.tags,
+    required this.dateTime,
+    required this.id,
   });
 
   @override
@@ -51,9 +54,15 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
 
   @override
   void initState() {
-    currentBookmark = widget.isBookmark;
+    currentBookmark =
+        GenericVars.favoritesList!.any((element) => element.id == widget.id);
     // TODO: implement initState
     super.initState();
+  }
+
+  void refreshPosts() async {
+    GenericVars.favoritesList = await DatabaseHelper().getPosts();
+    setState(() {});
   }
 
   @override
@@ -71,13 +80,13 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => CategoryView(
-                            categoryName: widget.categoryname,
+                            categoryName: widget.categoryname ?? "category",
                             categoryLink: GenericVars
                                 .newspaperCategoriesLink[widget.categoryname],
                           )));
                 },
                 child: Text(
-                  widget.categoryname,
+                  widget.categoryname ?? "category",
                   style: const TextStyle(
                       color: Color.fromARGB(255, 24, 112, 184),
                       fontSize: 18,
@@ -89,7 +98,7 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
             child: Text(
-              widget.title,
+              widget.title ?? "title",
               style: Theme.of(context).textTheme.headlineLarge,
               textAlign: TextAlign.start,
             ),
@@ -105,10 +114,11 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
       ), */
 //desk view
           Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: DeskViewBar(
-                date: widget.date,
-              )),
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: DeskViewBar(
+              dateTime: widget.dateTime,
+            ),
+          ),
 //follow bar
           Container(
               height: GenericVars.scSize.height * 0.05,
@@ -116,27 +126,54 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
                 const FollowPostBar(iconRadius: 12),
                 Spacer(),
                 IconButton(
-                    onPressed: () {
-                      setState(() {
-                        currentBookmark = !currentBookmark;
-                        (currentBookmark)
-                            ? GenericVars.favoritesList.add(CategoryListTile(
-                                tags: widget.tags,
-                                imageCaption: widget.imageCaption,
-                                imagePath: widget.url,
-                                newsTitle: widget.title,
-                                newsDescription: widget.description,
-                                dateTime: DateTime.parse(widget.date),
-                                categoryName: widget.categoryname,
-                                itemHeight: 0.17))
-                            : GenericVars.favoritesList.removeWhere(
-                                (element) => element.imagePath == widget.url);
-                      });
+                    onPressed: () async {
+                      // setState(() {
+                      currentBookmark = !currentBookmark;
+                      if (currentBookmark) {
+                        await DatabaseHelper().savePost(FavListTile(
+                            id: widget.id,
+                            tags: widget.tags ?? [],
+                            imageCaption: widget.imageCaption ?? "",
+                            imagePath: widget.url ?? "",
+                            newsTitle: widget.title ?? "title",
+                            newsDescription:
+                                widget.description ?? "description",
+                            dateTime: widget.dateTime,
+                            categoryName: widget.categoryname ?? "category",
+                            itemHeight: 0.17));
+                        refreshPosts();
+                      }
+
+                      /* GenericVars.favoritesList.add(CategoryListTile(
+                                id: widget.id,
+                                tags: widget.tags ?? [],
+                                imageCaption: widget.imageCaption ?? "",
+                                imagePath: widget.url ?? "",
+                                newsTitle: widget.title ?? "title",
+                                newsDescription:
+                                    widget.description ?? "description",
+                                dateTime: widget.dateTime,
+                                categoryName: widget.categoryname ?? "category",
+                                itemHeight: 0.17)) */
+                      else {
+                        DatabaseHelper().deletePost(widget.id);
+                        refreshPosts();
+                      }
+
+                      /*     GenericVars.favoritesList.removeWhere(
+                            (element) => element.imagePath == widget.url); */
+                      // });
                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text((currentBookmark)
-                              ? "News added to the favorites"
-                              : "News removed from the favorites")));
+                          duration: Duration(milliseconds: 500),
+                          backgroundColor:
+                              currentBookmark ? Colors.blue : Colors.red,
+                          content: Text(
+                            (currentBookmark)
+                                ? "News added to the favorites!"
+                                : "News removed from the favorites!",
+                            textAlign: TextAlign.center,
+                          )));
                     },
                     icon: (currentBookmark)
                         ? Icon(Icons.bookmark_add)
@@ -154,7 +191,7 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Image.network(
-                    widget.url,
+                    widget.url ?? "",
                     fit: BoxFit.contain,
                     filterQuality: FilterQuality.low,
                   ),
@@ -162,7 +199,7 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
                 Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child: Text(
-                    widget.imageCaption,
+                    widget.imageCaption ?? "",
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
                 ),

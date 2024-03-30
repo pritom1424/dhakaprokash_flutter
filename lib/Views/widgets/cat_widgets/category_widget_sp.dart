@@ -92,12 +92,12 @@ class CategoryWidgetSpecial extends StatelessWidget {
                     .pauseVideoState();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
+                          id: dhakaprokashModels[0].contentId,
                           tags: dhakaprokashModels[0].tags ?? [],
                           imageCaption:
                               dhakaprokashModels[0].imgbgCaption ?? "",
-                          date: DateFormatter().defaultFormatWithTime(
-                              dhakaprokashModels[0].createdAt ??
-                                  DateTime.now()),
+                          dateTime:
+                              dhakaprokashModels[0].createdAt ?? DateTime.now(),
                           categoryName:
                               dhakaprokashModels[0].category.catNameBn,
                           url:
@@ -264,6 +264,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (ctx, index) {
                   return CategoryListTile(
+                    id: dhakaprokashModels[index + 1].contentId,
                     tags: dhakaprokashModels[index + 1].tags ?? [],
                     imageCaption:
                         dhakaprokashModels[index + 1].imgbgCaption ?? "",

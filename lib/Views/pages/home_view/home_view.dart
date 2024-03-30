@@ -14,6 +14,7 @@ import 'package:dummy_app/Views/pages/searchtoNewpage.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 
 import 'package:dummy_app/Views/widgets/cat_widgets/category_photo_grid_widget.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/category_video_grid_widget.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_reg.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_sp.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_reg.dart';
@@ -26,6 +27,7 @@ import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
 
 import 'package:dummy_app/Views/widgets/navbar_widget.dart';
+import 'package:dummy_app/database/database_helper.dart';
 
 import 'package:flutter/material.dart';
 
@@ -73,7 +75,7 @@ class _HomeViewState extends State<HomeView> {
     _scrollController = ScrollController();
     _scrollController.addListener(_updateScrollOffset);
     _showScrollToTop = false;
-
+    DatabaseHelper().getPosts();
     // TODO: implement initState
     super.initState();
   }
@@ -132,9 +134,9 @@ class _HomeViewState extends State<HomeView> {
         drawer: CustomAppDrawer(), //AppDrawer(),
         onDrawerChanged: (isOpened) {
           if (isOpened) {
-            print('Drawer opened');
+            GenericVars.isAppdrawerGlow = true;
           } else {
-            print('Drawer closed');
+            GenericVars.isAppdrawerGlow = false;
           }
         },
 //navigation bar
@@ -162,7 +164,7 @@ class _HomeViewState extends State<HomeView> {
                         scrollDirection: Axis.vertical,
                         controller: _scrollController,
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: Column(children: [
                             CategoryWidgetSpecial(
                                 dhakaprokashModels: homepageController.Items,
@@ -172,7 +174,7 @@ class _HomeViewState extends State<HomeView> {
                                 listItemLength: 5,
                                 didFloat: false),
 
-                            CategoryVideoWidget(
+                            /* CategoryVideoWidget(
                                 didPause: Provider.of<VideoProvider>(context)
                                     .IsVideoPause,
                                 dhakaprokashModels: homepageController.Items,
@@ -180,7 +182,22 @@ class _HomeViewState extends State<HomeView> {
                                 didMoreButtonShow: false,
                                 didHeadSectionShow: true,
                                 listItemLength: 5,
-                                didFloat: false),
+                                didFloat: false), */
+                            FutureBuilder(
+                                future: homepageController.loadAllPhotoItems(),
+                                builder: (ctx, snap) => (snap.connectionState ==
+                                        ConnectionState.waiting)
+                                    ? LoaderWidget()
+                                    : (snap.hasData)
+                                        ? CategoryVideoGridWidget(
+                                            itemCount: snap.data!.length,
+                                            dhakaprokashModels: snap.data!,
+                                            didAxisHorizontal: true,
+                                            crossAxisCount: 1,
+                                            didDescriptionShow: true,
+                                            isScroll: true,
+                                            elevation: 5)
+                                        : SizedBox.shrink()),
 
                             CategoryGridWidgetSpecial(
                               dhakaprokashModels:

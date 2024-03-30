@@ -95,6 +95,7 @@ class _CategoryButtonListState extends State<CategoryButtonList> {
           child: ValueListenableBuilder(
             valueListenable: _scrollOffset,
             builder: (ctx, offset, _) => AvatarGlow(
+              animate: GenericVars.isAppdrawerGlow,
               child: CircleAvatar(
                 backgroundColor: Colors.white,
                 radius: 12,

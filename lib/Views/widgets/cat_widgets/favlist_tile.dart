@@ -6,7 +6,7 @@ import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CategoryListTile extends StatelessWidget {
+class FavListTile extends StatelessWidget {
   final int id;
   final String imagePath,
       newsTitle,
@@ -16,7 +16,7 @@ class CategoryListTile extends StatelessWidget {
   final DateTime dateTime;
   final double itemHeight;
   final List<String> tags;
-  const CategoryListTile(
+  const FavListTile(
       {super.key,
       required this.imagePath,
       required this.newsTitle,

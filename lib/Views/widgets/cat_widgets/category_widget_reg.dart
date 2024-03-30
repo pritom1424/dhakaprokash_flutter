@@ -101,12 +101,12 @@ class CategoryWidgetRegular extends StatelessWidget {
                     .pauseVideoState();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
+                          id: dhakaprokashModels[0].contentId ?? -1,
                           tags: tags ?? [], //dhakaprokashModels[0].tags,
                           imageCaption:
                               "caption", //dhakaprokashModels[0].imgBgCaption ?? "",
-                          date: DateFormatter().defaultFormatWithTime(
-                              dhakaprokashModels[0].createdAt ??
-                                  DateTime.now()),
+                          dateTime:
+                              dhakaprokashModels[0].createdAt ?? DateTime.now(),
                           categoryName: categoryName,
                           url:
                               "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[0].imgBgPath.toString()}",
@@ -274,6 +274,7 @@ class CategoryWidgetRegular extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (ctx, index) {
                   return CategoryListTile(
+                    id: dhakaprokashModels[index + 1].contentId ?? -1,
                     tags: tags ?? [], //dhakaprokashModels[index + 1].tags,
                     imageCaption: "caption",
                     // dhakaprokashModels[index + 1].imgbgCaption ?? "",

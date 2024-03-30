@@ -11,6 +11,7 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:provider/provider.dart';
 
 class CategoryGridTile extends StatefulWidget {
+  final int id;
   final String imagePath,
       newsTitle,
       newsDescription,
@@ -33,7 +34,8 @@ class CategoryGridTile extends StatefulWidget {
       required this.didDescriptionShow,
       required this.elevation,
       required this.imageCaption,
-      required this.tags});
+      required this.tags,
+      required this.id});
 
   @override
   State<CategoryGridTile> createState() => _CategoryGridTileState();
@@ -51,9 +53,10 @@ class _CategoryGridTileState extends State<CategoryGridTile> {
         Provider.of<VideoProvider>(context, listen: false).pauseVideoState();
         Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => DetailedPostView(
+                  id: widget.id,
                   tags: widget.tags,
                   imageCaption: widget.imageCaption,
-                  date: DateFormatter().defaultFormatWithTime(widget.dateTime),
+                  dateTime: widget.dateTime ?? DateTime.now(),
                   categoryName: widget.categoryName,
                   url: widget.imagePath,
                   title: widget.newsTitle,

@@ -71,19 +71,19 @@ class CategoryVideoWidget extends StatelessWidget {
                               color: Color.fromARGB(255, 151, 144, 144)))), */
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.square,
                         color: AppColors.categoryNameColor,
                         size: 20,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Text(
                         categoryName,
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
-                      Icon(
+                      const Icon(
                         Icons.arrow_right,
                         color: AppColors.categoryNameColor,
                       ),
@@ -94,7 +94,7 @@ class CategoryVideoWidget extends StatelessWidget {
 //part 2//HeadImagePreview + title+description
           if (didHeadSectionShow)
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   border: Border(
                       bottom: BorderSide(
                           width: 0.3,

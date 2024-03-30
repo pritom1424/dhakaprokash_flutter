@@ -1,26 +1,25 @@
 import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
+import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
 
 import 'package:flutter/material.dart';
 
 class CategoryAvatarListTile extends StatelessWidget {
-  final String imagePath,
-      newsTitle,
-      newsDate,
-      newsDescription,
-      categoryName,
-      name;
+  final String imagePath, newsTitle, newsDescription, categoryName, name;
   final double itemHeight;
+  final DateTime dateTime;
+  final int id;
 
   const CategoryAvatarListTile(
       {super.key,
       required this.imagePath,
       required this.newsTitle,
       required this.newsDescription,
-      required this.newsDate,
+      required this.dateTime,
       required this.categoryName,
       required this.itemHeight,
-      required this.name});
+      required this.name,
+      required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +28,10 @@ class CategoryAvatarListTile extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => DetailedPostView(
+                  id: id,
                   tags: [],
                   imageCaption: "caption",
-                  date: newsDate,
+                  dateTime: dateTime,
                   categoryName: categoryName,
                   url: imagePath,
                   title: newsTitle,
@@ -89,7 +89,7 @@ class CategoryAvatarListTile extends StatelessWidget {
                         style: Theme.of(context).textTheme.headlineMedium,
                         //  textAlign: TextAlign.justify,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(children: [
@@ -98,7 +98,7 @@ class CategoryAvatarListTile extends StatelessWidget {
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                         Text(
-                          newsDate,
+                          DateFormatter().defaultFormat(dateTime),
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                       ])

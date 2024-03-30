@@ -18,7 +18,9 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:provider/provider.dart';
 
 class DetailedPostView extends StatelessWidget {
-  final String url, title, description, categoryName, date, imageCaption;
+  final String url, title, description, categoryName, imageCaption;
+  final DateTime dateTime;
+  final int id;
   final List<String> tags;
 
   const DetailedPostView({
@@ -27,9 +29,10 @@ class DetailedPostView extends StatelessWidget {
     required this.title,
     required this.description,
     required this.categoryName,
-    required this.date,
+    required this.dateTime,
     required this.imageCaption,
     required this.tags,
+    required this.id,
   });
 
   @override
@@ -46,7 +49,7 @@ class DetailedPostView extends StatelessWidget {
     return Scaffold(
       appBar: AppbarDefault(),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5),
+        padding: EdgeInsets.symmetric(horizontal: 8),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,13 +59,13 @@ class DetailedPostView extends StatelessWidget {
                 //   height: GenericVars.scSize.height * 0.6,
 
                 child: MainHeadPostTile(
+                  id: id,
                   tags: tags,
                   imageCaption: imageCaption,
-                  date: date,
+                  dateTime: dateTime,
                   url: url,
                   title: title,
                   categoryname: categoryName,
-                  isBookmark: false,
                   description: description,
                 ),
               ),

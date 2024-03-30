@@ -9,6 +9,7 @@ import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Utils/scroll_controller.dart';
 
 import 'package:dummy_app/Views/pages/splash_screen.dart';
+import 'package:dummy_app/database/database_helper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +22,7 @@ var kColorScheme = ColorScheme.fromSeed(
 );
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseHelper().initDb();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await ds.initializeDateFormatting('bn');

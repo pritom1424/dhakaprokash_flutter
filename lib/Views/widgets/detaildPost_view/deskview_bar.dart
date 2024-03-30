@@ -1,16 +1,17 @@
+import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:flutter/material.dart';
 
 class DeskViewBar extends StatelessWidget {
-  final String date;
-  const DeskViewBar({super.key, required this.date});
+  final DateTime dateTime;
+  const DeskViewBar({super.key, required this.dateTime});
 
   @override
   Widget build(BuildContext context) {
     String iconPath = "assets/images/dhakaprokash_icon.png";
     String title = "Dhaka Prokash Desk";
-    String publishedDate = date;
+    String publishedDate = DateFormatter().defaultFormat(dateTime);
 
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
