@@ -1,8 +1,10 @@
 import 'package:dummy_app/Controllers/detailpage_controller.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
+import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_reg.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_sp.dart';
 
 import 'package:dummy_app/Views/widgets/detaildPost_view/comment_section.dart';
@@ -37,6 +39,28 @@ class DetailedPostView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<DhakaProkashRegularModel> currentContainer = [];
+
+    int gridItemCount = 4;
+    List<DhakaProkashRegularModel> currentElementList(
+        List<DhakaProkashRegularModel> allList, int id, int itemNumber) {
+      List<DhakaProkashRegularModel> currentContainer = [];
+      int first =
+          (allList.indexWhere((element) => element.contentId == id) + 1) <
+                  allList.length
+              ? allList.indexWhere((element) => element.contentId == id) + 1
+              : 0;
+
+      currentContainer.clear();
+
+      currentContainer = List.from(allList.sublist(first))
+        ..addAll(allList.sublist(0, first));
+
+      currentContainer = currentContainer.sublist(0, itemNumber);
+      print("Current Container $currentContainer");
+      return currentContainer;
+    }
+
     //for test only
     if (Provider.of<DetailPageController>(context, listen: false)
         .IsCommentClick) {
@@ -137,16 +161,30 @@ class DetailedPostView extends StatelessWidget {
                             elevation: 0,
                           );
                   }) ,*/
+              if (GenericVars.newspaperCategoriesLink[categoryName] != null)
+                FutureBuilder(
+                    future: homepageController.loadAllRegItems(
+                        GenericVars.newspaperCategoriesLink[categoryName]!),
+                    builder: (ctx, postSnapShot) {
+                      return (postSnapShot.connectionState ==
+                              ConnectionState.waiting)
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : CategoryGridWidgetRegular(
+                              dhakaprokashModels: currentElementList(
+                                  postSnapShot.data ?? [], id, gridItemCount),
+                              categoryName: categoryName,
+                              itemCount: gridItemCount,
+                              didAxisHorizontal: false,
+                              crossAxisCount: 2,
+                              didDescriptionShow: false,
+                              isScroll: false,
+                              elevation: 0,
+                              itemHeight: 0.23,
+                            );
 
-              FutureBuilder(
-                  future: homepageController.loadAllSpItems(),
-                  builder: (ctx, postSnapShot) {
-                    return (postSnapShot.connectionState ==
-                            ConnectionState.waiting)
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : CategoryGridWidgetSpecial(
+                      /*  CategoryGridWidgetSpecial(
                             dhakaprokashModels: homepageController.Items,
                             categoryName: categoryName,
                             itemCount: 4,
@@ -154,8 +192,8 @@ class DetailedPostView extends StatelessWidget {
                             crossAxisCount: 2,
                             didDescriptionShow: false,
                             isScroll: false,
-                            elevation: 0);
-                  }),
+                            elevation: 0); */
+                    }),
               HomePageFooter()
             ],
           ),

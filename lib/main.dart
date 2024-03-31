@@ -1,9 +1,11 @@
+import 'package:dummy_app/Controllers/bookmark_controller.dart';
 import 'package:dummy_app/Controllers/detailpage_controller.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/login_controller.dart';
 
 import 'package:dummy_app/Controllers/registration_controller.dart';
 import 'package:dummy_app/Controllers/video_controller.dart';
+import 'package:dummy_app/Utils/app_colors.dart';
 
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Utils/scroll_controller.dart';
@@ -40,6 +42,7 @@ void main() async {
       ),
       ChangeNotifierProvider(create: (_) => VideoProvider()),
       ChangeNotifierProvider(create: (_) => DetailPageController()),
+      ChangeNotifierProvider(create: (_) => BookmarkController()),
     ],
     child: const MyApp(),
   ));
@@ -56,6 +59,7 @@ class MyApp extends StatelessWidget {
       home: SplasScreen(),
 
       theme: ThemeData().copyWith(
+          scaffoldBackgroundColor: AppColors.backgroundColor,
           textTheme: ThemeData().textTheme.copyWith(
                 titleLarge: TextStyle(
                   fontWeight: FontWeight.bold,

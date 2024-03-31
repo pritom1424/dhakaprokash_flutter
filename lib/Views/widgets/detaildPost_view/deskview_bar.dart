@@ -10,7 +10,7 @@ class DeskViewBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String iconPath = "assets/images/dhakaprokash_icon.png";
-    String title = "Dhaka Prokash Desk";
+    String title = "ঢাকাপ্রকাশ ডেস্ক";
     String publishedDate = DateFormatter().defaultFormat(dateTime);
 
     return GestureDetector(

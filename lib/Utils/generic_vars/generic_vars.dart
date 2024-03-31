@@ -144,7 +144,6 @@ class GenericVars {
     },
   ];
 
-  static List<FavListTile>? favoritesList = [];
   static bool isAppdrawerGlow = false;
 }
 //পর্যটন

@@ -32,4 +32,30 @@ class _LogoAnimationState extends State<LogoAnimation>
       ),
     );
   }
+
+  /* RotationTransition(
+      turns: _animation,
+      child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Image.asset("assets/images/dhakaprokash_icon.png"),
+      ),
+    ); */
+
+  /*
+    Center(
+      child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            return Transform(
+              alignment: Alignment.center,
+              transform: Matrix4.rotationY(_controller.value * 5 * 3.14159),
+              child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Image.asset("assets/images/dhakaprokash_icon.png")),
+            );
+          }),
+    );
+    
+    
+     */
 }

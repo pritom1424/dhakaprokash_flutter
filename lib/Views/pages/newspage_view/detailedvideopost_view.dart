@@ -123,12 +123,22 @@ class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
                             //List Tile Started
                             child: ListTile(
                               onTap: () {
-                                Provider.of<VideoProvider>(context,
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (ctx) => DetailedVideoPostView(
+                                            categoryName: "Video",
+                                            videoUrl: currentContainer[index]
+                                                ['url']!,
+                                            videoTitle: currentContainer[index]
+                                                ['title']!)));
+
+                                /* Provider.of<VideoProvider>(context,
                                         listen: false)
                                     .setCurrentVideoLink(
                                         currentContainer[index]['url']!);
                                 currentContainer = currentElementList(
-                                    currentContainer[index]['url']!, 3);
+                                    currentContainer[index]['url']!, 3); */
                               },
                               contentPadding: EdgeInsets.symmetric(vertical: 2),
                               leading: const CircleAvatar(

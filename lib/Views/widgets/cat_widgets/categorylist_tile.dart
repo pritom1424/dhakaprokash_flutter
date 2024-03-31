@@ -98,7 +98,7 @@ class CategoryListTile extends StatelessWidget {
                   ClipRRect(
                 child: Image.network(
                   imagePath,
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.cover,
                   filterQuality: FilterQuality.low,
                   loadingBuilder: (context, child, loadingProgress) =>
                       (loadingProgress == null)

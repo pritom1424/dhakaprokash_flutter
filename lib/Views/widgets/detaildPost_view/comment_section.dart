@@ -1,7 +1,9 @@
+import 'package:dummy_app/Controllers/detailpage_controller.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class CommentSectionWidget extends StatefulWidget {
   const CommentSectionWidget({super.key});
@@ -102,7 +104,10 @@ class _CommentSectionWidgetState extends State<CommentSectionWidget> {
                 fixedSize: Size(GenericVars.scSize.width * 0.2,
                     GenericVars.scSize.height * 0.05),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<DetailPageController>(context, listen: false)
+                    .notCommentClick();
+              },
               icon: Icon(Icons.play_arrow),
               label: Text(
                 "POST",

@@ -164,7 +164,7 @@ class CategoryVideoWidget extends StatelessWidget {
                                                 ['title']!)));
                           },
                           contentPadding: EdgeInsets.symmetric(vertical: 2),
-                          leading: CircleAvatar(
+                          leading: const CircleAvatar(
                             backgroundImage:
                                 AssetImage("assets/images/video_play_icon.png"),
                             radius: 15,

@@ -1,3 +1,4 @@
+import 'package:dummy_app/Controllers/bookmark_controller.dart';
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
@@ -8,6 +9,8 @@ import 'package:dummy_app/Views/widgets/detaildPost_view/followpost_bar.dart';
 import 'package:dummy_app/database/database_helper.dart';
 
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:provider/provider.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -37,6 +40,7 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
   late bool currentBookmark;
   String mailSchema = "mailto";
   String websiteSchema = "https";
+
   Future<void> launchLink(String schema, String link) async {
     final Uri launchUri = Uri(scheme: schema, path: link);
     //final Uri launchWebUri = Uri.parse(link);
@@ -54,19 +58,21 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
 
   @override
   void initState() {
-    currentBookmark =
-        GenericVars.favoritesList!.any((element) => element.id == widget.id);
     // TODO: implement initState
     super.initState();
   }
 
-  void refreshPosts() async {
+/*   void refreshPosts() async {
     GenericVars.favoritesList = await DatabaseHelper().getPosts();
     setState(() {});
-  }
+  } */
 
   @override
   Widget build(BuildContext context) {
+    var bookmarkController =
+        Provider.of<BookmarkController>(context, listen: false);
+    currentBookmark =
+        bookmarkController.FavList.any((element) => element.id == widget.id);
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         /* physics: NeverScrollableScrollPhysics(),  */ children: [
@@ -125,12 +131,14 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
               child: Row(children: [
                 const FollowPostBar(iconRadius: 12),
                 Spacer(),
-                IconButton(
+                Consumer<BookmarkController>(
+                    builder: (context, bController, _) {
+                  return IconButton(
                     onPressed: () async {
                       // setState(() {
                       currentBookmark = !currentBookmark;
                       if (currentBookmark) {
-                        await DatabaseHelper().savePost(FavListTile(
+                        await bookmarkController.addToList(FavListTile(
                             id: widget.id,
                             tags: widget.tags ?? [],
                             imageCaption: widget.imageCaption ?? "",
@@ -141,27 +149,12 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
                             dateTime: widget.dateTime,
                             categoryName: widget.categoryname ?? "category",
                             itemHeight: 0.17));
-                        refreshPosts();
-                      }
-
-                      /* GenericVars.favoritesList.add(CategoryListTile(
-                                id: widget.id,
-                                tags: widget.tags ?? [],
-                                imageCaption: widget.imageCaption ?? "",
-                                imagePath: widget.url ?? "",
-                                newsTitle: widget.title ?? "title",
-                                newsDescription:
-                                    widget.description ?? "description",
-                                dateTime: widget.dateTime,
-                                categoryName: widget.categoryname ?? "category",
-                                itemHeight: 0.17)) */
-                      else {
-                        DatabaseHelper().deletePost(widget.id);
-                        refreshPosts();
+                      } else {
+                        bookmarkController.removeFromList(widget.id);
                       }
 
                       /*     GenericVars.favoritesList.removeWhere(
-                            (element) => element.imagePath == widget.url); */
+                                (element) => element.imagePath == widget.url); */
                       // });
                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -177,7 +170,9 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
                     },
                     icon: (currentBookmark)
                         ? Icon(Icons.bookmark_add)
-                        : Icon(Icons.bookmark_add_outlined))
+                        : Icon(Icons.bookmark_add_outlined),
+                  );
+                })
               ])),
 //News Post Image
           Container(

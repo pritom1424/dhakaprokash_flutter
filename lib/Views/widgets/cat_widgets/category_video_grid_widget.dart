@@ -3,10 +3,14 @@ import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedvideopost_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class CategoryVideoGridWidget extends StatefulWidget {
-  final List<DhakaProkashPhotoModel> dhakaprokashModels;
+  //final List<DhakaProkashPhotoModel> dhakaprokashModels;
   final int itemCount;
 
   final bool didAxisHorizontal;
@@ -19,7 +23,7 @@ class CategoryVideoGridWidget extends StatefulWidget {
   const CategoryVideoGridWidget(
       {super.key,
       required this.itemCount,
-      required this.dhakaprokashModels,
+      // required this.dhakaprokashModels,
       required this.didAxisHorizontal,
       required this.crossAxisCount,
       required this.didDescriptionShow,
@@ -105,29 +109,37 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
                     ? Axis.horizontal
                     : Axis.vertical,
                 itemBuilder: (ctx, index) => GestureDetector(
-                      onTap: () => DetailedVideoPostView(
-                          categoryName: "Video",
-                          videoUrl: "videoUrl",
-                          videoTitle: "videoTitle"),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (ctx) => DetailedVideoPostView(
+                                  categoryName: "Video",
+                                  videoUrl: GenericVars.getVideoData[index]
+                                      ['url']!,
+                                  videoTitle: GenericVars
+                                      .getVideoData[index + 1]['title']!),
+                            ));
+                      },
                       child: Card(
                         elevation: widget.elevation,
                         child: Container(
+                          color: Colors.black,
                           height: GenericVars.scSize.height * cellHeight,
-                          child: Stack(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Align(
-                                alignment: Alignment.topCenter,
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
+                              Container(
+                                child: Stack(
                                   children: [
-                                    Flexible(
-                                      flex: 2,
+                                    Align(
+                                      alignment: Alignment.topCenter,
                                       child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(5),
                                           child: Image.network(
-                                            "https://admin.dhakaprokash24.com/media/photoAlbum/${widget.dhakaprokashModels[index].photo}",
+                                            alignment: Alignment.center,
+                                            "https://img.youtube.com/vi/${YoutubePlayer.convertUrlToId(GenericVars.getVideoData[index]['url']!)}/0.jpg",
                                             fit: BoxFit.fill,
                                             filterQuality: FilterQuality.low,
                                             loadingBuilder: (context, child,
@@ -138,32 +150,43 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
                                                         padding:
                                                             const EdgeInsets
                                                                 .symmetric(
-                                                                horizontal: 40),
+                                                                horizontal: 40,
+                                                                vertical: 40),
                                                         child: Image.asset(
+                                                          alignment:
+                                                              Alignment.center,
                                                           "assets/images/dhakaprokash_logo.png",
                                                         ),
                                                       ),
                                           )),
                                     ),
-                                    Flexible(
-                                        flex: 1,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 5, vertical: 2),
-                                          child: Text(
-                                            widget.dhakaprokashModels[index]
-                                                .albumName,
-                                            style: TextStyle(fontSize: 18),
-                                          ),
-                                        ))
+                                    const Positioned.fill(
+                                      child: Align(
+                                          alignment: Alignment.center,
+                                          child: CircleAvatar(
+                                              backgroundColor: Colors.red,
+                                              foregroundColor: Colors.white,
+                                              child: Icon(Icons.play_arrow))),
+                                    )
                                   ],
                                 ),
                               ),
-                              const Align(
-                                  alignment: Alignment.center,
-                                  child: CircleAvatar(
-                                      backgroundColor: Colors.white60,
-                                      child: Icon(Icons.video_camera_front)))
+
+                              ///here
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 0),
+                                child: Text(
+                                  GenericVars.getVideoData[index]['title']!,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.white,
+                                      // overflow: TextOverflow.ellipsis,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: GenericVars.currenFontFamily),
+                                ),
+                              )
                             ],
                           ),
                         ),

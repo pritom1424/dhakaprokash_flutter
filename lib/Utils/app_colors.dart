@@ -6,4 +6,5 @@ class AppColors {
   static const Color buttonColor = Colors.green;
 
   static const Color categoryNameColor = Colors.blueAccent;
+  static const Color backgroundColor = Color.fromARGB(255, 247, 247, 240);
 }

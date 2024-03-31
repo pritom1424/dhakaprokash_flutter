@@ -122,6 +122,11 @@ flutter:
     - family: Helvetica
       fonts:
       - asset: assets/fonts/Helvetica.ttf
+    
+    - family: Siyam-Rupali
+      fonts:
+      - asset: assets/fonts/Siyam_Rupali-Regular.ttf
+    
 
         
       #  - asset: assets/fonts/RobotoMono-Bold.ttf

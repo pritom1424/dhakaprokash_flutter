@@ -11,6 +11,15 @@ class AppbarDefault extends StatelessWidget implements PreferredSize {
       centerTitle: true,
       title: Container(
         width: GenericVars.scSize.width * widthSize,
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+              color: Colors.black.withOpacity(0.075),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3),
+              blurStyle: BlurStyle.normal // changes position of shadow
+              ),
+        ]),
         child: Image.asset(
           "assets/images/dhakaprokash_logo.png",
           fit: BoxFit.fill,
@@ -18,14 +27,19 @@ class AppbarDefault extends StatelessWidget implements PreferredSize {
       ),
       actions: [
         // Notification Icon
-        IconButton(
-          icon: Icon(
-            Icons.notifications_none_outlined,
-            color: Colors.blueAccent,
+        Badge(
+          label: Text("0"),
+          offset: Offset(-10, 6),
+          child: IconButton(
+            icon: Icon(
+              size: 30,
+              Icons.notifications_none_outlined,
+              color: Colors.blueAccent,
+            ),
+            onPressed: () {
+              // Handle notification icon tap
+            },
           ),
-          onPressed: () {
-            // Handle notification icon tap
-          },
         ),
       ],
     );
