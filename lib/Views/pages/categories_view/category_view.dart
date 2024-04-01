@@ -68,7 +68,7 @@ class CategoryView extends StatelessWidget {
                             ],
                           )))
           : Center(
-              child: Text("No Link Found"),
+              child: Text("কোনো তথ্য পাওয়া যায় নি"),
             ),
     );
   }

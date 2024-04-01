@@ -78,6 +78,7 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetSpecial> {
                 tags: widget.dhakaprokashModels[index].tags ?? [],
                 imageCaption:
                     widget.dhakaprokashModels[index].imgbgCaption ?? "",
+                isScroll: widget.isScroll,
                 categoryName: widget.categoryName,
                 imagePath:
                     "https://admin.dhakaprokash24.com/media/content/images/${widget.dhakaprokashModels[index].imgBgPath.toString()}",

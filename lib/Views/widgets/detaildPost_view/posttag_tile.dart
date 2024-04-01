@@ -46,6 +46,7 @@ class PostTagTile extends StatelessWidget {
                               child: Text(
                                 tagList[index],
                                 softWrap: true,
+                                textAlign: TextAlign.center,
                                 style: TextStyle(fontSize: 12),
                               )),
                         ))),

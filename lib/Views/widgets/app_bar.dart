@@ -1,4 +1,5 @@
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
+import 'package:dummy_app/Views/widgets/digital_clock.dart';
 import 'package:flutter/material.dart';
 
 class AppbarDefault extends StatelessWidget implements PreferredSize {
@@ -25,6 +26,9 @@ class AppbarDefault extends StatelessWidget implements PreferredSize {
           fit: BoxFit.fill,
         ),
       ),
+      bottom: PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight * 0.1),
+          child: DigitalClockWidget()),
       actions: [
         // Notification Icon
         Badge(
@@ -47,7 +51,7 @@ class AppbarDefault extends StatelessWidget implements PreferredSize {
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight + 20);
 
   @override
   // TODO: implement child

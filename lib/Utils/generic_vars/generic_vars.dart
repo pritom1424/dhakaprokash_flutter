@@ -108,6 +108,17 @@ class GenericVars {
 
     // "Recent News": Icons.access_time,
   };
+
+  static Map<String, String?> deskbarLink = {
+    "ঢাকাপ্রকাশ ডেস্ক": null,
+    "নিজস্ব প্রতিনিধি": null,
+    "সারাবিশ্ব ডেস্ক": null,
+    "স্পোর্টস ডেস্ক": null,
+    "বিনোদন ডেস্ক": null,
+    "নিজস্ব প্রতিবেদক": null,
+    "তথ্যপ্রযুক্তি ডেস্ক": null,
+    "সারাদেশ ডেস্ক": null,
+  };
   static String currentSearchString = "";
   static String currenFontFamily = "Helvetica"; //"Shurjo-un-regular";
   //"SolaimanLipi"; //"Raleway"//"NotoSerif-Regular";

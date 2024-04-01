@@ -3,10 +3,12 @@ import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 
@@ -22,6 +24,7 @@ class CategoryGridTile extends StatefulWidget {
   final bool didDescriptionShow;
   final double elevation;
   final List<String> tags;
+  final bool isScroll;
 
   const CategoryGridTile(
       {super.key,
@@ -35,7 +38,8 @@ class CategoryGridTile extends StatefulWidget {
       required this.elevation,
       required this.imageCaption,
       required this.tags,
-      required this.id});
+      required this.id,
+      required this.isScroll});
 
   @override
   State<CategoryGridTile> createState() => _CategoryGridTileState();
@@ -114,21 +118,36 @@ class _CategoryGridTileState extends State<CategoryGridTile> {
                       Text(
                         //newsTitle.substring(0, 30),
                         "${StringLimiter().limitString(widget.newsTitle, 30)}",
-                        style: Theme.of(context).textTheme.titleSmall,
+                        style: (widget.isScroll)
+                            ? Theme.of(context).textTheme.titleMedium
+                            : Theme.of(context).textTheme.titleSmall,
                       ),
                       //description
                       if (widget.didDescriptionShow)
-                        HtmlWidget(
+                        Text(Bidi.stripHtmlIfNeeded(
+                                widget.newsDescription.substring(0, 100))
+                            .trim()),
+                      /* HtmlWidget(
                           removeHtmlContent(
                               widget.newsDescription.substring(0, 160),
-                              "<p style=\"text-align: justify;\">&nbsp;</p>\r\n<p style=\"text-align: justify;\">"),
-                          textStyle: TextStyle(
-                              fontWeight: FontWeight.w100, fontSize: 16),
-                        ),
+                              "<p style=\"text-align: justify;\">&nbsp;</p>\r\n<p style=\"text-align: justify;\">"), */
 
-                      Text(
-                        DateFormatter().defaultFormat(widget.dateTime),
-                        style: Theme.of(context).textTheme.labelSmall,
+                      // ),
+
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.alarm,
+                            size: 15,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            DateFormatter().defaultFormat(widget.dateTime),
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                        ],
                       )
                     ],
                   ),

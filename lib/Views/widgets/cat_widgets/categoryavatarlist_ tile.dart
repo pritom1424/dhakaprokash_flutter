@@ -97,10 +97,21 @@ class CategoryAvatarListTile extends StatelessWidget {
                           '$name| ',
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
-                        Text(
-                          DateFormatter().defaultFormat(dateTime),
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.alarm,
+                              size: 15,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              DateFormatter().defaultFormat(dateTime),
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
+                          ],
+                        )
                       ])
                     ],
                   ),

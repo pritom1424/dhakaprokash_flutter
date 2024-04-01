@@ -47,7 +47,7 @@ class _FavoritesNewsViewState extends State<FavoritesNewsView> {
                     width: double.infinity,
                     child: const Center(
                       child: Text(
-                        "no favorites",
+                        "কোনো বুকমার্ক পাওয়া যায় নি",
                         style: TextStyle(color: Colors.grey, fontSize: 18),
                       ),
                     ),

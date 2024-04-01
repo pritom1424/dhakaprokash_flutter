@@ -3,6 +3,7 @@ import 'package:dummy_app/Controllers/homepage_controller.dart';
 
 import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Utils/api_constants.dart';
+import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 
 import 'package:dummy_app/Views/pages/contact_view/contact_view.dart';
@@ -760,7 +761,8 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           )
                         : Center(
-                            child: Text("No data"),
+                            child:
+                                Text("কোনো তথ্য নেই! একটু পর আবার চেষ্টা করুন"),
                           );
               });
         });

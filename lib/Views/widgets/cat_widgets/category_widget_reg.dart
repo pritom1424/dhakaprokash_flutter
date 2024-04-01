@@ -183,13 +183,24 @@ class CategoryWidgetRegular extends StatelessWidget {
                                           .titleMedium,
                                       textAlign: TextAlign.justify,
                                     ),
-                                    Text(
-                                      DateFormatter().defaultFormat(
-                                          dhakaprokashModels[0].createdAt ??
-                                              DateTime.now()),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelSmall,
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.alarm,
+                                          size: 15,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          DateFormatter().defaultFormat(
+                                              dhakaprokashModels[0].createdAt ??
+                                                  DateTime.now()),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall,
+                                        ),
+                                      ],
                                     )
                                   ],
                                 ),
@@ -244,15 +255,24 @@ class CategoryWidgetRegular extends StatelessWidget {
                                         .trim(),
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  FittedBox(
-                                    child: Text(
-                                      DateFormatter().defaultFormat(
-                                          dhakaprokashModels[0].createdAt ??
-                                              DateTime.now()),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelSmall,
-                                    ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.alarm,
+                                        size: 15,
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        DateFormatter().defaultFormat(
+                                            dhakaprokashModels[0].createdAt ??
+                                                DateTime.now()),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall,
+                                      ),
+                                    ],
                                   )
                                 ],
                               ),
@@ -264,33 +284,61 @@ class CategoryWidgetRegular extends StatelessWidget {
             ),
 
 //part 3//Category News Lists
-          Container(
-            height:
-                GenericVars.scSize.height * itemHeight * (listItemLength - 1),
-            // padding: EdgeInsets.symmetric(horizontal: 15),
-            child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: listItemLength - 1,
-                shrinkWrap: true,
-                itemBuilder: (ctx, index) {
-                  return CategoryListTile(
-                    id: dhakaprokashModels[index + 1].contentId ?? -1,
-                    tags: tags ?? [], //dhakaprokashModels[index + 1].tags,
-                    imageCaption: "caption",
-                    // dhakaprokashModels[index + 1].imgbgCaption ?? "",
-                    categoryName: categoryName,
-                    imagePath:
-                        "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index + 1].imgBgPath.toString()}",
-                    newsTitle: dhakaprokashModels[index + 1].contentHeading!,
-                    newsDescription:
-                        dhakaprokashModels[index + 1].contentDetails!,
-                    itemHeight: itemHeight,
-                    /*postModels[index].title, */
-                    dateTime: dhakaprokashModels[index + 1].createdAt ??
-                        DateTime.now(),
-                  );
-                }),
-          )
+          if (didHeadSectionShow)
+            Container(
+              height:
+                  GenericVars.scSize.height * itemHeight * (listItemLength - 1),
+              // padding: EdgeInsets.symmetric(horizontal: 15),
+              child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: listItemLength - 1,
+                  shrinkWrap: true,
+                  itemBuilder: (ctx, index) {
+                    return CategoryListTile(
+                      id: dhakaprokashModels[index + 1].contentId ?? -1,
+                      tags: tags ?? [], //dhakaprokashModels[index + 1].tags,
+                      imageCaption: "caption",
+                      // dhakaprokashModels[index + 1].imgbgCaption ?? "",
+                      categoryName: categoryName,
+                      imagePath:
+                          "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index + 1].imgBgPath.toString()}",
+                      newsTitle: dhakaprokashModels[index + 1].contentHeading!,
+                      newsDescription:
+                          dhakaprokashModels[index + 1].contentDetails!,
+                      itemHeight: itemHeight,
+                      /*postModels[index].title, */
+                      dateTime: dhakaprokashModels[index + 1].createdAt ??
+                          DateTime.now(),
+                    );
+                  }),
+            ),
+          if (!didHeadSectionShow)
+            Container(
+              height: GenericVars.scSize.height * itemHeight * (listItemLength),
+              // padding: EdgeInsets.symmetric(horizontal: 15),
+              child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: listItemLength,
+                  shrinkWrap: true,
+                  itemBuilder: (ctx, index) {
+                    return CategoryListTile(
+                      id: dhakaprokashModels[index].contentId ?? -1,
+                      tags: tags ?? [], //dhakaprokashModels[index + 1].tags,
+                      imageCaption: "caption",
+                      // dhakaprokashModels[index + 1].imgbgCaption ?? "",
+                      categoryName: categoryName,
+                      imagePath:
+                          "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index].imgBgPath.toString()}",
+                      newsTitle: dhakaprokashModels[index].contentHeading!,
+                      newsDescription:
+                          dhakaprokashModels[index].contentDetails!,
+                      itemHeight: itemHeight,
+                      /*postModels[index].title, */
+                      dateTime:
+                          dhakaprokashModels[index].createdAt ?? DateTime.now(),
+                    );
+                  }),
+            )
         ],
       ),
     );
