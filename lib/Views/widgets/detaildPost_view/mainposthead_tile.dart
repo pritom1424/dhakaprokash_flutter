@@ -191,13 +191,14 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
                     filterQuality: FilterQuality.low,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: Text(
-                    widget.imageCaption ?? "",
-                    style: TextStyle(color: Colors.black, fontSize: 15),
+                if (widget.imageCaption != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: Text(
+                      widget.imageCaption!,
+                      style: TextStyle(color: Colors.black, fontSize: 15),
+                    ),
                   ),
-                ),
                 Divider()
               ],
             ),

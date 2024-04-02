@@ -14,11 +14,9 @@ import 'package:provider/provider.dart';
 
 class CategoryGridTile extends StatefulWidget {
   final int id;
-  final String imagePath,
-      newsTitle,
-      newsDescription,
-      categoryName,
-      imageCaption;
+  final String imagePath, newsTitle, newsDescription, categoryName;
+
+  final String? imageCaption;
   final DateTime dateTime;
   final double cellHeight;
   final bool didDescriptionShow;

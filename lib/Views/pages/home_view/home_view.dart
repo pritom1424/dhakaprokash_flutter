@@ -3,8 +3,10 @@ import 'package:dummy_app/Controllers/homepage_controller.dart';
 
 import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Utils/api_constants.dart';
+import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
+import 'package:dummy_app/Views/pages/categories_view/category_video_view.dart';
 
 import 'package:dummy_app/Views/pages/contact_view/contact_view.dart';
 import 'package:dummy_app/Views/pages/custom_appdrawer.dart';
@@ -58,6 +60,7 @@ class _HomeViewState extends State<HomeView> {
     return [
       homeBaseWidget(),
       PopularNewsView(),
+      CategoryVideoView(),
       FavoritesNewsView(),
       SearchToNewPage(),
       ContactView(),
@@ -110,7 +113,7 @@ class _HomeViewState extends State<HomeView> {
                   child: FloatingActionButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),
-                    backgroundColor: Color.fromARGB(255, 23, 115, 190),
+                    backgroundColor: AppColors.logoColorDeep,
                     foregroundColor: Colors.white,
                     elevation: 10,
                     onPressed: () {
@@ -132,7 +135,7 @@ class _HomeViewState extends State<HomeView> {
         floatingActionButtonLocation: (_selectedNavIndex == 0)
             ? FloatingActionButtonLocation.endFloat
             : null,
-        appBar: (_selectedNavIndex != 5) ? AppbarDefault() : null,
+        appBar: (_selectedNavIndex != 6) ? AppbarDefault() : null,
         drawer: CustomAppDrawer(), //AppDrawer(),
         onDrawerChanged: (isOpened) {
           if (isOpened) {
@@ -345,11 +348,30 @@ class _HomeViewState extends State<HomeView> {
                                                       dhakaprokashModels:
                                                           snap.data!,
                                                       categoryName: "বিনোদন",
-                                                      didMoreButtonShow: false,
+                                                      didMoreButtonShow: true,
                                                       didHeadSectionShow: true,
                                                       listItemLength: 4,
-                                                      didFloat: true)
+                                                      didFloat: false)
                                                   : SizedBox.shrink()),
+                                  //photo gallery
+                                  FutureBuilder(
+                                      future: homepageController
+                                          .loadAllPhotoItems(),
+                                      builder: (ctx, snap) => (snap
+                                                  .connectionState ==
+                                              ConnectionState.waiting)
+                                          ? LoaderWidget()
+                                          : (snap.hasData)
+                                              ? CategoryPhotoGridWidget(
+                                                  itemCount: snap.data!.length,
+                                                  dhakaprokashModels:
+                                                      snap.data!,
+                                                  didAxisHorizontal: true,
+                                                  crossAxisCount: 1,
+                                                  didDescriptionShow: true,
+                                                  isScroll: true,
+                                                  elevation: 5)
+                                              : SizedBox.shrink()),
 
                                   //saradesh
                                   FutureBuilder(
@@ -729,26 +751,6 @@ class _HomeViewState extends State<HomeView> {
                                                   didHeadSectionShow: true,
                                                   listItemLength: 3,
                                                   didFloat: false)
-                                              : SizedBox.shrink()),
-
-                                  //photo gallery
-                                  FutureBuilder(
-                                      future: homepageController
-                                          .loadAllPhotoItems(),
-                                      builder: (ctx, snap) => (snap
-                                                  .connectionState ==
-                                              ConnectionState.waiting)
-                                          ? LoaderWidget()
-                                          : (snap.hasData)
-                                              ? CategoryPhotoGridWidget(
-                                                  itemCount: snap.data!.length,
-                                                  dhakaprokashModels:
-                                                      snap.data!,
-                                                  didAxisHorizontal: true,
-                                                  crossAxisCount: 1,
-                                                  didDescriptionShow: true,
-                                                  isScroll: true,
-                                                  elevation: 5)
                                               : SizedBox.shrink()),
 
                                   Padding(

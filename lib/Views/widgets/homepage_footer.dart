@@ -49,6 +49,30 @@ class HomePageFooter extends StatelessWidget {
                     height: GenericVars.scSize.height * 0.06,
                   ),
                 ),
+                RichText(
+                  text: TextSpan(
+                      text: "ভারপ্রাপ্ত সম্পাদক: ",
+                      style: TextStyle(color: Colors.black),
+                      children: [
+                        TextSpan(
+                            text: "রবিউল ইসলাম\n",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold)),
+                        TextSpan(
+                            text: "প্রকাশক: ",
+                            style: TextStyle(color: Colors.black)),
+                        TextSpan(
+                            text: "শাহাদৎ জামান সাইফ",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold))
+                      ]),
+                ),
+                const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                        "৯৩, কাজী নজরুল ইসলাম এভিনিউ, (ষষ্ঠ তলা)\nকারওয়ান বাজার, ঢাকা-১২১৫।")),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -58,7 +82,7 @@ class HomePageFooter extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Newsroom",
+                            "নিউজরুম",
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           Text("+8809613331010"),
@@ -71,7 +95,7 @@ class HomePageFooter extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Marketing",
+                            "মার্কেটিং",
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           Text("+8809613332020"),
@@ -102,18 +126,18 @@ class HomePageFooter extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: FollowSocialWidget(fontSize: 25, iconRadius: 18),
                 ),
-                const Padding(
+                /* const Padding(
                     padding: EdgeInsets.symmetric(vertical: 10),
-                    child: Text("93, Kazi Nazrul Islam Avenue")),
+                    child: Text("93, Kazi Nazrul Islam Avenue")), */
                 Container(
-                  color: Color.fromARGB(255, 17, 61, 117),
+                  color: Colors.white70, //Color.fromARGB(255, 17, 61, 117),
                   height: GenericVars.scSize.height * 0.05,
                   width: double.infinity,
                   child: const Align(
                     alignment: Alignment.center,
                     child: Text(
                       "© ২০২৪ সর্বস্বত্ব সংরক্ষিত | ঢাকাপ্রকাশ",
-                      style: TextStyle(fontSize: 15, color: Colors.white),
+                      style: TextStyle(fontSize: 15, color: Colors.black),
                       textAlign: TextAlign.center,
                     ),
                   ),

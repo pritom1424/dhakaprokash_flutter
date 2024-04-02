@@ -60,6 +60,7 @@ class MyApp extends StatelessWidget {
 
       theme: ThemeData().copyWith(
           scaffoldBackgroundColor: AppColors.backgroundColor,
+          drawerTheme: DrawerThemeData(backgroundColor: Colors.red),
           textTheme: ThemeData().textTheme.copyWith(
                 titleLarge: TextStyle(
                   fontWeight: FontWeight.bold,

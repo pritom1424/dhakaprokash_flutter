@@ -8,11 +8,9 @@ import 'package:provider/provider.dart';
 
 class CategoryListTile extends StatelessWidget {
   final int id;
-  final String imagePath,
-      newsTitle,
-      newsDescription,
-      categoryName,
-      imageCaption;
+  final String imagePath, newsTitle, newsDescription, categoryName;
+
+  final String? imageCaption;
   final DateTime dateTime;
   final double itemHeight;
   final List<String> tags;

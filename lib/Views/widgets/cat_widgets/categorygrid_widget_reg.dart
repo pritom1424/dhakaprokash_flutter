@@ -83,7 +83,7 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
                 isReplace: widget.isReplace,
                 id: widget.dhakaprokashModels[index].contentId ?? -1,
                 tags: tags ?? [], //widget.dhakaprokashModels[index].tags,
-                imageCaption: "caption",
+                imageCaption: null,
                 isScroll: widget.isScroll,
                 // widget.dhakaprokashModels[index].imgbgCaption ?? "",
                 categoryName: widget.categoryName,

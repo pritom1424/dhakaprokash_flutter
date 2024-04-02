@@ -20,7 +20,8 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:provider/provider.dart';
 
 class DetailedPostView extends StatelessWidget {
-  final String url, title, description, categoryName, imageCaption;
+  final String url, title, description, categoryName;
+  final String? imageCaption;
   final DateTime dateTime;
   final int id;
   final List<String> tags;
