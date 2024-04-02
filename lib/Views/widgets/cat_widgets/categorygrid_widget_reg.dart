@@ -26,6 +26,7 @@ class CategoryGridWidgetRegular extends StatefulWidget {
   final bool isScroll;
   final double elevation;
   final double? itemHeight;
+  final bool? isReplace;
 
   const CategoryGridWidgetRegular(
       {super.key,
@@ -37,6 +38,7 @@ class CategoryGridWidgetRegular extends StatefulWidget {
       required this.didDescriptionShow,
       required this.isScroll,
       required this.elevation,
+      this.isReplace,
       this.itemHeight});
 
   @override
@@ -78,6 +80,7 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
           scrollDirection:
               (widget.didAxisHorizontal) ? Axis.horizontal : Axis.vertical,
           itemBuilder: (ctx, index) => CategoryGridTile(
+                isReplace: widget.isReplace,
                 id: widget.dhakaprokashModels[index].contentId ?? -1,
                 tags: tags ?? [], //widget.dhakaprokashModels[index].tags,
                 imageCaption: "caption",

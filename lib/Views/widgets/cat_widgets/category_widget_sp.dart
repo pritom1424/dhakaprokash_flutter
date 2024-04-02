@@ -239,13 +239,19 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                     style:
                                         Theme.of(context).textTheme.titleMedium,
                                     textAlign: TextAlign.justify,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
                                   ),
                                   Text(
                                     Bidi.stripHtmlIfNeeded(
-                                      StringLimiter().limitString(
-                                          dhakaprokashModels[0].contentDetails!,
-                                          120),
+                                      dhakaprokashModels[0].contentDetails!,
                                     ).trim(),
+                                    maxLines: 2,
+                                    // Bidi.stripHtmlIfNeeded(
+                                    //   StringLimiter().limitString(
+                                    //       dhakaprokashModels[0].contentDetails!,
+                                    //       120),
+                                    // ).trim(),
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Row(

@@ -11,10 +11,8 @@ class DigitalClockWidget extends StatelessWidget {
   String getSystemTime() {
     var now = DateTime.now();
     String dateString = DateFormat(null, "Bn").add_jms().format(now);
-    dateString = timeName(now) +
-        " " +
-        dateString.replaceAll(
-            RegExp(r'\b(?:AM|PM)\b', caseSensitive: false), '');
+    dateString =
+        "${timeName(now)} ${dateString.replaceAll(RegExp(r'\b(?:AM|PM)\b', caseSensitive: false), '')}";
     return dateString;
   }
 
@@ -44,7 +42,38 @@ class DigitalClockWidget extends StatelessWidget {
         "${Bongabdo.fromDate(DateTime.now()).bDay}-${Bongabdo.fromDate(DateTime.now()).bMonth}-${Bongabdo.fromDate(DateTime.now()).bYear}";
 
     String englishDate = DateFormat.yMMMMEEEEd("Bn").format(DateTime.now());
-    return TimerBuilder.periodic(Duration(seconds: 1), builder: (ctx) {
+
+    return Container(
+      color: Colors.blue,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            "$englishDate | $banglaDate",
+            style: TextStyle(
+                fontFamily: GenericVars.currenFontFamily,
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.bold),
+          ),
+          const Spacer(),
+          TimerBuilder.periodic(const Duration(milliseconds: 1000),
+              builder: (ctx) {
+            return Text(
+              getSystemTime(),
+              style: TextStyle(
+                  fontFamily: GenericVars.currenFontFamily,
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold),
+            );
+          }),
+        ],
+      ),
+    );
+
+    /*TimerBuilder.periodic(Duration(seconds: 1), builder: (ctx) {
       return Container(
         color: Colors.blue,
         padding: EdgeInsets.symmetric(horizontal: 10),
@@ -71,6 +100,7 @@ class DigitalClockWidget extends StatelessWidget {
           ],
         ),
       );
-    });
+    }
+    );*/
   }
 }

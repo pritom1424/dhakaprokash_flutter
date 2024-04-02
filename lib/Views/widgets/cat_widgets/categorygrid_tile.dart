@@ -25,6 +25,7 @@ class CategoryGridTile extends StatefulWidget {
   final double elevation;
   final List<String> tags;
   final bool isScroll;
+  final bool? isReplace;
 
   const CategoryGridTile(
       {super.key,
@@ -39,6 +40,7 @@ class CategoryGridTile extends StatefulWidget {
       required this.imageCaption,
       required this.tags,
       required this.id,
+      this.isReplace,
       required this.isScroll});
 
   @override
@@ -55,17 +57,29 @@ class _CategoryGridTileState extends State<CategoryGridTile> {
     return GestureDetector(
       onTap: () {
         Provider.of<VideoProvider>(context, listen: false).pauseVideoState();
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (ctx) => DetailedPostView(
-                  id: widget.id,
-                  tags: widget.tags,
-                  imageCaption: widget.imageCaption,
-                  dateTime: widget.dateTime ?? DateTime.now(),
-                  categoryName: widget.categoryName,
-                  url: widget.imagePath,
-                  title: widget.newsTitle,
-                  description: widget.newsDescription,
-                )));
+        (widget.isReplace == null || widget.isReplace == false)
+            ? Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => DetailedPostView(
+                      id: widget.id,
+                      tags: widget.tags,
+                      imageCaption: widget.imageCaption,
+                      dateTime: widget.dateTime ?? DateTime.now(),
+                      categoryName: widget.categoryName,
+                      url: widget.imagePath,
+                      title: widget.newsTitle,
+                      description: widget.newsDescription,
+                    )))
+            : Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (ctx) => DetailedPostView(
+                      id: widget.id,
+                      tags: widget.tags,
+                      imageCaption: widget.imageCaption,
+                      dateTime: widget.dateTime ?? DateTime.now(),
+                      categoryName: widget.categoryName,
+                      url: widget.imagePath,
+                      title: widget.newsTitle,
+                      description: widget.newsDescription,
+                    )));
       },
       child: Card(
         elevation: widget.elevation,
@@ -116,8 +130,10 @@ class _CategoryGridTileState extends State<CategoryGridTile> {
                       //title
 
                       Text(
-                        //newsTitle.substring(0, 30),
-                        "${StringLimiter().limitString(widget.newsTitle, 30)}",
+                        widget.newsTitle,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        // "${StringLimiter().limitString(widget.newsTitle, 30)}",
                         style: (widget.isScroll)
                             ? Theme.of(context).textTheme.titleMedium
                             : Theme.of(context).textTheme.titleSmall,

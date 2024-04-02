@@ -144,6 +144,8 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                                         child: Text(
                                           widget.dhakaprokashModels[index]
                                               .albumName,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
                                           style: TextStyle(fontSize: 18),
                                         ),
                                       ))

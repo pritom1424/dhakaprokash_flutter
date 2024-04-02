@@ -128,6 +128,10 @@ flutter:
     - family: Siyam-Rupali
       fonts:
       - asset: assets/fonts/Siyam_Rupali-Regular.ttf
+
+    - family: Kalpurush
+      fonts:
+      - asset: assets/fonts/kalpurush.ttf
     
 
         

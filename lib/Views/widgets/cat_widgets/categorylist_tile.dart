@@ -78,7 +78,10 @@ class CategoryListTile extends StatelessWidget {
                   children: [
                     Text(
                       //newsTitle,
-                      StringLimiter().limitString(newsTitle, 50),
+                      newsTitle,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      // StringLimiter().limitString(newsTitle, 50),
                       style: Theme.of(context).textTheme.titleSmall,
                       textAlign: TextAlign.left,
                     ),
