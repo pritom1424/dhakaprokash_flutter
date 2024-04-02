@@ -120,7 +120,7 @@ class GenericVars {
     "সারাদেশ ডেস্ক": null,
   };
   static String currentSearchString = "";
-  static String currenFontFamily = "Helvetica"; //"Shurjo-un-regular";
+  static String currenFontFamily = "Kalpurush"; //"Shurjo-un-regular";
   //"SolaimanLipi"; //"Raleway"//"NotoSerif-Regular";
 
   static double scrollOffset = 0;

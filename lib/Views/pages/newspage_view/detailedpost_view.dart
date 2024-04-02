@@ -182,6 +182,7 @@ class DetailedPostView extends StatelessWidget {
                               isScroll: false,
                               elevation: 0,
                               itemHeight: 0.23,
+                              isReplace: true,
                             );
 
                       /*  CategoryGridWidgetSpecial(

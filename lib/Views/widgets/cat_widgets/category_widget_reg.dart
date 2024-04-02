@@ -177,19 +177,22 @@ class CategoryWidgetRegular extends StatelessWidget {
                                     Text(categoryName),
                                     Text(
                                       dhakaprokashModels[0].contentHeading!,
+                                      maxLines: 2,
+
                                       // "${StringLimiter().limitString(dhakaprokashModels[0].contentHeading!, 25)} . . .",
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleMedium,
                                       textAlign: TextAlign.justify,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     Row(
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.alarm,
                                           size: 15,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 5,
                                         ),
                                         Text(
@@ -243,16 +246,22 @@ class CategoryWidgetRegular extends StatelessWidget {
                                 children: [
                                   Text(
                                     dhakaprokashModels[0].contentHeading!,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
                                     style:
                                         Theme.of(context).textTheme.titleMedium,
                                   ),
                                   Text(
-                                    Bidi.stripHtmlIfNeeded(StringLimiter()
-                                            .limitString(
-                                                dhakaprokashModels[0]
-                                                    .contentDetails!,
-                                                120))
+                                    Bidi.stripHtmlIfNeeded(dhakaprokashModels[0]
+                                            .contentDetails!)
                                         .trim(),
+                                    maxLines: 2,
+                                    // Bidi.stripHtmlIfNeeded(StringLimiter()
+                                    //         .limitString(
+                                    //             dhakaprokashModels[0]
+                                    //                 .contentDetails!,
+                                    //             120))
+                                    //     .trim(),
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Row(
