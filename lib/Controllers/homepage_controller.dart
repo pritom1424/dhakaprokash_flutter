@@ -1,28 +1,54 @@
 import 'dart:convert';
 
-import 'package:dummy_app/Models/dhaka_prokash_data.dart';
+import 'package:dummy_app/Models/dhaka_prokash_photo_model.dart';
+import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
+import 'package:dummy_app/Models/dhaka_prokash_sp_model.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class HomepageController with ChangeNotifier {
-  List<DhakaProkash> _items = [];
+  List<DhakaProkashSpecialModel> _items = [];
 
-  Future<List<DhakaProkash>> loadAllItems() async {
-    final url = Uri.parse(
-        "https://dhakaprokash24.com/api/prismaapi/home/specialtopcontent");
+  Future<List<DhakaProkashSpecialModel>> loadAllSpItems() async {
+    final url = Uri.parse(ApiConstant.homePageSpecialContentLink);
 
     final response = await http.get(url);
-    print(response);
-    List<DhakaProkash> jsonResponse =
-        dhakaProkashFromJson(utf8.decode(response.bodyBytes));
 
+    List<DhakaProkashSpecialModel> jsonResponse =
+        dhakaProkashSpecialModelFromJson(utf8.decode(response.bodyBytes)); //
+
+    _items.clear();
     _items = jsonResponse;
+
     // notifyListeners();
 
     return jsonResponse;
   }
 
-  List<DhakaProkash> get Items {
+  Future<List<DhakaProkashRegularModel>> loadAllRegItems(String apiLink) async {
+    final url = Uri.parse(apiLink);
+
+    final response = await http.get(url);
+
+    List<DhakaProkashRegularModel> jsonResponse =
+        dhakaProkashRegularModelFromJson(utf8.decode(response.bodyBytes));
+
+    return jsonResponse;
+  }
+
+  Future<List<DhakaProkashPhotoModel>> loadAllPhotoItems() async {
+    final url = Uri.parse(ApiConstant.photoGalleryCategoryLink);
+
+    final response = await http.get(url);
+
+    List<DhakaProkashPhotoModel> jsonResponse =
+        dhakaProkashPhotoModelFromJson(utf8.decode(response.bodyBytes));
+
+    return jsonResponse;
+  }
+
+  List<DhakaProkashSpecialModel> get Items {
     return _items;
   }
 }

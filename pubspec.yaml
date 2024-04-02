@@ -39,12 +39,17 @@ dependencies:
   provider: ^6.1.2
   intl: ^0.19.0
   url_launcher: ^6.2.5
-  flutter_spinkit: ^5.2.0
   youtube_player_flutter: ^9.0.0
   speech_to_text: ^6.6.0
   highlight_text: ^1.7.0
   avatar_glow: ^3.0.1
   flutter_widget_from_html_core: ^0.14.11
+  loading_animation_widget: ^1.2.1
+  sqflite: ^2.3.2
+  path: ^1.9.0
+  timer_builder: ^2.0.0
+
+
 
 
 
@@ -58,6 +63,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.0
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -101,7 +107,30 @@ flutter:
 
     - family: NotoSerif-Regular
       fonts:
-        - asset: assets/fonts/NotoSerif-Regular.ttf    
+        - asset: assets/fonts/NotoSerif-Regular.ttf
+    
+    - family: Mukti
+      fonts:
+        - asset: assets/fonts/Mukti.ttf
+
+    - family: SolaimanLipi
+      fonts:
+      - asset: assets/fonts/SolaimanLipi.ttf
+
+    - family: Shurjo-un-regular
+      fonts:
+      - asset: assets/fonts/Shurjo-un-regular.ttf
+
+    - family: Helvetica
+      fonts:
+      - asset: assets/fonts/Helvetica.ttf
+    
+    - family: Siyam-Rupali
+      fonts:
+      - asset: assets/fonts/Siyam_Rupali-Regular.ttf
+    
+
+        
       #  - asset: assets/fonts/RobotoMono-Bold.ttf
        #   weight: 700
   #   - family: Trajan Pro

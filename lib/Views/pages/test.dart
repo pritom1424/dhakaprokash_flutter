@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dummy_app/Controllers/homepage_controller.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class TestPage extends StatelessWidget {
     return Scaffold(
       appBar: AppbarDefault(),
       body: FutureBuilder(
-          future: HomepageController().loadAllItems(),
+          future: HomepageController().loadAllSpItems(),
           builder: (ctx, snapshot) => (snapshot.connectionState ==
                   ConnectionState.waiting)
               ? CircularProgressIndicator()

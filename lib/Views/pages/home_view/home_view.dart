@@ -1,8 +1,9 @@
-import 'package:avatar_glow/avatar_glow.dart';
+import 'package:dummy_app/Controllers/bookmark_controller.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
-import 'package:dummy_app/Controllers/photo_controller.dart';
-import 'package:dummy_app/Controllers/post_controller.dart';
+
 import 'package:dummy_app/Controllers/video_controller.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
+import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 
 import 'package:dummy_app/Views/pages/contact_view/contact_view.dart';
@@ -13,19 +14,24 @@ import 'package:dummy_app/Views/pages/popular_view/popularnews_view.dart';
 import 'package:dummy_app/Views/pages/searchtoNewpage.dart';
 
 import 'package:dummy_app/Views/widgets/app_bar.dart';
-import 'package:dummy_app/Views/widgets/category_avatar_widget.dart';
-import 'package:dummy_app/Views/widgets/category_widget%20copy.dart';
-import 'package:dummy_app/Views/widgets/category_widget.dart';
-import 'package:dummy_app/Views/widgets/categorygrid_widget%20copy.dart';
-import 'package:dummy_app/Views/widgets/categorygrid_widget.dart';
-import 'package:dummy_app/Views/widgets/categoryvideo_widget.dart';
+
+import 'package:dummy_app/Views/widgets/cat_widgets/category_photo_grid_widget.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/category_video_grid_widget.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_reg.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_sp.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_reg.dart';
+
+import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_sp.dart';
+
+import 'package:dummy_app/Views/widgets/cat_widgets/categoryvideo_widget.dart';
 
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
+
 import 'package:dummy_app/Views/widgets/navbar_widget.dart';
+import 'package:dummy_app/database/database_helper.dart';
 
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_file.dart';
 
 import 'package:provider/provider.dart';
 
@@ -47,19 +53,12 @@ class _HomeViewState extends State<HomeView> {
   //   return [homeBaseWidgetCopy(homepageController, scrollController)];
   // }
 
-  List<Widget> _NavViews(
-      PhotoController pcontrol,
-      ScrollController scrollController,
-      HomepageController homepageController) {
+  List<Widget> _NavViews() {
     _showScrollToTop = false;
     return [
-      homeBaseWidget(pcontrol, scrollController, homepageController),
-      PopularNewsView(
-        phController: pcontrol,
-      ),
-      FavoritesNewsView(
-        phController: pcontrol,
-      ),
+      homeBaseWidget(),
+      PopularNewsView(),
+      FavoritesNewsView(),
       SearchToNewPage(),
       ContactView(),
       MyAppView()
@@ -102,11 +101,6 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     GenericVars.scSize = MediaQuery.of(context).size;
-    //PostController postController = Provider.of<PostController>(context);
-    PhotoController photoController = Provider.of<PhotoController>(context);
-    HomepageController homepageController =
-        Provider.of<HomepageController>(context);
-
     return Scaffold(
         floatingActionButton: (_selectedNavIndex == 0)
             ? ValueListenableBuilder(
@@ -114,15 +108,23 @@ class _HomeViewState extends State<HomeView> {
                 builder: (ctx, offset, _) => Visibility(
                   visible: _showScrollToTop,
                   child: FloatingActionButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50)),
+                    backgroundColor: Color.fromARGB(255, 23, 115, 190),
+                    foregroundColor: Colors.white,
+                    elevation: 10,
                     onPressed: () {
 // Scroll to the top logic here
                       _scrollController.animateTo(
                         0.0,
-                        duration: Duration(milliseconds: 500),
+                        duration: const Duration(milliseconds: 500),
                         curve: Curves.easeInOut,
                       );
                     },
-                    child: Icon(Icons.arrow_upward),
+                    child: const Icon(
+                      size: 40,
+                      Icons.arrow_upward,
+                    ),
                   ),
                 ),
               )
@@ -132,669 +134,637 @@ class _HomeViewState extends State<HomeView> {
             : null,
         appBar: (_selectedNavIndex != 5) ? AppbarDefault() : null,
         drawer: CustomAppDrawer(), //AppDrawer(),
-
+        onDrawerChanged: (isOpened) {
+          if (isOpened) {
+            GenericVars.isAppdrawerGlow = true;
+          } else {
+            GenericVars.isAppdrawerGlow = false;
+          }
+        },
 //navigation bar
         bottomNavigationBar: NavBarWidget(
           currentIndex: _selectedNavIndex,
           onTap: _onNavigationTap,
-        ) /* Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.6),
-                    spreadRadius: 5,
-                    blurRadius: 8,
-                    offset: const Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-                color: Color.fromARGB(255, 255, 255, 255),
-                borderRadius: BorderRadius.all(Radius.circular(
-                    10)) /* BorderRadius.only(
-                    topLeft: Radius.circular(30), topRight: Radius.circular(30)) */
-                ),
-            child: BottomNavigationBar(
-                iconSize: 20,
-                selectedFontSize: 12,
-                unselectedFontSize: 10,
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                currentIndex: _selectedNavIndex,
-                onTap: _onNavigationTap,
-                type: BottomNavigationBarType.fixed,
-                selectedItemColor: Colors.deepPurple,
-                unselectedItemColor: Colors.black,
-                unselectedLabelStyle: TextStyle(color: Colors.white),
-                unselectedIconTheme: IconThemeData(color: Colors.white),
-                selectedIconTheme: IconThemeData(color: Colors.yellow),
-                items: [
-                  BottomNavigationBarItem(
-                    icon: Container(
-                      decoration: BoxDecoration(
-                          color: Color(0xFF1D6ECC),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              spreadRadius: 3,
-                              blurRadius: 5,
-                              offset: const Offset(
-                                  0, 3), // changes position of shadow
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(20)),
-                      child: const Padding(
-                        padding: EdgeInsets.all(6),
-                        child: Icon(
-                          Icons.home,
-                        ),
-                      ),
-                    ),
-                    label: 'home',
-                  ),
-                  BottomNavigationBarItem(
-                      icon: AvatarGlow(
-                        duration: (didNavButtonGlow && _selectedNavIndex == 1)
-                            ? Duration(milliseconds: 800)
-                            : Duration(seconds: 0),
-                        glowCount: 2,
-                        animate: (didNavButtonGlow && _selectedNavIndex == 1),
-                        repeat: false,
-                        glowColor: Colors.blue,
-                        curve: Curves.ease,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Color(0xFF1D6ECC),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 3,
-                                  blurRadius: 5,
-                                  offset: Offset(
-                                      0, 3), // changes position of shadow
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Padding(
-                            padding: EdgeInsets.all(6.0),
-                            child: Icon(
-                              Icons.trending_up,
-                            ),
-                          ),
-                        ),
-                      ),
-                      label: 'popular'),
-                  BottomNavigationBarItem(
-                      icon: Container(
-                        decoration: BoxDecoration(
-                            color: Color(0xFF1D6ECC),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 3,
-                                blurRadius: 5,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(20)),
-                        child: const Padding(
-                          padding: EdgeInsets.all(6.0),
-                          child: Icon(
-                            Icons.star,
-                          ),
-                        ),
-                      ),
-                      label: 'favorites'),
-                  BottomNavigationBarItem(
-                      icon: Container(
-                          decoration: BoxDecoration(
-                              color: Color(0xFF1D6ECC),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 3,
-                                  blurRadius: 5,
-                                  offset: const Offset(
-                                      0, 3), // changes position of shadow
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(20)),
-                          child: const Padding(
-                            padding: EdgeInsets.all(6.0),
-                            child: Icon(Icons.search),
-                          )),
-                      label: 'search'),
-                  BottomNavigationBarItem(
-                      icon: Container(
-                        decoration: BoxDecoration(
-                            color: Color(0xFF1D6ECC),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 3,
-                                blurRadius: 5,
-                                offset: const Offset(
-                                    0, 3), // changes position of shadow
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(20)),
-                        child: const Padding(
-                          padding: EdgeInsets.all(6.0),
-                          child: Icon(
-                            Icons.contact_page,
-                          ),
-                        ),
-                      ),
-                      label: 'Contact'),
-                  BottomNavigationBarItem(
-                      icon: Container(
-                        decoration: BoxDecoration(
-                            color: Color(0xFF1D6ECC),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 3,
-                                blurRadius: 5,
-                                offset:
-                                    Offset(0, 3), // changes position of shadow
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(20)),
-                        child: const Padding(
-                          padding: EdgeInsets.all(6.0),
-                          child: Icon(
-                            Icons.login_sharp,
-                          ),
-                        ),
-                      ),
-                      label: 'My App'),
-                ]),
-          ),
-        ) */
-        ,
-        body: (_selectedNavIndex != 3)
-            ? /* FutureBuilder(
-                future: homepageController.loadAllItems(),
-                builder: (ctx, homeSnapShot) {
-                  return (homeSnapShot.connectionState ==
-                          ConnectionState.waiting)
-                      ? LoaderWidget()
-                      : _navViewsNew(homepageController, _scrollController)[
-                          _selectedNavIndex];
-                })
-            : _navViewsNew(
-                homepageController, _scrollController)[_selectedNavIndex]); */
-
-            //  FutureBuilder(future: homepageController.loadAllItems(), builder: (ctx, homeSnapShot)=>(homeSnapShot.connectionState==ConnectionState.waiting)?LoaderWidget():)
-
-            FutureBuilder(
-                future: photoController.loadAllItems(),
-                builder: (ctx, photosnapShot) =>
-                    (photosnapShot.connectionState == ConnectionState.waiting)
-                        ? const LoaderWidget()
-                        : FutureBuilder(
-                            future: homepageController.loadAllItems(),
-                            builder: (ctx, homePageSnapShot) {
-                              return (homePageSnapShot.connectionState ==
-                                      ConnectionState.waiting)
-                                  ? const LoaderWidget()
-                                  : _NavViews(
-                                      photoController,
-                                      _scrollController,
-                                      homepageController)[_selectedNavIndex];
-                            }),
-              )
-            : _NavViews(photoController, _scrollController, homepageController)[
-                _selectedNavIndex]);
+        ),
+        body: _NavViews()[_selectedNavIndex]);
   }
 
-  Widget homeBaseWidget(
-      PhotoController phController,
-      ScrollController scrollController,
-      HomepageController homepageController) {
-    return Scrollbar(
-      thumbVisibility: true,
-      controller: scrollController,
-      //main section started
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        controller: scrollController,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(children: [
-            /*  ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) =>
-                          SpeechScreen() /*VideoTest() TestPage() */));
-                },
-                child: Text("debug")), */
+  Widget homeBaseWidget() {
+    HomepageController homepageController =
+        Provider.of<HomepageController>(context);
+    var bookmarkController =
+        Provider.of<BookmarkController>(context, listen: false);
+    return FutureBuilder(
+        future: bookmarkController.getFromList(),
+        builder: (context, snap) {
+          return FutureBuilder(
+              future: homepageController.loadAllSpItems(),
+              builder: (ctx, homePageSnapShot) {
+                return (homePageSnapShot.connectionState ==
+                        ConnectionState.waiting)
+                    ? const LoaderWidget()
+                    : (homePageSnapShot.hasData)
+                        ? Scrollbar(
+                            thumbVisibility: true,
+                            controller: _scrollController,
+                            //main section started
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              controller: _scrollController,
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                child: Column(children: [
+                                  CategoryWidgetSpecial(
+                                      dhakaprokashModels:
+                                          homepageController.Items,
+                                      categoryName: 'সর্বশেষ',
+                                      didMoreButtonShow: false,
+                                      didHeadSectionShow: true,
+                                      listItemLength: 5,
+                                      didFloat: false),
 
-            CategoryWidgetCopy(
-                dhakaprokashModels: homepageController.Items,
-                categoryName: 'Recent',
-                didMoreButtonShow: false,
-                didHeadSectionShow: true,
-                listItemLength: 5,
-                didFloat: false),
+                                  /* CategoryVideoWidget(
+                                    didPause: Provider.of<VideoProvider>(context)
+                                        .IsVideoPause,
+                                    dhakaprokashModels: homepageController.Items,
+                                    categoryName: "ভিজ্যুয়াল মিডিয়া",
+                                    didMoreButtonShow: false,
+                                    didHeadSectionShow: true,
+                                    listItemLength: 5,
+                                    didFloat: false), */
+                                  CategoryVideoGridWidget(
+                                      itemCount:
+                                          GenericVars.getVideoData.length,
+                                      didAxisHorizontal: true,
+                                      crossAxisCount: 1,
+                                      didDescriptionShow: true,
+                                      isScroll: true,
+                                      elevation: 5),
 
-            CategoryVideoWidget(
-                didPause: Provider.of<VideoProvider>(context).IsVideoPause,
-                dhakaprokashModels: homepageController.Items,
-                categoryName: "Video",
-                didMoreButtonShow: false,
-                didHeadSectionShow: true,
-                listItemLength: 5,
-                didFloat: false),
+                                  CategoryGridWidgetSpecial(
+                                    dhakaprokashModels:
+                                        homepageController.Items.sublist(5),
+                                    categoryName: "সর্বশেষ",
+                                    itemCount: 6,
+                                    didAxisHorizontal: false,
+                                    crossAxisCount: 2,
+                                    didDescriptionShow: false,
+                                    isScroll: false,
+                                    elevation: 0,
+                                  ),
 
-            CategoryGridWidgetCopy(
-              dhakaprokashModels: homepageController.Items.sublist(5),
-              categoryName: "More",
-              itemCount: 6,
-              didAxisHorizontal: false,
-              crossAxisCount: 2,
-              didDescriptionShow: false,
-              isScroll: false,
-              elevation: 0,
-            ),
-            //main news + headline+recent lists
-            /* CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Recent",
-              didMoreButtonShow: false,
-              didHeadSectionShow: true,
-              listItemLength: 10,
-              didFloat: false,
-            ), */
-            //For you
-            CategoryGridWidget(
-              photoModels: phController.Items,
-              categoryName: "For you",
-              itemCount: 4,
-              cellHeight: 0.4,
-              didAxisHorizontal: true,
-              crossAxisCount: 1,
-              mainAxisSpacing: 10,
-              didDescriptionShow: true,
-              isScroll: true,
-              elevation: 5,
-            ),
-            //tab widget
+                                  //national
 
-            //sports
-            CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Sports",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: false,
-            ),
-            //national news
-            CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "National News",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: false,
-            ),
-            //international news
-            CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "International News",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: false,
-            ),
+                                  FutureBuilder(
+                                      future:
+                                          homepageController.loadAllRegItems(
+                                              ApiConstant.nationalCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "জাতীয়",
+                                                      didMoreButtonShow: true,
+                                                      didHeadSectionShow: true,
+                                                      listItemLength: 4,
+                                                      didFloat: false)
+                                                  : SizedBox.shrink()),
 
-            //bindon special widget
-            CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Entertainment",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: true,
-            ),
+                                  //politics
+                                  FutureBuilder(
+                                      future:
+                                          homepageController.loadAllRegItems(
+                                              ApiConstant.politicsCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "রাজনীতি",
+                                                      didMoreButtonShow: true,
+                                                      didHeadSectionShow: true,
+                                                      listItemLength: 4,
+                                                      didFloat: false)
+                                                  : SizedBox.shrink()),
+                                  //economics
+                                  FutureBuilder(
+                                      future: homepageController
+                                          .loadAllRegItems(ApiConstant
+                                              .ecomonomicsCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "অর্থনীতি",
+                                                      didMoreButtonShow: true,
+                                                      didHeadSectionShow: true,
+                                                      listItemLength: 4,
+                                                      didFloat: false)
+                                                  : SizedBox.shrink()),
+                                  //international
+                                  FutureBuilder(
+                                      future: homepageController
+                                          .loadAllRegItems(ApiConstant
+                                              .internationalCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "সারাবিশ্ব",
+                                                      didMoreButtonShow: true,
+                                                      didHeadSectionShow: true,
+                                                      listItemLength: 4,
+                                                      didFloat: false)
+                                                  : SizedBox.shrink()),
+                                  //health
+                                  FutureBuilder(
+                                      future: homepageController
+                                          .loadAllRegItems(ApiConstant
+                                              .specialReportCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName:
+                                                          "বিশেষ প্রতিবেদন",
+                                                      didMoreButtonShow: true,
+                                                      didHeadSectionShow: true,
+                                                      listItemLength: 4,
+                                                      didFloat: false)
+                                                  : SizedBox.shrink()),
+                                  //sports
+                                  FutureBuilder(
+                                      future:
+                                          homepageController.loadAllRegItems(
+                                              ApiConstant.sportsCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "খেলা",
+                                                      didMoreButtonShow: true,
+                                                      didHeadSectionShow: true,
+                                                      listItemLength: 4,
+                                                      didFloat: false)
+                                                  : SizedBox.shrink()),
+                                  //entertainment
+                                  FutureBuilder(
+                                      future: homepageController
+                                          .loadAllRegItems(ApiConstant
+                                              .entertainmentCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "বিনোদন",
+                                                      didMoreButtonShow: false,
+                                                      didHeadSectionShow: true,
+                                                      listItemLength: 4,
+                                                      didFloat: true)
+                                                  : SizedBox.shrink()),
 
-            //life style
-            CategoryGridWidget(
-              photoModels: phController.Items,
-              categoryName: "Lifestyle",
-              itemCount: 4,
-              cellHeight: 0.4,
-              didAxisHorizontal: true,
-              crossAxisCount: 1,
-              mainAxisSpacing: 10,
-              didDescriptionShow: true,
-              isScroll: true,
-              elevation: 5,
-            ),
-            //motamot special widget
+                                  //saradesh
+                                  FutureBuilder(
+                                      future:
+                                          homepageController.loadAllRegItems(
+                                              ApiConstant.saradeshCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryGridWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "সারাদেশ",
+                                                      itemCount: 6,
+                                                      didAxisHorizontal: false,
+                                                      crossAxisCount: 2,
+                                                      didDescriptionShow: false,
+                                                      isScroll: false,
+                                                      elevation: 0,
+                                                      itemHeight: 0.23,
+                                                    )
+                                                  : SizedBox.shrink()),
 
-            CategoryAvatatarWidget(
-                photoModels: phController.Items,
-                categoryName: "Opinion/Editorial",
-                didMoreButtonShow: true,
-                listItemLength: 5),
+                                  //Court Law
+                                  FutureBuilder(
+                                      future:
+                                          homepageController.loadAllRegItems(
+                                              ApiConstant.courtLawLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryGridWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "আইন আদালত",
+                                                      itemCount: 4,
+                                                      didAxisHorizontal: true,
+                                                      crossAxisCount: 1,
+                                                      didDescriptionShow: true,
+                                                      isScroll: true,
+                                                      elevation: 5,
+                                                      itemHeight: 0.4,
+                                                    )
+                                                  : SizedBox.shrink()),
+                                  //crime
+                                  FutureBuilder(
+                                      future:
+                                          homepageController.loadAllRegItems(
+                                              ApiConstant.crimeCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "অপরাধ",
+                                                      didMoreButtonShow: true,
+                                                      didHeadSectionShow: true,
+                                                      listItemLength: 4,
+                                                      didFloat: false)
+                                                  : SizedBox.shrink()),
 
-            CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Business",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ),
-            //video section
-            CategoryGridWidget(
-              photoModels: phController.Items,
-              categoryName: "Video",
-              itemCount: 5,
-              didAxisHorizontal: true,
-              crossAxisCount: 1,
-              mainAxisSpacing: 10,
-              didDescriptionShow: true,
-              cellHeight: 0.4,
-              isScroll: true,
-              elevation: 5,
-            ),
-            // education
-            CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Education",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //job
-            CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Job",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //science
-            CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Technology",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            // gadgets
-            CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Gadgets",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //onno alo
-            CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Onno ALo",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ),
-            //dur porobash
-            CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Dur Porobash",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //nagorik shongbad
-            CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Nagorik News",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //Religion
-            CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Religion",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ),
-            // Health
-            CategoryWidget(
-              photoModels: phController.Items,
-              categoryName: "Health",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ),
-            HomePageFooter()
-          ]),
-        ),
-      ),
-    );
+                                  //lifestyle
+                                  FutureBuilder(
+                                      future: homepageController
+                                          .loadAllRegItems(ApiConstant
+                                              .lifeStyleCategoryLink),
+                                      builder: (ctx, snap) => (snap
+                                                  .connectionState ==
+                                              ConnectionState.waiting)
+                                          ? LoaderWidget()
+                                          : (snap.hasData)
+                                              ? CategoryGridWidgetRegular(
+                                                  dhakaprokashModels:
+                                                      snap.data!,
+                                                  categoryName: "লাইফস্টাইল",
+                                                  itemCount: 4,
+                                                  didAxisHorizontal: true,
+                                                  crossAxisCount: 1,
+                                                  didDescriptionShow: true,
+                                                  isScroll: true,
+                                                  elevation: 5,
+                                                  itemHeight: 0.4,
+                                                )
+                                              : SizedBox.shrink()),
+                                  //religion
+                                  FutureBuilder(
+                                      future:
+                                          homepageController.loadAllRegItems(
+                                              ApiConstant.religionCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "ধর্ম",
+                                                      didMoreButtonShow: true,
+                                                      didHeadSectionShow: true,
+                                                      listItemLength: 4,
+                                                      didFloat: false)
+                                                  : SizedBox.shrink()),
+                                  //health
+                                  FutureBuilder(
+                                      future:
+                                          homepageController.loadAllRegItems(
+                                              ApiConstant.healthCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryGridWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "স্বাস্থ্য",
+                                                      itemCount: 4,
+                                                      didAxisHorizontal: false,
+                                                      crossAxisCount: 2,
+                                                      didDescriptionShow: false,
+                                                      isScroll: false,
+                                                      elevation: 0,
+                                                      itemHeight: 0.23,
+                                                    )
+                                                  : SizedBox.shrink()),
+                                  //education
+                                  FutureBuilder(
+                                      future: homepageController
+                                          .loadAllRegItems(ApiConstant
+                                              .educationCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "শিক্ষা",
+                                                      didMoreButtonShow: true,
+                                                      didHeadSectionShow: true,
+                                                      listItemLength: 4,
+                                                      didFloat: false)
+                                                  : SizedBox.shrink()),
+                                  //art-culture
+                                  FutureBuilder(
+                                      future:
+                                          homepageController.loadAllRegItems(
+                                              ApiConstant.artCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName:
+                                                          "শিল্প-সংস্কৃতি",
+                                                      didMoreButtonShow: true,
+                                                      didHeadSectionShow: true,
+                                                      listItemLength: 4,
+                                                      didFloat: false)
+                                                  : SizedBox.shrink()),
+
+                                  //science-tech
+                                  FutureBuilder(
+                                      future: homepageController
+                                          .loadAllRegItems(ApiConstant
+                                              .scinenceTechCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryGridWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName:
+                                                          "বিজ্ঞান-তথ্যপ্রযুক্তি",
+                                                      itemCount: 4,
+                                                      didAxisHorizontal: false,
+                                                      crossAxisCount: 2,
+                                                      didDescriptionShow: false,
+                                                      isScroll: false,
+                                                      elevation: 0,
+                                                      itemHeight: 0.23,
+                                                    )
+                                                  : SizedBox.shrink()),
+
+                                  //career
+                                  FutureBuilder(
+                                      future:
+                                          homepageController.loadAllRegItems(
+                                              ApiConstant.careerCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "ক্যারিয়ার",
+                                                      didMoreButtonShow: true,
+                                                      didHeadSectionShow: true,
+                                                      listItemLength: 5,
+                                                      didFloat: false)
+                                                  : SizedBox.shrink()),
+                                  //campus
+                                  FutureBuilder(
+                                      future:
+                                          homepageController.loadAllRegItems(
+                                              ApiConstant.campusCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "ক্যাম্পাস",
+                                                      didMoreButtonShow: true,
+                                                      didHeadSectionShow: true,
+                                                      listItemLength: 3,
+                                                      didFloat: false)
+                                                  : SizedBox.shrink()),
+                                  //child
+                                  FutureBuilder(
+                                      future:
+                                          homepageController.loadAllRegItems(
+                                              ApiConstant.childCategoryLink),
+                                      builder: (ctx, snap) => (snap
+                                                  .connectionState ==
+                                              ConnectionState.waiting)
+                                          ? LoaderWidget()
+                                          : (snap.hasData)
+                                              ? CategoryWidgetRegular(
+                                                  dhakaprokashModels:
+                                                      snap.data!,
+                                                  categoryName: "শিশু-কিশোর",
+                                                  didMoreButtonShow: true,
+                                                  didHeadSectionShow: true,
+                                                  listItemLength: 3,
+                                                  didFloat: false)
+                                              : SizedBox.shrink()),
+                                  //motivation
+                                  FutureBuilder(
+                                      future: homepageController
+                                          .loadAllRegItems(ApiConstant
+                                              .motivationCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "মোটিভেশন",
+                                                      didMoreButtonShow: true,
+                                                      didHeadSectionShow: true,
+                                                      listItemLength: 3,
+                                                      didFloat: false)
+                                                  : SizedBox.shrink()),
+                                  //prbash
+                                  FutureBuilder(
+                                      future:
+                                          homepageController.loadAllRegItems(
+                                              ApiConstant.probashCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "প্রবাস",
+                                                      didMoreButtonShow: true,
+                                                      didHeadSectionShow: true,
+                                                      listItemLength: 3,
+                                                      didFloat: false)
+                                                  : SizedBox.shrink()),
+                                  //corporate
+                                  FutureBuilder(
+                                      future: homepageController
+                                          .loadAllRegItems(ApiConstant
+                                              .corporateCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "কর্পোরেট",
+                                                      didMoreButtonShow: true,
+                                                      didHeadSectionShow: true,
+                                                      listItemLength: 3,
+                                                      didFloat: false)
+                                                  : SizedBox.shrink()),
+                                  //literature
+                                  FutureBuilder(
+                                      future: homepageController
+                                          .loadAllRegItems(ApiConstant
+                                              .literatureCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryGridWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "সাহিত্য",
+                                                      itemCount: 4,
+                                                      didAxisHorizontal: false,
+                                                      crossAxisCount: 2,
+                                                      didDescriptionShow: false,
+                                                      isScroll: false,
+                                                      elevation: 0,
+                                                      itemHeight: 0.23,
+                                                    )
+                                                  : SizedBox.shrink()),
+                                  //motamot
+
+                                  FutureBuilder(
+                                      future:
+                                          homepageController.loadAllRegItems(
+                                              ApiConstant.opinionCategoryLink),
+                                      builder: (ctx, snap) =>
+                                          (snap.connectionState ==
+                                                  ConnectionState.waiting)
+                                              ? LoaderWidget()
+                                              : (snap.hasData)
+                                                  ? CategoryGridWidgetRegular(
+                                                      dhakaprokashModels:
+                                                          snap.data!,
+                                                      categoryName: "মতামত",
+                                                      itemCount: 4,
+                                                      didAxisHorizontal: true,
+                                                      crossAxisCount: 1,
+                                                      didDescriptionShow: true,
+                                                      isScroll: true,
+                                                      elevation: 5,
+                                                      itemHeight: 0.4,
+                                                    )
+                                                  : SizedBox.shrink()),
+
+                                  //special article
+
+                                  FutureBuilder(
+                                      future: homepageController
+                                          .loadAllRegItems(ApiConstant
+                                              .specialArticleCategoryLink),
+                                      builder: (ctx, snap) => (snap
+                                                  .connectionState ==
+                                              ConnectionState.waiting)
+                                          ? LoaderWidget()
+                                          : (snap.hasData)
+                                              ? CategoryWidgetRegular(
+                                                  dhakaprokashModels:
+                                                      snap.data!,
+                                                  categoryName: "বিশেষ নিবন্ধ",
+                                                  didMoreButtonShow: true,
+                                                  didHeadSectionShow: true,
+                                                  listItemLength: 3,
+                                                  didFloat: false)
+                                              : SizedBox.shrink()),
+
+                                  //photo gallery
+                                  FutureBuilder(
+                                      future: homepageController
+                                          .loadAllPhotoItems(),
+                                      builder: (ctx, snap) => (snap
+                                                  .connectionState ==
+                                              ConnectionState.waiting)
+                                          ? LoaderWidget()
+                                          : (snap.hasData)
+                                              ? CategoryPhotoGridWidget(
+                                                  itemCount: snap.data!.length,
+                                                  dhakaprokashModels:
+                                                      snap.data!,
+                                                  didAxisHorizontal: true,
+                                                  crossAxisCount: 1,
+                                                  didDescriptionShow: true,
+                                                  isScroll: true,
+                                                  elevation: 5)
+                                              : SizedBox.shrink()),
+
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: HomePageFooter(),
+                                  )
+                                ]),
+                              ),
+                            ),
+                          )
+                        : Center(
+                            child:
+                                Text("কোনো তথ্য নেই! একটু পর আবার চেষ্টা করুন"),
+                          );
+              });
+        });
   }
 }
-
-
-
-
- /* Widget homeBaseWidgetCopy(
-      HomepageController hcontroller, ScrollController scontroller) {
-    return Scrollbar(
-      thumbVisibility: true,
-      controller: scontroller,
-      //main section started
-      child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        controller: scontroller,
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(children: [
-            /*  ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (ctx) =>
-                          SpeechScreen() /*VideoTest() TestPage() */));
-                },
-                child: Text("debug")), */
-            //main news + headline+recent lists
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Recent",
-              didMoreButtonShow: false,
-              didHeadSectionShow: true,
-              listItemLength: 10,
-              didFloat: false,
-            ),
-            //For you
-            CategoryGridWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "For you",
-              itemCount: 6,
-              didAxisHorizontal: false,
-              crossAxisCount: 2,
-              didDescriptionShow: true,
-              isScroll: false,
-              elevation: 0,
-            ),
-            //tab widget
-
-            //sports
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Sports",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: false,
-            ),
-            //national news
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "National News",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: false,
-            ),
-            //international news
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "International News",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: false,
-            ),
-
-            //bindon special widget
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Entertainment",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 4,
-              didFloat: true,
-            ),
-
-            //life style
-            CategoryGridWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Lifestyle",
-              itemCount: 4,
-              didAxisHorizontal: true,
-              crossAxisCount: 1,
-              didDescriptionShow: true,
-              isScroll: true,
-              elevation: 5,
-            ),
-            //motamot special widget
-
-            /*   CategoryAvatatarWidgetCopy(
-                 dhakaprokashModels: hcontroller.Items,
-                categoryName: "Opinion/Editorial",
-                didMoreButtonShow: true,
-                listItemLength: 5), */
-
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Business",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ),
-            //video section
-            CategoryGridWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Video",
-              itemCount: 5,
-              didAxisHorizontal: true,
-              crossAxisCount: 1,
-              didDescriptionShow: true,
-              isScroll: true,
-              elevation: 5,
-            ),
-            // education
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Education",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //job
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Job",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //science
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Technology",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            // gadgets
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Gadgets",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //onno alo
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Onno ALo",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ),
-            //dur porobash
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Dur Porobash",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //nagorik shongbad
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Nagorik News",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 2,
-              didFloat: false,
-            ),
-            //Religion
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Religion",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ),
-            // Health
-            CategoryWidgetCopy(
-              dhakaprokashModels: hcontroller.Items,
-              categoryName: "Health",
-              didMoreButtonShow: true,
-              didHeadSectionShow: true,
-              listItemLength: 3,
-              didFloat: false,
-            ),
-            HomePageFooter()
-          ]),
-        ),
-      ),
-    );
-  } */

@@ -1,23 +1,24 @@
+import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
-import 'package:dummy_app/Views/pages/deskview/desk_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 
 class DeskViewBar extends StatelessWidget {
-  const DeskViewBar({super.key});
+  final DateTime dateTime;
+  const DeskViewBar({super.key, required this.dateTime});
 
   @override
   Widget build(BuildContext context) {
     String iconPath = "assets/images/dhakaprokash_icon.png";
-    String title = "Dhaka Prokash Desk";
-    String publishedDate =
-        DateFormat("d MMM, yyyy| hh:mm a").format(DateTime.now());
+    String title = "ঢাকাপ্রকাশ ডেস্ক";
+    String publishedDate = DateFormatter().defaultFormat(dateTime);
+
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (ctx) => CategoryView(categoryName: title))),
+          builder: (ctx) => CategoryView(
+                categoryName: title,
+                categoryLink: null,
+              ))),
       child: Container(
         decoration: const BoxDecoration(
             border: Border.symmetric(
@@ -32,16 +33,17 @@ class DeskViewBar extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
                     publishedDate,
-                    style: TextStyle(fontSize: 15),
+                    style: const TextStyle(fontSize: 15),
                   )
                 ],
               ),

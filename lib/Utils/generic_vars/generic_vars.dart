@@ -1,29 +1,127 @@
-import 'package:dummy_app/Views/widgets/categorylist_tile.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/categorylist_tile.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/favlist_tile.dart';
 import 'package:flutter/material.dart';
 
 class GenericVars {
   static Size scSize = Size(600, 800);
 
   static Map<String, IconData> newspaperCategories = {
-    "Local News": Icons.location_city,
-    "National News": Icons.flag,
-    "International News": Icons.public,
-    "Business": Icons.business,
-    "Finance": Icons.account_balance,
-    "Politics": Icons.gavel,
-    "Sports": Icons.sports_soccer,
-    "Entertainment": Icons.movie,
-    "Lifestyle": Icons.favorite,
-    "Technology": Icons.computer,
-    "Science": Icons.science,
-    "Health": Icons.health_and_safety,
-    "Opinion/Editorial": Icons.comment,
-    "Education": Icons.school,
-    "Weather": Icons.wb_sunny,
+    "সর্বশেষ": Icons.newspaper,
+    "জাতীয়": Icons.flag,
+    "রাজনীতি": Icons.gavel,
+    "অর্থনীতি": Icons.monetization_on,
+    "সারাদেশ": Icons.location_city,
+    "সারাবিশ্ব": Icons.public,
+    "খেলা": Icons.sports_soccer,
+    "বিনোদন": Icons.movie,
+    "লাইফস্টাইল": Icons.favorite,
+    "স্বাস্থ্য": Icons.health_and_safety,
+    "সাহিত্য": Icons.menu_book,
+    "শিক্ষা": Icons.school,
+    "বিশেষ প্রতিবেদন": Icons.priority_high,
+    "ভিজ্যুয়াল মিডিয়া": Icons.video_camera_back,
+    "মতামত": Icons.comment,
+    "ক্যারিয়ার": Icons.business_center,
+    "ধর্ম": Icons.mosque,
+
+    "শিল্প-সংস্কৃতি": Icons.category,
+    "বিজ্ঞান-তথ্যপ্রযুক্তি": Icons.science,
+    "সরেজমিন": Icons.broadcast_on_home,
+    "টিভি লাইভ": Icons.live_tv,
+
+    "অপরাধ": Icons.dangerous,
+
+    "ইতিহাস-ঐতিহ্য": Icons.history_edu,
+    "সোশ্যাল মিডিয়া": Icons.social_distance,
+    "পাঠকের কথা": Icons.drafts,
+    "পরিবেশ জলবায়ু": Icons.wb_sunny,
+    "রাশিফল": Icons.stars,
+    "আইন আদালত": Icons.balance,
+    "পর্যটন": Icons.travel_explore,
+    "গণমাধ্যম": Icons.tv,
+    "ফিচার": Icons.star,
+    "কৃষি": Icons.agriculture,
+    "প্রবাস": Icons.flight_takeoff,
+    "ক্যাম্পাস": Icons.apartment,
+    "রাজধানী": Icons.account_balance,
+    "হৃদয়ের জানালা": Icons.favorite,
+    "শুভেচ্ছা বার্তা": Icons.waving_hand,
+    "বিশেষ নিবন্ধ": Icons.folder_special,
+    "সাক্ষাৎকার": Icons.handshake,
+    "কর্পোরেট": Icons.business,
+    "মুক্তিযুদ্ধ": Icons.shield,
+    "শিশু-কিশোর": Icons.child_care,
+    "মোটিভেশন": Icons.lightbulb,
+
     // "Recent News": Icons.access_time,
   };
+  static Map<String, String?> newspaperCategoriesLink = {
+    "সর্বশেষ": ApiConstant.homePageSpecialContentLink,
+    "জাতীয়": ApiConstant.nationalCategoryLink,
+    "রাজনীতি": ApiConstant.politicsCategoryLink,
+    "অর্থনীতি": ApiConstant.ecomonomicsCategoryLink,
+    "সারাদেশ": ApiConstant.saradeshCategoryLink,
+    "সারাবিশ্ব": ApiConstant.internationalCategoryLink,
+    "খেলা": ApiConstant.sportsCategoryLink,
+    "বিনোদন": ApiConstant.entertainmentCategoryLink,
+    "লাইফস্টাইল": ApiConstant.lifeStyleCategoryLink,
+    "স্বাস্থ্য": ApiConstant.healthCategoryLink,
+    "সাহিত্য": ApiConstant.literatureCategoryLink,
+    "শিক্ষা": ApiConstant.educationCategoryLink,
+    "বিশেষ প্রতিবেদন": ApiConstant.specialReportCategoryLink,
+    "ভিজ্যুয়াল মিডিয়া": null,
+    "মতামত": ApiConstant.opinionCategoryLink,
+    "ক্যারিয়ার": ApiConstant.careerCategoryLink,
+    "ধর্ম": ApiConstant.religionCategoryLink,
+
+    "শিল্প-সংস্কৃতি": ApiConstant.artCategoryLink,
+    "বিজ্ঞান-তথ্যপ্রযুক্তি": ApiConstant.scinenceTechCategoryLink,
+    "সরেজমিন": null,
+    "টিভি লাইভ": null,
+
+    "অপরাধ": ApiConstant.crimeCategoryLink,
+
+    "ইতিহাস-ঐতিহ্য": null,
+    "সোশ্যাল মিডিয়া": null,
+    "পাঠকের কথা": null,
+    "পরিবেশ জলবায়ু": null,
+    "রাশিফল": null,
+    "আইন আদালত": ApiConstant.courtLawLink,
+    "পর্যটন": null,
+    "গণমাধ্যম": null,
+    "ফিচার": null,
+    "কৃষি": null,
+    "প্রবাস": ApiConstant.probashCategoryLink,
+    "ক্যাম্পাস": ApiConstant.campusCategoryLink,
+    "রাজধানী": null,
+    "হৃদয়ের জানালা": null,
+    "শুভেচ্ছা বার্তা": null,
+    "বিশেষ নিবন্ধ": ApiConstant.specialArticleCategoryLink,
+    "সাক্ষাৎকার": null,
+    "কর্পোরেট": ApiConstant.corporateCategoryLink,
+    "মুক্তিযুদ্ধ": null,
+    "শিশু-কিশোর": ApiConstant.childCategoryLink,
+    "মোটিভেশন": ApiConstant.motivationCategoryLink,
+    //not in category
+    "ফটো গ্যালারি": ApiConstant.photoGalleryCategoryLink
+
+    // "Recent News": Icons.access_time,
+  };
+
+  static Map<String, String?> deskbarLink = {
+    "ঢাকাপ্রকাশ ডেস্ক": null,
+    "নিজস্ব প্রতিনিধি": null,
+    "সারাবিশ্ব ডেস্ক": null,
+    "স্পোর্টস ডেস্ক": null,
+    "বিনোদন ডেস্ক": null,
+    "নিজস্ব প্রতিবেদক": null,
+    "তথ্যপ্রযুক্তি ডেস্ক": null,
+    "সারাদেশ ডেস্ক": null,
+  };
   static String currentSearchString = "";
-  static String currenFontFamily = "NotoSerif-Regular"; //"Raleway";
+  static String currenFontFamily = "Helvetica"; //"Shurjo-un-regular";
+  //"SolaimanLipi"; //"Raleway"//"NotoSerif-Regular";
 
   static double scrollOffset = 0;
 
@@ -57,6 +155,6 @@ class GenericVars {
     },
   ];
 
-  static List<CategoryListTile> favoritesList = [];
+  static bool isAppdrawerGlow = false;
 }
 //পর্যটন

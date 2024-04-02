@@ -1,27 +1,30 @@
-import 'package:dummy_app/Controllers/photo_controller.dart';
-import 'package:dummy_app/Controllers/post_controller.dart';
+import 'package:dummy_app/Controllers/bookmark_controller.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-
-import 'package:dummy_app/Views/widgets/app_bar.dart';
-import 'package:dummy_app/Views/widgets/category_widget.dart';
-
-import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
+import 'package:dummy_app/database/database_helper.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class FavoritesNewsView extends StatelessWidget {
-  final PhotoController phController;
-
+class FavoritesNewsView extends StatefulWidget {
   const FavoritesNewsView({
     super.key,
-    required this.phController,
   });
 
   @override
+  State<FavoritesNewsView> createState() => _FavoritesNewsViewState();
+}
+
+class _FavoritesNewsViewState extends State<FavoritesNewsView> {
+  /* void refreshPosts() async {
+    GenericVars.favoritesList = await DatabaseHelper().getPosts();
+    setState(() {});
+  } */
+
+  @override
   Widget build(BuildContext context) {
-    PostController postController = Provider.of<PostController>(context);
-    PhotoController photoController = Provider.of<PhotoController>(context);
     return Scrollbar(
         thumbVisibility: true,
         child: CustomScrollView(
@@ -37,38 +40,31 @@ class FavoritesNewsView extends StatelessWidget {
               ),
               automaticallyImplyLeading: false,
             ),
-            SliverList(
-                delegate: SliverChildListDelegate([
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: (GenericVars.favoritesList.isNotEmpty)
-                    ? Column(
-                        children: List.generate(
-                            GenericVars.favoritesList.length,
-                            (index) => GenericVars.favoritesList[
-                                index]) /* [
-                          //Category News List
-                         
-        
-                          /* CategoryWidget(
-                            photoModels: photoController.Items,
-                            categoryName: "Favorites",
-                            didMoreButtonShow: false,
-                            didHeadSectionShow: false,
-                            listItemLength: 8,
-                            didFloat: false,
-                          ), */
-                          HomePageFooter()
-                        ] */
-                        )
-                    : Center(
-                        child: Text(
-                          "no favorites",
-                          style: TextStyle(color: Colors.grey, fontSize: 18),
-                        ),
+            Consumer<BookmarkController>(
+                child: SliverToBoxAdapter(
+                  child: Container(
+                    height: GenericVars.scSize.height * 0.6,
+                    width: double.infinity,
+                    child: const Center(
+                      child: Text(
+                        "কোনো বুকমার্ক পাওয়া যায় নি",
+                        style: TextStyle(color: Colors.grey, fontSize: 18),
                       ),
-              )
-            ]))
+                    ),
+                  ),
+                ),
+                builder: (context, snap, ch) {
+                  return (snap.FavList.isEmpty)
+                      ? ch!
+                      : SliverList(
+                          delegate: SliverChildListDelegate([
+                          Container(
+                              padding: EdgeInsets.symmetric(horizontal: 15),
+                              child: Column(
+                                  children: List.generate(snap.FavList.length,
+                                      (index) => snap.FavList[index])))
+                        ]));
+                })
           ],
         ));
   }

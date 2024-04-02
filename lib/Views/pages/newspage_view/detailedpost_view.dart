@@ -1,46 +1,79 @@
+import 'package:dummy_app/Controllers/detailpage_controller.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
-import 'package:dummy_app/Controllers/photo_controller.dart';
-import 'package:dummy_app/Controllers/post_controller.dart';
-import 'package:dummy_app/Utils/dummy_tags.dart';
+import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
+
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
-import 'package:dummy_app/Views/widgets/categorygrid_widget%20copy.dart';
-import 'package:dummy_app/Views/widgets/categorygrid_widget.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_reg.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_sp.dart';
+
+import 'package:dummy_app/Views/widgets/detaildPost_view/comment_section.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/main_article_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/mainposthead_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/posttag_tile.dart';
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DetailedPostView extends StatelessWidget {
-  final String url, title, description, categoryName, date;
-  const DetailedPostView(
-      {super.key,
-      required this.url,
-      required this.title,
-      required this.description,
-      required this.categoryName,
-      required this.date});
+  final String url, title, description, categoryName, imageCaption;
+  final DateTime dateTime;
+  final int id;
+  final List<String> tags;
+
+  const DetailedPostView({
+    super.key,
+    required this.url,
+    required this.title,
+    required this.description,
+    required this.categoryName,
+    required this.dateTime,
+    required this.imageCaption,
+    required this.tags,
+    required this.id,
+  });
 
   @override
   Widget build(BuildContext context) {
+    List<DhakaProkashRegularModel> currentContainer = [];
+
+    int gridItemCount = 4;
+    List<DhakaProkashRegularModel> currentElementList(
+        List<DhakaProkashRegularModel> allList, int id, int itemNumber) {
+      List<DhakaProkashRegularModel> currentContainer = [];
+      int first =
+          (allList.indexWhere((element) => element.contentId == id) + 1) <
+                  allList.length
+              ? allList.indexWhere((element) => element.contentId == id) + 1
+              : 0;
+
+      currentContainer.clear();
+
+      currentContainer = List.from(allList.sublist(first))
+        ..addAll(allList.sublist(0, first));
+
+      currentContainer = currentContainer.sublist(0, itemNumber);
+      print("Current Container $currentContainer");
+      return currentContainer;
+    }
+
     //for test only
-    List<String> tags = DummyTags().categoryTags[categoryName] ?? [];
-    PostController postController = Provider.of<PostController>(context);
-    PhotoController photoController = Provider.of<PhotoController>(context);
+    if (Provider.of<DetailPageController>(context, listen: false)
+        .IsCommentClick) {
+      Provider.of<DetailPageController>(context, listen: false)
+          .notCommentClick();
+    }
+
     HomepageController homepageController =
         Provider.of<HomepageController>(context);
     return Scaffold(
       appBar: AppbarDefault(),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 8),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,11 +83,13 @@ class DetailedPostView extends StatelessWidget {
                 //   height: GenericVars.scSize.height * 0.6,
 
                 child: MainHeadPostTile(
-                  date: date,
+                  id: id,
+                  tags: tags,
+                  imageCaption: imageCaption,
+                  dateTime: dateTime,
                   url: url,
                   title: title,
                   categoryname: categoryName,
-                  isBookmark: false,
                   description: description,
                 ),
               ),
@@ -63,37 +98,46 @@ class DetailedPostView extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                   child: MainArticleTile(
                     articleItems: [
-                      HtmlWidget(description),
+                      HtmlWidget(
+                        description,
+                      ),
                     ],
                   )),
-//post tag tile
-              Container(
-                padding: const EdgeInsets.only(
-                    top: 10), //symmetric(horizontal: 10, vertical: 5),
-                //  height: (tags.isEmpty) ? 0 : GenericVars.scSize.height * 0.2,
+//Line divider
+              Divider(),
 
-                decoration: const BoxDecoration(
-                    border: Border(
-                        top: BorderSide(width: 0.4, color: Colors.grey))),
-                child: PostTagTile(
-                  tagList: tags,
-                  crossAxisCount: 2,
-                ),
+//post tag tile
+              PostTagTile(
+                tagList: tags,
+                crossAxisCount: 3,
               ),
 //comment button
-              Container(
-                height: GenericVars.scSize.height * 0.07,
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: SizedBox.expand(
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text("Comment",
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white),
-                  ),
-                ),
+
+              Consumer<DetailPageController>(
+                builder: (ctx, snap, _) => (snap.IsCommentClick)
+                    ? const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: CommentSectionWidget(),
+                      )
+                    : Container(
+                        height: GenericVars.scSize.height * 0.07,
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        child: SizedBox.expand(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Provider.of<DetailPageController>(context,
+                                      listen: false)
+                                  .commentClick();
+                            },
+                            child: Text("Comment",
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white)),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue,
+                                foregroundColor: Colors.white),
+                          ),
+                        ),
+                      ),
               ),
 // news grid
               /* FutureBuilder(
@@ -117,16 +161,30 @@ class DetailedPostView extends StatelessWidget {
                             elevation: 0,
                           );
                   }) ,*/
+              if (GenericVars.newspaperCategoriesLink[categoryName] != null)
+                FutureBuilder(
+                    future: homepageController.loadAllRegItems(
+                        GenericVars.newspaperCategoriesLink[categoryName]!),
+                    builder: (ctx, postSnapShot) {
+                      return (postSnapShot.connectionState ==
+                              ConnectionState.waiting)
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : CategoryGridWidgetRegular(
+                              dhakaprokashModels: currentElementList(
+                                  postSnapShot.data ?? [], id, gridItemCount),
+                              categoryName: categoryName,
+                              itemCount: gridItemCount,
+                              didAxisHorizontal: false,
+                              crossAxisCount: 2,
+                              didDescriptionShow: false,
+                              isScroll: false,
+                              elevation: 0,
+                              itemHeight: 0.23,
+                            );
 
-              FutureBuilder(
-                  future: homepageController.loadAllItems(),
-                  builder: (ctx, postSnapShot) {
-                    return (postSnapShot.connectionState ==
-                            ConnectionState.waiting)
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : CategoryGridWidgetCopy(
+                      /*  CategoryGridWidgetSpecial(
                             dhakaprokashModels: homepageController.Items,
                             categoryName: categoryName,
                             itemCount: 4,
@@ -134,8 +192,8 @@ class DetailedPostView extends StatelessWidget {
                             crossAxisCount: 2,
                             didDescriptionShow: false,
                             isScroll: false,
-                            elevation: 0);
-                  }),
+                            elevation: 0); */
+                    }),
               HomePageFooter()
             ],
           ),
@@ -144,6 +202,7 @@ class DetailedPostView extends StatelessWidget {
     );
   }
 }
+
 /*  Container(
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: ListView(

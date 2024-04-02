@@ -1,25 +1,28 @@
+import 'dart:async';
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:dummy_app/Controllers/photo_controller.dart';
-import 'package:dummy_app/Controllers/post_controller.dart';
-import 'package:dummy_app/Models/photo_model.dart';
+import 'package:dummy_app/Controllers/homepage_controller.dart';
+
+import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-import 'package:dummy_app/Views/widgets/category_widget.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_reg.dart';
+
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class SearchToNewPage extends StatefulWidget {
-  SearchToNewPage({super.key});
+  const SearchToNewPage({super.key});
 
   @override
   State<SearchToNewPage> createState() => _SearchToNewPageState();
 }
 
 class _SearchToNewPageState extends State<SearchToNewPage> {
-  List<PhotoModel> currentSearchItems = [];
+  List<DhakaProkashRegularModel> currentSearchItems = [];
   TextEditingController textEditingController = TextEditingController();
+
   bool didShowList = false;
   stt.SpeechToText? _speech;
   bool _isListening = false;
@@ -47,6 +50,7 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
 
   void _listen() async {
     didGlow = !didGlow;
+    Timer speechTimer;
     if (!_isListening) {
       bool available = await _speech!.initialize(
         onStatus: (val) => print('onStatus: $val'),
@@ -57,10 +61,18 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
         print(element.name);
       });
       if (available) {
+        speechTimer = Timer(Duration(seconds: 5), () {
+          setState(() {
+            _isListening = false;
+            didGlow = false;
+          });
+        });
         //_isListening = true;
         setState(() => _isListening = true);
 
         _speech!.listen(
+            listenOptions:
+                stt.SpeechListenOptions(listenMode: stt.ListenMode.search),
             onResult: (val) => setState(() {
                   _text = val.recognizedWords;
 
@@ -84,8 +96,7 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
 
   @override
   Widget build(BuildContext context) {
-    PostController postController = Provider.of<PostController>(context);
-    PhotoController photoController = Provider.of<PhotoController>(context);
+    HomepageController homepageController = Provider.of(context, listen: false);
 
     return Scaffold(
         appBar: AppBar(
@@ -97,6 +108,19 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
               child: Container(
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: TextField(
+                    onSubmitted: (value) {
+                      didShowList = true;
+                      textEditingController.text =
+                          textEditingController.text.trim();
+                      GenericVars.currentSearchString =
+                          textEditingController.text;
+                      FocusScopeNode currentFocus = FocusScope.of(context);
+                      if (!currentFocus.hasPrimaryFocus) {
+                        currentFocus.unfocus();
+                      }
+
+                      setState(() {});
+                    },
                     controller: textEditingController,
                     style: const TextStyle(
                         fontSize: 18,
@@ -130,8 +154,6 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
                         prefixIcon: IconButton(
                             onPressed: () {
                               didShowList = true;
-                              // Navigator.of(context).pop();
-                              // Focus.of(context).unfocus();
                               textEditingController.text =
                                   textEditingController.text.trim();
                               GenericVars.currentSearchString =
@@ -147,9 +169,10 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
                                   builder: (ctx) => SearchToNewPage(
                                       textEditingController.text))); */
                             },
-                            icon: Icon(Icons.search)),
-                        hintStyle: TextStyle(color: Colors.grey),
-                        enabledBorder: OutlineInputBorder(
+                            icon: const Icon(Icons.search)),
+                        hintStyle: const TextStyle(
+                            color: Colors.grey, fontWeight: FontWeight.normal),
+                        enabledBorder: const OutlineInputBorder(
                             borderSide:
                                 BorderSide(width: 1, color: Colors.grey))),
                   ))),
@@ -160,41 +183,32 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
         ),
         body: (didShowList)
             ? FutureBuilder(
-                future: photoController.loadSearchAllItems(
-                    GenericVars.currentSearchString.toLowerCase()),
-                builder: (ctx, photosnapShot) =>
-                    (photosnapShot.connectionState == ConnectionState.waiting)
-                        ? const LoaderWidget()
-                        : FutureBuilder(
-                            future: postController.loadAllItems(),
-                            builder: (ctx, postSnapShot) {
-                              currentSearchItems = photoController.SearchItems;
-                              return (postSnapShot.connectionState ==
-                                      ConnectionState.waiting)
-                                  ? const LoaderWidget()
-                                  : (currentSearchItems.isNotEmpty
-                                      ? SingleChildScrollView(
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 15),
-                                            child: CategoryWidget(
-                                                photoModels:
-                                                    photoController.SearchItems,
-                                                categoryName: "Search",
-                                                didMoreButtonShow: false,
-                                                didHeadSectionShow: false,
-                                                listItemLength: 8,
-                                                didFloat: false),
-                                          ),
-                                        )
-                                      : Center(
-                                          child: Text(
-                                          "Not Found",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge,
-                                        )));
-                            }))
-            : Container());
+                future: homepageController.loadAllRegItems(
+                    "https://dhakaprokash24.com/api/prismaapi/home/${GenericVars.currentSearchString.toLowerCase()}"),
+                builder: (ctx, postSnapShot) {
+                  currentSearchItems = postSnapShot.data ?? [];
+                  return (postSnapShot.connectionState ==
+                          ConnectionState.waiting)
+                      ? const LoaderWidget()
+                      : (currentSearchItems.isNotEmpty
+                          ? SingleChildScrollView(
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 15),
+                                child: CategoryWidgetRegular(
+                                    dhakaprokashModels: postSnapShot.data!,
+                                    categoryName: "Search",
+                                    didMoreButtonShow: false,
+                                    didHeadSectionShow: false,
+                                    listItemLength: postSnapShot.data!.length,
+                                    didFloat: false),
+                              ),
+                            )
+                          : Center(
+                              child: Text(
+                              "Not Found",
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            )));
+                })
+            : const SizedBox.shrink());
   }
 }
