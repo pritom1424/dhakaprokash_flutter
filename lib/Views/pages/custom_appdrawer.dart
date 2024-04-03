@@ -1,3 +1,4 @@
+import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_drawer/category_buttonList.dart';
 
@@ -10,14 +11,14 @@ class CustomAppDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     String iconPath = "assets/images/dhakaprokash_icon.png";
     return Drawer(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: AppColors.logoColorDeep,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             /// Header of the Drawer
             Container(
               // borderOnForeground: false,
-              color: Colors.blueAccent,
+              //color: AppColors.logoColorDeep,
               child: InkWell(
                 onTap: () {},
                 child: Container(
@@ -29,6 +30,7 @@ class CustomAppDrawer extends StatelessWidget {
                       //  Image.asset("assets/images/dhakaprokash_logo.png"),
                       CircleAvatar(
                           radius: 52,
+                          backgroundColor: Colors.orange,
                           backgroundImage: AssetImage(
                               "assets/images/character_placeholder.png")),
                       SizedBox(

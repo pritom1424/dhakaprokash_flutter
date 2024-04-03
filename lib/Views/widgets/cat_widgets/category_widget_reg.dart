@@ -104,7 +104,7 @@ class CategoryWidgetRegular extends StatelessWidget {
                           id: dhakaprokashModels[0].contentId ?? -1,
                           tags: tags ?? [], //dhakaprokashModels[0].tags,
                           imageCaption:
-                              "caption", //dhakaprokashModels[0].imgBgCaption ?? "",
+                              null, //dhakaprokashModels[0].imgBgCaption ?? "",
                           dateTime:
                               dhakaprokashModels[0].createdAt ?? DateTime.now(),
                           categoryName: categoryName,
@@ -306,7 +306,7 @@ class CategoryWidgetRegular extends StatelessWidget {
                     return CategoryListTile(
                       id: dhakaprokashModels[index + 1].contentId ?? -1,
                       tags: tags ?? [], //dhakaprokashModels[index + 1].tags,
-                      imageCaption: "caption",
+                      imageCaption: null,
                       // dhakaprokashModels[index + 1].imgbgCaption ?? "",
                       categoryName: categoryName,
                       imagePath:
@@ -333,7 +333,7 @@ class CategoryWidgetRegular extends StatelessWidget {
                     return CategoryListTile(
                       id: dhakaprokashModels[index].contentId ?? -1,
                       tags: tags ?? [], //dhakaprokashModels[index + 1].tags,
-                      imageCaption: "caption",
+                      imageCaption: null,
                       // dhakaprokashModels[index + 1].imgbgCaption ?? "",
                       categoryName: categoryName,
                       imagePath:

@@ -39,7 +39,7 @@ class FollowSocialWidget extends StatelessWidget {
       children: [
         Padding(
             padding: const EdgeInsets.only(bottom: 5),
-            child: Text("Follow", style: TextStyle(fontSize: fontSize))),
+            child: Text("অনুসরণ করুন", style: TextStyle(fontSize: fontSize))),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -53,17 +53,6 @@ class FollowSocialWidget extends StatelessWidget {
                   radius: iconRadius,
                   child: Image.asset("assets/images/facebook-icon.png"),
                 ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                launchLink(websiteSchema, youtubeLink);
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: CircleAvatar(
-                    radius: iconRadius,
-                    child: Image.asset("assets/images/youtube-icon.png")),
               ),
             ),
             GestureDetector(
@@ -87,7 +76,18 @@ class FollowSocialWidget extends StatelessWidget {
                     radius: iconRadius,
                     child: Image.asset("assets/images/twitter-icon.png")),
               ),
-            )
+            ),
+            GestureDetector(
+              onTap: () {
+                launchLink(websiteSchema, youtubeLink);
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: CircleAvatar(
+                    radius: iconRadius,
+                    child: Image.asset("assets/images/youtube-icon.png")),
+              ),
+            ),
           ],
         ),
       ],

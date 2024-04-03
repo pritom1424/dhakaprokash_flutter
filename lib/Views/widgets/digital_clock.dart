@@ -1,3 +1,4 @@
+import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/bangla_calendar/bongabdo.dart';
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
@@ -44,7 +45,7 @@ class DigitalClockWidget extends StatelessWidget {
     String englishDate = DateFormat.yMMMMEEEEd("Bn").format(DateTime.now());
 
     return Container(
-      color: Colors.blue,
+      color: AppColors.logoColorDeep,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,

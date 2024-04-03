@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-enum Social { facebook, twitter, whatsapp, linkedin }
+enum Social { facebook, twitter, whatsapp, linkedin, messenger }
 
 class FollowPostBar extends StatelessWidget {
   final double iconRadius;
@@ -29,6 +29,8 @@ class FollowPostBar extends StatelessWidget {
 
       case Social.whatsapp:
         return 'https://api.whatsapp.com/send?text=$text$url';
+      case Social.messenger:
+        return '';
 
       default:
         return "you need to login";
@@ -62,6 +64,17 @@ class FollowPostBar extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
+                // launchLink(dummyLink, Social.whatsapp, "here is a new post");
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: CircleAvatar(
+                    radius: iconRadius,
+                    child: Image.asset("assets/images/messenger-icon.png")),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
                 launchLink(dummyLink, Social.whatsapp, "here is a new post");
               },
               child: Padding(
@@ -69,6 +82,17 @@ class FollowPostBar extends StatelessWidget {
                 child: CircleAvatar(
                     radius: iconRadius,
                     child: Image.asset("assets/images/whatsapp-icon.png")),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                launchLink(dummyLink, Social.twitter, "here is a new post");
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: CircleAvatar(
+                    radius: iconRadius,
+                    child: Image.asset("assets/images/twitter-icon.png")),
               ),
             ),
             GestureDetector(
@@ -84,15 +108,15 @@ class FollowPostBar extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                launchLink(dummyLink, Social.twitter, "here is a new post");
+                launchLink(dummyLink, Social.linkedin, "here is a new post");
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: CircleAvatar(
                     radius: iconRadius,
-                    child: Image.asset("assets/images/twitter-icon.png")),
+                    child: Image.asset("assets/images/copy-icon.png")),
               ),
-            )
+            ),
           ],
         ),
       ],

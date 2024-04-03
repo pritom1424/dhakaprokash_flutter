@@ -46,6 +46,10 @@ class NavBarWidget extends StatelessWidget {
               label: "",
             ),
             BottomNavigationBarItem(
+              icon: Icon(Icons.play_arrow),
+              label: "",
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.bookmark),
               label: "",
             ),

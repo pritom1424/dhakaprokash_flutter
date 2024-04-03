@@ -8,14 +8,12 @@ import 'package:provider/provider.dart';
 
 class FavListTile extends StatelessWidget {
   final int id;
-  final String imagePath,
-      newsTitle,
-      newsDescription,
-      categoryName,
-      imageCaption;
+  final String imagePath, newsTitle, newsDescription, categoryName;
+
   final DateTime dateTime;
   final double itemHeight;
   final List<String> tags;
+  final String? imageCaption;
   const FavListTile(
       {super.key,
       required this.imagePath,
