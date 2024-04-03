@@ -49,32 +49,56 @@ class ContactView extends StatelessWidget {
                     height: GenericVars.scSize.height * 0.06,
                   ),
                 ),
+                RichText(
+                  text: TextSpan(
+                      text: "ভারপ্রাপ্ত সম্পাদক: ",
+                      style: TextStyle(color: Colors.black),
+                      children: [
+                        TextSpan(
+                            text: "রবিউল ইসলাম\n",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold)),
+                        TextSpan(
+                            text: "প্রকাশক: ",
+                            style: TextStyle(color: Colors.black)),
+                        TextSpan(
+                            text: "শাহাদৎ জামান সাইফ",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold))
+                      ]),
+                ),
+                Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    child: Text(
+                        "৯৩, কাজী নজরুল ইসলাম এভিনিউ, (ষষ্ঠ তলা)\nকারওয়ান বাজার, ঢাকা-১২১৫।")),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 5),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Newsroom",
+                            "নিউজরুম",
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
-                          Text("+8809613331010"),
+                          Text("+৮৮০৯৬১৩৩৩১০১০"),
                         ],
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 0.5),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Marketing",
+                            "মার্কেটিং",
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
-                          Text("+8809613332020"),
+                          Text("+৮৮০৯৬১৩৩৩২০২০"),
                         ],
                       ),
                     ),
@@ -118,9 +142,6 @@ class ContactView extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: FollowSocialWidget(fontSize: 25, iconRadius: 18),
                 ),
-                Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: Text("93, Kazi Nazrul Islam Avenue")),
               ],
             ),
           ),

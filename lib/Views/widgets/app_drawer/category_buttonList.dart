@@ -64,7 +64,7 @@ class _CategoryButtonListState extends State<CategoryButtonList> {
                                   BorderSide(width: 0.3, color: Colors.grey))),
                       child: ListTile(
                         leading: Icon(
-                            color: Colors.grey,
+                            color: Colors.blueGrey,
                             GenericVars.newspaperCategories.values
                                 .toList()[index]),
                         title: Text(

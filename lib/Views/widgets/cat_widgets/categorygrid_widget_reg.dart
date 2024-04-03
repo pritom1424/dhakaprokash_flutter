@@ -27,6 +27,7 @@ class CategoryGridWidgetRegular extends StatefulWidget {
   final double elevation;
   final double? itemHeight;
   final bool? isReplace;
+  final Color? barIconColor, barTextColor;
 
   const CategoryGridWidgetRegular(
       {super.key,
@@ -39,7 +40,9 @@ class CategoryGridWidgetRegular extends StatefulWidget {
       required this.isScroll,
       required this.elevation,
       this.isReplace,
-      this.itemHeight});
+      this.itemHeight,
+      this.barIconColor,
+      this.barTextColor});
 
   @override
   State<CategoryGridWidgetRegular> createState() => _CategoryGridWidgetState();
@@ -132,7 +135,8 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
                 children: [
                   Icon(
                     Icons.square,
-                    color: AppColors.categoryNameColor,
+                    color: widget.barIconColor ??
+                        AppColors.defaultCategoryBarIconColor,
                     size: 20,
                   ),
                   SizedBox(
@@ -143,12 +147,14 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
                     style: TextStyle(
                         fontSize:
                             Theme.of(context).textTheme.titleMedium!.fontSize,
-                        color: AppColors.categoryNameColor,
+                        color:
+                            widget.barIconColor ?? AppColors.categoryNameColor,
                         fontWeight: FontWeight.bold),
                   ),
                   Icon(
                     Icons.arrow_right,
-                    color: AppColors.categoryNameColor,
+                    color: widget.barIconColor ??
+                        AppColors.defaultCategoryBarIconColor,
                   )
                 ],
               ),

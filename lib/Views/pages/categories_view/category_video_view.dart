@@ -1,4 +1,5 @@
 import 'package:dummy_app/Controllers/homepage_controller.dart';
+import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/category_video_list_widget.dart';
@@ -26,9 +27,24 @@ class CategoryVideoView extends StatelessWidget {
         //appBar: AppbarDefault(),
         body: Scrollbar(
             thumbVisibility: true,
-            child: CustomScrollView(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  CategoryVideoListWidget(
+                      isHeadSectionShow: false,
+                      itemCount: GenericVars.getVideoData.length,
+                      didDescriptionShow: false,
+                      isScroll: false,
+                      itemHeight: 0.35,
+                      elevation: 0),
+                  HomePageFooter()
+                ],
+              ),
+            )
+
+            /*  CustomScrollView(
               slivers: [
-                SliverAppBar(
+                /*     SliverAppBar(
                   pinned: true,
                   title: Text(
                     "Video",
@@ -40,7 +56,7 @@ class CategoryVideoView extends StatelessWidget {
                         color: Colors.blue),
                   ),
                   automaticallyImplyLeading: false,
-                ),
+                ), */
                 SliverList(
                     delegate: SliverChildListDelegate([
                   Container(
@@ -48,26 +64,21 @@ class CategoryVideoView extends StatelessWidget {
                     child: Column(children: [
                       //Category News List
                       CategoryVideoListWidget(
+                          isHeadSectionShow: false,
                           itemCount: 4,
                           didDescriptionShow: false,
                           isScroll: true,
+                          itemHeight: 0.5,
                           elevation: 0),
-                      /*  CategoryWidgetRegular(
-                                      dhakaprokashModels: snapShot.data!,
-                                      categoryName: categoryName,
-                                      didMoreButtonShow: false,
-                                      didHeadSectionShow: false,
-                                      listItemLength: snapShot.data!.length,
-                                      didFloat: false,
-                                    ), */
+               
                       HomePageFooter()
                     ]),
                   )
                 ])),
               ],
-            ))
+            )) */
 
-        /*  (categoryLink != null)
+            /*  (categoryLink != null)
           ? FutureBuilder(
               future: homepageController.loadAllRegItems(categoryLink!),
               builder: (ctx, snapShot) =>
@@ -118,6 +129,6 @@ class CategoryVideoView extends StatelessWidget {
           : Center(
               child: Text("কোনো তথ্য পাওয়া যায় নি"),
             ), */
-        );
+            ));
   }
 }

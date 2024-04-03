@@ -10,6 +10,9 @@ import 'package:http/http.dart' as http;
 class HomepageController with ChangeNotifier {
   List<DhakaProkashSpecialModel> _items = [];
 
+  int photoShowNumber = 4;
+  bool isButtonVisible = true;
+
   Future<List<DhakaProkashSpecialModel>> loadAllSpItems() async {
     final url = Uri.parse(ApiConstant.homePageSpecialContentLink);
 
@@ -50,5 +53,25 @@ class HomepageController with ChangeNotifier {
 
   List<DhakaProkashSpecialModel> get Items {
     return _items;
+  }
+
+  void addMorePhotos(int totalPhotoNum) {
+    if (totalPhotoNum < photoShowNumber) {
+      isButtonVisible = false;
+      notifyListeners();
+    } else if (totalPhotoNum == photoShowNumber + 4) {
+      photoShowNumber += 4;
+
+      isButtonVisible = false;
+      notifyListeners();
+    }
+    photoShowNumber += 4;
+
+    isButtonVisible = true;
+    notifyListeners();
+  }
+
+  bool get IsMoreButtonVisible {
+    return isButtonVisible;
   }
 }

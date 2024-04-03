@@ -15,6 +15,7 @@ import 'package:dummy_app/database/database_helper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart' as ds;
@@ -58,61 +59,64 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SplasScreen(),
 
-      theme: ThemeData().copyWith(
+      theme: ThemeData(
+        primarySwatch:
+            Colors.blue, // You can change this to match your app's color scheme
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ).copyWith(
           scaffoldBackgroundColor: AppColors.backgroundColor,
-          drawerTheme: DrawerThemeData(backgroundColor: Colors.red),
           textTheme: ThemeData().textTheme.copyWith(
-                titleLarge: TextStyle(
+                titleLarge: GoogleFonts.tiroBangla(
                   fontWeight: FontWeight.bold,
-                  fontFamily: GenericVars.currenFontFamily,
+                  // fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
                   fontSize: 35,
                 ),
-                titleMedium: TextStyle(
+                titleMedium: GoogleFonts.tiroBangla(
                   fontWeight: FontWeight.bold,
-                  fontFamily: GenericVars.currenFontFamily,
+                  //  fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
                   fontSize: 20,
                 ),
-                titleSmall: TextStyle(
+                titleSmall: GoogleFonts.tiroBangla(
                   fontWeight: FontWeight.bold,
-                  fontFamily: GenericVars.currenFontFamily,
+                  // fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
                   fontSize: 15,
                 ),
-                bodyLarge: TextStyle(
+                bodyLarge: GoogleFonts.tiroBangla(
                   fontWeight: FontWeight.bold,
-                  fontFamily: GenericVars.currenFontFamily,
+                  // fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
                   fontSize: 25,
                 ),
-                bodyMedium: TextStyle(
+                bodyMedium: GoogleFonts.tiroBangla(
                   fontWeight: FontWeight.normal,
-                  fontFamily: GenericVars.currenFontFamily,
+                  //  fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
                   fontSize: 16,
                 ),
-                headlineMedium: TextStyle(
+                headlineMedium: GoogleFonts.tiroBangla(
                   fontWeight: FontWeight.normal,
-                  fontFamily: GenericVars.currenFontFamily,
+                  // fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
                   fontSize: 20,
                 ),
-                headlineLarge: TextStyle(
+                headlineLarge: GoogleFonts.tiroBangla(
                   fontWeight: FontWeight.bold,
-                  fontFamily: GenericVars.currenFontFamily,
+                  // fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
                   fontSize: 25,
                 ),
-                labelMedium: TextStyle(
+                labelMedium: GoogleFonts.tiroBangla(
                   fontWeight: FontWeight.bold,
-                  fontFamily: GenericVars.currenFontFamily,
+                  // fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
                   fontSize: 12,
                 ),
-                labelSmall: TextStyle(
+                labelSmall: GoogleFonts.tiroBangla(
                   fontWeight: FontWeight.normal,
-                  fontFamily: GenericVars.currenFontFamily,
+                  // fontFamily: GenericVars.currenFontFamily,
                   color: Colors.black87,
                   fontSize: 12,
                 ),

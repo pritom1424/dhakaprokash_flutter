@@ -1,6 +1,8 @@
+import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/digital_clock.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class AppbarDefault extends StatelessWidget implements PreferredSize {
   final double widthSize;
@@ -12,7 +14,7 @@ class AppbarDefault extends StatelessWidget implements PreferredSize {
       centerTitle: true,
       title: Container(
         width: GenericVars.scSize.width * widthSize,
-        decoration: BoxDecoration(boxShadow: [
+        /*  decoration: BoxDecoration(boxShadow: [
           BoxShadow(
               color: Colors.black.withOpacity(0.075),
               spreadRadius: 5,
@@ -20,25 +22,26 @@ class AppbarDefault extends StatelessWidget implements PreferredSize {
               offset: Offset(0, 3),
               blurStyle: BlurStyle.normal // changes position of shadow
               ),
-        ]),
+        ]), */
         child: Image.asset(
           "assets/images/dhakaprokash_logo.png",
           fit: BoxFit.fill,
         ),
       ),
-      bottom: PreferredSize(
+      /* bottom: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight * 0.1),
-          child: DigitalClockWidget()),
+          child: DigitalClockWidget()), */
       actions: [
         // Notification Icon
         Badge(
-          label: Text("0"),
+          label: Text("5"),
           offset: Offset(-10, 6),
           child: IconButton(
-            icon: Icon(
+            icon: const Icon(
               size: 30,
-              Icons.notifications_none_outlined,
-              color: Colors.blueAccent,
+              CupertinoIcons.bell,
+              // Icons.notifications_none_outlined,
+              color: AppColors.logoColorDeep,
             ),
             onPressed: () {
               // Handle notification icon tap
@@ -51,7 +54,7 @@ class AppbarDefault extends StatelessWidget implements PreferredSize {
 
   @override
   // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(kToolbarHeight + 20);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   @override
   // TODO: implement child

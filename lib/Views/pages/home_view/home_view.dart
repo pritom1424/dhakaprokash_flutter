@@ -25,7 +25,7 @@ import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_reg.dart
 
 import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_sp.dart';
 
-import 'package:dummy_app/Views/widgets/cat_widgets/categoryvideo_widget.dart';
+//import 'package:dummy_app/Views/widgets/cat_widgets/categoryvideo_widget.dart';
 
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
@@ -63,7 +63,7 @@ class _HomeViewState extends State<HomeView> {
       CategoryVideoView(),
       FavoritesNewsView(),
       SearchToNewPage(),
-      ContactView(),
+      //  ContactView(),
       MyAppView()
     ];
   }
@@ -135,7 +135,7 @@ class _HomeViewState extends State<HomeView> {
         floatingActionButtonLocation: (_selectedNavIndex == 0)
             ? FloatingActionButtonLocation.endFloat
             : null,
-        appBar: (_selectedNavIndex != 6) ? AppbarDefault() : null,
+        appBar: (_selectedNavIndex != 5) ? AppbarDefault() : null,
         drawer: CustomAppDrawer(), //AppDrawer(),
         onDrawerChanged: (isOpened) {
           if (isOpened) {
@@ -204,7 +204,7 @@ class _HomeViewState extends State<HomeView> {
                                       didDescriptionShow: true,
                                       isScroll: true,
                                       elevation: 5),
-
+/* 
                                   CategoryGridWidgetSpecial(
                                     dhakaprokashModels:
                                         homepageController.Items.sublist(5),
@@ -215,7 +215,7 @@ class _HomeViewState extends State<HomeView> {
                                     didDescriptionShow: false,
                                     isScroll: false,
                                     elevation: 0,
-                                  ),
+                                  ), */
 
                                   //national
 
@@ -300,21 +300,26 @@ class _HomeViewState extends State<HomeView> {
                                       future: homepageController
                                           .loadAllRegItems(ApiConstant
                                               .specialReportCategoryLink),
-                                      builder: (ctx, snap) =>
-                                          (snap.connectionState ==
-                                                  ConnectionState.waiting)
-                                              ? LoaderWidget()
-                                              : (snap.hasData)
-                                                  ? CategoryWidgetRegular(
-                                                      dhakaprokashModels:
-                                                          snap.data!,
-                                                      categoryName:
-                                                          "বিশেষ প্রতিবেদন",
-                                                      didMoreButtonShow: true,
-                                                      didHeadSectionShow: true,
-                                                      listItemLength: 4,
-                                                      didFloat: false)
-                                                  : SizedBox.shrink()),
+                                      builder: (ctx, snap) => (snap
+                                                  .connectionState ==
+                                              ConnectionState.waiting)
+                                          ? LoaderWidget()
+                                          : (snap.hasData)
+                                              ? CategoryWidgetRegular(
+                                                  dhakaprokashModels:
+                                                      snap.data!,
+                                                  categoryName:
+                                                      "বিশেষ প্রতিবেদন",
+                                                  didMoreButtonShow: true,
+                                                  didHeadSectionShow: true,
+                                                  listItemLength: 4,
+                                                  didFloat: false,
+                                                  bariconColor:
+                                                      AppColors.logoColorDeep,
+                                                  bartextColor: AppColors
+                                                      .defaultCategoryBarIconColor,
+                                                )
+                                              : SizedBox.shrink()),
                                   //sports
                                   FutureBuilder(
                                       future:
@@ -354,24 +359,32 @@ class _HomeViewState extends State<HomeView> {
                                                       didFloat: false)
                                                   : SizedBox.shrink()),
                                   //photo gallery
-                                  FutureBuilder(
-                                      future: homepageController
-                                          .loadAllPhotoItems(),
-                                      builder: (ctx, snap) => (snap
-                                                  .connectionState ==
-                                              ConnectionState.waiting)
-                                          ? LoaderWidget()
-                                          : (snap.hasData)
-                                              ? CategoryPhotoGridWidget(
-                                                  itemCount: snap.data!.length,
-                                                  dhakaprokashModels:
-                                                      snap.data!,
-                                                  didAxisHorizontal: true,
-                                                  crossAxisCount: 1,
-                                                  didDescriptionShow: true,
-                                                  isScroll: true,
-                                                  elevation: 5)
-                                              : SizedBox.shrink()),
+                                  Consumer<HomepageController>(
+                                    builder: (ctx, snapMorePhoto, _) =>
+                                        FutureBuilder(
+                                            future: homepageController
+                                                .loadAllPhotoItems(),
+                                            builder: (ctx, snap) => (snap
+                                                        .connectionState ==
+                                                    ConnectionState.waiting)
+                                                ? LoaderWidget()
+                                                : (snap.hasData)
+                                                    ? CategoryPhotoGridWidget(
+                                                        totalPhotoItems:
+                                                            snap.data!.length,
+                                                        itemCount: snapMorePhoto
+                                                            .photoShowNumber,
+                                                        dhakaprokashModels:
+                                                            snap.data!,
+                                                        didAxisHorizontal: true,
+                                                        crossAxisCount: 2,
+                                                        didDescriptionShow:
+                                                            true,
+                                                        isScroll: false,
+                                                        itemHeight: 0.45,
+                                                        elevation: 0)
+                                                    : SizedBox.shrink()),
+                                  ),
 
                                   //saradesh
                                   FutureBuilder(

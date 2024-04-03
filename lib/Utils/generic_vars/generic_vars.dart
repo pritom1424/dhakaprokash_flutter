@@ -1,6 +1,5 @@
 import 'package:dummy_app/Utils/api_constants.dart';
-import 'package:dummy_app/Views/widgets/cat_widgets/categorylist_tile.dart';
-import 'package:dummy_app/Views/widgets/cat_widgets/favlist_tile.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GenericVars {
