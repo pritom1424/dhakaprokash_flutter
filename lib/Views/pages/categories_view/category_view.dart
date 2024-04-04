@@ -12,10 +12,12 @@ import 'package:provider/provider.dart';
 class CategoryView extends StatelessWidget {
   final String categoryName;
   final String? categoryLink;
+  final bool? isPost;
   const CategoryView({
     super.key,
     required this.categoryName,
     required this.categoryLink,
+    this.isPost,
   });
 
   @override
@@ -25,7 +27,9 @@ class CategoryView extends StatelessWidget {
       appBar: AppbarDefault(),
       body: (categoryLink != null)
           ? FutureBuilder(
-              future: homepageController.loadAllRegItems(categoryLink!),
+              future: (isPost == null || isPost == false)
+                  ? homepageController.loadAllRegItems(categoryLink!)
+                  : homepageController.loadAllRegItemsPost(categoryLink!, 10),
               builder: (ctx, snapShot) =>
                   (snapShot.connectionState == ConnectionState.waiting)
                       ? LoaderWidget()

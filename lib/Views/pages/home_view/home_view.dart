@@ -18,6 +18,7 @@ import 'package:dummy_app/Views/pages/searchtoNewpage.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 
 import 'package:dummy_app/Views/widgets/cat_widgets/category_photo_grid_widget.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/category_tab_widget.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/category_video_grid_widget.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_reg.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_sp.dart';
@@ -34,6 +35,7 @@ import 'package:dummy_app/Views/widgets/navbar_widget.dart';
 import 'package:dummy_app/database/database_helper.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:provider/provider.dart';
 
@@ -44,12 +46,14 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
   int _selectedNavIndex = 0;
   bool _showScrollToTop = false;
   late ScrollController _scrollController;
   final ValueNotifier<double> _scrollOffset = ValueNotifier<double>(0.0);
+  late TabController tabController;
   bool didNavButtonGlow = false;
+  final tabBarItem = 5;
   // List<Widget> _navViewsNew(HomepageController homepageController,
   //     ScrollController scrollController) {
   //   return [homeBaseWidgetCopy(homepageController, scrollController)];
@@ -80,7 +84,7 @@ class _HomeViewState extends State<HomeView> {
     _scrollController = ScrollController();
     _scrollController.addListener(_updateScrollOffset);
     _showScrollToTop = false;
-
+    tabController = TabController(length: 2, vsync: this);
     // TODO: implement initState
     super.initState();
   }
@@ -88,6 +92,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   void dispose() {
     _scrollController.dispose();
+    tabController.dispose();
     // TODO: implement dispose
     super.dispose();
   }
@@ -104,6 +109,9 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     GenericVars.scSize = MediaQuery.of(context).size;
+
+    print(
+        "currentNumber:${Provider.of<HomepageController>(context, listen: false).photoShowNumber}");
     return Scaffold(
         floatingActionButton: (_selectedNavIndex == 0)
             ? ValueListenableBuilder(
@@ -186,7 +194,6 @@ class _HomeViewState extends State<HomeView> {
                                       didHeadSectionShow: true,
                                       listItemLength: 5,
                                       didFloat: false),
-
                                   /* CategoryVideoWidget(
                                     didPause: Provider.of<VideoProvider>(context)
                                         .IsVideoPause,
@@ -204,6 +211,67 @@ class _HomeViewState extends State<HomeView> {
                                       didDescriptionShow: true,
                                       isScroll: true,
                                       elevation: 5),
+
+                                  TabBar(
+                                      controller: tabController,
+                                      isScrollable: false,
+                                      tabs: const [
+                                        Tab(
+                                          icon: Text('সর্বশেষ'),
+                                        ),
+                                        Tab(
+                                          icon: Text('জনপ্রিয়'),
+                                        )
+                                      ]),
+                                  Container(
+                                    height: GenericVars.scSize.height *
+                                            tabBarItem *
+                                            (0.09) +
+                                        GenericVars.scSize.height * 0.09,
+                                    child: TabBarView(
+                                        controller: tabController,
+                                        children: [
+                                          FutureBuilder(
+                                              future: homepageController
+                                                  .loadAllRegItemsPost(
+                                                      ApiConstant
+                                                          .homeLatestPostLink,
+                                                      tabBarItem),
+                                              builder: (ctx, snap) => (snap
+                                                          .connectionState ==
+                                                      ConnectionState.waiting)
+                                                  ? LoaderWidget()
+                                                  : (snap.hasData)
+                                                      ? CategoryTabWidget(
+                                                          dhakaProkashModels:
+                                                              snap.data!,
+                                                          catName: "সর্বশেষ",
+                                                          itemNumber:
+                                                              tabBarItem,
+                                                        )
+                                                      : SizedBox.shrink()),
+                                          FutureBuilder(
+                                              future: homepageController
+                                                  .loadAllRegItemsPost(
+                                                      ApiConstant
+                                                          .homePopularPostLink,
+                                                      tabBarItem),
+                                              builder: (ctx, snap) => (snap
+                                                          .connectionState ==
+                                                      ConnectionState.waiting)
+                                                  ? LoaderWidget()
+                                                  : (snap.hasData)
+                                                      ? CategoryTabWidget(
+                                                          dhakaProkashModels:
+                                                              snap.data!,
+                                                          catName: "জনপ্রিয়",
+                                                          itemNumber:
+                                                              tabBarItem,
+                                                        )
+                                                      : SizedBox.shrink()),
+                                        ]),
+                                  ),
+
 /* 
                                   CategoryGridWidgetSpecial(
                                     dhakaprokashModels:
@@ -359,32 +427,34 @@ class _HomeViewState extends State<HomeView> {
                                                       didFloat: false)
                                                   : SizedBox.shrink()),
                                   //photo gallery
-                                  Consumer<HomepageController>(
-                                    builder: (ctx, snapMorePhoto, _) =>
-                                        FutureBuilder(
-                                            future: homepageController
-                                                .loadAllPhotoItems(),
-                                            builder: (ctx, snap) => (snap
-                                                        .connectionState ==
-                                                    ConnectionState.waiting)
-                                                ? LoaderWidget()
-                                                : (snap.hasData)
-                                                    ? CategoryPhotoGridWidget(
-                                                        totalPhotoItems:
-                                                            snap.data!.length,
-                                                        itemCount: snapMorePhoto
-                                                            .photoShowNumber,
-                                                        dhakaprokashModels:
-                                                            snap.data!,
-                                                        didAxisHorizontal: true,
-                                                        crossAxisCount: 2,
-                                                        didDescriptionShow:
-                                                            true,
-                                                        isScroll: false,
-                                                        itemHeight: 0.45,
-                                                        elevation: 0)
-                                                    : SizedBox.shrink()),
-                                  ),
+                                  FutureBuilder(
+                                      future: homepageController
+                                          .loadAllPhotoItems(),
+                                      builder: (ctx, snap) {
+                                        return (snap.connectionState ==
+                                                ConnectionState.waiting)
+                                            ? LoaderWidget()
+                                            : (snap.hasData)
+                                                ? CategoryPhotoGridWidget(
+                                                    scrollController:
+                                                        _scrollController,
+                                                    totalPhotoItems:
+                                                        snap.data!.length,
+                                                    itemCount: Provider.of<
+                                                                HomepageController>(
+                                                            ctx,
+                                                            listen: false)
+                                                        .photoShowNumber,
+                                                    dhakaprokashModels:
+                                                        snap.data!,
+                                                    didAxisHorizontal: false,
+                                                    crossAxisCount: 2,
+                                                    didDescriptionShow: false,
+                                                    isScroll: false,
+                                                    itemHeight: 0.23,
+                                                    elevation: 0)
+                                                : SizedBox.shrink();
+                                      }),
 
                                   //saradesh
                                   FutureBuilder(
@@ -424,7 +494,7 @@ class _HomeViewState extends State<HomeView> {
                                                       dhakaprokashModels:
                                                           snap.data!,
                                                       categoryName: "আইন আদালত",
-                                                      itemCount: 4,
+                                                      itemCount: 5,
                                                       didAxisHorizontal: true,
                                                       crossAxisCount: 1,
                                                       didDescriptionShow: true,
@@ -467,7 +537,7 @@ class _HomeViewState extends State<HomeView> {
                                                   dhakaprokashModels:
                                                       snap.data!,
                                                   categoryName: "লাইফস্টাইল",
-                                                  itemCount: 4,
+                                                  itemCount: 5,
                                                   didAxisHorizontal: true,
                                                   crossAxisCount: 1,
                                                   didDescriptionShow: true,
@@ -735,7 +805,7 @@ class _HomeViewState extends State<HomeView> {
                                                       dhakaprokashModels:
                                                           snap.data!,
                                                       categoryName: "মতামত",
-                                                      itemCount: 4,
+                                                      itemCount: 5,
                                                       didAxisHorizontal: true,
                                                       crossAxisCount: 1,
                                                       didDescriptionShow: true,
@@ -766,16 +836,15 @@ class _HomeViewState extends State<HomeView> {
                                                   didFloat: false)
                                               : SizedBox.shrink()),
 
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
+                                  const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
                                     child: HomePageFooter(),
                                   )
                                 ]),
                               ),
                             ),
                           )
-                        : Center(
+                        : const Center(
                             child:
                                 Text("কোনো তথ্য নেই! একটু পর আবার চেষ্টা করুন"),
                           );

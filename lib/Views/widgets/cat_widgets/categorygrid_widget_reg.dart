@@ -169,7 +169,8 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
                     (widget.itemHeight ?? cellHeight) *
                     (widget.itemCount / widget.crossAxisCount).ceil(),
             child: widget.isScroll
-                ? Scrollbar(
+                ? RawScrollbar(
+                    thumbColor: Colors.black45,
                     thickness: 5,
                     radius: Radius.circular(10),
                     controller: scController,

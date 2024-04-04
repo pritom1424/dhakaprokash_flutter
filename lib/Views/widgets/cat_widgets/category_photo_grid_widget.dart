@@ -3,6 +3,7 @@ import 'package:dummy_app/Models/dhaka_prokash_photo_model.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class CategoryPhotoGridWidget extends StatefulWidget {
@@ -18,6 +19,7 @@ class CategoryPhotoGridWidget extends StatefulWidget {
   final double? itemHeight;
   final Color? barIconColor, barTextColor;
   final int totalPhotoItems;
+  final ScrollController? scrollController;
   const CategoryPhotoGridWidget(
       {super.key,
       required this.itemCount,
@@ -30,6 +32,7 @@ class CategoryPhotoGridWidget extends StatefulWidget {
       this.itemHeight,
       this.barIconColor,
       this.barTextColor,
+      this.scrollController,
       required this.totalPhotoItems});
 
   @override
@@ -55,6 +58,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print("item count ${widget.totalPhotoItems}");
     double cellHeight = 0.3;
     double mainAxisSpacing = 10;
     return Column(
@@ -175,18 +179,24 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                     )),
           ),
         ),
-        Consumer<HomepageController>(
-          builder: (ctx, snap, _) => Visibility(
-            visible: snap.IsMoreButtonVisible,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: ElevatedButton(
-                  onPressed: () {
-                    Provider.of<HomepageController>(context, listen: false)
-                        .addMorePhotos(widget.totalPhotoItems);
-                  },
-                  child: Text("আরও")),
-            ),
+        Visibility(
+          visible: Provider.of<HomepageController>(context, listen: false)
+              .IsMoreButtonVisible,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(shape: LinearBorder()),
+                onPressed: () {
+                  // if (widget.scrollController != null) {
+                  //   GenericVars.scrollOffset = widget.scrollController!.offset;
+                  // }
+                  // Provider.of<HomepageController>(context, listen: false)
+                  //     .addMorePhotos(widget.totalPhotoItems);
+                },
+                child: Text(
+                  "আরও",
+                  style: GoogleFonts.tiroBangla(fontWeight: FontWeight.bold),
+                )),
           ),
         )
       ],

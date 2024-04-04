@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dummy_app/Models/dhak_prokash_tab_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_photo_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_sp_model.dart';
@@ -40,6 +41,25 @@ class HomepageController with ChangeNotifier {
     return jsonResponse;
   }
 
+  Future<List<DhakaProkashRegularModel>> loadAllRegItemsPost(
+      String apiLink, int itemNum) async {
+    final url = Uri.parse(apiLink);
+    print("Post Api Called");
+    Map data = {"take": itemNum};
+
+    final response = await http.post(url, body: jsonEncode(data), headers: {
+      'Content-Type': 'application/json'
+    } //{"Content-Type": "application/x-www-form-urlencoded"},
+        );
+    print("Post Api response: ${utf8.decode(response.bodyBytes)}");
+    List<DhakaProkashRegularModel> jsonResponse =
+        dhakaProkashRegularModelFromJson(utf8.decode(response.bodyBytes));
+    print("Post Api debug");
+    print(jsonResponse);
+
+    return jsonResponse;
+  }
+
   Future<List<DhakaProkashPhotoModel>> loadAllPhotoItems() async {
     final url = Uri.parse(ApiConstant.photoGalleryCategoryLink);
 
@@ -61,6 +81,12 @@ class HomepageController with ChangeNotifier {
       notifyListeners();
     } else if (totalPhotoNum == photoShowNumber + 4) {
       photoShowNumber += 4;
+
+      isButtonVisible = false;
+      notifyListeners();
+    } else if (totalPhotoNum < photoShowNumber + 4 &&
+        totalPhotoNum > photoShowNumber) {
+      photoShowNumber = totalPhotoNum;
 
       isButtonVisible = false;
       notifyListeners();

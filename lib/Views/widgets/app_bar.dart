@@ -12,6 +12,14 @@ class AppbarDefault extends StatelessWidget implements PreferredSize {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
+      leading: IconButton(
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+          icon: Icon(
+            Icons.menu,
+            size: 25,
+          )),
       title: Container(
         width: GenericVars.scSize.width * widthSize,
         /*  decoration: BoxDecoration(boxShadow: [
@@ -34,11 +42,15 @@ class AppbarDefault extends StatelessWidget implements PreferredSize {
       actions: [
         // Notification Icon
         Badge(
-          label: Text("5"),
-          offset: Offset(-10, 6),
+          largeSize: 13,
+          label: Text(
+            "0",
+            style: TextStyle(fontSize: 10),
+          ),
+          offset: Offset(-12, 6),
           child: IconButton(
             icon: const Icon(
-              size: 30,
+              size: 22,
               CupertinoIcons.bell,
               // Icons.notifications_none_outlined,
               color: AppColors.logoColorDeep,
