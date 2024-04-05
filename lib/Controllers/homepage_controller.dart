@@ -82,7 +82,7 @@ class HomepageController with ChangeNotifier {
     } else if (totalPhotoNum == photoShowNumber + 4) {
       photoShowNumber += 4;
 
-      isButtonVisible = false;
+
       notifyListeners();
     } else if (totalPhotoNum < photoShowNumber + 4 &&
         totalPhotoNum > photoShowNumber) {

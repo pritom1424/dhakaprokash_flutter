@@ -187,7 +187,10 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(shape: LinearBorder()),
                 onPressed: () {
-                  // if (widget.scrollController != null) {
+                   Provider.of<HomepageController>(context, listen: false)
+                      .addMorePhotos(widget.totalPhotoItems);
+                  // if (widget.scr
+                  //ollController != null) {
                   //   GenericVars.scrollOffset = widget.scrollController!.offset;
                   // }
                   // Provider.of<HomepageController>(context, listen: false)

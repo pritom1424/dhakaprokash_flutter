@@ -12,14 +12,15 @@ class AppbarDefault extends StatelessWidget implements PreferredSize {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      leading: IconButton(
+      /*  leading: IconButton(
           onPressed: () {
             Scaffold.of(context).openDrawer();
           },
+          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
           icon: Icon(
             Icons.menu,
             size: 25,
-          )),
+          )), */
       title: Container(
         width: GenericVars.scSize.width * widthSize,
         /*  decoration: BoxDecoration(boxShadow: [
