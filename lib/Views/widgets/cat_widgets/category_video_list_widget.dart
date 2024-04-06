@@ -52,7 +52,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoListWidget> {
   @override
   Widget build(BuildContext context) {
     double cellHeight = 0.3;
-    double listPadding = 20;
+    double listPadding = 0;
     return Column(
       children: [
         if (widget.isHeadSectionShow)
@@ -107,8 +107,8 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoListWidget> {
                                     categoryName: "Video",
                                     videoUrl: GenericVars.getVideoData[index]
                                         ['url']!,
-                                    videoTitle: GenericVars
-                                        .getVideoData[index + 1]['title']!),
+                                    videoTitle: GenericVars.getVideoData[index]
+                                        ['title']!),
                               ));
                         },
                         child: Card(

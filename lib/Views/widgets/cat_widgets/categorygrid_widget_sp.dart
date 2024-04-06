@@ -23,6 +23,7 @@ class CategoryGridWidgetSpecial extends StatefulWidget {
   final bool didDescriptionShow;
   final bool isScroll;
   final double elevation;
+  final bool? didHeadSectionShow;
 
   const CategoryGridWidgetSpecial({
     super.key,
@@ -34,6 +35,7 @@ class CategoryGridWidgetSpecial extends StatefulWidget {
     required this.didDescriptionShow,
     required this.isScroll,
     required this.elevation,
+    this.didHeadSectionShow,
   });
 
   @override
@@ -79,7 +81,8 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetSpecial> {
                 imageCaption:
                     widget.dhakaprokashModels[index].imgbgCaption ?? "",
                 isScroll: widget.isScroll,
-                categoryName: widget.categoryName,
+                categoryName:
+                    widget.dhakaprokashModels[index].category.catNameBn,
                 imagePath:
                     "https://admin.dhakaprokash24.com/media/content/images/${widget.dhakaprokashModels[index].imgBgPath.toString()}",
                 newsTitle: widget.dhakaprokashModels[index].contentHeading!,
@@ -101,52 +104,56 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetSpecial> {
         children: [
           //part 1//categoryname + More Button section
 
-          GestureDetector(
-            onTap: () {
-              Provider.of<VideoProvider>(context, listen: false)
-                  .pauseVideoState();
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (ctx) => CategoryView(
-                        categoryName: widget.categoryName,
-                        categoryLink: GenericVars
-                            .newspaperCategoriesLink[widget.categoryName],
-                      )));
-            },
-            child: Container(
-              height: GenericVars.scSize.height * 0.06,
-              width: double.infinity,
-              // padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: const BoxDecoration(
-                  border: Border.symmetric(
-                      horizontal: BorderSide(
-                          width: 0.3,
-                          color: Color.fromARGB(255, 151, 144, 144)))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.square,
-                    color: AppColors.categoryNameColor,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(widget.categoryName,
-                      style: TextStyle(
-                          fontSize:
-                              Theme.of(context).textTheme.titleMedium!.fontSize,
-                          color: AppColors.categoryNameColor,
-                          fontWeight: FontWeight.bold)),
-                  Icon(
-                    Icons.arrow_right,
-                    color: AppColors.categoryNameColor,
-                  )
-                ],
+          if (widget.didHeadSectionShow == null ||
+              widget.didHeadSectionShow == true)
+            GestureDetector(
+              onTap: () {
+                Provider.of<VideoProvider>(context, listen: false)
+                    .pauseVideoState();
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => CategoryView(
+                          categoryName: widget.categoryName,
+                          catSlug:
+                              widget.dhakaprokashModels[0].category.catSlug,
+                        )));
+              },
+              child: Container(
+                height: GenericVars.scSize.height * 0.06,
+                width: double.infinity,
+                // padding: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: const BoxDecoration(
+                    border: Border.symmetric(
+                        horizontal: BorderSide(
+                            width: 0.3,
+                            color: Color.fromARGB(255, 151, 144, 144)))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.square,
+                      color: AppColors.categoryNameColor,
+                      size: 20,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(widget.categoryName,
+                        style: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .fontSize,
+                            color: AppColors.categoryNameColor,
+                            fontWeight: FontWeight.bold)),
+                    Icon(
+                      Icons.arrow_right,
+                      color: AppColors.categoryNameColor,
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
 
           //part 3//Category News Lists
           Container(

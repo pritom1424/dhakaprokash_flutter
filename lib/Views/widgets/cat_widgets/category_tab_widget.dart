@@ -30,7 +30,7 @@ class CategoryTabWidget extends StatelessWidget {
               (index) => CategoryTabTile(
                   id: dhakaProkashModels[index].contentId ?? -1,
                   imageCaption: null,
-                  dateTime: null,
+                  dateTime: dhakaProkashModels[index].createdAt,
                   categoryName: dhakaProkashModels[index].bnCatName ?? "",
                   newsDescription:
                       dhakaProkashModels[index].contentDetails ?? "",
@@ -46,7 +46,7 @@ class CategoryTabWidget extends StatelessWidget {
                 builder: (ctx) => CategoryView(
                       isPost: true,
                       categoryName: catName,
-                      categoryLink: GenericVars.tabLinks[catName],
+                      catSlug: dhakaProkashModels[0].catSlug,
                     )));
           },
           child: Container(

@@ -1,10 +1,12 @@
 import 'package:dummy_app/Controllers/detailpage_controller.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
+import 'package:dummy_app/Models/dhaka_prokash_cat_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_reg.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_reg_total.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_sp.dart';
 
 import 'package:dummy_app/Views/widgets/detaildPost_view/comment_section.dart';
@@ -40,12 +42,12 @@ class DetailedPostView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<DhakaProkashRegularModel> currentContainer = [];
+    //List<Content> currentContainer = [];
 
     int gridItemCount = 4;
-    List<DhakaProkashRegularModel> currentElementList(
-        List<DhakaProkashRegularModel> allList, int id, int itemNumber) {
-      List<DhakaProkashRegularModel> currentContainer = [];
+    List<Content> currentElementList(
+        List<Content> allList, int id, int itemNumber) {
+      List<Content> currentContainer = [];
       int first =
           (allList.indexWhere((element) => element.contentId == id) + 1) <
                   allList.length
@@ -164,17 +166,16 @@ class DetailedPostView extends StatelessWidget {
                   }) ,*/
               if (GenericVars.newspaperCategoriesLink[categoryName] != null)
                 FutureBuilder(
-                    future: homepageController.loadAllRegItems(
-                        GenericVars.newspaperCategoriesLink[categoryName]!),
+                    future: homepageController.loadAllRegCatItemsPost(
+                        GenericVars.newspaperCategoriesLink[categoryName]!, 10),
                     builder: (ctx, postSnapShot) {
                       return (postSnapShot.connectionState ==
                               ConnectionState.waiting)
                           ? const Center(
                               child: CircularProgressIndicator(),
                             )
-                          : CategoryGridWidgetRegular(
-                              dhakaprokashModels: currentElementList(
-                                  postSnapShot.data ?? [], id, gridItemCount),
+                          : CategoryGridWidgetTotal(
+                              dhakaprokashModels: postSnapShot.data!,
                               categoryName: categoryName,
                               itemCount: gridItemCount,
                               didAxisHorizontal: false,

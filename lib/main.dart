@@ -1,9 +1,11 @@
 import 'package:dummy_app/Controllers/bookmark_controller.dart';
+import 'package:dummy_app/Controllers/category_controller.dart';
 import 'package:dummy_app/Controllers/detailpage_controller.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/login_controller.dart';
 
 import 'package:dummy_app/Controllers/registration_controller.dart';
+import 'package:dummy_app/Controllers/searchpage_controller.dart';
 import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
 
@@ -44,6 +46,8 @@ void main() async {
       ChangeNotifierProvider(create: (_) => VideoProvider()),
       ChangeNotifierProvider(create: (_) => DetailPageController()),
       ChangeNotifierProvider(create: (_) => BookmarkController()),
+      ChangeNotifierProvider(create: (_) => SearchPageController()),
+      ChangeNotifierProvider(create: (_) => CategoryViewController()),
     ],
     child: const MyApp(),
   ));

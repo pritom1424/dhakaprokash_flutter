@@ -14,7 +14,9 @@ import 'package:provider/provider.dart';
 class CategoryVideoView extends StatelessWidget {
   /*  final String categoryName;
   final String? categoryLink; */
+  final bool? isEnableAppbar;
   const CategoryVideoView({
+    this.isEnableAppbar,
     super.key,
     /*  required this.categoryName,
     required this.categoryLink, */
@@ -24,7 +26,9 @@ class CategoryVideoView extends StatelessWidget {
   Widget build(BuildContext context) {
     HomepageController homepageController = Provider.of(context, listen: false);
     return Scaffold(
-        //appBar: AppbarDefault(),
+        appBar: (isEnableAppbar != null && isEnableAppbar == true)
+            ? AppbarDefault()
+            : null,
         body: Scrollbar(
             thumbVisibility: true,
             child: SingleChildScrollView(

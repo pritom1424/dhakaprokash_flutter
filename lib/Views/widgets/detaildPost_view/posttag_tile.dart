@@ -39,7 +39,7 @@ class PostTagTile extends StatelessWidget {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (ctx) => CategoryView(
                                           categoryName: tagList[index],
-                                          categoryLink: GenericVars
+                                          catSlug: GenericVars
                                               .newspaperCategoriesLink[null],
                                         )));
                               },

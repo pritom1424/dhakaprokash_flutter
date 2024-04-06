@@ -55,8 +55,7 @@ class CategoryWidgetRegular extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => CategoryView(
                           categoryName: categoryName,
-                          categoryLink:
-                              GenericVars.newspaperCategoriesLink[categoryName],
+                          catSlug: dhakaprokashModels[0].catSlug,
                         )));
               },
               child: Container(

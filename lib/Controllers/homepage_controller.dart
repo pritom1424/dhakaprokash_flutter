@@ -1,16 +1,17 @@
 import 'dart:convert';
-
-import 'package:dummy_app/Models/dhak_prokash_tab_model.dart';
+import 'package:dummy_app/Models/dhaka_prokash_cat_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_photo_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_sp_model.dart';
+import 'package:dummy_app/Models/dhaka_prokash_vid_model.dart';
 import 'package:dummy_app/Utils/api_constants.dart';
+import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class HomepageController with ChangeNotifier {
   List<DhakaProkashSpecialModel> _items = [];
-
+  List<DhakaProkashPhotoModel> _photoes = [];
   int photoShowNumber = 4;
   bool isButtonVisible = true;
 
@@ -41,21 +42,37 @@ class HomepageController with ChangeNotifier {
     return jsonResponse;
   }
 
-  Future<List<DhakaProkashRegularModel>> loadAllRegItemsPost(
+  Future<List<DhakaProkashRegularModel>> loadAllRegTabItemsPost(
       String apiLink, int itemNum) async {
     final url = Uri.parse(apiLink);
-    print("Post Api Called");
+
     Map data = {"take": itemNum};
 
-    final response = await http.post(url, body: jsonEncode(data), headers: {
-      'Content-Type': 'application/json'
-    } //{"Content-Type": "application/x-www-form-urlencoded"},
-        );
-    print("Post Api response: ${utf8.decode(response.bodyBytes)}");
+    final response = await http.post(url,
+        body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
+
     List<DhakaProkashRegularModel> jsonResponse =
         dhakaProkashRegularModelFromJson(utf8.decode(response.bodyBytes));
-    print("Post Api debug");
-    print(jsonResponse);
+
+    return jsonResponse;
+  }
+
+  Future<DhakaprokashCatModel> loadAllRegCatItemsPost(
+      String catSlug, int itemNum) async {
+    final url =
+        Uri.parse("https://dhakaprokash24.com/api/v1/category/categorycontent");
+
+    Map<String, dynamic> data = {
+      "cat_slug": catSlug,
+      "take": itemNum,
+      "skip": 0
+    };
+
+    final response = await http.post(url,
+        body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
+
+    DhakaprokashCatModel jsonResponse =
+        dhakaprokashCatModelFromJson(utf8.decode(response.bodyBytes));
 
     return jsonResponse;
   }
@@ -68,7 +85,37 @@ class HomepageController with ChangeNotifier {
     List<DhakaProkashPhotoModel> jsonResponse =
         dhakaProkashPhotoModelFromJson(utf8.decode(response.bodyBytes));
 
+    _photoes = jsonResponse;
+
     return jsonResponse;
+  }
+
+  Future<void> loadHomeVideosPost(int itemNum) async {
+    final url =
+        Uri.parse("https://dhakaprokash24.com/api/v1/home/videofeature");
+
+    Map<String, dynamic> data = {
+      "take": itemNum,
+    };
+
+    final response = await http.post(url,
+        body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
+
+    List<DhakaprokashVidModel> jsonResponse =
+        dhakaprokashVidModelFromJson(utf8.decode(response.bodyBytes));
+
+    GenericVars.getVideoData.clear();
+    GenericVars.getVideoData = List.generate(
+      jsonResponse.length,
+      (index) => {
+        "title": jsonResponse[index].title,
+        "category": GenericVars.newspaperCategoriesLink.keys.firstWhere(
+            (element) =>
+                GenericVars.newspaperCategoriesLink[element] ==
+                jsonResponse[index].slug),
+        "url": "https://www.youtube.com/watch?v=${jsonResponse[index].code}"
+      },
+    );
   }
 
   List<DhakaProkashSpecialModel> get Items {
@@ -81,7 +128,6 @@ class HomepageController with ChangeNotifier {
       notifyListeners();
     } else if (totalPhotoNum == photoShowNumber + 4) {
       photoShowNumber += 4;
-
 
       notifyListeners();
     } else if (totalPhotoNum < photoShowNumber + 4 &&
@@ -100,4 +146,6 @@ class HomepageController with ChangeNotifier {
   bool get IsMoreButtonVisible {
     return isButtonVisible;
   }
+
+  List<DhakaProkashPhotoModel> get photoes => _photoes;
 }
