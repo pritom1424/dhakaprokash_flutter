@@ -20,6 +20,7 @@ class CategoryVideoGridWidget extends StatefulWidget {
   final bool isScroll;
   final double elevation;
   final double? itemHeight;
+  final Color? barIconColor, barTextColor;
   const CategoryVideoGridWidget(
       {super.key,
       required this.itemCount,
@@ -29,7 +30,9 @@ class CategoryVideoGridWidget extends StatefulWidget {
       required this.didDescriptionShow,
       required this.isScroll,
       required this.elevation,
-      this.itemHeight});
+      this.itemHeight,
+      this.barIconColor,
+      this.barTextColor});
 
   @override
   State<CategoryVideoGridWidget> createState() =>
@@ -68,9 +71,10 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
                       width: 0.3, color: Color.fromARGB(255, 151, 144, 144)))),
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.square,
-                color: AppColors.categoryNameColor,
+                color: widget.barIconColor ??
+                    AppColors.defaultCategoryBarIconColor,
                 size: 20,
               ),
               const SizedBox(
@@ -80,19 +84,21 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
                 "ভিডিও গ্যালারি",
                 style: TextStyle(
                     fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
-                    color: AppColors.categoryNameColor,
+                    color: widget.barTextColor ?? AppColors.categoryNameColor,
                     fontWeight: FontWeight.bold),
               ),
-              const Icon(
+              Icon(
                 Icons.arrow_right,
-                color: AppColors.categoryNameColor,
+                color: widget.barIconColor ??
+                    AppColors.defaultCategoryBarIconColor,
               )
             ],
           ),
         ),
         Container(
           height: GenericVars.scSize.height * cellHeight,
-          child: Scrollbar(
+          child: RawScrollbar(
+            thumbColor: Colors.black45,
             controller: scController,
             thickness: 5,
             child: GridView.builder(

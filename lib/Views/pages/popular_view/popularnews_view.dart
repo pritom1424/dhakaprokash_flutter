@@ -1,4 +1,6 @@
 import 'package:dummy_app/Controllers/homepage_controller.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
+import 'package:dummy_app/Utils/app_colors.dart';
 
 import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_sp.dart';
 
@@ -17,7 +19,8 @@ class PopularNewsView extends StatelessWidget {
     HomepageController homepageController = Provider.of(context, listen: false);
 
     return FutureBuilder(
-        future: homepageController.loadAllSpItems(),
+        future: homepageController
+            .loadAllRegItems(ApiConstant.homePageSpecialContentLink),
         builder: (ctx, postSnapShot) {
           return (postSnapShot.connectionState == ConnectionState.waiting)
               ? LoaderWidget()
@@ -28,13 +31,13 @@ class PopularNewsView extends StatelessWidget {
                       SliverAppBar(
                         pinned: true,
                         title: Text(
-                          "Popular",
+                          "সর্বশেষ",
                           style: TextStyle(
                               fontSize: Theme.of(context)
                                   .textTheme
                                   .headlineMedium!
                                   .fontSize,
-                              color: Colors.blue),
+                              color: AppColors.logoColorDeep),
                         ),
                         automaticallyImplyLeading: false,
                       ),
@@ -47,7 +50,7 @@ class PopularNewsView extends StatelessWidget {
 
                             CategoryWidgetSpecial(
                               dhakaprokashModels: homepageController.Items,
-                              categoryName: "Popular",
+                              categoryName: "Recent",
                               didMoreButtonShow: false,
                               didHeadSectionShow: false,
                               listItemLength: 8,

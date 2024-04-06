@@ -58,4 +58,9 @@ class ApiConstant {
       "https://dhakaprokash24.com/api/v1/home/galleryphoto";
   static String religionCategoryLink =
       "https://dhakaprokash24.com/api/v1/home/religion";
+
+  static String homeLatestPostLink =
+      "https://dhakaprokash24.com/api/v1/tabs/latestpost";
+  static String homePopularPostLink =
+      "https://dhakaprokash24.com/api/v1/tabs/popularpost";
 }

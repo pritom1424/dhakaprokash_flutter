@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NavBarWidget extends StatelessWidget {
@@ -28,8 +29,8 @@ class NavBarWidget extends StatelessWidget {
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
-          unselectedItemColor: Color.fromARGB(255, 174, 243, 220),
-          selectedItemColor: Color.fromARGB(255, 15, 120, 240),
+          unselectedItemColor: Color.fromARGB(255, 49, 150, 153),
+          selectedItemColor: Color.fromARGB(255, 50, 100, 175),
           showUnselectedLabels: false,
           showSelectedLabels: false,
           currentIndex: currentIndex,
@@ -37,30 +38,41 @@ class NavBarWidget extends StatelessWidget {
           onTap: onTap, //_onItemTapped
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.home,
-                ),
+                icon: Icon(CupertinoIcons.home
+                    // Icons.home,
+                    ),
                 label: ""),
             BottomNavigationBarItem(
-              icon: Icon(Icons.bar_chart),
+              icon: Icon(CupertinoIcons.time
+                  //Icons.bar_chart,
+                  ),
               label: "",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.play_arrow),
+              icon: Icon(CupertinoIcons.play_rectangle),
               label: "",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark),
+              icon: Icon(
+                CupertinoIcons.bookmark_fill,
+                // Icons.bookmark,
+              ),
               label: "",
             ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.search_rounded), label: ""),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.contact_page_rounded),
+                icon: Icon(CupertinoIcons.search
+                    // Icons.search_rounded,
+                    ),
+                label: ""),
+            /* BottomNavigationBarItem(
+              icon: Icon(
+                //CupertinoIcons.about
+                Icons.contact_page_rounded,
+              ),
               label: "",
-            ),
+            ), */
             BottomNavigationBarItem(
-              icon: Icon(Icons.login_rounded), //Icon(CupertinoIcons.info),
+              icon: Icon(Icons.person), //Icon(CupertinoIcons.info),
               label: "",
               /*  final snackBar =               
                              SnackBar(

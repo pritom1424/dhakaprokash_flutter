@@ -1,28 +1,27 @@
 // To parse this JSON data, do
 //
-//     final dhakaProkashRegularModel = dhakaProkashRegularModelFromJson(jsonString);
+//     final dhakaProkashTabModel = dhakaProkashTabModelFromJson(jsonString);
 
 import 'dart:convert';
 
-List<DhakaProkashRegularModel> dhakaProkashRegularModelFromJson(String str) =>
-    List<DhakaProkashRegularModel>.from(
-        json.decode(str).map((x) => DhakaProkashRegularModel.fromJson(x)));
+List<DhakaProkashTabModel> dhakaProkashTabModelFromJson(String str) =>
+    List<DhakaProkashTabModel>.from(
+        json.decode(str).map((x) => DhakaProkashTabModel.fromJson(x)));
 
-String dhakaProkashRegularModelToJson(List<DhakaProkashRegularModel> data) =>
+String dhakaProkashTabModelToJson(List<DhakaProkashTabModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class DhakaProkashRegularModel {
-  int? contentId;
-  int? contentType;
-  String? imgBgPath;
-  String? contentHeading;
-  String? contentDetails;
-  String? bnCatName;
-  String? catSlug;
+class DhakaProkashTabModel {
+  int contentId;
+  int contentType;
+  String imgBgPath;
+  String contentHeading;
+  String contentDetails;
+  String bnCatName;
+  String catSlug;
   String? subcatSlug;
-  DateTime? createdAt;
 
-  DhakaProkashRegularModel({
+  DhakaProkashTabModel({
     required this.contentId,
     required this.contentType,
     required this.imgBgPath,
@@ -30,12 +29,11 @@ class DhakaProkashRegularModel {
     required this.contentDetails,
     required this.bnCatName,
     required this.catSlug,
-    required this.subcatSlug,
-    required this.createdAt,
+    this.subcatSlug,
   });
 
-  factory DhakaProkashRegularModel.fromJson(Map<String, dynamic> json) =>
-      DhakaProkashRegularModel(
+  factory DhakaProkashTabModel.fromJson(Map<String, dynamic> json) =>
+      DhakaProkashTabModel(
         contentId: json["content_id"],
         contentType: json["content_type"],
         imgBgPath: json["img_bg_path"],
@@ -43,10 +41,7 @@ class DhakaProkashRegularModel {
         contentDetails: json["content_details"],
         bnCatName: json["bn_cat_name"],
         catSlug: json["cat_slug"],
-        subcatSlug: json["subcat_slug"] ?? "",
-        createdAt: DateTime.tryParse(
-                json["created_at"] ?? DateTime.now().toIso8601String()) ??
-            DateTime.now(),
+        subcatSlug: json["subcat_slug"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -58,6 +53,5 @@ class DhakaProkashRegularModel {
         "bn_cat_name": bnCatName,
         "cat_slug": catSlug,
         "subcat_slug": subcatSlug,
-        "created_at": createdAt?.toIso8601String(),
       };
 }

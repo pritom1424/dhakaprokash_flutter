@@ -11,7 +11,7 @@ class DeskViewBar extends StatelessWidget {
   Widget build(BuildContext context) {
     String iconPath = "assets/images/dhakaprokash_icon.png";
     String title = "ঢাকাপ্রকাশ ডেস্ক";
-    String publishedDate = DateFormatter().defaultFormat(dateTime);
+    String publishedDate = DateFormatter().defaultFormatWithTime(dateTime);
 
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
@@ -42,7 +42,7 @@ class DeskViewBar extends StatelessWidget {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    publishedDate,
+                    "প্রকাশঃ $publishedDate",
                     style: const TextStyle(fontSize: 15),
                   )
                 ],

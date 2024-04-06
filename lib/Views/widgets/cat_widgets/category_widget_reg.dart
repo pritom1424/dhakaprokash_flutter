@@ -24,6 +24,7 @@ class CategoryWidgetRegular extends StatelessWidget {
   final bool didHeadSectionShow;
   final int listItemLength;
   final bool didFloat;
+  final Color? bariconColor, bartextColor;
 
   const CategoryWidgetRegular({
     super.key,
@@ -33,6 +34,8 @@ class CategoryWidgetRegular extends StatelessWidget {
     required this.didHeadSectionShow,
     required this.listItemLength,
     required this.didFloat,
+    this.bariconColor,
+    this.bartextColor,
   });
 
   @override
@@ -67,9 +70,10 @@ class CategoryWidgetRegular extends StatelessWidget {
                               color: Color.fromARGB(255, 151, 144, 144)))), */
                   child: Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.square,
-                        color: AppColors.categoryNameColor,
+                        color: bariconColor ??
+                            AppColors.defaultCategoryBarIconColor,
                         size: 20,
                       ),
                       const SizedBox(
@@ -83,11 +87,12 @@ class CategoryWidgetRegular extends StatelessWidget {
                                 .headlineMedium!
                                 .fontSize,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.categoryNameColor),
+                            color: bartextColor ?? AppColors.categoryNameColor),
                       ),
-                      const Icon(
+                      Icon(
                         Icons.arrow_right,
-                        color: AppColors.categoryNameColor,
+                        color: bariconColor ??
+                            AppColors.defaultCategoryBarIconColor,
                       ),
                     ],
                   )),

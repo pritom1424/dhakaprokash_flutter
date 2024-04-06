@@ -1,7 +1,10 @@
+import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Models/dhaka_prokash_photo_model.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class CategoryPhotoGridWidget extends StatefulWidget {
   final List<DhakaProkashPhotoModel> dhakaprokashModels;
@@ -14,6 +17,9 @@ class CategoryPhotoGridWidget extends StatefulWidget {
   final bool isScroll;
   final double elevation;
   final double? itemHeight;
+  final Color? barIconColor, barTextColor;
+  final int totalPhotoItems;
+  final ScrollController? scrollController;
   const CategoryPhotoGridWidget(
       {super.key,
       required this.itemCount,
@@ -23,7 +29,11 @@ class CategoryPhotoGridWidget extends StatefulWidget {
       required this.didDescriptionShow,
       required this.isScroll,
       required this.elevation,
-      this.itemHeight});
+      this.itemHeight,
+      this.barIconColor,
+      this.barTextColor,
+      this.scrollController,
+      required this.totalPhotoItems});
 
   @override
   State<CategoryPhotoGridWidget> createState() =>
@@ -48,6 +58,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print("item count ${widget.totalPhotoItems}");
     double cellHeight = 0.3;
     double mainAxisSpacing = 10;
     return Column(
@@ -62,9 +73,9 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                       width: 0.3, color: Color.fromARGB(255, 151, 144, 144)))),
           child: Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.square,
-                color: AppColors.categoryNameColor,
+                color: (widget.barIconColor) ?? AppColors.categoryNameColor,
                 size: 20,
               ),
               const SizedBox(
@@ -74,18 +85,22 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                 "ফটো গ্যালারি",
                 style: TextStyle(
                     fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
-                    color: AppColors.categoryNameColor,
+                    color: (widget.barTextColor) ?? Colors.red,
                     fontWeight: FontWeight.bold),
               ),
-              const Icon(
+              Icon(
                 Icons.arrow_right,
-                color: AppColors.categoryNameColor,
+                color: (widget.barIconColor) ?? AppColors.categoryNameColor,
               )
             ],
           ),
         ),
         Container(
-          height: GenericVars.scSize.height * cellHeight,
+          height: (widget.didAxisHorizontal)
+              ? GenericVars.scSize.height * (widget.itemHeight ?? cellHeight)
+              : GenericVars.scSize.height *
+                  (widget.itemHeight ?? cellHeight) *
+                  (widget.itemCount / widget.crossAxisCount).ceil(),
           child: Scrollbar(
             controller: scController,
             thickness: 5,
@@ -106,6 +121,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                       elevation: widget.elevation,
                       child: Container(
                         height: GenericVars.scSize.height * cellHeight,
+                        width: double.infinity,
                         child: Stack(
                           children: [
                             Align(
@@ -163,6 +179,29 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                     )),
           ),
         ),
+        Visibility(
+          visible: Provider.of<HomepageController>(context, listen: false)
+              .IsMoreButtonVisible,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(shape: LinearBorder()),
+                onPressed: () {
+                   Provider.of<HomepageController>(context, listen: false)
+                      .addMorePhotos(widget.totalPhotoItems);
+                  // if (widget.scr
+                  //ollController != null) {
+                  //   GenericVars.scrollOffset = widget.scrollController!.offset;
+                  // }
+                  // Provider.of<HomepageController>(context, listen: false)
+                  //     .addMorePhotos(widget.totalPhotoItems);
+                },
+                child: Text(
+                  "আরও",
+                  style: GoogleFonts.tiroBangla(fontWeight: FontWeight.bold),
+                )),
+          ),
+        )
       ],
     );
   }

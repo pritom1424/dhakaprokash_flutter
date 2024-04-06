@@ -3,6 +3,7 @@ import 'package:dummy_app/Views/widgets/follow_social.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePageFooter extends StatelessWidget {
@@ -52,19 +53,19 @@ class HomePageFooter extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                       text: "ভারপ্রাপ্ত সম্পাদক: ",
-                      style: TextStyle(color: Colors.black),
+                      style: GoogleFonts.tiroBangla(color: Colors.black),
                       children: [
                         TextSpan(
                             text: "রবিউল ইসলাম\n",
-                            style: TextStyle(
+                            style: GoogleFonts.tiroBangla(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold)),
                         TextSpan(
                             text: "প্রকাশক: ",
-                            style: TextStyle(color: Colors.black)),
+                            style: GoogleFonts.tiroBangla(color: Colors.black)),
                         TextSpan(
                             text: "শাহাদৎ জামান সাইফ",
-                            style: TextStyle(
+                            style: GoogleFonts.tiroBangla(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold))
                       ]),
@@ -79,26 +80,26 @@ class HomePageFooter extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 0.5),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             "নিউজরুম",
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
-                          Text("+8809613331010"),
+                          Text("+৮৮০৯৬১৩৩৩১০১০"),
                         ],
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 0.5),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             "মার্কেটিং",
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
-                          Text("+8809613332020"),
+                          Text("+৮৮০৯৬১৩৩৩২০২০"),
                         ],
                       ),
                     ),

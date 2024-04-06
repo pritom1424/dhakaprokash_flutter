@@ -7,12 +7,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class CategoryVideoListWidget extends StatefulWidget {
   //final List<DhakaProkashPhotoModel> dhakaprokashModels;
   final int itemCount;
-
+  final bool isHeadSectionShow;
   final bool didDescriptionShow;
   final bool isScroll;
   final double elevation;
@@ -21,7 +22,7 @@ class CategoryVideoListWidget extends StatefulWidget {
       {super.key,
       required this.itemCount,
       // required this.dhakaprokashModels,
-
+      required this.isHeadSectionShow,
       required this.didDescriptionShow,
       required this.isScroll,
       required this.elevation,
@@ -51,146 +52,257 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoListWidget> {
   @override
   Widget build(BuildContext context) {
     double cellHeight = 0.3;
-    double mainAxisSpacing = 10;
+    double listPadding = 20;
     return Column(
       children: [
-        Container(
-          height: GenericVars.scSize.height * 0.07,
-          width: double.infinity,
-          // padding: const EdgeInsets.symmetric(horizontal: 10),
-          decoration: const BoxDecoration(
-              border: Border.symmetric(
-                  horizontal: BorderSide(
-                      width: 0.3, color: Color.fromARGB(255, 151, 144, 144)))),
-          child: Row(
-            children: [
-              const Icon(
-                Icons.square,
-                color: AppColors.categoryNameColor,
-                size: 20,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(
-                "ভিডিও গ্যালারি",
-                style: TextStyle(
-                    fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
-                    color: AppColors.categoryNameColor,
-                    fontWeight: FontWeight.bold),
-              ),
-              const Icon(
-                Icons.arrow_right,
-                color: AppColors.categoryNameColor,
-              )
-            ],
-          ),
-        ),
-        Container(
-          //  height: GenericVars.scSize.height * cellHeight,
-          child: Scrollbar(
-            controller: scController,
-            thickness: 5,
-            child: ListView.builder(
-                controller: scController,
-                itemCount: widget.itemCount,
-                physics: (widget.isScroll)
-                    ? const AlwaysScrollableScrollPhysics()
-                    : const NeverScrollableScrollPhysics(),
-                /*   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: widget.crossAxisCount,
-                  mainAxisSpacing: mainAxisSpacing,
+        if (widget.isHeadSectionShow)
+          Container(
+            height: GenericVars.scSize.height * 0.07,
+            width: double.infinity,
+            // padding: const EdgeInsets.symmetric(horizontal: 10),
+            decoration: const BoxDecoration(
+                border: Border.symmetric(
+                    horizontal: BorderSide(
+                        width: 0.3,
+                        color: Color.fromARGB(255, 151, 144, 144)))),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.square,
+                  color: AppColors.categoryNameColor,
+                  size: 20,
                 ),
-                scrollDirection: (widget.didAxisHorizontal)
-                    ? Axis.horizontal
-                    : Axis.vertical, */
-                itemBuilder: (ctx, index) => GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (ctx) => DetailedVideoPostView(
-                                  categoryName: "Video",
-                                  videoUrl: GenericVars.getVideoData[index]
-                                      ['url']!,
-                                  videoTitle: GenericVars
-                                      .getVideoData[index + 1]['title']!),
-                            ));
-                      },
-                      child: Card(
-                        elevation: widget.elevation,
-                        child: Container(
-                          color: Colors.black,
-                          height: GenericVars.scSize.height * cellHeight,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: Stack(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.topCenter,
-                                      child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          child: Image.network(
-                                            alignment: Alignment.center,
-                                            "https://img.youtube.com/vi/${YoutubePlayer.convertUrlToId(GenericVars.getVideoData[index]['url']!)}/0.jpg",
-                                            fit: BoxFit.fill,
-                                            filterQuality: FilterQuality.low,
-                                            loadingBuilder: (context, child,
-                                                    loadingProgress) =>
-                                                (loadingProgress == null)
-                                                    ? child
-                                                    : Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal: 40,
-                                                                vertical: 40),
-                                                        child: Image.asset(
-                                                          alignment:
-                                                              Alignment.center,
-                                                          "assets/images/dhakaprokash_logo.png",
-                                                        ),
-                                                      ),
-                                          )),
-                                    ),
-                                    const Positioned.fill(
-                                      child: Align(
-                                          alignment: Alignment.center,
-                                          child: CircleAvatar(
-                                              backgroundColor: Colors.red,
-                                              foregroundColor: Colors.white,
-                                              child: Icon(Icons.play_arrow))),
-                                    )
-                                  ],
-                                ),
-                              ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  "ভিডিও গ্যালারি",
+                  style: TextStyle(
+                      fontSize:
+                          Theme.of(context).textTheme.titleMedium!.fontSize,
+                      color: AppColors.categoryNameColor,
+                      fontWeight: FontWeight.bold),
+                ),
+                const Icon(
+                  Icons.arrow_right,
+                  color: AppColors.categoryNameColor,
+                )
+              ],
+            ),
+          ),
+        Container(
+          height: GenericVars.scSize.height *
+                  (widget.itemHeight ?? cellHeight) *
+                  widget.itemCount +
+              (listPadding * widget.itemCount),
+          child: Column(
+              children: List.generate(
+                  widget.itemCount,
+                  (index) => GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (ctx) => DetailedVideoPostView(
+                                    categoryName: "Video",
+                                    videoUrl: GenericVars.getVideoData[index]
+                                        ['url']!,
+                                    videoTitle: GenericVars
+                                        .getVideoData[index + 1]['title']!),
+                              ));
+                        },
+                        child: Card(
+                          elevation: widget.elevation,
+                          margin: EdgeInsets.all(0),
+                          child: Container(
+                            //    margin: EdgeInsets.only(bottom: listPadding),
+                            padding: EdgeInsets.only(bottom: listPadding),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border(
+                                    bottom: BorderSide(
+                                        width: 8, color: Colors.grey))),
+                            // padding: EdgeInsets.only(bottom: listPadding),
 
-                              ///here
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 5, vertical: 0),
-                                child: Text(
-                                  GenericVars.getVideoData[index]['title']!,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.white,
+                            height: GenericVars.scSize.height *
+                                (widget.itemHeight ?? cellHeight),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.topCenter,
+                                        child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            child: Image.network(
+                                              width: double.infinity,
+                                              alignment: Alignment.center,
+                                              "https://img.youtube.com/vi/${YoutubePlayer.convertUrlToId(GenericVars.getVideoData[index]['url']!)}/0.jpg",
+                                              fit: BoxFit.cover,
+                                              filterQuality: FilterQuality.low,
+                                              loadingBuilder: (context, child,
+                                                      loadingProgress) =>
+                                                  (loadingProgress == null)
+                                                      ? child
+                                                      : Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal:
+                                                                      40,
+                                                                  vertical: 40),
+                                                          child: Image.asset(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            "assets/images/dhakaprokash_logo.png",
+                                                          ),
+                                                        ),
+                                            )),
+                                      ),
+                                      const Positioned.fill(
+                                        child: Align(
+                                            alignment: Alignment.center,
+                                            child: CircleAvatar(
+                                                radius: 30,
+                                                backgroundColor: Colors.red,
+                                                foregroundColor: Colors.white,
+                                                child: Icon(
+                                                  Icons.play_arrow,
+                                                  size: 40,
+                                                ))),
+                                      )
+                                    ],
+                                  ),
+                                ),
+
+                                ///here
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      top: 15, right: 10, left: 10),
+                                  child: Text(
+                                    GenericVars.getVideoData[index]['title']!,
+                                    textAlign: TextAlign.start,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: GoogleFonts.tiroBangla(
+                                      fontSize: 20,
+                                      color: Colors.black,
                                       // overflow: TextOverflow.ellipsis,
                                       fontWeight: FontWeight.bold,
-                                      fontFamily: GenericVars.currenFontFamily),
-                                ),
-                              )
-                            ],
+                                      // fontFamily: GenericVars.currenFontFamily,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    )),
-          ),
+                      ))),
         ),
       ],
     );
   }
 }
+
+/**ListView.builder(
+              controller: scController,
+              itemCount: widget.itemCount,
+              physics: (widget.isScroll)
+                  ? const AlwaysScrollableScrollPhysics()
+                  : const NeverScrollableScrollPhysics(),
+              /*   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: widget.crossAxisCount,
+                mainAxisSpacing: mainAxisSpacing,
+              ),
+              scrollDirection: (widget.didAxisHorizontal)
+                  ? Axis.horizontal
+                  : Axis.vertical, */
+              itemBuilder: (ctx, index) => GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (ctx) => DetailedVideoPostView(
+                                categoryName: "Video",
+                                videoUrl: GenericVars.getVideoData[index]
+                                    ['url']!,
+                                videoTitle: GenericVars
+                                    .getVideoData[index + 1]['title']!),
+                          ));
+                    },
+                    child: Card(
+                      elevation: widget.elevation,
+                      child: Container(
+                        color: Colors.black,
+                        height: GenericVars.scSize.height *
+                            (widget.itemHeight ?? cellHeight),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topCenter,
+                                    child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(5),
+                                        child: Image.network(
+                                          alignment: Alignment.center,
+                                          "https://img.youtube.com/vi/${YoutubePlayer.convertUrlToId(GenericVars.getVideoData[index]['url']!)}/0.jpg",
+                                          fit: BoxFit.fitWidth,
+                                          filterQuality: FilterQuality.low,
+                                          loadingBuilder: (context, child,
+                                                  loadingProgress) =>
+                                              (loadingProgress == null)
+                                                  ? child
+                                                  : Container(
+                                                      padding:
+                                                          const EdgeInsets
+                                                              .symmetric(
+                                                              horizontal: 40,
+                                                              vertical: 40),
+                                                      child: Image.asset(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        "assets/images/dhakaprokash_logo.png",
+                                                      ),
+                                                    ),
+                                        )),
+                                  ),
+                                  const Positioned.fill(
+                                    child: Align(
+                                        alignment: Alignment.center,
+                                        child: CircleAvatar(
+                                            backgroundColor: Colors.red,
+                                            foregroundColor: Colors.white,
+                                            child: Icon(Icons.play_arrow))),
+                                  )
+                                ],
+                              ),
+                            ),
+          
+                            ///here
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 0),
+                              child: Text(
+                                GenericVars.getVideoData[index]['title']!,
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.white,
+                                    overflow: TextOverflow.ellipsis,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: GenericVars.currenFontFamily),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  )) */

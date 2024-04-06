@@ -1,6 +1,5 @@
 import 'package:dummy_app/Utils/api_constants.dart';
-import 'package:dummy_app/Views/widgets/cat_widgets/categorylist_tile.dart';
-import 'package:dummy_app/Views/widgets/cat_widgets/favlist_tile.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GenericVars {
@@ -104,7 +103,7 @@ class GenericVars {
     "শিশু-কিশোর": ApiConstant.childCategoryLink,
     "মোটিভেশন": ApiConstant.motivationCategoryLink,
     //not in category
-    "ফটো গ্যালারি": ApiConstant.photoGalleryCategoryLink
+    "ফটো গ্যালারি": ApiConstant.photoGalleryCategoryLink,
 
     // "Recent News": Icons.access_time,
   };
@@ -156,5 +155,12 @@ class GenericVars {
   ];
 
   static bool isAppdrawerGlow = false;
+
+  static Map<String, String> tabLinks = {
+    "সর্বশেষ": ApiConstant.homeLatestPostLink,
+    "জনপ্রিয়": ApiConstant.homePopularPostLink,
+  };
+
+  static double currentRootOffset = 0;
 }
 //পর্যটন

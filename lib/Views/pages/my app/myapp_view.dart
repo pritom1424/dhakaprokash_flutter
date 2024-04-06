@@ -1,3 +1,4 @@
+import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/login_page.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
@@ -30,9 +31,14 @@ class MyAppView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: CircleAvatar(
-                        child: Image.asset(
-                            "assets/images/character_placeholder.png"),
-                        radius: 40,
+                        radius: 35,
+                        backgroundColor: AppColors.logoColorDeep,
+                        child: CircleAvatar(
+                          radius: 30,
+                          backgroundColor: AppColors.logoColorDeep,
+                          child: Image.asset(
+                              "assets/images/character_placeholder_2.png"),
+                        ),
                       ),
                     ),
                     ElevatedButton(

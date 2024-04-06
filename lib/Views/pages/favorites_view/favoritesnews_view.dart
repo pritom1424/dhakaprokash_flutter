@@ -1,4 +1,5 @@
 import 'package:dummy_app/Controllers/bookmark_controller.dart';
+import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
 import 'package:dummy_app/database/database_helper.dart';
@@ -32,11 +33,11 @@ class _FavoritesNewsViewState extends State<FavoritesNewsView> {
             SliverAppBar(
               pinned: true,
               title: Text(
-                "Favorites",
+                "ফেভারিট",
                 style: TextStyle(
                     fontSize:
                         Theme.of(context).textTheme.headlineMedium!.fontSize,
-                    color: Colors.blue),
+                    color: AppColors.logoColorDeep),
               ),
               automaticallyImplyLeading: false,
             ),

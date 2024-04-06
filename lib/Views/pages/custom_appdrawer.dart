@@ -30,7 +30,7 @@ class CustomAppDrawer extends StatelessWidget {
                       //  Image.asset("assets/images/dhakaprokash_logo.png"),
                       CircleAvatar(
                           radius: 52,
-                          backgroundColor: Colors.orange,
+                          backgroundColor: Colors.transparent,
                           backgroundImage: AssetImage(
                               "assets/images/character_placeholder.png")),
                       SizedBox(
