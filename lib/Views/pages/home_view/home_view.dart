@@ -89,7 +89,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     var bookmarkController =
         Provider.of<BookmarkController>(context, listen: false);
     bookmarkController.getFromList();
-    // TODO: implement initState
+    Provider.of<HomepageController>(context, listen: false).loadAllPhotoItems();
     super.initState();
   }
 
@@ -166,7 +166,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
   Widget homeBaseWidget() {
     HomepageController homepageController =
-        Provider.of<HomepageController>(context);
+        Provider.of<HomepageController>(context,listen: false);
 
     return Scrollbar(
       thumbVisibility: true,
@@ -388,30 +388,46 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                 listItemLength: 4,
                                 didFloat: false)
                             : SizedBox.shrink()),
-            //photo gallery
-            FutureBuilder(
-                future: homepageController.loadAllPhotoItems(),
-                builder: (ctx, snap) {
-                  return (snap.connectionState == ConnectionState.waiting)
-                      ? LoaderWidget()
-                      : (snap.hasData)
-                          ? CategoryPhotoGridWidget(
-                              scrollController: _scrollController,
-                              totalPhotoItems: snap.data!.length,
-                              itemCount: Provider.of<HomepageController>(ctx,
-                                      listen: false)
-                                  .photoShowNumber,
-                              dhakaprokashModels: snap.data!,
-                              didAxisHorizontal: false,
-                              crossAxisCount: 2,
-                              didDescriptionShow: false,
-                              isScroll: false,
-                              itemHeight: 0.23,
-                              elevation: 0)
-                          : SizedBox.shrink();
-                }),
 
-            //saradesh
+            // photo gallery
+            FutureBuilder(
+                  future: homepageController.loadAllPhotoItems(),
+                  builder: (ctx, snap) {
+                    return (snap.connectionState == ConnectionState.waiting)
+                        ? LoaderWidget()
+                        : (snap.hasData)
+                        ? CategoryPhotoGridWidget(
+                        scrollController: _scrollController,
+                        totalPhotoItems: snap.data!.length,
+                        itemCount: homepageController.photoShowNumber,
+                        dhakaprokashModels: snap.data!,
+                        didAxisHorizontal: false,
+                        crossAxisCount: 2,
+                        didDescriptionShow: false,
+                        isScroll: false,
+                        itemHeight: 0.23,
+                        elevation: 0)
+                        : SizedBox.shrink();
+                  }),
+
+
+          // homepageController.photoes.isNotEmpty && homepageController.photoes != null ?
+          // CategoryPhotoGridWidget(
+          //     scrollController: _scrollController,
+          //     totalPhotoItems: homepageController.photoes.length,
+          //     // itemCount: Provider.of<HomepageController>(ctx, listen: false).photoShowNumber,
+          //     itemCount: homepageController.photoShowNumber,
+          //     dhakaprokashModels: homepageController.photoes,
+          //     didAxisHorizontal: false,
+          //     crossAxisCount: 2,
+          //     didDescriptionShow: false,
+          //     isScroll: false,
+          //     itemHeight: 0.23,
+          //     elevation: 0) :
+          //     LoaderWidget(),
+
+
+            // saradesh
             FutureBuilder(
                 future: homepageController
                     .loadAllRegItems(ApiConstant.saradeshCategoryLink),

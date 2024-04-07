@@ -10,8 +10,13 @@ import 'package:http/http.dart' as http;
 
 class HomepageController with ChangeNotifier {
   List<DhakaProkashSpecialModel> _items = [];
+  List<DhakaProkashPhotoModel> _photoes = [];
+
+
 
   int photoShowNumber = 4;
+
+  int _itemCount = 4;
   bool isButtonVisible = true;
 
   Future<List<DhakaProkashSpecialModel>> loadAllSpItems() async {
@@ -31,12 +36,14 @@ class HomepageController with ChangeNotifier {
   }
 
   Future<List<DhakaProkashRegularModel>> loadAllRegItems(String apiLink) async {
+
     final url = Uri.parse(apiLink);
 
     final response = await http.get(url);
 
     List<DhakaProkashRegularModel> jsonResponse =
         dhakaProkashRegularModelFromJson(utf8.decode(response.bodyBytes));
+
 
     return jsonResponse;
   }
@@ -60,43 +67,59 @@ class HomepageController with ChangeNotifier {
     return jsonResponse;
   }
 
+
   Future<List<DhakaProkashPhotoModel>> loadAllPhotoItems() async {
     final url = Uri.parse(ApiConstant.photoGalleryCategoryLink);
-
     final response = await http.get(url);
 
     List<DhakaProkashPhotoModel> jsonResponse =
         dhakaProkashPhotoModelFromJson(utf8.decode(response.bodyBytes));
 
+    _photoes = jsonResponse;
+    print('photoes ..... $photoes');
+    notifyListeners();
     return jsonResponse;
+    // return _photoes;
+
   }
 
   List<DhakaProkashSpecialModel> get Items {
     return _items;
   }
+  int get itemCount => _itemCount;
+
+
+  List<DhakaProkashPhotoModel> get photoes => _photoes;
 
   void addMorePhotos(int totalPhotoNum) {
-    if (totalPhotoNum < photoShowNumber) {
+    if (totalPhotoNum < _itemCount) {
       isButtonVisible = false;
       notifyListeners();
-    } else if (totalPhotoNum == photoShowNumber + 4) {
-      photoShowNumber += 4;
-
+    } else if (totalPhotoNum == _itemCount + 4) {
+      _itemCount += 4;
 
       notifyListeners();
-    } else if (totalPhotoNum < photoShowNumber + 4 &&
-        totalPhotoNum > photoShowNumber) {
-      photoShowNumber = totalPhotoNum;
+    } else if (totalPhotoNum < _itemCount + 4 &&
+        totalPhotoNum > _itemCount) {
+      _itemCount = totalPhotoNum;
 
       isButtonVisible = false;
       notifyListeners();
     }
-    photoShowNumber += 4;
 
+    _itemCount += 4;
     isButtonVisible = true;
     notifyListeners();
   }
 
+  void addItemPhoto(item) {
+      print("clciked");
+      if(item == _itemCount + 4) _itemCount = item;
+      else if(item < _itemCount + 4 &&item > _itemCount) _itemCount = item;
+      else if(item > _itemCount) _itemCount +=4;
+      notifyListeners();
+      print(_itemCount);
+}
   bool get IsMoreButtonVisible {
     return isButtonVisible;
   }

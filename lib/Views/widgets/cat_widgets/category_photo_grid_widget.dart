@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 class CategoryPhotoGridWidget extends StatefulWidget {
   final List<DhakaProkashPhotoModel> dhakaprokashModels;
-  final int itemCount;
+  int itemCount;
 
   final bool didAxisHorizontal;
   final int crossAxisCount;
@@ -20,7 +20,7 @@ class CategoryPhotoGridWidget extends StatefulWidget {
   final Color? barIconColor, barTextColor;
   final int totalPhotoItems;
   final ScrollController? scrollController;
-  const CategoryPhotoGridWidget(
+   CategoryPhotoGridWidget(
       {super.key,
       required this.itemCount,
       required this.dhakaprokashModels,
@@ -42,10 +42,10 @@ class CategoryPhotoGridWidget extends StatefulWidget {
 
 class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
   late ScrollController scController;
+
   @override
   void initState() {
     scController = ScrollController();
-    // TODO: implement initState
     super.initState();
   }
 
@@ -58,6 +58,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
 
   @override
   Widget build(BuildContext context) {
+    HomepageController homecontroller =  Provider.of<HomepageController>(context,listen: true);
     print("item count ${widget.totalPhotoItems}");
     double cellHeight = 0.3;
     double mainAxisSpacing = 10;
@@ -95,18 +96,19 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
             ],
           ),
         ),
+
         Container(
           height: (widget.didAxisHorizontal)
               ? GenericVars.scSize.height * (widget.itemHeight ?? cellHeight)
               : GenericVars.scSize.height *
-                  (widget.itemHeight ?? cellHeight) *
-                  (widget.itemCount / widget.crossAxisCount).ceil(),
+              (widget.itemHeight ?? cellHeight) *
+              (widget.itemCount / widget.crossAxisCount).ceil(),
           child: Scrollbar(
             controller: scController,
             thickness: 5,
             child: GridView.builder(
                 controller: scController,
-                itemCount: widget.itemCount,
+                itemCount:  widget.itemCount,
                 physics: (widget.isScroll)
                     ? const AlwaysScrollableScrollPhysics()
                     : const NeverScrollableScrollPhysics(),
@@ -118,83 +120,88 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                     ? Axis.horizontal
                     : Axis.vertical,
                 itemBuilder: (ctx, index) => Card(
-                      elevation: widget.elevation,
-                      child: Container(
-                        height: GenericVars.scSize.height * cellHeight,
-                        width: double.infinity,
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Flexible(
-                                    flex: 2,
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(5),
-                                        child: Image.network(
-                                          "https://admin.dhakaprokash24.com/media/photoAlbum/${widget.dhakaprokashModels[index].photo}",
-                                          fit: BoxFit.fill,
-                                          filterQuality: FilterQuality.low,
-                                          loadingBuilder: (context, child,
-                                                  loadingProgress) =>
-                                              (loadingProgress == null)
-                                                  ? child
-                                                  : Container(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 40),
-                                                      child: Image.asset(
-                                                        "assets/images/dhakaprokash_logo.png",
-                                                      ),
-                                                    ),
-                                        )),
-                                  ),
-                                  Flexible(
-                                      flex: 1,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 5, vertical: 2),
-                                        child: Text(
-                                          widget.dhakaprokashModels[index]
-                                              .albumName,
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          style: TextStyle(fontSize: 18),
+                  elevation: widget.elevation,
+                  child: Container(
+                    height: GenericVars.scSize.height * cellHeight,
+                    width: double.infinity,
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Column(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceAround,
+                            children: [
+                              Flexible(
+                                flex: 2,
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(5),
+                                    child: Image.network(
+                                      "https://admin.dhakaprokash24.com/media/photoAlbum/${widget.dhakaprokashModels[index].photo}",
+                                      fit: BoxFit.fill,
+                                      filterQuality: FilterQuality.low,
+                                      loadingBuilder: (context, child,
+                                          loadingProgress) =>
+                                      (loadingProgress == null)
+                                          ? child
+                                          : Container(
+                                        padding: const EdgeInsets
+                                            .symmetric(
+                                            horizontal: 40),
+                                        child: Image.asset(
+                                          "assets/images/dhakaprokash_logo.png",
                                         ),
-                                      ))
-                                ],
+                                      ),
+                                    )),
                               ),
-                            ),
-                            const Align(
-                                alignment: Alignment.topLeft,
-                                child: CircleAvatar(
-                                    backgroundColor: Colors.white60,
-                                    child: Icon(Icons.photo_rounded)))
-                          ],
+                              Flexible(
+                                  flex: 1,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5, vertical: 2),
+                                    child: Text(
+                                      widget.dhakaprokashModels[index]
+                                          .albumName,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                  ))
+                            ],
+                          ),
                         ),
-                      ),
-                    )),
+                        const Align(
+                            alignment: Alignment.topLeft,
+                            child: CircleAvatar(
+                                backgroundColor: Colors.white60,
+                                child: Icon(Icons.photo_rounded)))
+                      ],
+                    ),
+                  ),
+                )),
           ),
         ),
+
+
         Visibility(
-          visible: Provider.of<HomepageController>(context, listen: false)
-              .IsMoreButtonVisible,
+          // visible: Provider.of<HomepageController>(context, listen: false).IsMoreButtonVisible,
+          visible: homecontroller.IsMoreButtonVisible,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(shape: LinearBorder()),
                 onPressed: () {
-                   Provider.of<HomepageController>(context, listen: false)
-                      .addMorePhotos(widget.totalPhotoItems);
-                  // if (widget.scr
-                  //ollController != null) {
-                  //   GenericVars.scrollOffset = widget.scrollController!.offset;
-                  // }
-                  // Provider.of<HomepageController>(context, listen: false)
-                  //     .addMorePhotos(widget.totalPhotoItems);
+
+                   // Provider.of<HomepageController>(context, listen: false)
+                   //    .addMorePhotos(widget.totalPhotoItems);
+                  // homecontroller.addItemPhoto(widget.totalPhotoItems);
+
+                  setState(() {
+                    if(widget.totalPhotoItems == widget.itemCount + 4) widget.itemCount = widget.totalPhotoItems;
+                    else if(widget.totalPhotoItems < widget.itemCount + 4 && widget.totalPhotoItems > widget.itemCount) widget.itemCount = widget.totalPhotoItems;
+                    else if(widget.totalPhotoItems > widget.itemCount) widget.itemCount +=4;
+                  });
+
                 },
                 child: Text(
                   "আরও",
