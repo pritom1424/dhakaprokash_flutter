@@ -1,9 +1,8 @@
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/follow_social.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePageFooter extends StatelessWidget {
@@ -53,19 +52,28 @@ class HomePageFooter extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                       text: "ভারপ্রাপ্ত সম্পাদক: ",
-                      style: GoogleFonts.tiroBangla(color: Colors.black),
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: GenericVars.currenFontFamily,
+                      ),
                       children: [
                         TextSpan(
                             text: "রবিউল ইসলাম\n",
-                            style: GoogleFonts.tiroBangla(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold)),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: GenericVars.currenFontFamily,
+                            )),
                         TextSpan(
                             text: "প্রকাশক: ",
-                            style: GoogleFonts.tiroBangla(color: Colors.black)),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: GenericVars.currenFontFamily,
+                            )),
                         TextSpan(
                             text: "শাহাদৎ জামান সাইফ",
-                            style: GoogleFonts.tiroBangla(
+                            style: TextStyle(
+                                fontFamily: GenericVars.currenFontFamily,
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold))
                       ]),

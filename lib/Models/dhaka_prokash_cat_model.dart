@@ -14,15 +14,17 @@ class DhakaprokashCatModel {
   Category category;
   List<dynamic> subcat;
   List<Content> contents;
+  int totalPost;
 
-  DhakaprokashCatModel({
-    required this.category,
-    required this.subcat,
-    required this.contents,
-  });
+  DhakaprokashCatModel(
+      {required this.category,
+      required this.subcat,
+      required this.contents,
+      required this.totalPost});
 
   factory DhakaprokashCatModel.fromJson(Map<String, dynamic> json) =>
       DhakaprokashCatModel(
+        totalPost: json['total_post'],
         category: Category.fromJson(json["category"]),
         subcat: List<dynamic>.from(json["subcat"].map((x) => x)),
         contents: List<Content>.from(
@@ -33,6 +35,7 @@ class DhakaprokashCatModel {
         "category": category.toJson(),
         "subcat": List<dynamic>.from(subcat.map((x) => x)),
         "contents": List<dynamic>.from(contents.map((x) => x.toJson())),
+        'total_post': totalPost
       };
 }
 

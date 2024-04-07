@@ -15,6 +15,8 @@ class HomepageController with ChangeNotifier {
   int photoShowNumber = 4;
   bool isButtonVisible = true;
 
+  DhakaprokashCatModel? _dhakaprokashCatModel;
+
   Future<List<DhakaProkashSpecialModel>> loadAllSpItems() async {
     final url = Uri.parse(ApiConstant.homePageSpecialContentLink);
 
@@ -73,6 +75,8 @@ class HomepageController with ChangeNotifier {
 
     DhakaprokashCatModel jsonResponse =
         dhakaprokashCatModelFromJson(utf8.decode(response.bodyBytes));
+
+    _dhakaprokashCatModel = jsonResponse;
 
     return jsonResponse;
   }
@@ -148,4 +152,5 @@ class HomepageController with ChangeNotifier {
   }
 
   List<DhakaProkashPhotoModel> get photoes => _photoes;
+  DhakaprokashCatModel? get catModels => _dhakaprokashCatModel!;
 }

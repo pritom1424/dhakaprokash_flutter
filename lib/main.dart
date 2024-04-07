@@ -17,7 +17,6 @@ import 'package:dummy_app/database/database_helper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart' as ds;
@@ -70,57 +69,57 @@ class MyApp extends StatelessWidget {
       ).copyWith(
           scaffoldBackgroundColor: AppColors.backgroundColor,
           textTheme: ThemeData().textTheme.copyWith(
-                titleLarge: GoogleFonts.tiroBangla(
+                titleLarge: TextStyle(
                   fontWeight: FontWeight.bold,
-                  // fontFamily: GenericVars.currenFontFamily,
+                  fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
                   fontSize: 35,
                 ),
-                titleMedium: GoogleFonts.tiroBangla(
+                titleMedium: TextStyle(
                   fontWeight: FontWeight.bold,
-                  //  fontFamily: GenericVars.currenFontFamily,
+                  fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
-                  fontSize: 20,
+                  fontSize: 25,
                 ),
-                titleSmall: GoogleFonts.tiroBangla(
+                titleSmall: TextStyle(
                   fontWeight: FontWeight.bold,
-                  // fontFamily: GenericVars.currenFontFamily,
+                  fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
                   fontSize: 15,
                 ),
-                bodyLarge: GoogleFonts.tiroBangla(
+                bodyLarge: TextStyle(
                   fontWeight: FontWeight.bold,
-                  // fontFamily: GenericVars.currenFontFamily,
+                  fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
                   fontSize: 25,
                 ),
-                bodyMedium: GoogleFonts.tiroBangla(
+                bodyMedium: TextStyle(
                   fontWeight: FontWeight.normal,
-                  //  fontFamily: GenericVars.currenFontFamily,
+                  fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
                   fontSize: 16,
                 ),
-                headlineMedium: GoogleFonts.tiroBangla(
+                headlineMedium: TextStyle(
                   fontWeight: FontWeight.normal,
-                  // fontFamily: GenericVars.currenFontFamily,
+                  fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
                   fontSize: 20,
                 ),
-                headlineLarge: GoogleFonts.tiroBangla(
+                headlineLarge: TextStyle(
                   fontWeight: FontWeight.bold,
-                  // fontFamily: GenericVars.currenFontFamily,
+                  fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
                   fontSize: 25,
                 ),
-                labelMedium: GoogleFonts.tiroBangla(
+                labelMedium: TextStyle(
                   fontWeight: FontWeight.bold,
-                  // fontFamily: GenericVars.currenFontFamily,
+                  fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
                   fontSize: 12,
                 ),
-                labelSmall: GoogleFonts.tiroBangla(
+                labelSmall: TextStyle(
                   fontWeight: FontWeight.normal,
-                  // fontFamily: GenericVars.currenFontFamily,
+                  fontFamily: GenericVars.currenFontFamily,
                   color: Colors.black87,
                   fontSize: 12,
                 ),

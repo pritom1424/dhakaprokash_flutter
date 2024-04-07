@@ -1,13 +1,11 @@
-import 'package:dummy_app/Models/dhak_prokash_tab_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
-import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
+
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/categorytab_tile.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:intl/intl.dart';
 
 class CategoryTabWidget extends StatelessWidget {
@@ -60,7 +58,7 @@ class CategoryTabWidget extends StatelessWidget {
             child: Text(
               "$catName সব খবর",
               textAlign: TextAlign.center,
-              style: GoogleFonts.tiroBangla(
+              style: TextStyle(
                   fontWeight: FontWeight.bold, color: AppColors.logoColorDeep),
             ),
           ),

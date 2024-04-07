@@ -398,9 +398,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                           ? CategoryPhotoGridWidget(
                               scrollController: _scrollController,
                               totalPhotoItems: snap.data!.length,
-                              itemCount: Provider.of<HomepageController>(ctx,
-                                      listen: false)
-                                  .photoShowNumber,
                               dhakaprokashModels: snap.data!,
                               didAxisHorizontal: false,
                               crossAxisCount: 2,
@@ -1003,7 +1000,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                     homepageController.photoes.length,
                                 // itemCount: Provider.of<HomepageController>(ctx, listen: false).photoShowNumber,
 
-                                itemCount: homepageController.photoShowNumber,
                                 dhakaprokashModels: homepageController.photoes,
                                 didAxisHorizontal: false,
                                 crossAxisCount: 2,
@@ -1012,30 +1008,6 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                 itemHeight: 0.23,
                                 elevation: 0)
                             : LoaderWidget(),
-                        // FutureBuilder(
-                        //     future: homepageController.loadAllPhotoItems(),
-                        //     builder: (ctx, snap) {
-                        //       return (snap.connectionState ==
-                        //               ConnectionState.waiting)
-                        //           ? LoaderWidget()
-                        //           : (snap.hasData)
-                        //               ? CategoryPhotoGridWidget(
-                        //                   scrollController: _scrollController,
-                        //                   totalPhotoItems: snap.data!.length,
-                        //                   itemCount:
-                        //                       Provider.of<HomepageController>(
-                        //                               ctx,
-                        //                               listen: false)
-                        //                           .photoShowNumber,
-                        //                   dhakaprokashModels: snap.data!,
-                        //                   didAxisHorizontal: false,
-                        //                   crossAxisCount: 2,
-                        //                   didDescriptionShow: false,
-                        //                   isScroll: false,
-                        //                   itemHeight: 0.23,
-                        //                   elevation: 0)
-                        //               : SizedBox.shrink();
-                        //     }),
 
                         //saradesh
                         FutureBuilder(

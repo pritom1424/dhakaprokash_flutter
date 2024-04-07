@@ -1,7 +1,6 @@
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CategoryTabTile extends StatelessWidget {
   final int id;
@@ -36,13 +35,6 @@ class CategoryTabTile extends StatelessWidget {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (ctx) => DetailedPostView(
                     id: id,
-                    tags: tags ?? [],
-                    imageCaption: imageCaption,
-                    dateTime: dateTime ?? DateTime.now(),
-                    categoryName: categoryName,
-                    url: imagePath,
-                    title: title,
-                    description: newsDescription,
                   )));
         },
         leading: CircleAvatar(
@@ -50,7 +42,7 @@ class CategoryTabTile extends StatelessWidget {
           backgroundColor: Colors.black12,
           child: Text(
             rankString,
-            style: GoogleFonts.tiroBangla(
+            style: const TextStyle(
               fontWeight: FontWeight.normal,
               // fontFamily: GenericVars.currenFontFamily,
               color: Colors.black38,
@@ -62,7 +54,7 @@ class CategoryTabTile extends StatelessWidget {
           title,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: GoogleFonts.tiroBangla(
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             // fontFamily: GenericVars.currenFontFamily,
             // color: kColorScheme.onSecondaryContainer,

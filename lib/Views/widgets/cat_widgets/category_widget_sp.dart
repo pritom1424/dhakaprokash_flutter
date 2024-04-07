@@ -92,17 +92,6 @@ class CategoryWidgetSpecial extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
                           id: dhakaprokashModels[0].contentId,
-                          tags: dhakaprokashModels[0].tags ?? [],
-                          imageCaption:
-                              dhakaprokashModels[0].imgbgCaption ?? "",
-                          dateTime:
-                              dhakaprokashModels[0].createdAt ?? DateTime.now(),
-                          categoryName:
-                              dhakaprokashModels[0].category.catNameBn,
-                          url:
-                              "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[0].imgBgPath.toString()}",
-                          title: dhakaprokashModels[0].contentHeading!,
-                          description: dhakaprokashModels[0].contentDetails!,
                         )));
               },
               child: Container(

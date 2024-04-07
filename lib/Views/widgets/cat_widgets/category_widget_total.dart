@@ -107,17 +107,6 @@ class CategoryWidgetTotal extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
                           id: dhakaprokashModel.contents[0].contentId ?? -1,
-                          tags: tags ?? [], //dhakaprokashModels[0].tags,
-                          imageCaption:
-                              null, //dhakaprokashModels[0].imgBgCaption ?? "",
-                          dateTime: dhakaprokashModel.contents[0].createdAt ??
-                              DateTime.now(),
-                          categoryName: categoryName,
-                          url:
-                              "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModel.contents[0].imgBgPath.toString()}",
-                          title: dhakaprokashModel.contents[0].contentHeading!,
-                          description:
-                              dhakaprokashModel.contents[0].contentDetails!,
                         )));
               },
               child: Container(

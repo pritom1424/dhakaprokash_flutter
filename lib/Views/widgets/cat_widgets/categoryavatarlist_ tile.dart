@@ -29,13 +29,6 @@ class CategoryAvatarListTile extends StatelessWidget {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => DetailedPostView(
                   id: id,
-                  tags: [],
-                  imageCaption: "caption",
-                  dateTime: dateTime,
-                  categoryName: categoryName,
-                  url: imagePath,
-                  title: newsTitle,
-                  description: newsDescription,
                 )));
       },
       child: Container(
