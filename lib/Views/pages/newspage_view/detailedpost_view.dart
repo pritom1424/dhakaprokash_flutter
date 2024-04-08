@@ -136,7 +136,7 @@ class DetailedPostView extends StatelessWidget {
                             ),
                             //comment button
 
-                            Consumer<DetailPageController>(
+                            /*  Consumer<DetailPageController>(
                               builder: (ctx, snap, _) => (snap.IsCommentClick)
                                   ? const Padding(
                                       padding:
@@ -165,79 +165,42 @@ class DetailedPostView extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                            ),
-                            // news grid
-                            /* FutureBuilder(
-                      future: postController.loadAllItems(),
-                      builder: (ctx, postSnapShot) {
-                        return (postSnapShot.connectionState ==
-                                ConnectionState.waiting)
-                            ? const Center(
-                                child: CircularProgressIndicator(),
-                              )
-                            : CategoryGridWidget(
-                                photoModels: photoController.Items,
-                                categoryName: categoryName,
-                                itemCount: 4,
-                                cellHeight: 0.23,
-                                didDescriptionShow: false,
-                                didAxisHorizontal: false,
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 10,
-                                isScroll: false,
-                                elevation: 0,
-                              );
-                      }) ,*/
+                            ), */
 
-                            CategoryGridWidgetMore(
+                            /* CategoryGridWidgetMore(
                               dhakaprokashModels: List.generate(
                                   snap
                                       .data!
-                                      .moreDetailContent[snap.data!.moreDetailContent.indexWhere(
-                                          (element) => element.contentId == id)]
+                                      .moreDetailContent[snap
+                                          .data!.moreDetailContent
+                                          .indexWhere((element) =>
+                                              element.contentId == id)]
                                       .morecatwisePost
                                       .length,
-                                  (index) => DetailMorePostModel(
-                                      contentId: snap
-                                          .data!
-                                          .moreDetailContent[snap
-                                              .data!.moreDetailContent
-                                              .indexWhere((element) =>
-                                                  element.contentId == id)]
-                                          .morecatwisePost[index]
-                                          .contentId,
-                                      contentType: snap
-                                          .data!
-                                          .moreDetailContent[snap
-                                              .data!.moreDetailContent
-                                              .indexWhere((element) => element.contentId == id)]
-                                          .morecatwisePost[index]
-                                          .contentType,
-                                      contentHeading: snap.data!.moreDetailContent[snap.data!.moreDetailContent.indexWhere((element) => element.contentId == id)].morecatwisePost[index].contentHeading,
-                                      imgBgPath: snap.data!.moreDetailContent[snap.data!.moreDetailContent.indexWhere((element) => element.contentId == id)].morecatwisePost[index].imgBgPath,
-                                      catSlug: snap.data!.moreDetailContent[snap.data!.moreDetailContent.indexWhere((element) => element.contentId == id)].morecatwisePost[index].catSlug)),
+                                  (index) => snap
+                                      .data!
+                                      .moreDetailContent[snap
+                                          .data!.moreDetailContent
+                                          .indexWhere((element) =>
+                                              element.contentId == id)]
+                                      .morecatwisePost[index]),
                               categoryName:
                                   snap.data!.detailsContent.category.catNameBn,
-                              itemCount: 4,
+                              itemCount: snap
+                                  .data!
+                                  .moreDetailContent[
+                                      snap.data!.moreDetailContent.indexWhere(
+                                          (element) => element.contentId == id)]
+                                  .morecatwisePost
+                                  .length,
                               didAxisHorizontal: false,
                               crossAxisCount: 2,
                               didDescriptionShow: false,
                               isScroll: false,
                               elevation: 0,
                               itemHeight: 0.23,
-                            ),
-                            /* CategoryGridWidgetTotal(
-                                  dhakaprokashModels: postSnapShot.data!,
-                                  categoryName: categoryName,
-                                  itemCount: gridItemCount,
-                                  didAxisHorizontal: false,
-                                  crossAxisCount: 2,
-                                  didDescriptionShow: false,
-                                  isScroll: false,
-                                  elevation: 0,
-                                  itemHeight: 0.23,
-                                  isReplace: true,
-                                ), */
+                            ), */
+
                             HomePageFooter()
                           ],
                         ),

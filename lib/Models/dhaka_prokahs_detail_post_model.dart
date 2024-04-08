@@ -67,7 +67,7 @@ class DetailsContent {
   DateTime createdAt;
   DateTime updatedAt;
   Category category;
-  Subcategory subcategory;
+  DetailsContentSubcategory subcategory;
   Author author;
 
   DetailsContent({
@@ -126,7 +126,7 @@ class DetailsContent {
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         category: Category.fromJson(json["category"]),
-        subcategory: Subcategory.fromJson(json["subcategory"]),
+        subcategory: DetailsContentSubcategory.fromJson(json["subcategory"]),
         author: Author.fromJson(json["author"]),
       );
 
@@ -165,7 +165,7 @@ class Author {
   int authorId;
   String authorNameBn;
   String authorSlug;
-  String imgPath;
+  String? imgPath;
 
   Author({
     required this.authorId,
@@ -213,28 +213,13 @@ class Category {
       };
 }
 
-class Subcategory {
-  String? subcatNameBn;
-  int? subcatId;
-  String? subcatSlug;
+class DetailsContentSubcategory {
+  DetailsContentSubcategory();
 
-  Subcategory({
-    this.subcatNameBn,
-    this.subcatId,
-    this.subcatSlug,
-  });
+  factory DetailsContentSubcategory.fromJson(Map<String, dynamic> json) =>
+      DetailsContentSubcategory();
 
-  factory Subcategory.fromJson(Map<String, dynamic> json) => Subcategory(
-        subcatNameBn: json["subcat_name_bn"],
-        subcatId: json["subcat_id"],
-        subcatSlug: json["subcat_slug"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "subcat_name_bn": subcatNameBn,
-        "subcat_id": subcatId,
-        "subcat_slug": subcatSlug,
-      };
+  Map<String, dynamic> toJson() => {};
 }
 
 class FirstRelatedContent {
@@ -304,7 +289,7 @@ class MoreDetailContent {
   DateTime createdAt;
   DateTime updatedAt;
   Category category;
-  Subcategory subcategory;
+  MoreDetailContentSubcategory subcategory;
   Author author;
   List<FirstRelatedContent> morecatwisePost;
   List<List<FirstRelatedContent>> morereletedcontentbelow;
@@ -368,7 +353,7 @@ class MoreDetailContent {
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         category: Category.fromJson(json["category"]),
-        subcategory: Subcategory.fromJson(json["subcategory"]),
+        subcategory: MoreDetailContentSubcategory.fromJson(json["subcategory"]),
         author: Author.fromJson(json["author"]),
         morecatwisePost: List<FirstRelatedContent>.from(json["morecatwisePost"]
             .map((x) => FirstRelatedContent.fromJson(x))),
@@ -410,5 +395,30 @@ class MoreDetailContent {
             List<dynamic>.from(morecatwisePost.map((x) => x.toJson())),
         "morereletedcontentbelow": List<dynamic>.from(morereletedcontentbelow
             .map((x) => List<dynamic>.from(x.map((x) => x.toJson())))),
+      };
+}
+
+class MoreDetailContentSubcategory {
+  String? subcatNameBn;
+  int? subcatId;
+  String? subcatSlug;
+
+  MoreDetailContentSubcategory({
+    this.subcatNameBn,
+    this.subcatId,
+    this.subcatSlug,
+  });
+
+  factory MoreDetailContentSubcategory.fromJson(Map<String, dynamic> json) =>
+      MoreDetailContentSubcategory(
+        subcatNameBn: json["subcat_name_bn"],
+        subcatId: json["subcat_id"],
+        subcatSlug: json["subcat_slug"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "subcat_name_bn": subcatNameBn,
+        "subcat_id": subcatId,
+        "subcat_slug": subcatSlug,
       };
 }
