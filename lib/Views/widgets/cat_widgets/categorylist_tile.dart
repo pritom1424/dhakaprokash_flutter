@@ -82,7 +82,7 @@ class CategoryListTile extends StatelessWidget {
                           width: 5,
                         ),
                         Text(
-                          DateFormatter().defaultFormat(dateTime),
+                          "প্রকাশঃ ${DateFormatter().defaultFormat(dateTime)}",
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                       ],
@@ -98,7 +98,7 @@ class CategoryListTile extends StatelessWidget {
                             width: 5,
                           ),
                           Text(
-                            DateFormatter().defaultFormat(updateDateTime!),
+                            "আপডেটঃ ${DateFormatter().defaultFormat(updateDateTime!)}",
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                         ],

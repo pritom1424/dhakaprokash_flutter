@@ -121,7 +121,12 @@ flutter:
 
     - family: Bangla_Kolom
       fonts:
-      - asset: assets/fonts/Bangla_Kolom.ttf          
+      - asset: assets/fonts/Bangla_Kolom.ttf   
+
+    - family: SutonnyMJ   
+      fonts:
+      - asset: assets/fonts/SutonnyMJ.ttf      
+  
       #  - asset: assets/fonts/RobotoMono-Bold.ttf
        #   weight: 700
   #   - family: Trajan Pro

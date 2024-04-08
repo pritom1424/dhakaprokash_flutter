@@ -43,12 +43,12 @@ class _CategoryTagnAuthorViewState extends State<CategoryTagnAuthorView> {
       appBar: AppbarDefault(),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Column(
             children: [
               Container(
                 height: GenericVars.scSize.height * 0.1,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     border: Border(
                         bottom: BorderSide(width: 0.3, color: Colors.black38))),
                 child: Row(

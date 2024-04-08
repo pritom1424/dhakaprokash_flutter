@@ -188,9 +188,7 @@ class CategoryWidgetRegular extends StatelessWidget {
                                           width: 5,
                                         ),
                                         Text(
-                                          DateFormatter().defaultFormat(
-                                              dhakaprokashModels[0].createdAt ??
-                                                  DateTime.now()),
+                                          "প্রকাশঃ ${DateFormatter().defaultFormat(dhakaprokashModels[0].createdAt ?? DateTime.now())}",
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelSmall,
@@ -266,9 +264,7 @@ class CategoryWidgetRegular extends StatelessWidget {
                                         width: 5,
                                       ),
                                       Text(
-                                        DateFormatter().defaultFormat(
-                                            dhakaprokashModels[0].createdAt ??
-                                                DateTime.now()),
+                                        "প্রকাশঃ ${DateFormatter().defaultFormat(dhakaprokashModels[0].createdAt ?? DateTime.now())}",
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelSmall,

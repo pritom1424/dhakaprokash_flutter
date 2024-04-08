@@ -120,7 +120,8 @@ class GenericVars {
   };
   static String currentSearchString = "";
   static String currenFontFamily =
-      "TiroBangla-Regular"; //"BongobondhuUnicode-Regular";
+      "TiroBangla-Regular"; //"Lal_Salu_Normal"; //"TiroBangla-Regular";
+  // "Lal_Salu_Normal"; //"BongobondhuUnicode-Regular";
   // "Bensen"; //"Kalpurush"; //"Shurjo-un-regular";
   //"SolaimanLipi"; //"Raleway"//"NotoSerif-Regular";
 

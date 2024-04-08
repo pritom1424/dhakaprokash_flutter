@@ -57,7 +57,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double cellHeight = 0.3;
+    double cellHeight = 0.35;
     double mainAxisSpacing = 10;
     return Column(
       children: [
@@ -187,10 +187,11 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
                                 child: Text(
                                   GenericVars.getVideoData[index]['title']!,
                                   textAlign: TextAlign.center,
+                                  maxLines: 2,
                                   style: TextStyle(
                                       fontSize: 15,
                                       color: Colors.white,
-                                      // overflow: TextOverflow.ellipsis,
+                                      overflow: TextOverflow.ellipsis,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: GenericVars.currenFontFamily),
                                 ),

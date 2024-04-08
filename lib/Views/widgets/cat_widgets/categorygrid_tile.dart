@@ -120,27 +120,23 @@ class _CategoryGridTileState extends State<CategoryGridTile> {
                       ),
                       //description
                       if (widget.didDescriptionShow)
-                        Text(Bidi.stripHtmlIfNeeded(
-                                widget.newsDescription.substring(0, 100))
-                            .trim()),
-                      /* HtmlWidget(
-                          removeHtmlContent(
-                              widget.newsDescription.substring(0, 160),
-                              "<p style=\"text-align: justify;\">&nbsp;</p>\r\n<p style=\"text-align: justify;\">"), */
-
-                      // ),
+                        Text(
+                          Bidi.stripHtmlIfNeeded(widget.newsDescription).trim(),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
 
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.alarm,
                             size: 15,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
-                            DateFormatter().defaultFormat(widget.dateTime),
+                            "প্রকাশঃ ${DateFormatter().defaultFormat(widget.dateTime)}",
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                         ],

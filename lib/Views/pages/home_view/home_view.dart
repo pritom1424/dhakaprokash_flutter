@@ -788,6 +788,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                               (snap.connectionState == ConnectionState.waiting)
                                   ? LoaderWidget()
                                   : const CategoryVideoGridWidget(
+                                      itemHeight: 0.34,
                                       itemCount: 5,
                                       didAxisHorizontal: true,
                                       crossAxisCount: 1,

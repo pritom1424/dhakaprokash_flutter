@@ -132,13 +132,6 @@ class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
                                                 ['url']!,
                                             videoTitle: currentContainer[index]
                                                 ['title']!)));
-
-                                /* Provider.of<VideoProvider>(context,
-                                        listen: false)
-                                    .setCurrentVideoLink(
-                                        currentContainer[index]['url']!);
-                                currentContainer = currentElementList(
-                                    currentContainer[index]['url']!, 3); */
                               },
                               contentPadding: EdgeInsets.symmetric(vertical: 2),
                               leading: const CircleAvatar(
@@ -161,85 +154,6 @@ class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
                           )),
                 ),
               ),
-              /* Consumer<VideoProvider>(
-                builder: (ctx, snapshot, ch) {
-                  return Container(
-                    height: GenericVars.scSize.height *
-                        itemHeight *
-                        (listItemLength),
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: List.generate(
-                          listItemLength,
-                          (index) => Container(
-                                height:
-                                    GenericVars.scSize.height * itemHeight,
-                                decoration: const BoxDecoration(
-                                    border: Border(
-                                        top: BorderSide(
-                                            width: 0.4,
-                                            color: Colors.grey))),
-                                //List Tile Started
-                                child: ListTile(
-                                  onTap: () {
-                                    Provider.of<VideoProvider>(context,
-                                            listen: false)
-                                        .setCurrentVideoLink(
-                                            currentContainer[index]
-                                                ['url']!);
-                                    currentContainer =
-                                        GenericVars.getVideoData;
-                                    currentContainer.removeWhere(
-                                        (element) =>
-                                            element['url'] ==
-                                            currentContainer[index]
-                                                ['url']!);
-                                  },
-                                  contentPadding:
-                                      EdgeInsets.symmetric(vertical: 2),
-                                  leading: const CircleAvatar(
-                                    backgroundImage: AssetImage(
-                                        "assets/images/video_play_icon.png"),
-                                    radius: 20,
-                                  ),
-                                  title: Container(
-                                    child: Text(
-                                      currentContainer[index]['title']!,
-                                      softWrap: true,
-                                    ),
-                                  ),
-                                  titleTextStyle: const TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.normal),
-                                ),
-                              )),
-                    ),
-                  );
-                },
-              ) */
-              /*  Expanded(
-                  child: Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          dhakaprokashModels[0].contentHeading!,
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                        Text(StringLimiter().limitString(
-                            dhakaprokashModels[0].contentDetails!, 97)),
-                        Text(
-                          DateFormat.yMEd()
-                              .format(dhakaprokashModels[0].createdAt!),
-                          style: Theme.of(context).textTheme.labelSmall,
-                        )
-                      ],
-                    ),
-                  ),
-                ) */
             ],
           ),
         ),
