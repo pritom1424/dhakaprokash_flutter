@@ -1,4 +1,5 @@
 import 'package:dummy_app/Controllers/video_controller.dart';
+import 'package:dummy_app/Models/dhaka_prokahs_detail_post_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_details_more.dart';
 import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 
@@ -17,7 +18,7 @@ import 'package:provider/provider.dart';
 
 class CategoryGridWidgetMore extends StatefulWidget {
   final String categoryName;
-  final List<DetailMorePostModel> dhakaprokashModels;
+  final List<FirstRelatedContent> dhakaprokashModels;
   final int itemCount;
 
   final bool didAxisHorizontal;

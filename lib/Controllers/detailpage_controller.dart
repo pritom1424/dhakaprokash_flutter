@@ -26,7 +26,7 @@ class DetailPageController with ChangeNotifier {
         Uri.parse("https://dhakaprokash24.com/api/v1/detail/postdetail");
 
     Map data = {"content_id": id};
-
+    print("id:$id");
     final response = await http.post(url,
         body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
 
