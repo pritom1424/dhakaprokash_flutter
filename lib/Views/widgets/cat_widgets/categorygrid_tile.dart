@@ -14,14 +14,13 @@ import 'package:provider/provider.dart';
 
 class CategoryGridTile extends StatefulWidget {
   final int id;
-  final String imagePath, newsTitle, newsDescription, categoryName;
+  final String imagePath, newsTitle, newsDescription;
 
-  final String? imageCaption;
   final DateTime dateTime;
   final double cellHeight;
   final bool didDescriptionShow;
   final double elevation;
-  final List<String> tags;
+
   final bool isScroll;
   final bool? isReplace;
 
@@ -31,12 +30,9 @@ class CategoryGridTile extends StatefulWidget {
       required this.newsTitle,
       required this.newsDescription,
       required this.dateTime,
-      required this.categoryName,
       required this.cellHeight,
       required this.didDescriptionShow,
       required this.elevation,
-      required this.imageCaption,
-      required this.tags,
       required this.id,
       this.isReplace,
       required this.isScroll});

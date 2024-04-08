@@ -1,15 +1,14 @@
 import 'package:dummy_app/Controllers/bookmark_controller.dart';
-import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
+
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
-import 'package:dummy_app/Views/widgets/cat_widgets/categorylist_tile.dart';
+
 import 'package:dummy_app/Views/widgets/cat_widgets/favlist_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/deskview_bar.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/followpost_bar.dart';
-import 'package:dummy_app/database/database_helper.dart';
 
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
+
 import 'package:provider/provider.dart';
 
 import 'package:url_launcher/url_launcher.dart';
@@ -17,7 +16,8 @@ import 'package:url_launcher/url_launcher.dart';
 class MainHeadPostTile extends StatefulWidget {
   final String? url, title, categoryname, description, imageCaption;
   final DateTime dateTime;
-
+  final String authorSlug;
+  final String authorName;
   final List<String>? tags;
   final int id;
   const MainHeadPostTile({
@@ -30,6 +30,8 @@ class MainHeadPostTile extends StatefulWidget {
     required this.tags,
     required this.dateTime,
     required this.id,
+    required this.authorSlug,
+    required this.authorName,
   });
 
   @override
@@ -84,7 +86,7 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
               //Tag Button
               child: TextButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (ctx) => CategoryView(
                             categoryName: widget.categoryname ?? "category",
                             catSlug: GenericVars
@@ -119,9 +121,12 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
         ),
       ), */
 //desk view
+
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: DeskViewBar(
+              title: widget.authorName,
+              slug: widget.authorSlug,
               dateTime: widget.dateTime,
             ),
           ),

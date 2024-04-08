@@ -85,11 +85,7 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
           itemBuilder: (ctx, index) => CategoryGridTile(
                 isReplace: widget.isReplace,
                 id: widget.dhakaprokashModels[index].contentId ?? -1,
-                tags: tags ?? [], //widget.dhakaprokashModels[index].tags,
-                imageCaption: null,
                 isScroll: widget.isScroll,
-                // widget.dhakaprokashModels[index].imgbgCaption ?? "",
-                categoryName: widget.categoryName,
                 imagePath:
                     "https://admin.dhakaprokash24.com/media/content/images/${widget.dhakaprokashModels[index].imgBgPath.toString()}",
                 newsTitle: widget.dhakaprokashModels[index].contentHeading!,

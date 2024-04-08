@@ -12,7 +12,7 @@ import 'package:dummy_app/Views/pages/contact_view/contact_view.dart';
 import 'package:dummy_app/Views/pages/custom_appdrawer.dart';
 import 'package:dummy_app/Views/pages/favorites_view/favoritesnews_view.dart';
 import 'package:dummy_app/Views/pages/my%20app/myapp_view.dart';
-import 'package:dummy_app/Views/pages/popular_view/popularnews_view.dart';
+import 'package:dummy_app/Views/pages/latest_view/latestnews_view.dart';
 import 'package:dummy_app/Views/pages/searchtoNewpage.dart';
 
 import 'package:dummy_app/Views/widgets/app_bar.dart';
@@ -65,7 +65,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     _showScrollToTop = false;
     return [
       homeBaseWidgetVer2(),
-      PopularNewsView(),
+      LatestNewsView(),
       CategoryVideoView(),
       FavoritesNewsView(),
       SearchToNewPage(),

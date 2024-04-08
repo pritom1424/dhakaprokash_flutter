@@ -108,7 +108,7 @@ class FollowPostBar extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                launchLink(dummyLink, Social.linkedin, "here is a new post");
+                //launchLink(dummyLink, Social.linkedin, "here is a new post");
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),

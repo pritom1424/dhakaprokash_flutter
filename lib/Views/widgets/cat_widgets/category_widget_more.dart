@@ -18,7 +18,7 @@ import 'package:provider/provider.dart';
 
 class CategoryGridWidgetMore extends StatefulWidget {
   final String categoryName;
-  final List<FirstRelatedContent> dhakaprokashModels;
+  final DetailsMorePostModel dhakaprokashModels;
   final int itemCount;
 
   final bool didAxisHorizontal;
@@ -86,15 +86,12 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetMore> {
               (widget.didAxisHorizontal) ? Axis.horizontal : Axis.vertical,
           itemBuilder: (ctx, index) => CategoryGridTile(
                 isReplace: widget.isReplace,
-                id: widget.dhakaprokashModels[index].contentId ?? -1,
-                tags: tags ?? [], //widget.dhakaprokashModels[index].tags,
-                imageCaption: null,
+                id: widget.dhakaprokashModels.contents[index].contentId ?? -1,
                 isScroll: widget.isScroll,
-                // widget.dhakaprokashModels[index].imgbgCaption ?? "",
-                categoryName: widget.categoryName,
                 imagePath:
-                    "https://admin.dhakaprokash24.com/media/content/images/${widget.dhakaprokashModels[index].imgBgPath.toString()}",
-                newsTitle: widget.dhakaprokashModels[index].contentHeading!,
+                    "https://admin.dhakaprokash24.com/media/content/images/${widget.dhakaprokashModels.contents[index].imgBgPath.toString()}",
+                newsTitle:
+                    widget.dhakaprokashModels.contents[index].contentHeading!,
                 newsDescription: "",
                 cellHeight: widget.itemHeight ?? cellHeight,
                 didDescriptionShow: widget.didDescriptionShow,
@@ -115,10 +112,10 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetMore> {
             onTap: () {
               Provider.of<VideoProvider>(context, listen: false)
                   .pauseVideoState();
-              Navigator.of(context).push(MaterialPageRoute(
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (ctx) => CategoryView(
                         categoryName: widget.categoryName,
-                        catSlug: widget.dhakaprokashModels[0].catSlug,
+                        catSlug: widget.dhakaprokashModels.contents[0].catSlug,
                       )));
             },
             child: Container(

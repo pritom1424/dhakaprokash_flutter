@@ -102,8 +102,6 @@ class CategoryWidgetTotal extends StatelessWidget {
           if (didHeadSectionShow)
             GestureDetector(
               onTap: () {
-                Provider.of<VideoProvider>(context, listen: false)
-                    .pauseVideoState();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
                           id: dhakaprokashModel.contents[0].contentId ?? -1,
@@ -304,16 +302,10 @@ class CategoryWidgetTotal extends StatelessWidget {
                   itemBuilder: (ctx, index) {
                     return CategoryListTile(
                       id: dhakaprokashModel.contents[index + 1].contentId ?? -1,
-                      tags: tags ?? [], //dhakaprokashModels[index + 1].tags,
-                      imageCaption: null,
-                      // dhakaprokashModels[index + 1].imgbgCaption ?? "",
-                      categoryName: categoryName,
                       imagePath:
                           "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModel.contents[index + 1].imgBgPath.toString()}",
                       newsTitle:
                           dhakaprokashModel.contents[index + 1].contentHeading!,
-                      newsDescription:
-                          dhakaprokashModel.contents[index + 1].contentDetails!,
                       itemHeight: itemHeight,
                       /*postModels[index].title, */
                       dateTime:
@@ -333,16 +325,10 @@ class CategoryWidgetTotal extends StatelessWidget {
                   itemBuilder: (ctx, index) {
                     return CategoryListTile(
                       id: dhakaprokashModel.contents[index].contentId ?? -1,
-                      tags: tags ?? [], //dhakaprokashModels[index + 1].tags,
-                      imageCaption: null,
-                      // dhakaprokashModels[index + 1].imgbgCaption ?? "",
-                      categoryName: categoryName,
                       imagePath:
                           "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModel.contents[index].imgBgPath.toString()}",
                       newsTitle:
                           dhakaprokashModel.contents[index].contentHeading!,
-                      newsDescription:
-                          dhakaprokashModel.contents[index].contentDetails!,
                       itemHeight: itemHeight,
                       /*postModels[index].title, */
                       dateTime: dhakaprokashModel.contents[index].createdAt ??

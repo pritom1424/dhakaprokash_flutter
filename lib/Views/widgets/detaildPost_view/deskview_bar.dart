@@ -1,23 +1,31 @@
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
+import 'package:dummy_app/Views/pages/categories_view/category_tag_view.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:flutter/material.dart';
 
 class DeskViewBar extends StatelessWidget {
   final DateTime dateTime;
-  const DeskViewBar({super.key, required this.dateTime});
+  final String title;
+  final String slug;
+  const DeskViewBar(
+      {super.key,
+      required this.dateTime,
+      required this.title,
+      required this.slug});
 
   @override
   Widget build(BuildContext context) {
     String iconPath = "assets/images/dhakaprokash_icon.png";
-    String title = "ঢাকাপ্রকাশ ডেস্ক";
+
     String publishedDate = DateFormatter().defaultFormatWithTime(dateTime);
 
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (ctx) => CategoryView(
-                categoryName: title,
-                catSlug: null,
+          builder: (ctx) => CategoryTagnAuthorView(
+                name: title,
+                slug: slug,
+                isAuthor: true,
               ))),
       child: Container(
         decoration: const BoxDecoration(

@@ -3,6 +3,7 @@ import 'package:dummy_app/Controllers/category_controller.dart';
 import 'package:dummy_app/Controllers/detailpage_controller.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/login_controller.dart';
+import 'package:dummy_app/Controllers/recent_page_controller.dart';
 
 import 'package:dummy_app/Controllers/registration_controller.dart';
 import 'package:dummy_app/Controllers/searchpage_controller.dart';
@@ -47,6 +48,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => BookmarkController()),
       ChangeNotifierProvider(create: (_) => SearchPageController()),
       ChangeNotifierProvider(create: (_) => CategoryViewController()),
+      ChangeNotifierProvider(create: (_) => RecentPageController()),
     ],
     child: const MyApp(),
   ));

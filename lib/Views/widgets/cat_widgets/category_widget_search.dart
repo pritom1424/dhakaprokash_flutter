@@ -300,15 +300,9 @@ class CategoryWidgetSearch extends StatelessWidget {
                   itemBuilder: (ctx, index) {
                     return CategoryListTile(
                       id: dhakaprokashModels[index + 1].contentId ?? -1,
-                      tags: tags ?? [], //dhakaprokashModels[index + 1].tags,
-                      imageCaption: null,
-                      // dhakaprokashModels[index + 1].imgbgCaption ?? "",
-                      categoryName: categoryName,
                       imagePath:
                           "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index + 1].imgBgPath.toString()}",
                       newsTitle: dhakaprokashModels[index + 1].contentHeading!,
-                      newsDescription:
-                          dhakaprokashModels[index + 1].contentDetails!,
                       itemHeight: itemHeight,
                       /*postModels[index].title, */
                       dateTime: dhakaprokashModels[index + 1].createdAt ??
@@ -327,15 +321,9 @@ class CategoryWidgetSearch extends StatelessWidget {
                   itemBuilder: (ctx, index) {
                     return CategoryListTile(
                       id: dhakaprokashModels[index].contentId ?? -1,
-                      tags: tags ?? [], //dhakaprokashModels[index + 1].tags,
-                      imageCaption: null,
-                      // dhakaprokashModels[index + 1].imgbgCaption ?? "",
-                      categoryName: categoryName,
                       imagePath:
                           "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index].imgBgPath.toString()}",
                       newsTitle: dhakaprokashModels[index].contentHeading!,
-                      newsDescription:
-                          dhakaprokashModels[index].contentDetails!,
                       itemHeight: itemHeight,
                       /*postModels[index].title, */
                       dateTime:

@@ -31,7 +31,7 @@ class CategoryView extends StatefulWidget {
 
 class _CategoryViewState extends State<CategoryView> {
   int itm = 10;
-  int addMore = 4;
+  int addMore = 10;
   @override
   void initState() {
     // TODO: implement initState
@@ -45,7 +45,7 @@ class _CategoryViewState extends State<CategoryView> {
       } else if (totalItem < itm + addMore && totalItem > itm) {
         itm = totalItem;
       } else if (totalItem > itm) {
-        itm += 4;
+        itm += addMore;
       }
     });
   }
