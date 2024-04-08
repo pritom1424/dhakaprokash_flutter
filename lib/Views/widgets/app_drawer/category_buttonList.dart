@@ -1,5 +1,6 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
+import 'package:dummy_app/Views/pages/categories_view/category_video_view.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:flutter/material.dart';
 
@@ -79,12 +80,18 @@ class _CategoryButtonListState extends State<CategoryButtonList> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (ctx) => CategoryView(
-                                      categoryLink:
-                                          GenericVars.newspaperCategoriesLink[
+                                  builder: (ctx) => (widget
+                                              .foundCategories[index] ==
+                                          "ভিজ্যুয়াল মিডিয়া")
+                                      ? CategoryVideoView(
+                                          isEnableAppbar: true,
+                                        )
+                                      : CategoryView(
+                                          catSlug: GenericVars
+                                                  .newspaperCategoriesLink[
                                               widget.foundCategories[index]],
-                                      categoryName:
-                                          widget.foundCategories[index])));
+                                          categoryName:
+                                              widget.foundCategories[index])));
                         },
                       ),
                     )),

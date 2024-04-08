@@ -17,7 +17,7 @@ class DeskViewBar extends StatelessWidget {
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
           builder: (ctx) => CategoryView(
                 categoryName: title,
-                categoryLink: null,
+                catSlug: null,
               ))),
       child: Container(
         decoration: const BoxDecoration(

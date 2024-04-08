@@ -37,13 +37,6 @@ class CategoryListTile extends StatelessWidget {
         Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => DetailedPostView(
                   id: id,
-                  tags: tags,
-                  imageCaption: imageCaption,
-                  dateTime: dateTime,
-                  categoryName: categoryName,
-                  url: imagePath,
-                  title: newsTitle,
-                  description: newsDescription,
                 )));
       },
       child: Container(

@@ -48,7 +48,7 @@ dependencies:
   sqflite: ^2.3.2
   path: ^1.9.0
   timer_builder: ^2.0.0
-  google_fonts: ^6.2.1
+ 
 
 
 
@@ -134,8 +134,25 @@ flutter:
       fonts:
       - asset: assets/fonts/kalpurush.ttf
     
+    - family: BenSen
+      fonts:
+      - asset: assets/fonts/BenSen.ttf
 
-        
+    - family: MR_Font
+      fonts:
+      - asset: assets/fonts/MR_Font.ttf
+
+    - family: Shonar
+      fonts:
+      - asset: assets/fonts/Shonar.ttf
+    
+    - family: BongobondhuUnicode-Regular
+      fonts:
+      - asset: assets/fonts/BongobondhuUnicode-Regular.ttf
+      
+    - family: TiroBangla-Regular
+      fonts:
+      - asset: assets/fonts/TiroBangla-Regular.ttf    
       #  - asset: assets/fonts/RobotoMono-Bold.ttf
        #   weight: 700
   #   - family: Trajan Pro

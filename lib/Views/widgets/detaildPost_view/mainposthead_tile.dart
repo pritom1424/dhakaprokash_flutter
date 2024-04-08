@@ -87,7 +87,7 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => CategoryView(
                             categoryName: widget.categoryname ?? "category",
-                            categoryLink: GenericVars
+                            catSlug: GenericVars
                                 .newspaperCategoriesLink[widget.categoryname],
                           )));
                 },

@@ -1,4 +1,5 @@
 import 'package:dummy_app/Controllers/video_controller.dart';
+import 'package:dummy_app/Models/dhaka_prokash_details_more.dart';
 import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 
 import 'package:dummy_app/Utils/app_colors.dart';
@@ -14,9 +15,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class CategoryGridWidgetRegular extends StatefulWidget {
+class CategoryGridWidgetMore extends StatefulWidget {
   final String categoryName;
-  final List<DhakaProkashRegularModel> dhakaprokashModels;
+  final List<DetailMorePostModel> dhakaprokashModels;
   final int itemCount;
 
   final bool didAxisHorizontal;
@@ -29,7 +30,7 @@ class CategoryGridWidgetRegular extends StatefulWidget {
   final bool? isReplace;
   final Color? barIconColor, barTextColor;
 
-  const CategoryGridWidgetRegular(
+  const CategoryGridWidgetMore(
       {super.key,
       required this.dhakaprokashModels,
       required this.categoryName,
@@ -45,10 +46,10 @@ class CategoryGridWidgetRegular extends StatefulWidget {
       this.barTextColor});
 
   @override
-  State<CategoryGridWidgetRegular> createState() => _CategoryGridWidgetState();
+  State<CategoryGridWidgetMore> createState() => _CategoryGridWidgetState();
 }
 
-class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
+class _CategoryGridWidgetState extends State<CategoryGridWidgetMore> {
   late ScrollController scController;
   double cellHeight = 0.15;
   double mainAxisSpacing = 5;
@@ -93,14 +94,12 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
                 imagePath:
                     "https://admin.dhakaprokash24.com/media/content/images/${widget.dhakaprokashModels[index].imgBgPath.toString()}",
                 newsTitle: widget.dhakaprokashModels[index].contentHeading!,
-                newsDescription: Bidi.stripHtmlIfNeeded(
-                    widget.dhakaprokashModels[index].contentDetails!),
+                newsDescription: "",
                 cellHeight: widget.itemHeight ?? cellHeight,
                 didDescriptionShow: widget.didDescriptionShow,
                 elevation: widget.elevation,
                 /*postModels[index].title, */
-                dateTime: widget.dhakaprokashModels[index].createdAt ??
-                    DateTime.now(),
+                dateTime: DateTime.now(),
               ));
     }
 

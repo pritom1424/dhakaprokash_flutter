@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
+import 'package:dummy_app/Controllers/searchpage_controller.dart';
 
 import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
+import 'package:dummy_app/Models/search_model.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_reg.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_search.dart';
 
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
 
@@ -20,7 +23,7 @@ class SearchToNewPage extends StatefulWidget {
 }
 
 class _SearchToNewPageState extends State<SearchToNewPage> {
-  List<DhakaProkashRegularModel> currentSearchItems = [];
+  List<DhakaprokashSearchModel> currentSearchItems = [];
   TextEditingController textEditingController = TextEditingController();
 
   bool didShowList = false;
@@ -96,7 +99,8 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
 
   @override
   Widget build(BuildContext context) {
-    HomepageController homepageController = Provider.of(context, listen: false);
+    SearchPageController searchController =
+        Provider.of<SearchPageController>(context, listen: false);
 
     return Scaffold(
         appBar: AppBar(
@@ -183,8 +187,8 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
         ),
         body: (didShowList)
             ? FutureBuilder(
-                future: homepageController.loadAllRegItems(
-                    "https://dhakaprokash24.com/api/prismaapi/home/${GenericVars.currentSearchString.toLowerCase()}"),
+                future: searchController.loadAllRegSearchItemsPost(
+                    GenericVars.currentSearchString, 10),
                 builder: (ctx, postSnapShot) {
                   currentSearchItems = postSnapShot.data ?? [];
                   return (postSnapShot.connectionState ==
@@ -194,7 +198,7 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
                           ? SingleChildScrollView(
                               child: Container(
                                 padding: EdgeInsets.symmetric(horizontal: 15),
-                                child: CategoryWidgetRegular(
+                                child: CategoryWidgetSearch(
                                     dhakaprokashModels: postSnapShot.data!,
                                     categoryName: "Search",
                                     didMoreButtonShow: false,
@@ -205,7 +209,7 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
                             )
                           : Center(
                               child: Text(
-                              "Not Found",
+                              "কিছু পাওয়া যায়নি",
                               style: Theme.of(context).textTheme.bodyLarge,
                             )));
                 })

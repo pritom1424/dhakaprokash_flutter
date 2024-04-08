@@ -1,4 +1,5 @@
 import 'package:dummy_app/Controllers/video_controller.dart';
+import 'package:dummy_app/Models/dhaka_prokash_cat_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 
 import 'package:dummy_app/Utils/app_colors.dart';
@@ -14,9 +15,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class CategoryGridWidgetRegular extends StatefulWidget {
+class CategoryGridWidgetTotal extends StatefulWidget {
   final String categoryName;
-  final List<DhakaProkashRegularModel> dhakaprokashModels;
+  final DhakaprokashCatModel dhakaprokashModels;
   final int itemCount;
 
   final bool didAxisHorizontal;
@@ -29,7 +30,7 @@ class CategoryGridWidgetRegular extends StatefulWidget {
   final bool? isReplace;
   final Color? barIconColor, barTextColor;
 
-  const CategoryGridWidgetRegular(
+  const CategoryGridWidgetTotal(
       {super.key,
       required this.dhakaprokashModels,
       required this.categoryName,
@@ -45,10 +46,10 @@ class CategoryGridWidgetRegular extends StatefulWidget {
       this.barTextColor});
 
   @override
-  State<CategoryGridWidgetRegular> createState() => _CategoryGridWidgetState();
+  State<CategoryGridWidgetTotal> createState() => _CategoryGridWidgetState();
 }
 
-class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
+class _CategoryGridWidgetState extends State<CategoryGridWidgetTotal> {
   late ScrollController scController;
   double cellHeight = 0.15;
   double mainAxisSpacing = 5;
@@ -84,22 +85,23 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
               (widget.didAxisHorizontal) ? Axis.horizontal : Axis.vertical,
           itemBuilder: (ctx, index) => CategoryGridTile(
                 isReplace: widget.isReplace,
-                id: widget.dhakaprokashModels[index].contentId ?? -1,
+                id: widget.dhakaprokashModels.contents[index].contentId ?? -1,
                 tags: tags ?? [], //widget.dhakaprokashModels[index].tags,
                 imageCaption: null,
                 isScroll: widget.isScroll,
                 // widget.dhakaprokashModels[index].imgbgCaption ?? "",
                 categoryName: widget.categoryName,
                 imagePath:
-                    "https://admin.dhakaprokash24.com/media/content/images/${widget.dhakaprokashModels[index].imgBgPath.toString()}",
-                newsTitle: widget.dhakaprokashModels[index].contentHeading!,
+                    "https://admin.dhakaprokash24.com/media/content/images/${widget.dhakaprokashModels.contents[index].imgBgPath.toString()}",
+                newsTitle:
+                    widget.dhakaprokashModels.contents[index].contentHeading!,
                 newsDescription: Bidi.stripHtmlIfNeeded(
-                    widget.dhakaprokashModels[index].contentDetails!),
+                    widget.dhakaprokashModels.contents[index].contentDetails!),
                 cellHeight: widget.itemHeight ?? cellHeight,
                 didDescriptionShow: widget.didDescriptionShow,
                 elevation: widget.elevation,
                 /*postModels[index].title, */
-                dateTime: widget.dhakaprokashModels[index].createdAt ??
+                dateTime: widget.dhakaprokashModels.contents[index].createdAt ??
                     DateTime.now(),
               ));
     }
@@ -118,7 +120,7 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (ctx) => CategoryView(
                         categoryName: widget.categoryName,
-                        catSlug: widget.dhakaprokashModels[0].catSlug,
+                        catSlug: widget.dhakaprokashModels.contents[0].catSlug,
                       )));
             },
             child: Container(

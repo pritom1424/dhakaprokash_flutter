@@ -39,8 +39,7 @@ class CategoryAvatatarWidget extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => CategoryView(
                           categoryName: categoryName,
-                          categoryLink:
-                              GenericVars.newspaperCategoriesLink[categoryName],
+                          catSlug: dhakaProkashRegModels[0].catSlug,
                         )));
               },
               child: Container(

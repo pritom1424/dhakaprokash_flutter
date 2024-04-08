@@ -59,24 +59,10 @@ class _CategoryGridTileState extends State<CategoryGridTile> {
             ? Navigator.of(context).push(MaterialPageRoute(
                 builder: (ctx) => DetailedPostView(
                       id: widget.id,
-                      tags: widget.tags,
-                      imageCaption: widget.imageCaption,
-                      dateTime: widget.dateTime ?? DateTime.now(),
-                      categoryName: widget.categoryName,
-                      url: widget.imagePath,
-                      title: widget.newsTitle,
-                      description: widget.newsDescription,
                     )))
             : Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (ctx) => DetailedPostView(
                       id: widget.id,
-                      tags: widget.tags,
-                      imageCaption: widget.imageCaption,
-                      dateTime: widget.dateTime ?? DateTime.now(),
-                      categoryName: widget.categoryName,
-                      url: widget.imagePath,
-                      title: widget.newsTitle,
-                      description: widget.newsDescription,
                     )));
       },
       child: Card(

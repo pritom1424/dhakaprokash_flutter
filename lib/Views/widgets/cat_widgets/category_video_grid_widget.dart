@@ -98,7 +98,9 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
         Container(
           height: GenericVars.scSize.height * cellHeight,
           child: RawScrollbar(
-            thumbColor: Colors.black45,
+            thumbVisibility: true,
+            trackVisibility: true,
+            thumbColor: Colors.blueAccent,
             controller: scController,
             thickness: 5,
             child: GridView.builder(

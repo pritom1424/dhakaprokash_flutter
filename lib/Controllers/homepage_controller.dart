@@ -1,23 +1,21 @@
 import 'dart:convert';
-
-import 'package:dummy_app/Models/dhak_prokash_tab_model.dart';
+import 'package:dummy_app/Models/dhaka_prokash_cat_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_photo_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_sp_model.dart';
+import 'package:dummy_app/Models/dhaka_prokash_vid_model.dart';
 import 'package:dummy_app/Utils/api_constants.dart';
+import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class HomepageController with ChangeNotifier {
   List<DhakaProkashSpecialModel> _items = [];
   List<DhakaProkashPhotoModel> _photoes = [];
-
-
-
   int photoShowNumber = 4;
-
-  int _itemCount = 4;
   bool isButtonVisible = true;
+
+  DhakaprokashCatModel? _dhakaprokashCatModel;
 
   Future<List<DhakaProkashSpecialModel>> loadAllSpItems() async {
     final url = Uri.parse(ApiConstant.homePageSpecialContentLink);
@@ -36,7 +34,6 @@ class HomepageController with ChangeNotifier {
   }
 
   Future<List<DhakaProkashRegularModel>> loadAllRegItems(String apiLink) async {
-
     final url = Uri.parse(apiLink);
 
     final response = await http.get(url);
@@ -44,83 +41,116 @@ class HomepageController with ChangeNotifier {
     List<DhakaProkashRegularModel> jsonResponse =
         dhakaProkashRegularModelFromJson(utf8.decode(response.bodyBytes));
 
-
     return jsonResponse;
   }
 
-  Future<List<DhakaProkashRegularModel>> loadAllRegItemsPost(
+  Future<List<DhakaProkashRegularModel>> loadAllRegTabItemsPost(
       String apiLink, int itemNum) async {
     final url = Uri.parse(apiLink);
-    print("Post Api Called");
+
     Map data = {"take": itemNum};
 
-    final response = await http.post(url, body: jsonEncode(data), headers: {
-      'Content-Type': 'application/json'
-    } //{"Content-Type": "application/x-www-form-urlencoded"},
-        );
-    print("Post Api response: ${utf8.decode(response.bodyBytes)}");
+    final response = await http.post(url,
+        body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
+
     List<DhakaProkashRegularModel> jsonResponse =
         dhakaProkashRegularModelFromJson(utf8.decode(response.bodyBytes));
-    print("Post Api debug");
-    print(jsonResponse);
 
     return jsonResponse;
   }
 
+  Future<DhakaprokashCatModel> loadAllRegCatItemsPost(
+      String catSlug, int itemNum) async {
+    final url =
+        Uri.parse("https://dhakaprokash24.com/api/v1/category/categorycontent");
+
+    Map<String, dynamic> data = {
+      "cat_slug": catSlug,
+      "take": itemNum,
+      "skip": 0
+    };
+
+    final response = await http.post(url,
+        body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
+
+    DhakaprokashCatModel jsonResponse =
+        dhakaprokashCatModelFromJson(utf8.decode(response.bodyBytes));
+
+    _dhakaprokashCatModel = jsonResponse;
+
+    return jsonResponse;
+  }
 
   Future<List<DhakaProkashPhotoModel>> loadAllPhotoItems() async {
     final url = Uri.parse(ApiConstant.photoGalleryCategoryLink);
+
     final response = await http.get(url);
 
     List<DhakaProkashPhotoModel> jsonResponse =
         dhakaProkashPhotoModelFromJson(utf8.decode(response.bodyBytes));
 
     _photoes = jsonResponse;
-    print('photoes ..... $photoes');
-    notifyListeners();
-    return jsonResponse;
-    // return _photoes;
 
+    return jsonResponse;
+  }
+
+  Future<void> loadHomeVideosPost(int itemNum) async {
+    final url =
+        Uri.parse("https://dhakaprokash24.com/api/v1/home/videofeature");
+
+    Map<String, dynamic> data = {
+      "take": itemNum,
+    };
+
+    final response = await http.post(url,
+        body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
+
+    List<DhakaprokashVidModel> jsonResponse =
+        dhakaprokashVidModelFromJson(utf8.decode(response.bodyBytes));
+
+    GenericVars.getVideoData.clear();
+    GenericVars.getVideoData = List.generate(
+      jsonResponse.length,
+      (index) => {
+        "title": jsonResponse[index].title,
+        "category": GenericVars.newspaperCategoriesLink.keys.firstWhere(
+            (element) =>
+                GenericVars.newspaperCategoriesLink[element] ==
+                jsonResponse[index].slug),
+        "url": "https://www.youtube.com/watch?v=${jsonResponse[index].code}"
+      },
+    );
   }
 
   List<DhakaProkashSpecialModel> get Items {
     return _items;
   }
-  int get itemCount => _itemCount;
-
-
-  List<DhakaProkashPhotoModel> get photoes => _photoes;
 
   void addMorePhotos(int totalPhotoNum) {
-    if (totalPhotoNum < _itemCount) {
+    if (totalPhotoNum < photoShowNumber) {
       isButtonVisible = false;
       notifyListeners();
-    } else if (totalPhotoNum == _itemCount + 4) {
-      _itemCount += 4;
+    } else if (totalPhotoNum == photoShowNumber + 4) {
+      photoShowNumber += 4;
 
       notifyListeners();
-    } else if (totalPhotoNum < _itemCount + 4 &&
-        totalPhotoNum > _itemCount) {
-      _itemCount = totalPhotoNum;
+    } else if (totalPhotoNum < photoShowNumber + 4 &&
+        totalPhotoNum > photoShowNumber) {
+      photoShowNumber = totalPhotoNum;
 
       isButtonVisible = false;
       notifyListeners();
     }
+    photoShowNumber += 4;
 
-    _itemCount += 4;
     isButtonVisible = true;
     notifyListeners();
   }
 
-  void addItemPhoto(item) {
-      print("clciked");
-      if(item == _itemCount + 4) _itemCount = item;
-      else if(item < _itemCount + 4 &&item > _itemCount) _itemCount = item;
-      else if(item > _itemCount) _itemCount +=4;
-      notifyListeners();
-      print(_itemCount);
-}
   bool get IsMoreButtonVisible {
     return isButtonVisible;
   }
+
+  List<DhakaProkashPhotoModel> get photoes => _photoes;
+  DhakaprokashCatModel? get catModels => _dhakaprokashCatModel!;
 }

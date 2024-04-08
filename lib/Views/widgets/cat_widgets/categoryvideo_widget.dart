@@ -56,7 +56,7 @@ class CategoryVideoWidget extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => CategoryView(
                           categoryName: categoryName,
-                          categoryLink:
+                          catSlug:
                               GenericVars.newspaperCategoriesLink[categoryName],
                         )));
               },

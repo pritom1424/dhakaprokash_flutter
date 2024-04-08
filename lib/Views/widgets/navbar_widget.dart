@@ -9,7 +9,7 @@ class NavBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(20),
+      // margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
           color: const Color.fromRGBO(0, 0, 0, 0),
           boxShadow: [
@@ -20,12 +20,12 @@ class NavBarWidget extends StatelessWidget {
           ],
           borderRadius: BorderRadius.circular(30)),
       child: ClipRRect(
-        borderRadius: const BorderRadius.only(
+        /* borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(30.0),
           topRight: Radius.circular(30.0),
           bottomLeft: Radius.circular(30.0),
           bottomRight: Radius.circular(30.0),
-        ),
+        ), */
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,

@@ -1,10 +1,16 @@
+import 'dart:convert';
+
 import 'package:dummy_app/Controllers/detailpage_controller.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
+import 'package:dummy_app/Models/dhaka_prokash_cat_model.dart';
+import 'package:dummy_app/Models/dhaka_prokash_details_more.dart';
 import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_more.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_reg.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_reg_total.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_sp.dart';
 
 import 'package:dummy_app/Views/widgets/detaildPost_view/comment_section.dart';
@@ -12,6 +18,7 @@ import 'package:dummy_app/Views/widgets/detaildPost_view/main_article_tile.dart'
 import 'package:dummy_app/Views/widgets/detaildPost_view/mainposthead_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/posttag_tile.dart';
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
+import 'package:dummy_app/Views/widgets/loader_widget.dart';
 
 import 'package:flutter/material.dart';
 
@@ -20,32 +27,32 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:provider/provider.dart';
 
 class DetailedPostView extends StatelessWidget {
-  final String url, title, description, categoryName;
+  /* final String url, title, description, categoryName;
   final String? imageCaption;
-  final DateTime dateTime;
+  final DateTime dateTime; */
   final int id;
-  final List<String> tags;
+  // final List<String> tags;
 
   const DetailedPostView({
     super.key,
-    required this.url,
+    /*   required this.url,
     required this.title,
     required this.description,
     required this.categoryName,
     required this.dateTime,
     required this.imageCaption,
-    required this.tags,
+    required this.tags, */
     required this.id,
   });
 
   @override
   Widget build(BuildContext context) {
-    List<DhakaProkashRegularModel> currentContainer = [];
+    //List<Content> currentContainer = [];
 
     int gridItemCount = 4;
-    List<DhakaProkashRegularModel> currentElementList(
-        List<DhakaProkashRegularModel> allList, int id, int itemNumber) {
-      List<DhakaProkashRegularModel> currentContainer = [];
+    List<Content> currentElementList(
+        List<Content> allList, int id, int itemNumber) {
+      List<Content> currentContainer = [];
       int first =
           (allList.indexWhere((element) => element.contentId == id) + 1) <
                   allList.length
@@ -70,136 +77,174 @@ class DetailedPostView extends StatelessWidget {
     }
 
     HomepageController homepageController =
-        Provider.of<HomepageController>(context);
+        Provider.of<HomepageController>(context, listen: false);
+
+    DetailPageController detailPageController =
+        Provider.of(context, listen: false);
     return Scaffold(
       appBar: AppbarDefault(),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-//main post head tile
-              Container(
-                //   height: GenericVars.scSize.height * 0.6,
+        child: FutureBuilder(
+            future: detailPageController.loadDeatilPost(id),
+            builder: (context, snap) => (snap.connectionState ==
+                    ConnectionState.waiting)
+                ? LoaderWidget()
+                : (snap.hasData)
+                    ? SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            //main post head tile
+                            Container(
+                              //   height: GenericVars.scSize.height * 0.6,
 
-                child: MainHeadPostTile(
-                  id: id,
-                  tags: tags,
-                  imageCaption: imageCaption,
-                  dateTime: dateTime,
-                  url: url,
-                  title: title,
-                  categoryname: categoryName,
-                  description: description,
-                ),
-              ),
-//main post decription
-              Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                  child: MainArticleTile(
-                    articleItems: [
-                      HtmlWidget(
-                        description,
-                      ),
-                    ],
-                  )),
-//Line divider
-              Divider(),
+                              child: MainHeadPostTile(
+                                id: id,
+                                tags: snap.data!.detailsContent.tags.split(","),
+                                imageCaption:
+                                    snap.data!.detailsContent.imgBgCaption,
+                                dateTime: snap.data!.detailsContent.createdAt,
+                                url:
+                                    "https://admin.dhakaprokash24.com/media/content/images/${snap.data!.detailsContent.imgBgPath}",
+                                title: snap.data!.detailsContent.contentHeading,
+                                categoryname: snap
+                                    .data!.detailsContent.category.catNameBn,
+                                description:
+                                    snap.data!.detailsContent.contentDetails,
+                              ),
+                            ),
+                            //main post decription
+                            Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 5),
+                                child: MainArticleTile(
+                                  articleItems: [
+                                    HtmlWidget(
+                                      snap.data!.detailsContent.contentDetails,
+                                    ),
+                                  ],
+                                )),
+                            //Line divider
+                            Divider(),
 
-//post tag tile
-              PostTagTile(
-                tagList: tags,
-                crossAxisCount: 3,
-              ),
-//comment button
+                            //post tag tile
+                            PostTagTile(
+                              tagList:
+                                  snap.data!.detailsContent.tags.split(","),
+                              crossAxisCount: 3,
+                            ),
+                            //comment button
 
-              Consumer<DetailPageController>(
-                builder: (ctx, snap, _) => (snap.IsCommentClick)
-                    ? const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5),
-                        child: CommentSectionWidget(),
-                      )
-                    : Container(
-                        height: GenericVars.scSize.height * 0.07,
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        child: SizedBox.expand(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Provider.of<DetailPageController>(context,
-                                      listen: false)
-                                  .commentClick();
-                            },
-                            child: Text("Comment",
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white)),
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue,
-                                foregroundColor: Colors.white),
-                          ),
-                        ),
-                      ),
-              ),
-// news grid
-              /* FutureBuilder(
-                  future: postController.loadAllItems(),
-                  builder: (ctx, postSnapShot) {
-                    return (postSnapShot.connectionState ==
-                            ConnectionState.waiting)
-                        ? const Center(
-                            child: CircularProgressIndicator(),
-                          )
-                        : CategoryGridWidget(
-                            photoModels: photoController.Items,
-                            categoryName: categoryName,
-                            itemCount: 4,
-                            cellHeight: 0.23,
-                            didDescriptionShow: false,
-                            didAxisHorizontal: false,
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 10,
-                            isScroll: false,
-                            elevation: 0,
-                          );
-                  }) ,*/
-              if (GenericVars.newspaperCategoriesLink[categoryName] != null)
-                FutureBuilder(
-                    future: homepageController.loadAllRegItems(
-                        GenericVars.newspaperCategoriesLink[categoryName]!),
-                    builder: (ctx, postSnapShot) {
-                      return (postSnapShot.connectionState ==
-                              ConnectionState.waiting)
-                          ? const Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : CategoryGridWidgetRegular(
-                              dhakaprokashModels: currentElementList(
-                                  postSnapShot.data ?? [], id, gridItemCount),
-                              categoryName: categoryName,
-                              itemCount: gridItemCount,
+                            Consumer<DetailPageController>(
+                              builder: (ctx, snap, _) => (snap.IsCommentClick)
+                                  ? const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 5),
+                                      child: CommentSectionWidget(),
+                                    )
+                                  : Container(
+                                      height: GenericVars.scSize.height * 0.07,
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 10),
+                                      child: SizedBox.expand(
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            Provider.of<DetailPageController>(
+                                                    context,
+                                                    listen: false)
+                                                .commentClick();
+                                          },
+                                          child: Text("Comment",
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.white)),
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.blue,
+                                              foregroundColor: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                            ),
+                            // news grid
+                            /* FutureBuilder(
+                      future: postController.loadAllItems(),
+                      builder: (ctx, postSnapShot) {
+                        return (postSnapShot.connectionState ==
+                                ConnectionState.waiting)
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : CategoryGridWidget(
+                                photoModels: photoController.Items,
+                                categoryName: categoryName,
+                                itemCount: 4,
+                                cellHeight: 0.23,
+                                didDescriptionShow: false,
+                                didAxisHorizontal: false,
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 10,
+                                isScroll: false,
+                                elevation: 0,
+                              );
+                      }) ,*/
+
+                            CategoryGridWidgetMore(
+                              dhakaprokashModels: List.generate(
+                                  snap
+                                      .data!
+                                      .moreDetailContent[snap.data!.moreDetailContent.indexWhere(
+                                          (element) => element.contentId == id)]
+                                      .morecatwisePost
+                                      .length,
+                                  (index) => DetailMorePostModel(
+                                      contentId: snap
+                                          .data!
+                                          .moreDetailContent[snap
+                                              .data!.moreDetailContent
+                                              .indexWhere((element) =>
+                                                  element.contentId == id)]
+                                          .morecatwisePost[index]
+                                          .contentId,
+                                      contentType: snap
+                                          .data!
+                                          .moreDetailContent[snap
+                                              .data!.moreDetailContent
+                                              .indexWhere((element) => element.contentId == id)]
+                                          .morecatwisePost[index]
+                                          .contentType,
+                                      contentHeading: snap.data!.moreDetailContent[snap.data!.moreDetailContent.indexWhere((element) => element.contentId == id)].morecatwisePost[index].contentHeading,
+                                      imgBgPath: snap.data!.moreDetailContent[snap.data!.moreDetailContent.indexWhere((element) => element.contentId == id)].morecatwisePost[index].imgBgPath,
+                                      catSlug: snap.data!.moreDetailContent[snap.data!.moreDetailContent.indexWhere((element) => element.contentId == id)].morecatwisePost[index].catSlug)),
+                              categoryName:
+                                  snap.data!.detailsContent.category.catNameBn,
+                              itemCount: 4,
                               didAxisHorizontal: false,
                               crossAxisCount: 2,
                               didDescriptionShow: false,
                               isScroll: false,
                               elevation: 0,
                               itemHeight: 0.23,
-                              isReplace: true,
-                            );
-
-                      /*  CategoryGridWidgetSpecial(
-                            dhakaprokashModels: homepageController.Items,
-                            categoryName: categoryName,
-                            itemCount: 4,
-                            didAxisHorizontal: false,
-                            crossAxisCount: 2,
-                            didDescriptionShow: false,
-                            isScroll: false,
-                            elevation: 0); */
-                    }),
-              HomePageFooter()
-            ],
-          ),
-        ),
+                            ),
+                            /* CategoryGridWidgetTotal(
+                                  dhakaprokashModels: postSnapShot.data!,
+                                  categoryName: categoryName,
+                                  itemCount: gridItemCount,
+                                  didAxisHorizontal: false,
+                                  crossAxisCount: 2,
+                                  didDescriptionShow: false,
+                                  isScroll: false,
+                                  elevation: 0,
+                                  itemHeight: 0.23,
+                                  isReplace: true,
+                                ), */
+                            HomePageFooter()
+                          ],
+                        ),
+                      )
+                    : Center(
+                        child: Text("কোনো তথ্য পাওয়া যায় নি!"),
+                      )),
       ),
     );
   }

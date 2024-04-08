@@ -55,8 +55,7 @@ class CategoryWidgetRegular extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => CategoryView(
                           categoryName: categoryName,
-                          categoryLink:
-                              GenericVars.newspaperCategoriesLink[categoryName],
+                          catSlug: dhakaprokashModels[0].catSlug,
                         )));
               },
               child: Container(
@@ -107,16 +106,6 @@ class CategoryWidgetRegular extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
                           id: dhakaprokashModels[0].contentId ?? -1,
-                          tags: tags ?? [], //dhakaprokashModels[0].tags,
-                          imageCaption:
-                              null, //dhakaprokashModels[0].imgBgCaption ?? "",
-                          dateTime:
-                              dhakaprokashModels[0].createdAt ?? DateTime.now(),
-                          categoryName: categoryName,
-                          url:
-                              "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[0].imgBgPath.toString()}",
-                          title: dhakaprokashModels[0].contentHeading!,
-                          description: dhakaprokashModels[0].contentDetails!,
                         )));
               },
               child: Container(
