@@ -21,6 +21,7 @@ class CategoryVideoGridWidget extends StatefulWidget {
   final double elevation;
   final double? itemHeight;
   final Color? barIconColor, barTextColor;
+  final List<int> ids;
   const CategoryVideoGridWidget(
       {super.key,
       required this.itemCount,
@@ -32,7 +33,8 @@ class CategoryVideoGridWidget extends StatefulWidget {
       required this.elevation,
       this.itemHeight,
       this.barIconColor,
-      this.barTextColor});
+      this.barTextColor,
+      required this.ids});
 
   @override
   State<CategoryVideoGridWidget> createState() =>
@@ -122,11 +124,8 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
                             context,
                             MaterialPageRoute(
                               builder: (ctx) => DetailedVideoPostView(
-                                  categoryName: "Video",
-                                  videoUrl: GenericVars.getVideoData[index]
-                                      ['url']!,
-                                  videoTitle: GenericVars
-                                      .getVideoData[index + 1]['title']!),
+                                id: widget.ids[index],
+                              ),
                             ));
                       },
                       child: Card(

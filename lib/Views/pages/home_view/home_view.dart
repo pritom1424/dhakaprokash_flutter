@@ -210,13 +210,13 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                     didHeadSectionShow: true,
                                     listItemLength: 5,
                                     didFloat: false), */
-            CategoryVideoGridWidget(
+            /*   CategoryVideoGridWidget(
                 itemCount: GenericVars.getVideoData.length,
                 didAxisHorizontal: true,
                 crossAxisCount: 1,
                 didDescriptionShow: true,
                 isScroll: true,
-                elevation: 5),
+                elevation: 5), */
 
             TabBar(controller: tabController, isScrollable: false, tabs: const [
               Tab(
@@ -787,7 +787,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                           builder: (ctx, snap) =>
                               (snap.connectionState == ConnectionState.waiting)
                                   ? LoaderWidget()
-                                  : const CategoryVideoGridWidget(
+                                  : CategoryVideoGridWidget(
+                                      ids: snap.data!,
                                       itemHeight: 0.34,
                                       itemCount: 5,
                                       didAxisHorizontal: true,

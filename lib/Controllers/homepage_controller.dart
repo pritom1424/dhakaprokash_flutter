@@ -94,9 +94,11 @@ class HomepageController with ChangeNotifier {
     return jsonResponse;
   }
 
-  Future<void> loadHomeVideosPost(int itemNum) async {
+  Future<List<int>> loadHomeVideosPost(int itemNum) async {
     final url =
         Uri.parse("https://dhakaprokash24.com/api/v1/home/videofeature");
+
+    List<int> ids = [];
 
     Map<String, dynamic> data = {
       "take": itemNum,
@@ -109,17 +111,19 @@ class HomepageController with ChangeNotifier {
         dhakaprokashVidModelFromJson(utf8.decode(response.bodyBytes));
 
     GenericVars.getVideoData.clear();
-    GenericVars.getVideoData = List.generate(
-      jsonResponse.length,
-      (index) => {
+
+    GenericVars.getVideoData = List.generate(jsonResponse.length, (index) {
+      ids.add(jsonResponse[index].id);
+      return {
         "title": jsonResponse[index].title,
         "category": GenericVars.newspaperCategoriesLink.keys.firstWhere(
             (element) =>
                 GenericVars.newspaperCategoriesLink[element] ==
                 jsonResponse[index].slug),
         "url": "https://www.youtube.com/watch?v=${jsonResponse[index].code}"
-      },
-    );
+      };
+    });
+    return ids;
   }
 
   List<DhakaProkashSpecialModel> get Items {
