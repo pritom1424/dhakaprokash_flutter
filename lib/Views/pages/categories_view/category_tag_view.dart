@@ -70,6 +70,8 @@ class _CategoryTagnAuthorViewState extends State<CategoryTagnAuthorView> {
                       (widget.isAuthor == null || widget.isAuthor == false)
                           ? widget.slug
                           : widget.name!,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                       style: TextStyle(
                           fontSize:
                               Theme.of(context).textTheme.titleMedium!.fontSize,

@@ -62,7 +62,7 @@ class _LatestNewsViewState extends State<LatestNewsView> {
                         delegate: SliverChildListDelegate([
                       (snapRecent.hasData)
                           ? Container(
-                              padding: EdgeInsets.symmetric(horizontal: 5),
+                              padding: EdgeInsets.symmetric(horizontal: 8),
                               child: Column(children: [
                                 //Category News List
 

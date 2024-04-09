@@ -12,6 +12,7 @@ import 'package:dummy_app/Views/widgets/loader_widget.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class CategoryView extends StatefulWidget {
@@ -32,6 +33,7 @@ class CategoryView extends StatefulWidget {
 class _CategoryViewState extends State<CategoryView> {
   int itm = 10;
   int addMore = 10;
+  bool isVisible = true;
   @override
   void initState() {
     // TODO: implement initState
@@ -43,7 +45,7 @@ class _CategoryViewState extends State<CategoryView> {
       if (totalItem == itm + addMore) {
         itm = totalItem;
       } else if (totalItem < itm + addMore && totalItem > itm) {
-        itm = totalItem;
+        isVisible = true;
       } else if (totalItem > itm) {
         itm += addMore;
       }
@@ -93,27 +95,32 @@ class _CategoryViewState extends State<CategoryView> {
                                 listItemLength: snapShot.data!.contents.length,
                                 didFloat: false),
 
-                            GestureDetector(
-                              onTap: () {
-                                AddMore(snapShot.data!.totalPost);
-                              },
-                              child: Container(
-                                width: double.infinity,
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 10),
-                                padding: EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                    color: Colors.blue.withOpacity(0.1),
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                        width: 0.5,
-                                        color: AppColors.logoColorDeep)),
-                                child: const Text(
-                                  "আরও",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.logoColorDeep),
+                            Visibility(
+                              visible: (snapShot.data!.contents.length >= itm)
+                                  ? true
+                                  : false,
+                              child: GestureDetector(
+                                onTap: () {
+                                  AddMore(snapShot.data!.totalPost);
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                  padding: EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                      color: Colors.blue.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                          width: 0.5,
+                                          color: AppColors.logoColorDeep)),
+                                  child: const Text(
+                                    "আরও",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.logoColorDeep),
+                                  ),
                                 ),
                               ),
                             ),
