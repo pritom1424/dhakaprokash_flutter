@@ -83,7 +83,7 @@ class _CategoryButtonListState extends State<CategoryButtonList> {
                                   builder: (ctx) => (widget
                                               .foundCategories[index] ==
                                           "ভিজ্যুয়াল মিডিয়া")
-                                      ? CategoryVideoView(
+                                      ? const CategoryVideoView(
                                           isEnableAppbar: true,
                                         )
                                       : CategoryView(
@@ -113,7 +113,7 @@ class _CategoryButtonListState extends State<CategoryButtonList> {
                       (_showScrollToTop)
                           ? 0.0
                           : _scrollController.offset +
-                              _scrollController.position.maxScrollExtent / 3,
+                              _scrollController.position.maxScrollExtent / 3.2,
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeInOut,
                     );

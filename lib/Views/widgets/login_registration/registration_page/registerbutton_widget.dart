@@ -1,7 +1,7 @@
 import 'package:dummy_app/Controllers/registration_controller.dart';
-import 'package:dummy_app/Utils/app_validators.dart';
+
 import 'package:dummy_app/Utils/components/round_button.dart';
-import 'package:dummy_app/Views/pages/login_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

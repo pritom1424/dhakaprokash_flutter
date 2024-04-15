@@ -1,7 +1,6 @@
 import 'package:dummy_app/Controllers/video_controller.dart';
-import 'package:dummy_app/Models/dhaka_prokahs_detail_post_model.dart';
+
 import 'package:dummy_app/Models/dhaka_prokash_details_more.dart';
-import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/dummy_tags.dart';
@@ -13,7 +12,6 @@ import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_tile.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class CategoryGridWidgetMore extends StatefulWidget {

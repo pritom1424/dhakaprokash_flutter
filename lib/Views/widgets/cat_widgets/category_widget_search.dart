@@ -1,10 +1,10 @@
 import 'package:dummy_app/Controllers/video_controller.dart';
-import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
+
 import 'package:dummy_app/Models/search_model.dart';
 
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/dummy_tags.dart';
-import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
+
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';

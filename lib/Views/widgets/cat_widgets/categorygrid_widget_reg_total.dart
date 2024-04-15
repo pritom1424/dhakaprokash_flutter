@@ -1,6 +1,5 @@
 import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Models/dhaka_prokash_cat_model.dart';
-import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/dummy_tags.dart';
@@ -170,9 +169,10 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetTotal> {
                     (widget.itemCount / widget.crossAxisCount).ceil(),
             child: widget.isScroll
                 ? RawScrollbar(
-                    thumbColor: Colors.black45,
+                    thumbColor: Colors.blueAccent,
                     thickness: 5,
-                    radius: Radius.circular(10),
+                    trackVisibility: true,
+                    // radius: Radius.circular(10),
                     controller: scController,
                     thumbVisibility: true,
                     child: gridWidget())

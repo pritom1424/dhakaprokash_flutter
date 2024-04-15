@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,6 +18,19 @@ class FollowPostBar extends StatelessWidget {
       throw 'Could not launch $formatLink';
   }
 
+  void _copyToClipBoard(String text, BuildContext ctx) async {
+    ScaffoldMessenger.of(ctx).hideCurrentSnackBar();
+    ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
+      duration: Duration(seconds: 1),
+      content: Text(
+        'Link copied to clipboard',
+        textAlign: TextAlign.center,
+      ),
+      backgroundColor: Colors.blue,
+    ));
+    await Clipboard.setData(ClipboardData(text: text));
+  }
+
   String linkFormatter(Social social, String url, String text) {
     switch (social) {
       case Social.facebook:
@@ -31,6 +45,7 @@ class FollowPostBar extends StatelessWidget {
         return 'https://api.whatsapp.com/send?text=$text$url';
       case Social.messenger:
         return '';
+      /* 'https://fb-messenger://share.php/?link=$url&app_id=291494419107518'; */
 
       default:
         return "you need to login";
@@ -64,7 +79,7 @@ class FollowPostBar extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                // launchLink(dummyLink, Social.whatsapp, "here is a new post");
+                launchLink(dummyLink, Social.messenger, "here is a new post");
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -108,6 +123,7 @@ class FollowPostBar extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
+                _copyToClipBoard(dummyLink, context);
                 //launchLink(dummyLink, Social.linkedin, "here is a new post");
               },
               child: Padding(

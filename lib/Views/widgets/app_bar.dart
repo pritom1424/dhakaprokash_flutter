@@ -1,6 +1,6 @@
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-import 'package:dummy_app/Views/widgets/digital_clock.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 

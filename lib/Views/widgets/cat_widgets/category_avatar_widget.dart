@@ -5,7 +5,6 @@ import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/categoryavatarlist_%20tile.dart';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class CategoryAvatatarWidget extends StatelessWidget {
   final String categoryName;

@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:dummy_app/Controllers/homepage_controller.dart';
+
 import 'package:dummy_app/Controllers/searchpage_controller.dart';
 
-import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 import 'package:dummy_app/Models/search_model.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_reg.dart';
+
 import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_search.dart';
 
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
@@ -61,7 +60,7 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
       );
       var locals = await _speech!.locales();
       locals.forEach((element) {
-        print(element.name);
+        print("speech locals: ${element.name}");
       });
       if (available) {
         speechTimer = Timer(Duration(seconds: 5), () {
@@ -139,7 +138,7 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
                                 BorderSide(width: 1, color: Colors.grey)),
                         contentPadding:
                             const EdgeInsets.symmetric(horizontal: 5),
-                        hintText: "Search...",
+                        hintText: "অনুসন্ধান করুন...",
                         suffixIcon: AvatarGlow(
                           glowRadiusFactor: 0.1,
                           animate: _isListening,
@@ -210,7 +209,7 @@ class _SearchToNewPageState extends State<SearchToNewPage> {
                           : Center(
                               child: Text(
                               "কিছু পাওয়া যায়নি",
-                              style: Theme.of(context).textTheme.bodyLarge,
+                              //  style: Theme.of(context).textTheme.bodyLarge,
                             )));
                 })
             : const SizedBox.shrink());

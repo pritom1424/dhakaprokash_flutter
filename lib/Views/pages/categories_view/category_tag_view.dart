@@ -7,6 +7,7 @@ import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class CategoryTagnAuthorView extends StatefulWidget {
@@ -106,27 +107,32 @@ class _CategoryTagnAuthorViewState extends State<CategoryTagnAuthorView> {
                                               .data!.content[index].updatedAt,
                                         )),
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  AddMore(100); //snapShot.data!.totalPost
-                                },
-                                child: Container(
-                                  width: double.infinity,
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 10),
-                                  padding: EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                      color: Colors.blue.withOpacity(0.1),
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                          width: 0.5,
-                                          color: AppColors.logoColorDeep)),
-                                  child: const Text(
-                                    "আরও",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColors.logoColorDeep),
+                              Visibility(
+                                visible: (snap.data!.content.length >= 10)
+                                    ? true
+                                    : false,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    AddMore(100); //snapShot.data!.totalPost
+                                  },
+                                  child: Container(
+                                    width: double.infinity,
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 10),
+                                    padding: EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                        color: Colors.blue.withOpacity(0.1),
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(
+                                            width: 0.5,
+                                            color: AppColors.logoColorDeep)),
+                                    child: const Text(
+                                      "আরও",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.logoColorDeep),
+                                    ),
                                   ),
                                 ),
                               ),

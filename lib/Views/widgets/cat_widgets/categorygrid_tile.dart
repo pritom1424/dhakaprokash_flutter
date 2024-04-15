@@ -1,13 +1,12 @@
 import 'package:dummy_app/Controllers/video_controller.dart';
-import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
+
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
@@ -91,9 +90,10 @@ class _CategoryGridTileState extends State<CategoryGridTile> {
                                 ? child
                                 : Container(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 40),
+                                        horizontal: 8),
                                     child: Image.asset(
-                                      "assets/images/dhakaprokash_logo.png",
+                                      ApiConstant
+                                          .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                                     ),
                                   ),
                       ),

@@ -1,3 +1,4 @@
+import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:flutter/material.dart';
 
 class LogoAnimation extends StatefulWidget {
@@ -18,7 +19,7 @@ class _LogoAnimationState extends State<LogoAnimation>
   @override
   void dispose() {
     _controller.dispose();
-    // TODO: implement dispose
+
     super.dispose();
   }
 
@@ -26,8 +27,9 @@ class _LogoAnimationState extends State<LogoAnimation>
   Widget build(BuildContext context) {
     return RotationTransition(
       turns: _animation,
-      child: Padding(
-        padding: EdgeInsets.all(8.0),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        height: GenericVars.scSize.height * 0.06,
         child: Image.asset("assets/images/dhakaprokash_icon.png"),
       ),
     );

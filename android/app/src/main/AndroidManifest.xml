@@ -5,6 +5,7 @@
         android:label="Dhaka Prokash"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+      
         <activity
             android:name=".MainActivity"
             android:exported="true"

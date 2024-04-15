@@ -63,4 +63,7 @@ class ApiConstant {
       "https://dhakaprokash24.com/api/v1/tabs/latestpost";
   static String homePopularPostLink =
       "https://dhakaprokash24.com/api/v1/tabs/popularpost";
+
+  //placeholder
+  static String imagePlaceHolder = "assets/images/placeholder.jpg";
 }

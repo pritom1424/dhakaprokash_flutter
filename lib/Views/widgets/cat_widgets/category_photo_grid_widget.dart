@@ -1,10 +1,12 @@
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Models/dhaka_prokash_photo_model.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_photo_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class CategoryPhotoGridWidget extends StatefulWidget {
@@ -42,6 +44,7 @@ class CategoryPhotoGridWidget extends StatefulWidget {
 class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
   late ScrollController scController;
   int itemCount = 4;
+  int addMore = 4;
   @override
   void initState() {
     scController = ScrollController();
@@ -58,12 +61,12 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
 
   void addMorePhotos() {
     setState(() {
-      if (widget.totalPhotoItems == itemCount + 4)
+      if (widget.totalPhotoItems == itemCount + addMore)
         itemCount = widget.totalPhotoItems;
-      else if (widget.totalPhotoItems < itemCount + 4 &&
+      else if (widget.totalPhotoItems < itemCount + addMore &&
           widget.totalPhotoItems > itemCount)
         itemCount = widget.totalPhotoItems;
-      else if (widget.totalPhotoItems > itemCount) itemCount += 4;
+      else if (widget.totalPhotoItems > itemCount) itemCount += addMore;
     });
   }
 
@@ -171,7 +174,8 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                                                                 .symmetric(
                                                                 horizontal: 40),
                                                         child: Image.asset(
-                                                          "assets/images/dhakaprokash_logo.png",
+                                                          ApiConstant
+                                                              .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                                                         ),
                                                       ),
                                           )),
@@ -204,28 +208,31 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                     )),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: GestureDetector(
-            onTap: () {
-              addMorePhotos();
-            },
-            child: Container(
-              width: double.infinity,
-              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(10),
-                  border:
-                      Border.all(width: 0.5, color: AppColors.logoColorDeep)),
-              child: Text(
-                "আরও",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontFamily: GenericVars.currenFontFamily,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.logoColorDeep),
+        Visibility(
+          visible: (itemCount < widget.totalPhotoItems) ? true : false,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: GestureDetector(
+              onTap: () {
+                addMorePhotos();
+              },
+              child: Container(
+                width: double.infinity,
+                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                    color: Colors.blue.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(10),
+                    border:
+                        Border.all(width: 0.5, color: AppColors.logoColorDeep)),
+                child: Text(
+                  "আরও",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontFamily: GenericVars.currenFontFamily,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.logoColorDeep),
+                ),
               ),
             ),
           ),

@@ -124,6 +124,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                 builder: (ctx, offset, _) => Visibility(
                   visible: _showScrollToTop,
                   child: FloatingActionButton(
+                    mini: true,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),
                     backgroundColor: AppColors.logoColorDeep,
@@ -138,7 +139,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                       );
                     },
                     child: const Icon(
-                      size: 40,
+                      size: 30,
                       Icons.arrow_upward,
                     ),
                   ),
@@ -1007,7 +1008,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                 crossAxisCount: 2,
                                 didDescriptionShow: false,
                                 isScroll: false,
-                                itemHeight: 0.23,
+                                itemHeight: 0.24,
                                 elevation: 0)
                             : LoaderWidget(),
 
@@ -1338,10 +1339,14 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                         const HomePageFooter()
                       ]),
                     )
-                  : Center(
-                      child: Text(
-                        "কোনো তথ্য পাওয়া যায় নি",
-                        style: Theme.of(context).textTheme.bodyLarge,
+                  : Container(
+                      height: GenericVars.scSize.height * 0.8,
+                      width: double.infinity,
+                      child: Center(
+                        child: Text(
+                          "কোনো তথ্য পাওয়া যায় নি",
+                          //style: Theme.of(context).textTheme.bodyLarge,
+                        ),
                       ),
                     ),
         ),

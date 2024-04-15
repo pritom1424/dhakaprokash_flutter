@@ -1,8 +1,9 @@
 import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Models/dhaka_prokash_sp_model.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
 
 import 'package:dummy_app/Utils/app_colors.dart';
-import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
+
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
@@ -173,8 +174,14 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                         SizedBox(
                                           width: 5,
                                         ),
-                                        Text(
+                                        /* Text(
                                           "প্রকাশঃ ${DateFormatter().defaultFormat(dhakaprokashModels[0].createdAt ?? DateTime.now())}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall,
+                                        ), */
+                                        Text(
+                                          "${dhakaprokashModels[0].category.catNameBn} | ${DateFormatter().defaultFormat(dhakaprokashModels[0].createdAt ?? DateTime.now())}",
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelSmall,
@@ -206,9 +213,10 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                           : Container(
                                               padding:
                                                   const EdgeInsets.symmetric(
-                                                      horizontal: 40),
+                                                      horizontal: 10),
                                               child: Image.asset(
-                                                "assets/images/dhakaprokash_logo.png",
+                                                ApiConstant
+                                                    .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                                               ),
                                             ),
                                 )),

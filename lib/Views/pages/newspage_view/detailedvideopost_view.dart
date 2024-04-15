@@ -27,38 +27,8 @@ class DetailedVideoPostView extends StatefulWidget {
 }
 
 class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
-/*   late String currentUrl;
-  List<Map<String, String>> currentContainer = []; */
-
-  /* List<Map<String, String>> currentElementList(String url, int itemNumber) {
-    List<Map<String, String>> currentContainer = [];
-    int first = (GenericVars.getVideoData
-                    .indexWhere((element) => element['url'] == url) +
-                1) <
-            GenericVars.getVideoData.length
-        ? GenericVars.getVideoData
-                .indexWhere((element) => element['url'] == url) +
-            1
-        : 0;
-
-    currentContainer.clear();
-
-    currentContainer = List.from(GenericVars.getVideoData.sublist(first))
-      ..addAll(GenericVars.getVideoData.sublist(0, first));
-
-    currentContainer = currentContainer.sublist(0, itemNumber);
-    print("Current Container $currentContainer");
-    return currentContainer;
-  } */
-
   @override
   void initState() {
-    /* currentUrl = widget.videoUrl;
-    currentContainer = currentElementList(widget.videoUrl, 3);
-
-    VideoProvider provider = Provider.of<VideoProvider>(context, listen: false);
-    provider.setCurrentVideoLink(widget.videoUrl); */
-
     super.initState();
   }
 
@@ -66,10 +36,6 @@ class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
   Widget build(BuildContext context) {
     VideoProvider videoProvider =
         Provider.of<VideoProvider>(context, listen: false);
-    /*  
-    Provider.of<VideoProvider>(context, listen: false)
-        .CurrentVideoLink(videoUrl); 
-        */
 
     double itemHeight = 0.09;
     int listItemLength = 3;
@@ -87,7 +53,7 @@ class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
                               color: Color.fromARGB(255, 136, 135, 135)))),
                   width: double.infinity,
                   //height: GenericVars.scSize.height * 0.7,
-                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,

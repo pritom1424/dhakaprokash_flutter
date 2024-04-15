@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/home_view/home_view.dart';
 import 'package:dummy_app/Views/widgets/splash_screen/logo_anim.dart';
 
@@ -27,7 +28,7 @@ class _SplasScreenState extends State<SplasScreen> {
   Widget build(BuildContext context) {
     Size scSize = MediaQuery.of(context).size;
     return Scaffold(
-      body: Column(
+        body: /* Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -43,7 +44,25 @@ class _SplasScreenState extends State<SplasScreen> {
           ),
           LogoAnimation()
         ],
+      ), */
+            Container(
+      height: GenericVars.scSize.height,
+      width: double.infinity,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          LogoAnimation(),
+          SizedBox(
+            width: scSize.width * 0.5,
+            height: scSize.height * 0.2,
+            child: Image.asset(
+              "assets/images/dhakaprokash_logo_without_icon.png",
+              fit: BoxFit.contain,
+            ),
+          ),
+        ],
       ),
-    );
+    ));
   }
 }

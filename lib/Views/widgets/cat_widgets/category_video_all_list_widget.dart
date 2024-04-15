@@ -1,15 +1,11 @@
-import 'package:dummy_app/Models/dhaka_prokash_photo_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_vid_total.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
+
 import 'package:dummy_app/Views/pages/categories_view/categorywise_video_view.dart';
-import 'package:dummy_app/Views/pages/newspage_view/detailedvideopost_view.dart';
-import 'package:dummy_app/Views/widgets/cat_widgets/CategoryWiseVideoListWidget.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -55,7 +51,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoAllListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double cellHeight = 0.3;
+    double cellHeight = 0.32;
     double listPadding = 0;
     int itemCount = widget.dhakaprokashVidModel.categoryVideos.length;
     return Column(
@@ -157,11 +153,12 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoAllListWidget> {
                                           : Container(
                                               padding:
                                                   const EdgeInsets.symmetric(
-                                                      horizontal: 40,
-                                                      vertical: 40),
+                                                      horizontal: 8,
+                                                      vertical: 8),
                                               child: Image.asset(
                                                 alignment: Alignment.center,
-                                                "assets/images/dhakaprokash_logo.png",
+                                                ApiConstant
+                                                    .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                                               ),
                                             ),
                                 )),

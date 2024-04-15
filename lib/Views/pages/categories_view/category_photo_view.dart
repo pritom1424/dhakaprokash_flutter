@@ -1,5 +1,6 @@
 import 'package:dummy_app/Controllers/category_controller.dart';
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
+import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
@@ -24,10 +25,13 @@ class CategoryPhotoView extends StatelessWidget {
             future: categoryViewController.loadDetailPhotoItem(albumId),
             builder: (ctx, snap) => (snap.connectionState ==
                     ConnectionState.waiting)
-                ? LoaderWidget()
+                ? Container(
+                    height: GenericVars.scSize.height * 0.6,
+                    width: double.infinity,
+                    child: LoaderWidget())
                 : (snap.hasData)
                     ? Container(
-                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        padding: EdgeInsets.symmetric(horizontal: 8),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

@@ -1,4 +1,5 @@
 import 'package:dummy_app/Controllers/bookmark_controller.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
 
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
@@ -194,7 +195,24 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
                     widget.url ?? "",
                     fit: BoxFit.contain,
                     filterQuality: FilterQuality.low,
+                    loadingBuilder: (context, child, loadingProgress) =>
+                        (loadingProgress == null)
+                            ? child
+                            : Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: Image.asset(
+                                  ApiConstant
+                                      .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
+                                ),
+                              ),
                   ),
+
+                  /*    Image.network(
+                    widget.url ?? "",
+                    fit: BoxFit.contain,
+                    filterQuality: FilterQuality.low,
+                  ), */
                 ),
                 if (widget.imageCaption != null)
                   Padding(

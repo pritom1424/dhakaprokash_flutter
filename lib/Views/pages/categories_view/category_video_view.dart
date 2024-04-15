@@ -62,7 +62,7 @@ class CategoryVideoView extends StatelessWidget {
                         ),
                       )
                     : Container(
-                        height: GenericVars.scSize.height,
+                        height: GenericVars.scSize.height * 0.7,
                         child: Center(
                           child: LoaderWidget(),
                         ),
