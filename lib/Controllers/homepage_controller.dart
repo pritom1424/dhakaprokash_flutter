@@ -113,9 +113,9 @@ class HomepageController with ChangeNotifier {
     GenericVars.getVideoData.clear();
 
     GenericVars.getVideoData = List.generate(jsonResponse.length, (index) {
-      ids.add(jsonResponse[index].id);
+      ids.add(jsonResponse[index].id ?? -1);
       return {
-        "title": jsonResponse[index].title,
+        "title": jsonResponse[index].title ?? "",
         "category": GenericVars.newspaperCategoriesLink.keys.firstWhere(
             (element) =>
                 GenericVars.newspaperCategoriesLink[element] ==

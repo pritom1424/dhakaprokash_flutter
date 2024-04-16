@@ -77,7 +77,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryWiseVideoListWidget> {
                   width: 10,
                 ),
                 Text(
-                  widget.categoryVideo.category.nameBn,
+                  widget.categoryVideo.category.nameBn ?? "",
                   style: TextStyle(
                       fontSize:
                           Theme.of(context).textTheme.titleMedium!.fontSize,
@@ -105,7 +105,8 @@ class _CategoryPhotoGridWidgetState extends State<CategoryWiseVideoListWidget> {
                               context,
                               MaterialPageRoute(
                                 builder: (ctx) => DetailedVideoPostView(
-                                  id: widget.categoryVideo.videos[index].id,
+                                  id: widget.categoryVideo.videos[index].id ??
+                                      -1,
                                 ),
                               ));
                         },
@@ -181,7 +182,8 @@ class _CategoryPhotoGridWidgetState extends State<CategoryWiseVideoListWidget> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 5),
                                   child: Text(
-                                    widget.categoryVideo.videos[index].title,
+                                    widget.categoryVideo.videos[index].title ??
+                                        "",
                                     textAlign: TextAlign.start,
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,

@@ -12,15 +12,15 @@ String dhakaProkashRecentModelToJson(List<DhakaProkashRecentModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class DhakaProkashRecentModel {
-  int contentId;
-  int contentType;
-  String imgBgPath;
-  String contentHeading;
-  String contentDetails;
-  DateTime createdAt;
-  DateTime updatedAt;
-  String bnCatName;
-  String catSlug;
+  int? contentId;
+  int? contentType;
+  String? imgBgPath;
+  String? contentHeading;
+  String? contentDetails;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? bnCatName;
+  String? catSlug;
   String? subcatSlug;
 
   DhakaProkashRecentModel({
@@ -56,8 +56,10 @@ class DhakaProkashRecentModel {
         "img_bg_path": imgBgPath,
         "content_heading": contentHeading,
         "content_details": contentDetails,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at":
+            createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+        "updated_at":
+            updatedAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
         "bn_cat_name": bnCatName,
         "cat_slug": catSlug,
         "subcat_slug": subcatSlug,

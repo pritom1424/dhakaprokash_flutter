@@ -82,17 +82,20 @@ class DetailedPostView extends StatelessWidget {
                               //   height: GenericVars.scSize.height * 0.6,
 
                               child: MainHeadPostTile(
-                                authorName: snap
-                                    .data!.detailsContent.author.authorNameBn,
-                                authorSlug:
-                                    snap.data!.detailsContent.author.authorSlug,
+                                authorName: snap.data!.detailsContent.author
+                                        .authorNameBn ??
+                                    "ঢাকাপ্রকাশ ডেস্ক",
+                                authorSlug: snap.data!.detailsContent.author
+                                        .authorSlug ??
+                                    "dhaka-prokash-desk",
                                 id: id,
                                 tags: (snap.data!.detailsContent.tags != null)
                                     ? snap.data!.detailsContent.tags!.split(",")
                                     : [],
                                 imageCaption:
                                     snap.data!.detailsContent.imgBgCaption,
-                                dateTime: snap.data!.detailsContent.createdAt,
+                                dateTime: snap.data!.detailsContent.createdAt ??
+                                    DateTime.now(),
                                 url:
                                     "https://admin.dhakaprokash24.com/media/content/images/${snap.data!.detailsContent.imgBgPath}",
                                 title: snap.data!.detailsContent.contentHeading,
@@ -109,7 +112,9 @@ class DetailedPostView extends StatelessWidget {
                                 child: MainArticleTile(
                                   articleItems: [
                                     HtmlWidget(
-                                      snap.data!.detailsContent.contentDetails,
+                                      snap.data!.detailsContent
+                                              .contentDetails ??
+                                          "",
                                     ),
                                   ],
                                 )),
@@ -127,13 +132,14 @@ class DetailedPostView extends StatelessWidget {
 
                             FutureBuilder(
                                 future: detailPageController.loadMoreCatPost(
-                                    snap.data!.detailsContent.catId,
-                                    snap.data!.detailsContent.contentId),
+                                    snap.data!.detailsContent.catId ?? -1,
+                                    snap.data!.detailsContent.contentId ?? -1),
                                 builder: (ctx, snapMore) => (snapMore.hasData)
                                     ? CategoryGridWidgetMore(
                                         dhakaprokashModels: snapMore.data!,
                                         categoryName: snap.data!.detailsContent
-                                            .category.catNameBn,
+                                                .category.catNameBn ??
+                                            "",
                                         itemCount:
                                             snapMore.data!.contents.length,
                                         didAxisHorizontal: false,

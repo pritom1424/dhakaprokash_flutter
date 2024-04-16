@@ -59,19 +59,19 @@ class CategoryVideo {
 }
 
 class Category {
-  int id;
-  String name;
-  String slug;
-  String nameBn;
-  String metaKeywords;
-  String metaDescription;
+  int? id;
+  String? name;
+  String? slug;
+  String? nameBn;
+  String? metaKeywords;
+  String? metaDescription;
   dynamic ogImgPath;
-  int position;
-  int userId;
-  int status;
-  int deletable;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? position;
+  int? userId;
+  int? status;
+  int? deletable;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   Category({
     required this.id,
@@ -117,30 +117,32 @@ class Category {
         "user_id": userId,
         "status": status,
         "deletable": deletable,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at":
+            createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+        "updated_at":
+            updatedAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
       };
 }
 
 class Video {
-  int id;
-  int catId;
-  int type;
-  String title;
-  String code;
-  String imgBgPath;
-  String imgSmPath;
-  String imgXsPath;
+  int? id;
+  int? catId;
+  int? type;
+  String? title;
+  String? code;
+  String? imgBgPath;
+  String? imgSmPath;
+  String? imgXsPath;
   dynamic link;
   dynamic metaKeywords;
   dynamic metaDescription;
-  int userId;
-  int target;
-  int isLive;
-  int status;
-  int deletable;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? userId;
+  int? target;
+  int? isLive;
+  int? status;
+  int? deletable;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   Video({
     required this.id,
@@ -201,7 +203,9 @@ class Video {
         "is_live": isLive,
         "status": status,
         "deletable": deletable,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at":
+            createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+        "updated_at":
+            updatedAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
       };
 }

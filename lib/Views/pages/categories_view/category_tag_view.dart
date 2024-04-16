@@ -97,12 +97,15 @@ class _CategoryTagnAuthorViewState extends State<CategoryTagnAuthorView> {
                                           imagePath:
                                               "https://admin.dhakaprokash24.com/media/content/images/${snap.data!.content[index].imgBgPath}",
                                           newsTitle: snap.data!.content[index]
-                                              .contentHeading,
+                                                  .contentHeading ??
+                                              "",
                                           itemHeight: 0.16,
-                                          dateTime: snap
-                                              .data!.content[index].createdAt,
-                                          id: snap
-                                              .data!.content[index].contentId,
+                                          dateTime: snap.data!.content[index]
+                                                  .createdAt ??
+                                              DateTime.now(),
+                                          id: snap.data!.content[index]
+                                                  .contentId ??
+                                              -1,
                                           updateDateTime: snap
                                               .data!.content[index].updatedAt,
                                         )),
@@ -157,12 +160,15 @@ class _CategoryTagnAuthorViewState extends State<CategoryTagnAuthorView> {
                                           imagePath:
                                               "https://admin.dhakaprokash24.com/media/content/images/${snap.data!.content[index].imgBgPath}",
                                           newsTitle: snap.data!.content[index]
-                                              .contentHeading,
+                                                  .contentHeading ??
+                                              "",
                                           itemHeight: 0.16,
-                                          dateTime: snap
-                                              .data!.content[index].createdAt,
-                                          id: snap
-                                              .data!.content[index].contentId,
+                                          dateTime: snap.data!.content[index]
+                                                  .createdAt ??
+                                              DateTime.now(),
+                                          id: snap.data!.content[index]
+                                                  .contentId ??
+                                              -1,
                                           updateDateTime: snap
                                               .data!.content[index].updatedAt,
                                         )),

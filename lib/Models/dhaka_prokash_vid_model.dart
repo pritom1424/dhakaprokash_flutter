@@ -12,16 +12,16 @@ String dhakaprokashVidModelToJson(List<DhakaprokashVidModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class DhakaprokashVidModel {
-  int id;
-  int catId;
-  String slug;
-  int type;
-  String title;
-  String imgBgPath;
-  String imgSmPath;
-  String code;
-  int isLive;
-  int target;
+  int? id;
+  int? catId;
+  String? slug;
+  int? type;
+  String? title;
+  String? imgBgPath;
+  String? imgSmPath;
+  String? code;
+  int? isLive;
+  int? target;
 
   DhakaprokashVidModel({
     required this.id,

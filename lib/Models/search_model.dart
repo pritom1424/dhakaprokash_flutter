@@ -12,14 +12,14 @@ String dhakaprokashSearchModelToJson(List<DhakaprokashSearchModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class DhakaprokashSearchModel {
-  int contentId;
-  int contentType;
-  String contentHeading;
-  String contentDetails;
-  String imgBgPath;
-  String catSlug;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? contentId;
+  int? contentType;
+  String? contentHeading;
+  String? contentDetails;
+  String? imgBgPath;
+  String? catSlug;
+  DateTime? createdAt;
+  DateTime? updatedAt;
   String? subcatSlug;
 
   DhakaprokashSearchModel({
@@ -54,8 +54,10 @@ class DhakaprokashSearchModel {
         "content_details": contentDetails,
         "img_bg_path": imgBgPath,
         "cat_slug": catSlug,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at":
+            createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+        "updated_at":
+            updatedAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
         "subcat_slug": subcatSlug,
       };
 }

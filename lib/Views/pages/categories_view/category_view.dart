@@ -101,7 +101,7 @@ class _CategoryViewState extends State<CategoryView> {
                                   : false,
                               child: GestureDetector(
                                 onTap: () {
-                                  AddMore(snapShot.data!.totalPost);
+                                  AddMore(snapShot.data!.totalPost ?? 100);
                                 },
                                 child: Container(
                                   width: double.infinity,

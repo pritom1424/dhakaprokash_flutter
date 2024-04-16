@@ -12,44 +12,44 @@ String dhakaProkashSpecialModelToJson(List<DhakaProkashSpecialModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class DhakaProkashSpecialModel {
-  int contentId;
-  int contentType;
-  int catId;
-  int subcatId;
-  int specialCatId;
-  int countryId;
-  int divisionId;
-  int districtId;
-  int upozillaId;
-  String contentHeading;
+  int? contentId;
+  int? contentType;
+  int? catId;
+  int? subcatId;
+  int? specialCatId;
+  int? countryId;
+  int? divisionId;
+  int? districtId;
+  int? upozillaId;
+  String? contentHeading;
   String? contentSubHeading;
-  String authorSlugs;
+  String? authorSlugs;
   dynamic authorName;
-  String contentBrief;
-  String contentDetails;
-  String imgXsPath;
-  String imgSmPath;
+  String? contentBrief;
+  String? contentDetails;
+  String? imgXsPath;
+  String? imgSmPath;
   dynamic imgSmCaption;
-  String imgBgPath;
-  String ogImage;
-  String imgbgCaption;
+  String? imgBgPath;
+  String? ogImage;
+  String? imgbgCaption;
   dynamic relatedIds;
   dynamic photoIds;
   dynamic videoType;
   dynamic videoId;
-  int uploaderId;
+  int? uploaderId;
   dynamic reporterId;
   List<String>? tags;
-  String metaKeywords;
+  String? metaKeywords;
   dynamic timelineTag;
   dynamic podcastId;
-  int status;
-  int scroll;
-  int totalHit;
-  int deletable;
-  DateTime createdAt;
-  DateTime updatedAt;
-  Category category;
+  int? status;
+  int? scroll;
+  int? totalHit;
+  int? deletable;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  Category? category;
   Subcategory? subcategory;
 
   DhakaProkashSpecialModel({
@@ -175,9 +175,11 @@ class DhakaProkashSpecialModel {
         "scroll": scroll,
         "total_hit": totalHit,
         "deletable": deletable,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
-        "category": category.toJson(),
+        "created_at":
+            createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+        "updated_at":
+            updatedAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+        "category": category?.toJson() ?? "",
         "subcategory": subcategory?.toJson(),
       };
 }

@@ -139,8 +139,9 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                             context,
                             MaterialPageRoute(
                                 builder: (ctx) => CategoryPhotoView(
-                                    albumId: widget
-                                        .dhakaprokashModels[index].albumId)));
+                                    albumId: widget.dhakaprokashModels[index]
+                                            .albumId ??
+                                        -1)));
                       },
                       child: Card(
                         elevation: widget.elevation,
@@ -187,7 +188,8 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                                               horizontal: 5, vertical: 2),
                                           child: Text(
                                             widget.dhakaprokashModels[index]
-                                                .albumName,
+                                                    .albumName ??
+                                                "এলবাম",
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                             style: TextStyle(fontSize: 18),

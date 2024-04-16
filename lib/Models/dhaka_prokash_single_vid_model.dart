@@ -33,16 +33,16 @@ class DhakaProkashSingleVideoModel {
 }
 
 class TVideo {
-  int id;
-  int catId;
-  int type;
-  String title;
-  String code;
-  String imgBgPath;
+  int? id;
+  int? catId;
+  int? type;
+  String? title;
+  String? code;
+  String? imgBgPath;
   dynamic link;
-  String catNameBn;
-  String catSlug;
-  DateTime createdAt;
+  String? catNameBn;
+  String? catSlug;
+  DateTime? createdAt;
 
   TVideo({
     required this.id,
@@ -80,6 +80,7 @@ class TVideo {
         "link": link,
         "cat_name_bn": catNameBn,
         "cat_slug": catSlug,
-        "created_at": createdAt.toIso8601String(),
+        "created_at":
+            createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
       };
 }

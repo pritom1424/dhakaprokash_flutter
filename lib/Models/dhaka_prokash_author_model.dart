@@ -33,8 +33,8 @@ class DetailsAuthorModel {
 }
 
 class Author {
-  String authorNameBn;
-  String authorSlug;
+  String? authorNameBn;
+  String? authorSlug;
 
   Author({
     required this.authorNameBn,
@@ -53,14 +53,14 @@ class Author {
 }
 
 class Content {
-  int contentId;
-  int contentType;
-  String imgBgPath;
-  String contentHeading;
-  String contentDetails;
-  DateTime createdAt;
-  DateTime updatedAt;
-  String catSlug;
+  int? contentId;
+  int? contentType;
+  String? imgBgPath;
+  String? contentHeading;
+  String? contentDetails;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? catSlug;
   String? subcatSlug;
 
   Content({
@@ -93,8 +93,10 @@ class Content {
         "img_bg_path": imgBgPath,
         "content_heading": contentHeading,
         "content_details": contentDetails,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at":
+            createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+        "updated_at":
+            updatedAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
         "cat_slug": catSlug,
         "subcat_slug": subcatSlug,
       };

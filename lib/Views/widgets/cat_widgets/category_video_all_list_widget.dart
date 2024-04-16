@@ -97,7 +97,8 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoAllListWidget> {
                     ),
                     Text(
                       widget.dhakaprokashVidModel.categoryVideos[index].category
-                          .nameBn,
+                              .nameBn ??
+                          "",
                       style: TextStyle(
                           fontSize:
                               Theme.of(context).textTheme.titleMedium!.fontSize,
@@ -185,7 +186,8 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoAllListWidget> {
                           const EdgeInsets.only(top: 15, right: 10, left: 10),
                       child: Text(
                         widget.dhakaprokashVidModel.categoryVideos[index]
-                            .videos[0].title,
+                                .videos[0].title ??
+                            "",
                         textAlign: TextAlign.start,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,

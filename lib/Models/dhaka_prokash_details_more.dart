@@ -29,11 +29,11 @@ class DetailsMorePostModel {
 }
 
 class Content {
-  int contentId;
-  int contentType;
-  String imgBgPath;
-  String contentHeading;
-  String catSlug;
+  int? contentId;
+  int? contentType;
+  String? imgBgPath;
+  String? contentHeading;
+  String? catSlug;
 
   Content({
     required this.contentId,

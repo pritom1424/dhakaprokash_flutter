@@ -14,7 +14,7 @@ class DhakaprokashCatModel {
   Category category;
   List<dynamic> subcat;
   List<Content> contents;
-  int totalPost;
+  int? totalPost;
 
   DhakaprokashCatModel(
       {required this.category,
@@ -40,8 +40,8 @@ class DhakaprokashCatModel {
 }
 
 class Category {
-  String catNameBn;
-  String catSlug;
+  String? catNameBn;
+  String? catSlug;
 
   Category({
     required this.catNameBn,
@@ -68,15 +68,15 @@ enum CatSlug { NATIONAL }
 final catSlugValues = EnumValues({"national": CatSlug.NATIONAL});
 
 class Content {
-  int contentId;
-  int contentType;
-  String imgBgPath;
-  String contentHeading;
-  String contentDetails;
-  DateTime createdAt;
-  DateTime updatedAt;
-  String bnCatName;
-  String catSlug;
+  int? contentId;
+  int? contentType;
+  String? imgBgPath;
+  String? contentHeading;
+  String? contentDetails;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? bnCatName;
+  String? catSlug;
 
   Content({
     required this.contentId,
@@ -108,8 +108,10 @@ class Content {
         "img_bg_path": imgBgPath,
         "content_heading": contentHeading,
         "content_details": contentDetails,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at":
+            createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+        "updated_at":
+            updatedAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
         "bn_cat_name": bnCatName,
         "cat_slug": catSlug,
       };

@@ -60,11 +60,11 @@ class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
                     children: [
                       VideoPlayerWidget(
                           isPause: false,
-                          videoId: snap.data!.currentVideo.code),
+                          videoId: snap.data!.currentVideo.code ?? ""),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
-                          snap.data!.currentVideo.title,
+                          snap.data!.currentVideo.title ?? "",
                           // widget.videoTitle,
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
@@ -104,8 +104,11 @@ class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
                                             MaterialPageRoute(
                                                 builder: (ctx) =>
                                                     DetailedVideoPostView(
-                                                      id: snap.data!
-                                                          .getVideos[index].id,
+                                                      id: snap
+                                                              .data!
+                                                              .getVideos[index]
+                                                              .id ??
+                                                          -1,
                                                     )));
                                       },
                                       contentPadding:
@@ -117,7 +120,8 @@ class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
                                       ),
                                       title: Container(
                                         child: Text(
-                                          snap.data!.getVideos[index].title,
+                                          snap.data!.getVideos[index].title ??
+                                              "",
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                         ),

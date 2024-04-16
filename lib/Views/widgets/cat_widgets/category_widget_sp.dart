@@ -52,7 +52,8 @@ class CategoryWidgetSpecial extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => CategoryView(
                           categoryName: categoryName,
-                          catSlug: dhakaprokashModels[0].category.catSlug,
+                          catSlug:
+                              dhakaprokashModels[0].category?.catSlug ?? "",
                         )));
               },
               child: Container(
@@ -92,7 +93,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
                     .pauseVideoState();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
-                          id: dhakaprokashModels[0].contentId,
+                          id: dhakaprokashModels[0].contentId ?? -1,
                         )));
               },
               child: Container(
@@ -181,7 +182,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                               .labelSmall,
                                         ), */
                                         Text(
-                                          "${dhakaprokashModels[0].category.catNameBn} | ${DateFormatter().defaultFormat(dhakaprokashModels[0].createdAt ?? DateTime.now())}",
+                                          "${dhakaprokashModels[0].category?.catNameBn} | ${DateFormatter().defaultFormat(dhakaprokashModels[0].createdAt ?? DateTime.now())}",
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelSmall,
@@ -286,7 +287,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (ctx, index) {
                     return CategoryListTile(
-                      id: dhakaprokashModels[index + 1].contentId,
+                      id: dhakaprokashModels[index + 1].contentId ?? -1,
                       imagePath:
                           "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index + 1].imgBgPath.toString()}",
                       newsTitle: dhakaprokashModels[index + 1].contentHeading!,
@@ -307,7 +308,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (ctx, index) {
                     return CategoryListTile(
-                      id: dhakaprokashModels[index].contentId,
+                      id: dhakaprokashModels[index].contentId ?? -1,
                       imagePath:
                           "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index].imgBgPath.toString()}",
                       newsTitle: dhakaprokashModels[index].contentHeading!,

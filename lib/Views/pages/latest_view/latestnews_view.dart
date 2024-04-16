@@ -68,7 +68,8 @@ class _LatestNewsViewState extends State<LatestNewsView> {
 
                                 CategoryWidgetRecent(
                                     dhakaprokashModels: snapRecent.data!,
-                                    categoryName: snapRecent.data![0].bnCatName,
+                                    categoryName:
+                                        snapRecent.data![0].bnCatName ?? "",
                                     didMoreButtonShow: false,
                                     didHeadSectionShow: false,
                                     listItemLength: snapRecent.data!.length,
