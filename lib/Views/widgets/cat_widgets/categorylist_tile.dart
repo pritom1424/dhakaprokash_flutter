@@ -59,7 +59,7 @@ class CategoryListTile extends StatelessWidget {
             Expanded(
               //flex: 5,
               child: Container(
-                padding: EdgeInsets.only(right: 5, top: 2),
+                padding: const EdgeInsets.only(right: 5, top: 2),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
