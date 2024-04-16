@@ -216,12 +216,20 @@ class Category {
 }
 
 class DetailsContentSubcategory {
-  DetailsContentSubcategory();
+  String? subcatNameBn;
+  int? subcatId;
+  String? subcatSlug;
+  DetailsContentSubcategory(this.subcatNameBn, this.subcatId, this.subcatSlug);
 
   factory DetailsContentSubcategory.fromJson(Map<String, dynamic> json) =>
-      DetailsContentSubcategory();
+      DetailsContentSubcategory(
+          json["subcat_name_bn"], json["subcat_id"], json["subcat_slug"]);
 
-  Map<String, dynamic> toJson() => {};
+  Map<String, dynamic> toJson() => {
+        "subcat_name_bn": subcatNameBn,
+        "subcat_id": subcatId,
+        "subcat_slug": subcatSlug
+      };
 }
 
 class FirstRelatedContent {

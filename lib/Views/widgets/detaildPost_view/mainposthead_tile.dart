@@ -21,6 +21,7 @@ class MainHeadPostTile extends StatefulWidget {
   final String authorName;
   final List<String>? tags;
   final int id;
+  final String postLink;
   const MainHeadPostTile({
     super.key,
     required this.url,
@@ -33,6 +34,7 @@ class MainHeadPostTile extends StatefulWidget {
     required this.id,
     required this.authorSlug,
     required this.authorName,
+    required this.postLink,
   });
 
   @override
@@ -135,8 +137,11 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
           Container(
               height: GenericVars.scSize.height * 0.05,
               child: Row(children: [
-                const FollowPostBar(iconRadius: 12),
-                Spacer(),
+                FollowPostBar(
+                  iconRadius: 12,
+                  link: widget.postLink,
+                ),
+                const Spacer(),
                 Consumer<BookmarkController>(
                     builder: (context, bController, _) {
                   return IconButton(

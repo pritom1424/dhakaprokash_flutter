@@ -2,6 +2,7 @@ import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
+import 'package:dummy_app/Views/widgets/detaildPost_view/followpost_bar.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
 import 'package:dummy_app/Views/widgets/videoplayer_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -76,6 +77,12 @@ class _DetailedVideoPostViewState extends State<DetailedVideoPostView> {
                             // DateFormat.yMEd().format(DateTime.now()),
                             style: TextStyle(color: Colors.grey),
                           )),
+                      FollowPostBar(
+                          iconRadius: 12,
+                          isFullLink: true,
+                          postText: "ভিডিওটি দেখতে ক্লিক করুন",
+                          link:
+                              "https://www.youtube.com/watch?v=${snap.data!.currentVideo.code}"),
                       const SizedBox(
                         height: 20,
                       ),

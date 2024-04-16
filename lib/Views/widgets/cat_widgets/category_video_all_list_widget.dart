@@ -4,6 +4,7 @@ import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 
 import 'package:dummy_app/Views/pages/categories_view/categorywise_video_view.dart';
+import 'package:dummy_app/Views/widgets/detaildPost_view/followpost_bar.dart';
 
 import 'package:flutter/material.dart';
 
@@ -199,7 +200,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoAllListWidget> {
                           // fontFamily: GenericVars.currenFontFamily,
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

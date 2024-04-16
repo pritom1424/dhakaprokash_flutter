@@ -82,6 +82,8 @@ class DetailedPostView extends StatelessWidget {
                               //   height: GenericVars.scSize.height * 0.6,
 
                               child: MainHeadPostTile(
+                                postLink:
+                                    "/${snap.data!.detailsContent.category.catSlug}/${snap.data!.detailsContent.subcategory.subcatSlug ?? (snap.data!.detailsContent.contentType == 1 ? 'news' : 'article')}/${snap.data!.detailsContent.contentId}",
                                 authorName: snap.data!.detailsContent.author
                                         .authorNameBn ??
                                     "ঢাকাপ্রকাশ ডেস্ক",

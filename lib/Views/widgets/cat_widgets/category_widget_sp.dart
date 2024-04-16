@@ -233,7 +233,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                     dhakaprokashModels[0].contentHeading!,
                                     style:
                                         Theme.of(context).textTheme.titleMedium,
-                                    textAlign: TextAlign.justify,
+                                    textAlign: TextAlign.start,
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                   ),

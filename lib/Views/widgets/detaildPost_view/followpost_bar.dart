@@ -1,15 +1,21 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 enum Social { facebook, twitter, whatsapp, linkedin, messenger }
 
 class FollowPostBar extends StatelessWidget {
   final double iconRadius;
-  final String dummyLink = "https://www.dhakaprokash24.com/national/news/60447";
-  const FollowPostBar({super.key, required this.iconRadius});
+  final bool? isFullLink;
+  final String? postText;
+  final String link;
+  const FollowPostBar(
+      {super.key,
+      required this.iconRadius,
+      required this.link,
+      this.postText,
+      this.isFullLink});
 
   Future<void> launchLink(String link, Social sc, String postText) async {
     String formatLink = linkFormatter(sc, link, postText);
@@ -44,8 +50,7 @@ class FollowPostBar extends StatelessWidget {
       case Social.whatsapp:
         return 'https://api.whatsapp.com/send?text=$text$url';
       case Social.messenger:
-        return '';
-      /* 'https://fb-messenger://share.php/?link=$url&app_id=291494419107518'; */
+        return 'fb-messenger://share/?link=$url&app_id=184941580989360';
 
       default:
         return "you need to login";
@@ -54,6 +59,12 @@ class FollowPostBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String postLink = (isFullLink == null || isFullLink == false)
+        ? "https://www.dhakaprokash24.com$link"
+        : link;
+
+    final String textString =
+        (postText == null) ? "খবরটি পড়তে ক্লিক করুন\n" : "${postText!}\n";
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -66,7 +77,7 @@ class FollowPostBar extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                launchLink(dummyLink, Social.facebook, "here");
+                launchLink(postLink, Social.facebook, textString);
                 //test();
               },
               child: Padding(
@@ -79,7 +90,7 @@ class FollowPostBar extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                launchLink(dummyLink, Social.messenger, "here is a new post");
+                launchLink(postLink, Social.messenger, textString);
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -90,7 +101,7 @@ class FollowPostBar extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                launchLink(dummyLink, Social.whatsapp, "here is a new post");
+                launchLink(postLink, Social.whatsapp, textString);
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -101,7 +112,7 @@ class FollowPostBar extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                launchLink(dummyLink, Social.twitter, "here is a new post");
+                launchLink(postLink, Social.twitter, textString);
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -112,7 +123,7 @@ class FollowPostBar extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                launchLink(dummyLink, Social.linkedin, "here is a new post");
+                launchLink(postLink, Social.linkedin, textString);
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -123,7 +134,7 @@ class FollowPostBar extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                _copyToClipBoard(dummyLink, context);
+                _copyToClipBoard(postLink, context);
                 //launchLink(dummyLink, Social.linkedin, "here is a new post");
               },
               child: Padding(
