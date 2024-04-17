@@ -2,6 +2,7 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_video_view.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
+import 'package:dummy_app/Views/pages/latest_view/latestnews_view.dart';
 import 'package:flutter/material.dart';
 
 class CategoryButtonList extends StatefulWidget {
@@ -77,21 +78,25 @@ class _CategoryButtonListState extends State<CategoryButtonList> {
                         ),
                         onTap: () {
                           Navigator.pop(context);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (ctx) => (widget
-                                              .foundCategories[index] ==
-                                          "ভিজ্যুয়াল মিডিয়া")
-                                      ? const CategoryVideoView(
-                                          isEnableAppbar: true,
-                                        )
-                                      : CategoryView(
-                                          catSlug: GenericVars
-                                                  .newspaperCategoriesLink[
-                                              widget.foundCategories[index]],
-                                          categoryName:
-                                              widget.foundCategories[index])));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (ctx) {
+                            if (widget.foundCategories[index] ==
+                                "ভিজ্যুয়াল মিডিয়া") {
+                              return const CategoryVideoView(
+                                isEnableAppbar: true,
+                              );
+                            } else if (widget.foundCategories[index] ==
+                                "সর্বশেষ") {
+                              return const LatestNewsView(
+                                isEnableAppbar: true,
+                              );
+                            } else {
+                              return CategoryView(
+                                  catSlug: GenericVars.newspaperCategoriesLink[
+                                      widget.foundCategories[index]],
+                                  categoryName: widget.foundCategories[index]);
+                            }
+                          }));
                         },
                       ),
                     )),

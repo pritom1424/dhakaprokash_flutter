@@ -4,6 +4,7 @@ import 'package:dummy_app/Utils/api_constants.dart';
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
@@ -71,19 +72,21 @@ class _CategoryGridTileState extends State<CategoryGridTile> {
           //Category News Row Started
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               //Category News Image
               Expanded(
+                flex: 3,
                 child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(5),
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(5),
                       child: Image.network(
                         widget.imagePath,
-                        fit: BoxFit.fitWidth,
+                        fit: BoxFit.contain,
                         filterQuality: FilterQuality.low,
                         loadingBuilder: (context, child, loadingProgress) =>
                             (loadingProgress == null)
@@ -99,8 +102,21 @@ class _CategoryGridTileState extends State<CategoryGridTile> {
                       ),
                     )),
               ),
-              //Category News Description s+ Date
               Expanded(
+                flex: 1,
+                //  margin: EdgeInsets.symmetric(vertical: 20),
+                child: Text(
+                  widget.newsTitle,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  // "${StringLimiter().limitString(widget.newsTitle, 30)}",
+                  style: (widget.isScroll)
+                      ? Theme.of(context).textTheme.titleMedium
+                      : Theme.of(context).textTheme.titleSmall,
+                ),
+              ),
+              //Category News Description s+ Date
+              /*  Expanded(
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 5),
                   child: Column(
@@ -144,7 +160,7 @@ class _CategoryGridTileState extends State<CategoryGridTile> {
                     ],
                   ),
                 ),
-              ),
+              ), */
             ],
           ),
         ),

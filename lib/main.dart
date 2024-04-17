@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
-                  fontSize: 35,
+                  fontSize: 35, //40, //35
                 ),
                 titleMedium: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   fontFamily: GenericVars.currenFontFamily,
                   color: kColorScheme.onSecondaryContainer,
-                  fontSize: 15,
+                  fontSize: 17,
                 ),
                 bodyLarge: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -99,7 +99,7 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   fontFamily: GenericVars.currenFontFamily,
                   color: Colors.black,
-                  fontSize: 16,
+                  fontSize: 16, //20, //16,
                 ),
                 headlineMedium: TextStyle(
                   fontWeight: FontWeight.normal,

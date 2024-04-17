@@ -125,9 +125,12 @@ flutter:
       fonts:
       - asset: assets/fonts/Bangla_Kolom.ttf   
 
-    - family: Lipi_Ekushey_Normal  
+    - family: Shonar_Bangla
       fonts:
-      - asset: assets/fonts/Lipi_Ekushey_Normal.ttf      
+      - asset: assets/fonts/Shonar.ttf
+    - family: Nikosh
+      fonts:
+      - asset: assets/fonts/Nikosh.ttf         
   
       #  - asset: assets/fonts/RobotoMono-Bold.ttf
        #   weight: 700

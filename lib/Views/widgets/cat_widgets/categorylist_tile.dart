@@ -60,20 +60,30 @@ class CategoryListTile extends StatelessWidget {
               //flex: 5,
               child: Container(
                 padding: const EdgeInsets.only(right: 5, top: 2),
-                child: Column(
+                child: Text(
+                  //newsTitle,
+                  newsTitle,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  // StringLimiter().limitString(newsTitle, 50),
+                  style: Theme.of(context).textTheme.titleSmall,
+                  textAlign: TextAlign.left,
+                ),
+
+                /*  Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       //newsTitle,
                       newsTitle,
-                      maxLines: 2,
+                      maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       // StringLimiter().limitString(newsTitle, 50),
                       style: Theme.of(context).textTheme.titleSmall,
                       textAlign: TextAlign.left,
                     ),
-                    Row(
+                     Row(
                       children: [
                         const Icon(
                           Icons.alarm,
@@ -105,7 +115,7 @@ class CategoryListTile extends StatelessWidget {
                         ],
                       )
                   ],
-                ),
+                ), */
               ),
             ),
 //Category News Image

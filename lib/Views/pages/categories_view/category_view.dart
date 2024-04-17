@@ -72,7 +72,7 @@ class _CategoryViewState extends State<CategoryView> {
                               .textTheme
                               .headlineMedium!
                               .fontSize,
-                          color: Colors.blue),
+                          color: AppColors.logoColorDeep),
                     ),
                     automaticallyImplyLeading: false,
                   ),
@@ -83,7 +83,7 @@ class _CategoryViewState extends State<CategoryView> {
                         delegate: SliverChildListDelegate([
                       if (snapShot.hasData)
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: Column(children: [
                             //Category News List
 
