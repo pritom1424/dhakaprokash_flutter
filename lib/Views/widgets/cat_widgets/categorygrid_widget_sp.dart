@@ -76,13 +76,8 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetSpecial> {
           scrollDirection:
               (widget.didAxisHorizontal) ? Axis.horizontal : Axis.vertical,
           itemBuilder: (ctx, index) => CategoryGridTile(
-                id: widget.dhakaprokashModels[index].contentId,
-                tags: widget.dhakaprokashModels[index].tags ?? [],
-                imageCaption:
-                    widget.dhakaprokashModels[index].imgbgCaption ?? "",
+                id: widget.dhakaprokashModels[index].contentId ?? -1,
                 isScroll: widget.isScroll,
-                categoryName:
-                    widget.dhakaprokashModels[index].category.catNameBn,
                 imagePath:
                     "https://admin.dhakaprokash24.com/media/content/images/${widget.dhakaprokashModels[index].imgBgPath.toString()}",
                 newsTitle: widget.dhakaprokashModels[index].contentHeading!,
@@ -114,7 +109,8 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetSpecial> {
                     builder: (ctx) => CategoryView(
                           categoryName: widget.categoryName,
                           catSlug:
-                              widget.dhakaprokashModels[0].category.catSlug,
+                              widget.dhakaprokashModels[0].category?.catSlug ??
+                                  "",
                         )));
               },
               child: Container(
@@ -163,11 +159,12 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetSpecial> {
                     cellHeight *
                     (widget.itemCount / widget.crossAxisCount).ceil(),
             child: widget.isScroll
-                ? Scrollbar(
+                ? RawScrollbar(
                     thickness: 5,
-                    radius: Radius.circular(10),
+                    thumbColor: Colors.blueAccent,
                     controller: scController,
                     thumbVisibility: true,
+                    trackVisibility: true,
                     child: gridWidget())
                 : gridWidget(),
           )

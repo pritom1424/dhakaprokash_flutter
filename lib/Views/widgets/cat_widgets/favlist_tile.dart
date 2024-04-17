@@ -1,4 +1,5 @@
 import 'package:dummy_app/Controllers/video_controller.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
 import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
@@ -98,7 +99,8 @@ class FavListTile extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 5),
                               child: Image.asset(
-                                "assets/images/dhakaprokash_logo.png",
+                                ApiConstant
+                                    .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                               ),
                             ),
                 ),

@@ -4,12 +4,9 @@ import 'package:flutter/material.dart';
 
 class CategoryTabTile extends StatelessWidget {
   final int id;
-  final String? imageCaption;
-  final DateTime? dateTime;
+
   final String rankString;
-  final String categoryName;
-  final String imagePath;
-  final String newsDescription;
+
   final String title;
   final List<String>? tags;
   const CategoryTabTile(
@@ -17,11 +14,6 @@ class CategoryTabTile extends StatelessWidget {
       required this.rankString,
       required this.title,
       required this.id,
-      this.imageCaption,
-      this.dateTime,
-      required this.categoryName,
-      required this.imagePath,
-      required this.newsDescription,
       this.tags});
 
   @override

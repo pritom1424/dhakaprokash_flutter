@@ -12,13 +12,13 @@ String dhakaProkashTabModelToJson(List<DhakaProkashTabModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class DhakaProkashTabModel {
-  int contentId;
-  int contentType;
-  String imgBgPath;
-  String contentHeading;
-  String contentDetails;
-  String bnCatName;
-  String catSlug;
+  int? contentId;
+  int? contentType;
+  String? imgBgPath;
+  String? contentHeading;
+  String? contentDetails;
+  String? bnCatName;
+  String? catSlug;
   String? subcatSlug;
 
   DhakaProkashTabModel({

@@ -27,13 +27,6 @@ class CategoryTabWidget extends StatelessWidget {
               itemNumber,
               (index) => CategoryTabTile(
                   id: dhakaProkashModels[index].contentId ?? -1,
-                  imageCaption: null,
-                  dateTime: dhakaProkashModels[index].createdAt,
-                  categoryName: dhakaProkashModels[index].bnCatName ?? "",
-                  newsDescription:
-                      dhakaProkashModels[index].contentDetails ?? "",
-                  imagePath:
-                      "https://admin.dhakaprokash24.com/media/content/images/${dhakaProkashModels[index].imgBgPath.toString()}",
                   rankString:
                       NumberFormat(null, 'Bn').format(index + 1).toString(),
                   title: dhakaProkashModels[index].contentHeading ?? "title")),

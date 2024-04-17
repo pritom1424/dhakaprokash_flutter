@@ -1,10 +1,10 @@
 import 'package:dummy_app/Controllers/video_controller.dart';
-import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
+
 import 'package:dummy_app/Models/search_model.dart';
 
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/dummy_tags.dart';
-import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
+
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
@@ -300,15 +300,9 @@ class CategoryWidgetSearch extends StatelessWidget {
                   itemBuilder: (ctx, index) {
                     return CategoryListTile(
                       id: dhakaprokashModels[index + 1].contentId ?? -1,
-                      tags: tags ?? [], //dhakaprokashModels[index + 1].tags,
-                      imageCaption: null,
-                      // dhakaprokashModels[index + 1].imgbgCaption ?? "",
-                      categoryName: categoryName,
                       imagePath:
                           "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index + 1].imgBgPath.toString()}",
                       newsTitle: dhakaprokashModels[index + 1].contentHeading!,
-                      newsDescription:
-                          dhakaprokashModels[index + 1].contentDetails!,
                       itemHeight: itemHeight,
                       /*postModels[index].title, */
                       dateTime: dhakaprokashModels[index + 1].createdAt ??
@@ -327,15 +321,9 @@ class CategoryWidgetSearch extends StatelessWidget {
                   itemBuilder: (ctx, index) {
                     return CategoryListTile(
                       id: dhakaprokashModels[index].contentId ?? -1,
-                      tags: tags ?? [], //dhakaprokashModels[index + 1].tags,
-                      imageCaption: null,
-                      // dhakaprokashModels[index + 1].imgbgCaption ?? "",
-                      categoryName: categoryName,
                       imagePath:
                           "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index].imgBgPath.toString()}",
                       newsTitle: dhakaprokashModels[index].contentHeading!,
-                      newsDescription:
-                          dhakaprokashModels[index].contentDetails!,
                       itemHeight: itemHeight,
                       /*postModels[index].title, */
                       dateTime:

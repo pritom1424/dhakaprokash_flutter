@@ -1,5 +1,6 @@
 import 'package:dummy_app/Controllers/video_controller.dart';
-import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
+
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
 
@@ -8,23 +9,20 @@ import 'package:provider/provider.dart';
 
 class CategoryListTile extends StatelessWidget {
   final int id;
-  final String imagePath, newsTitle, newsDescription, categoryName;
+  final String imagePath, newsTitle;
 
-  final String? imageCaption;
   final DateTime dateTime;
   final double itemHeight;
-  final List<String> tags;
+  final DateTime? updateDateTime;
+
   const CategoryListTile(
       {super.key,
       required this.imagePath,
       required this.newsTitle,
-      required this.newsDescription,
-      required this.categoryName,
       required this.itemHeight,
       required this.dateTime,
-      required this.imageCaption,
-      required this.tags,
-      required this.id});
+      required this.id,
+      this.updateDateTime});
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +30,7 @@ class CategoryListTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Provider.of<VideoProvider>(context, listen: false).pauseVideoState();
-        print(
-            "Video Pause: ${Provider.of<VideoProvider>(context, listen: false).IsVideoPause}");
+
         Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => DetailedPostView(
                   id: id,
@@ -42,8 +39,8 @@ class CategoryListTile extends StatelessWidget {
       child: Container(
         height: scSize.height * itemHeight,
         width: double.infinity,
-        decoration: BoxDecoration(
-          border: const Border(
+        decoration: const BoxDecoration(
+          border: Border(
               bottom: BorderSide(
                   width: 0.3, color: Color.fromARGB(255, 136, 135, 135))),
           /* boxShadow: [
@@ -62,7 +59,7 @@ class CategoryListTile extends StatelessWidget {
             Expanded(
               //flex: 5,
               child: Container(
-                padding: EdgeInsets.only(right: 5, top: 2),
+                padding: const EdgeInsets.only(right: 5, top: 2),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,19 +75,35 @@ class CategoryListTile extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.alarm,
                           size: 15,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
                         Text(
-                          DateFormatter().defaultFormat(dateTime),
+                          "প্রকাশঃ ${DateFormatter().defaultFormat(dateTime)}",
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                       ],
-                    )
+                    ),
+                    if (updateDateTime != null)
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.alarm,
+                            size: 15,
+                          ),
+                          const SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "আপডেটঃ ${DateFormatter().defaultFormat(updateDateTime!)}",
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                        ],
+                      )
                   ],
                 ),
               ),
@@ -112,7 +125,8 @@ class CategoryListTile extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 5),
                               child: Image.asset(
-                                "assets/images/dhakaprokash_logo.png",
+                                ApiConstant
+                                    .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                               ),
                             ),
                 ),

@@ -1,9 +1,9 @@
-import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
 
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/dummy_tags.dart';
-import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
+
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
@@ -14,7 +14,6 @@ import 'package:dummy_app/Views/widgets/cat_widgets/categorylist_tile.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class CategoryWidgetRegular extends StatelessWidget {
   final String categoryName;
@@ -101,8 +100,6 @@ class CategoryWidgetRegular extends StatelessWidget {
           if (didHeadSectionShow)
             GestureDetector(
               onTap: () {
-                Provider.of<VideoProvider>(context, listen: false)
-                    .pauseVideoState();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
                           id: dhakaprokashModels[0].contentId ?? -1,
@@ -141,9 +138,10 @@ class CategoryWidgetRegular extends StatelessWidget {
                                           : Container(
                                               padding:
                                                   const EdgeInsets.symmetric(
-                                                      horizontal: 40),
+                                                      horizontal: 10),
                                               child: Image.asset(
-                                                "assets/images/dhakaprokash_logo.png",
+                                                ApiConstant
+                                                    .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                                               ),
                                             ),
                                 )),
@@ -190,9 +188,7 @@ class CategoryWidgetRegular extends StatelessWidget {
                                           width: 5,
                                         ),
                                         Text(
-                                          DateFormatter().defaultFormat(
-                                              dhakaprokashModels[0].createdAt ??
-                                                  DateTime.now()),
+                                          "প্রকাশঃ ${DateFormatter().defaultFormat(dhakaprokashModels[0].createdAt ?? DateTime.now())}",
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelSmall,
@@ -268,9 +264,7 @@ class CategoryWidgetRegular extends StatelessWidget {
                                         width: 5,
                                       ),
                                       Text(
-                                        DateFormatter().defaultFormat(
-                                            dhakaprokashModels[0].createdAt ??
-                                                DateTime.now()),
+                                        "প্রকাশঃ ${DateFormatter().defaultFormat(dhakaprokashModels[0].createdAt ?? DateTime.now())}",
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelSmall,
@@ -299,15 +293,9 @@ class CategoryWidgetRegular extends StatelessWidget {
                   itemBuilder: (ctx, index) {
                     return CategoryListTile(
                       id: dhakaprokashModels[index + 1].contentId ?? -1,
-                      tags: tags ?? [], //dhakaprokashModels[index + 1].tags,
-                      imageCaption: null,
-                      // dhakaprokashModels[index + 1].imgbgCaption ?? "",
-                      categoryName: categoryName,
                       imagePath:
                           "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index + 1].imgBgPath.toString()}",
                       newsTitle: dhakaprokashModels[index + 1].contentHeading!,
-                      newsDescription:
-                          dhakaprokashModels[index + 1].contentDetails!,
                       itemHeight: itemHeight,
                       /*postModels[index].title, */
                       dateTime: dhakaprokashModels[index + 1].createdAt ??
@@ -326,15 +314,9 @@ class CategoryWidgetRegular extends StatelessWidget {
                   itemBuilder: (ctx, index) {
                     return CategoryListTile(
                       id: dhakaprokashModels[index].contentId ?? -1,
-                      tags: tags ?? [], //dhakaprokashModels[index + 1].tags,
-                      imageCaption: null,
-                      // dhakaprokashModels[index + 1].imgbgCaption ?? "",
-                      categoryName: categoryName,
                       imagePath:
                           "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index].imgBgPath.toString()}",
                       newsTitle: dhakaprokashModels[index].contentHeading!,
-                      newsDescription:
-                          dhakaprokashModels[index].contentDetails!,
                       itemHeight: itemHeight,
                       /*postModels[index].title, */
                       dateTime:

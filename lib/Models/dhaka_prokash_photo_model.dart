@@ -12,13 +12,13 @@ String dhakaProkashPhotoModelToJson(List<DhakaProkashPhotoModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class DhakaProkashPhotoModel {
-  String catName;
-  String catSlug;
-  int albumId;
-  String albumName;
-  String shortDescription;
+  String? catName;
+  String? catSlug;
+  int? albumId;
+  String? albumName;
+  String? shortDescription;
   String? photoCaption;
-  String photo;
+  String? photo;
 
   DhakaProkashPhotoModel({
     required this.catName,

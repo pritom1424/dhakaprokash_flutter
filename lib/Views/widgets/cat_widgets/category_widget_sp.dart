@@ -1,8 +1,9 @@
 import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Models/dhaka_prokash_sp_model.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
 
 import 'package:dummy_app/Utils/app_colors.dart';
-import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
+
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
@@ -51,7 +52,8 @@ class CategoryWidgetSpecial extends StatelessWidget {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => CategoryView(
                           categoryName: categoryName,
-                          catSlug: dhakaprokashModels[0].category.catSlug,
+                          catSlug:
+                              dhakaprokashModels[0].category?.catSlug ?? "",
                         )));
               },
               child: Container(
@@ -91,7 +93,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
                     .pauseVideoState();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
-                          id: dhakaprokashModels[0].contentId,
+                          id: dhakaprokashModels[0].contentId ?? -1,
                         )));
               },
               child: Container(
@@ -173,10 +175,14 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                         SizedBox(
                                           width: 5,
                                         ),
+                                        /* Text(
+                                          "প্রকাশঃ ${DateFormatter().defaultFormat(dhakaprokashModels[0].createdAt ?? DateTime.now())}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall,
+                                        ), */
                                         Text(
-                                          DateFormatter().defaultFormat(
-                                              dhakaprokashModels[0].createdAt ??
-                                                  DateTime.now()),
+                                          "${dhakaprokashModels[0].category?.catNameBn} | ${DateFormatter().defaultFormat(dhakaprokashModels[0].createdAt ?? DateTime.now())}",
                                           style: Theme.of(context)
                                               .textTheme
                                               .labelSmall,
@@ -208,9 +214,10 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                           : Container(
                                               padding:
                                                   const EdgeInsets.symmetric(
-                                                      horizontal: 40),
+                                                      horizontal: 10),
                                               child: Image.asset(
-                                                "assets/images/dhakaprokash_logo.png",
+                                                ApiConstant
+                                                    .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                                               ),
                                             ),
                                 )),
@@ -226,7 +233,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                     dhakaprokashModels[0].contentHeading!,
                                     style:
                                         Theme.of(context).textTheme.titleMedium,
-                                    textAlign: TextAlign.justify,
+                                    textAlign: TextAlign.start,
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                   ),
@@ -252,9 +259,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                         width: 5,
                                       ),
                                       Text(
-                                        DateFormatter().defaultFormat(
-                                            dhakaprokashModels[0].createdAt ??
-                                                DateTime.now()),
+                                        "প্রকাশঃ ${DateFormatter().defaultFormat(dhakaprokashModels[0].createdAt ?? DateTime.now())}",
                                         style: Theme.of(context)
                                             .textTheme
                                             .labelSmall,
@@ -282,17 +287,10 @@ class CategoryWidgetSpecial extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (ctx, index) {
                     return CategoryListTile(
-                      id: dhakaprokashModels[index + 1].contentId,
-                      tags: dhakaprokashModels[index + 1].tags ?? [],
-                      imageCaption:
-                          dhakaprokashModels[index + 1].imgbgCaption ?? "",
-                      categoryName:
-                          dhakaprokashModels[index + 1].category.catNameBn,
+                      id: dhakaprokashModels[index + 1].contentId ?? -1,
                       imagePath:
                           "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index + 1].imgBgPath.toString()}",
                       newsTitle: dhakaprokashModels[index + 1].contentHeading!,
-                      newsDescription:
-                          dhakaprokashModels[index + 1].contentDetails!,
                       itemHeight: itemHeight,
                       /*postModels[index].title, */
                       dateTime: dhakaprokashModels[index + 1].createdAt ??
@@ -310,17 +308,10 @@ class CategoryWidgetSpecial extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (ctx, index) {
                     return CategoryListTile(
-                      id: dhakaprokashModels[index].contentId,
-                      tags: dhakaprokashModels[index].tags ?? [],
-                      imageCaption:
-                          dhakaprokashModels[index].imgbgCaption ?? "",
-                      categoryName:
-                          dhakaprokashModels[index].category.catNameBn,
+                      id: dhakaprokashModels[index].contentId ?? -1,
                       imagePath:
                           "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[index].imgBgPath.toString()}",
                       newsTitle: dhakaprokashModels[index].contentHeading!,
-                      newsDescription:
-                          dhakaprokashModels[index].contentDetails!,
                       itemHeight: itemHeight,
                       /*postModels[index].title, */
                       dateTime:

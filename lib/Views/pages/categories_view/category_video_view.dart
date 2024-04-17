@@ -1,8 +1,10 @@
 import 'package:dummy_app/Controllers/homepage_controller.dart';
+import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 
 import 'package:dummy_app/Views/widgets/app_bar.dart';
-import 'package:dummy_app/Views/widgets/cat_widgets/category_video_list_widget.dart';
+import 'package:dummy_app/Views/widgets/cat_widgets/category_video_all_list_widget.dart';
+
 import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_reg.dart';
 
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
@@ -26,6 +28,8 @@ class CategoryVideoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HomepageController homepageController = Provider.of(context, listen: false);
+    VideoProvider videoProvider =
+        Provider.of<VideoProvider>(context, listen: false);
     return Scaffold(
         appBar: (isEnableAppbar != null && isEnableAppbar == true)
             ? AppbarDefault()
@@ -33,107 +37,37 @@ class CategoryVideoView extends StatelessWidget {
         body: Scrollbar(
             thumbVisibility: true,
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  CategoryVideoListWidget(
-                      isHeadSectionShow: false,
-                      itemCount: GenericVars.getVideoData.length,
-                      didDescriptionShow: false,
-                      isScroll: false,
-                      itemHeight: 0.35,
-                      elevation: 0),
-                  HomePageFooter()
-                ],
+              child: FutureBuilder(
+                future: videoProvider.getAllVideos(),
+                builder: (ctx, snap) => (snap.hasData)
+                    ? Container(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        child: Column(
+                          children: [
+                            CategoryVideoAllListWidget(
+                                isHeadSectionShow: true,
+                                didDescriptionShow: false,
+                                isScroll: false,
+                                elevation: 0,
+                                dhakaprokashVidModel: snap.data!),
+                            /* CategoryVideoListWidget(
+                                                  isHeadSectionShow: false,
+                                                  itemCount: GenericVars.getVideoData.length,
+                                                  didDescriptionShow: false,
+                                                  isScroll: false,
+                                                  itemHeight: 0.35,
+                                                  elevation: 0), */
+                            HomePageFooter()
+                          ],
+                        ),
+                      )
+                    : Container(
+                        height: GenericVars.scSize.height * 0.7,
+                        child: Center(
+                          child: LoaderWidget(),
+                        ),
+                      ),
               ),
-            )
-
-            /*  CustomScrollView(
-              slivers: [
-                /*     SliverAppBar(
-                  pinned: true,
-                  title: Text(
-                    "Video",
-                    style: TextStyle(
-                        fontSize: Theme.of(context)
-                            .textTheme
-                            .headlineMedium!
-                            .fontSize,
-                        color: Colors.blue),
-                  ),
-                  automaticallyImplyLeading: false,
-                ), */
-                SliverList(
-                    delegate: SliverChildListDelegate([
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Column(children: [
-                      //Category News List
-                      CategoryVideoListWidget(
-                          isHeadSectionShow: false,
-                          itemCount: 4,
-                          didDescriptionShow: false,
-                          isScroll: true,
-                          itemHeight: 0.5,
-                          elevation: 0),
-               
-                      HomePageFooter()
-                    ]),
-                  )
-                ])),
-              ],
-            )) */
-
-            /*  (categoryLink != null)
-          ? FutureBuilder(
-              future: homepageController.loadAllRegItems(categoryLink!),
-              builder: (ctx, snapShot) =>
-                  (snapShot.connectionState == ConnectionState.waiting)
-                      ? LoaderWidget()
-                      : Scrollbar(
-                          thumbVisibility: true,
-                          child: CustomScrollView(
-                            slivers: [
-                              SliverAppBar(
-                                pinned: true,
-                                title: Text(
-                                  categoryName,
-                                  style: TextStyle(
-                                      fontSize: Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium!
-                                          .fontSize,
-                                      color: Colors.blue),
-                                ),
-                                automaticallyImplyLeading: false,
-                              ),
-                              SliverList(
-                                  delegate: SliverChildListDelegate([
-                                Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 8),
-                                  child: Column(children: [
-                                    //Category News List
-                                    CategoryVideoListWidget(
-                                        itemCount: 4,
-                                        didDescriptionShow: false,
-                                        isScroll: true,
-                                        elevation: 0),
-                                    /*  CategoryWidgetRegular(
-                                      dhakaprokashModels: snapShot.data!,
-                                      categoryName: categoryName,
-                                      didMoreButtonShow: false,
-                                      didHeadSectionShow: false,
-                                      listItemLength: snapShot.data!.length,
-                                      didFloat: false,
-                                    ), */
-                                    HomePageFooter()
-                                  ]),
-                                )
-                              ])),
-                            ],
-                          )))
-          : Center(
-              child: Text("কোনো তথ্য পাওয়া যায় নি"),
-            ), */
-            ));
+            )));
   }
 }

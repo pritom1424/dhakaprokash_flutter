@@ -1,27 +1,25 @@
 import 'package:dummy_app/Controllers/video_controller.dart';
-import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
+
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 
 class CategoryGridTile extends StatefulWidget {
   final int id;
-  final String imagePath, newsTitle, newsDescription, categoryName;
+  final String imagePath, newsTitle, newsDescription;
 
-  final String? imageCaption;
   final DateTime dateTime;
   final double cellHeight;
   final bool didDescriptionShow;
   final double elevation;
-  final List<String> tags;
+
   final bool isScroll;
   final bool? isReplace;
 
@@ -31,12 +29,9 @@ class CategoryGridTile extends StatefulWidget {
       required this.newsTitle,
       required this.newsDescription,
       required this.dateTime,
-      required this.categoryName,
       required this.cellHeight,
       required this.didDescriptionShow,
       required this.elevation,
-      required this.imageCaption,
-      required this.tags,
       required this.id,
       this.isReplace,
       required this.isScroll});
@@ -95,9 +90,10 @@ class _CategoryGridTileState extends State<CategoryGridTile> {
                                 ? child
                                 : Container(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 40),
+                                        horizontal: 8),
                                     child: Image.asset(
-                                      "assets/images/dhakaprokash_logo.png",
+                                      ApiConstant
+                                          .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                                     ),
                                   ),
                       ),
@@ -124,27 +120,23 @@ class _CategoryGridTileState extends State<CategoryGridTile> {
                       ),
                       //description
                       if (widget.didDescriptionShow)
-                        Text(Bidi.stripHtmlIfNeeded(
-                                widget.newsDescription.substring(0, 100))
-                            .trim()),
-                      /* HtmlWidget(
-                          removeHtmlContent(
-                              widget.newsDescription.substring(0, 160),
-                              "<p style=\"text-align: justify;\">&nbsp;</p>\r\n<p style=\"text-align: justify;\">"), */
-
-                      // ),
+                        Text(
+                          Bidi.stripHtmlIfNeeded(widget.newsDescription).trim(),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                        ),
 
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.alarm,
                             size: 15,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
-                            DateFormatter().defaultFormat(widget.dateTime),
+                            "প্রকাশঃ ${DateFormatter().defaultFormat(widget.dateTime)}",
                             style: Theme.of(context).textTheme.labelSmall,
                           ),
                         ],

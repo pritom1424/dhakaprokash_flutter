@@ -1,10 +1,8 @@
-import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-import 'package:dummy_app/Views/widgets/loader_widget.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 

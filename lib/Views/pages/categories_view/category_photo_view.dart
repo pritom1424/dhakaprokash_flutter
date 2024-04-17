@@ -1,5 +1,6 @@
 import 'package:dummy_app/Controllers/category_controller.dart';
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
+import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
@@ -24,15 +25,18 @@ class CategoryPhotoView extends StatelessWidget {
             future: categoryViewController.loadDetailPhotoItem(albumId),
             builder: (ctx, snap) => (snap.connectionState ==
                     ConnectionState.waiting)
-                ? LoaderWidget()
+                ? Container(
+                    height: GenericVars.scSize.height * 0.6,
+                    width: double.infinity,
+                    child: LoaderWidget())
                 : (snap.hasData)
                     ? Container(
-                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        padding: EdgeInsets.symmetric(horizontal: 8),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              snap.data!.albumName,
+                              snap.data!.albumName ?? "এলবাম",
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Container(
@@ -41,7 +45,7 @@ class CategoryPhotoView extends StatelessWidget {
                                       vertical: BorderSide(
                                           width: 0.3, color: Colors.grey))),
                               child: Text(
-                                  "প্রকাশঃ ${DateFormatter().defaultFormatWithTime(snap.data!.createdAt)}"),
+                                  "প্রকাশঃ ${DateFormatter().defaultFormatWithTime(snap.data!.createdAt ?? DateTime.now())}"),
                             ),
                             Container(
                               padding: EdgeInsets.only(top: 5),
@@ -65,9 +69,10 @@ class CategoryPhotoView extends StatelessWidget {
                                                     color: Colors.black12),
                                                 child: Text(
                                                   snap
-                                                      .data!
-                                                      .photoGalleries[index]
-                                                      .photoCapture,
+                                                          .data!
+                                                          .photoGalleries[index]
+                                                          .photoCapture ??
+                                                      "ছবি: ঢাকাপ্রকাশ",
                                                   style: Theme.of(context)
                                                       .textTheme
                                                       .headlineMedium,

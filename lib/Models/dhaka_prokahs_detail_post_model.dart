@@ -42,30 +42,30 @@ class DetailPostModel {
 }
 
 class DetailsContent {
-  int contentId;
-  int contentType;
-  int catId;
-  int subcatId;
-  int specialCatId;
-  int countryId;
-  int divisionId;
-  int districtId;
-  int upozillaId;
-  String contentHeading;
+  int? contentId;
+  int? contentType;
+  int? catId;
+  int? subcatId;
+  int? specialCatId;
+  int? countryId;
+  int? divisionId;
+  int? districtId;
+  int? upozillaId;
+  String? contentHeading;
   dynamic contentSubHeading;
-  String authorSlugs;
-  String contentBrief;
-  String contentDetails;
-  String imgXsPath;
-  String imgSmPath;
+  String? authorSlugs;
+  String? contentBrief;
+  String? contentDetails;
+  String? imgXsPath;
+  String? imgSmPath;
   dynamic imgSmCaption;
-  String imgBgPath;
-  String imgBgCaption;
-  String ogImage;
-  String tags;
-  String metaKeywords;
-  DateTime createdAt;
-  DateTime updatedAt;
+  String? imgBgPath;
+  String? imgBgCaption;
+  String? ogImage;
+  String? tags;
+  String? metaKeywords;
+  DateTime? createdAt;
+  DateTime? updatedAt;
   Category category;
   DetailsContentSubcategory subcategory;
   Author author;
@@ -153,8 +153,10 @@ class DetailsContent {
         "og_image": ogImage,
         "tags": tags,
         "meta_keywords": metaKeywords,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at":
+            createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+        "updated_at":
+            updatedAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
         "category": category.toJson(),
         "subcategory": subcategory.toJson(),
         "author": author.toJson(),
@@ -162,9 +164,9 @@ class DetailsContent {
 }
 
 class Author {
-  int authorId;
-  String authorNameBn;
-  String authorSlug;
+  int? authorId;
+  String? authorNameBn;
+  String? authorSlug;
   String? imgPath;
 
   Author({
@@ -190,9 +192,9 @@ class Author {
 }
 
 class Category {
-  String catNameBn;
-  int catId;
-  String catSlug;
+  String? catNameBn;
+  int? catId;
+  String? catSlug;
 
   Category({
     required this.catNameBn,
@@ -214,21 +216,29 @@ class Category {
 }
 
 class DetailsContentSubcategory {
-  DetailsContentSubcategory();
+  String? subcatNameBn;
+  int? subcatId;
+  String? subcatSlug;
+  DetailsContentSubcategory(this.subcatNameBn, this.subcatId, this.subcatSlug);
 
   factory DetailsContentSubcategory.fromJson(Map<String, dynamic> json) =>
-      DetailsContentSubcategory();
+      DetailsContentSubcategory(
+          json["subcat_name_bn"], json["subcat_id"], json["subcat_slug"]);
 
-  Map<String, dynamic> toJson() => {};
+  Map<String, dynamic> toJson() => {
+        "subcat_name_bn": subcatNameBn,
+        "subcat_id": subcatId,
+        "subcat_slug": subcatSlug
+      };
 }
 
 class FirstRelatedContent {
-  int contentId;
-  int contentType;
-  String contentHeading;
+  int? contentId;
+  int? contentType;
+  String? contentHeading;
   dynamic contentSubHeading;
-  String imgBgPath;
-  String catSlug;
+  String? imgBgPath;
+  String? catSlug;
   String? subcatSlug;
 
   FirstRelatedContent({
@@ -264,30 +274,30 @@ class FirstRelatedContent {
 }
 
 class MoreDetailContent {
-  int contentId;
-  int contentType;
-  int catId;
-  int subcatId;
-  int specialCatId;
-  int countryId;
-  int divisionId;
-  int districtId;
-  int upozillaId;
-  String contentHeading;
+  int? contentId;
+  int? contentType;
+  int? catId;
+  int? subcatId;
+  int? specialCatId;
+  int? countryId;
+  int? divisionId;
+  int? districtId;
+  int? upozillaId;
+  String? contentHeading;
   dynamic contentSubHeading;
-  String authorSlugs;
-  String contentBrief;
-  String contentDetails;
-  String imgXsPath;
-  String imgSmPath;
+  String? authorSlugs;
+  String? contentBrief;
+  String? contentDetails;
+  String? imgXsPath;
+  String? imgSmPath;
   dynamic imgSmCaption;
-  String imgBgPath;
-  String ogImage;
-  String imgBgCaption;
-  String tags;
-  String metaKeywords;
-  DateTime createdAt;
-  DateTime updatedAt;
+  String? imgBgPath;
+  String? ogImage;
+  String? imgBgCaption;
+  String? tags;
+  String? metaKeywords;
+  DateTime? createdAt;
+  DateTime? updatedAt;
   Category category;
   MoreDetailContentSubcategory subcategory;
   Author author;
@@ -386,8 +396,10 @@ class MoreDetailContent {
         "img_bg_caption": imgBgCaption,
         "tags": tags,
         "meta_keywords": metaKeywords,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at":
+            createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+        "updated_at":
+            updatedAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
         "category": category.toJson(),
         "subcategory": subcategory.toJson(),
         "author": author.toJson(),

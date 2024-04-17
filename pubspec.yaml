@@ -48,6 +48,8 @@ dependencies:
   sqflite: ^2.3.2
   path: ^1.9.0
   timer_builder: ^2.0.0
+
+
  
 
 
@@ -94,65 +96,39 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: QuickSand
-      fonts:
-        - asset: assets/fonts/Quicksand-Regular.ttf
-    - family: Raleway
-      fonts:
-        - asset: assets/fonts/Raleway-Regular.ttf
-      #  - asset: fonts/Raleway-Italic.ttf
-       #   style: italic
-    - family: RobotoMono
-      fonts:
-        - asset: assets/fonts/RobotoMono-Regular.ttf
-
-    - family: NotoSerif-Regular
-      fonts:
-        - asset: assets/fonts/NotoSerif-Regular.ttf
-    
-    - family: Mukti
-      fonts:
-        - asset: assets/fonts/Mukti.ttf
-
+      
     - family: SolaimanLipi
       fonts:
       - asset: assets/fonts/SolaimanLipi.ttf
 
-    - family: Shurjo-un-regular
-      fonts:
-      - asset: assets/fonts/Shurjo-un-regular.ttf
-
     - family: Helvetica
       fonts:
       - asset: assets/fonts/Helvetica.ttf
-    
-    - family: Siyam-Rupali
-      fonts:
-      - asset: assets/fonts/Siyam_Rupali-Regular.ttf
-
-    - family: Kalpurush
-      fonts:
-      - asset: assets/fonts/kalpurush.ttf
-    
-    - family: BenSen
-      fonts:
-      - asset: assets/fonts/BenSen.ttf
-
-    - family: MR_Font
-      fonts:
-      - asset: assets/fonts/MR_Font.ttf
-
-    - family: Shonar
-      fonts:
-      - asset: assets/fonts/Shonar.ttf
-    
-    - family: BongobondhuUnicode-Regular
-      fonts:
-      - asset: assets/fonts/BongobondhuUnicode-Regular.ttf
-      
+            
     - family: TiroBangla-Regular
       fonts:
-      - asset: assets/fonts/TiroBangla-Regular.ttf    
+      - asset: assets/fonts/TiroBangla-Regular.ttf
+
+    - family: Lal_Salu_Normal
+      fonts:
+      - asset: assets/fonts/Lal_Salu_Normal.ttf
+
+    - family: NotoSerifBengali
+      fonts:
+      - asset: assets/fonts/NotoSerifBengali.ttf  
+
+    - family: Ruposhi_Bangla
+      fonts:
+      - asset: assets/fonts/Ruposhi_Bangla.ttf
+
+    - family: Bangla_Kolom
+      fonts:
+      - asset: assets/fonts/Bangla_Kolom.ttf   
+
+    - family: Lipi_Ekushey_Normal  
+      fonts:
+      - asset: assets/fonts/Lipi_Ekushey_Normal.ttf      
+  
       #  - asset: assets/fonts/RobotoMono-Bold.ttf
        #   weight: 700
   #   - family: Trajan Pro

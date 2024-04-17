@@ -1,12 +1,12 @@
-import 'package:dummy_app/Models/dhaka_prokash_photo_model.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
+import 'package:dummy_app/Views/pages/categories_view/category_video_view.dart';
+
 import 'package:dummy_app/Views/pages/newspage_view/detailedvideopost_view.dart';
 import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class CategoryVideoGridWidget extends StatefulWidget {
@@ -21,6 +21,7 @@ class CategoryVideoGridWidget extends StatefulWidget {
   final double elevation;
   final double? itemHeight;
   final Color? barIconColor, barTextColor;
+  final List<int> ids;
   const CategoryVideoGridWidget(
       {super.key,
       required this.itemCount,
@@ -32,7 +33,8 @@ class CategoryVideoGridWidget extends StatefulWidget {
       required this.elevation,
       this.itemHeight,
       this.barIconColor,
-      this.barTextColor});
+      this.barTextColor,
+      required this.ids});
 
   @override
   State<CategoryVideoGridWidget> createState() =>
@@ -57,42 +59,52 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double cellHeight = 0.3;
+    double cellHeight = 0.35;
     double mainAxisSpacing = 10;
     return Column(
       children: [
-        Container(
-          height: GenericVars.scSize.height * 0.07,
-          width: double.infinity,
-          // padding: const EdgeInsets.symmetric(horizontal: 10),
-          decoration: const BoxDecoration(
-              border: Border.symmetric(
-                  horizontal: BorderSide(
-                      width: 0.3, color: Color.fromARGB(255, 151, 144, 144)))),
-          child: Row(
-            children: [
-              Icon(
-                Icons.square,
-                color: widget.barIconColor ??
-                    AppColors.defaultCategoryBarIconColor,
-                size: 20,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(
-                "ভিডিও গ্যালারি",
-                style: TextStyle(
-                    fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
-                    color: widget.barTextColor ?? AppColors.categoryNameColor,
-                    fontWeight: FontWeight.bold),
-              ),
-              Icon(
-                Icons.arrow_right,
-                color: widget.barIconColor ??
-                    AppColors.defaultCategoryBarIconColor,
-              )
-            ],
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => const CategoryVideoView(
+                      isEnableAppbar: true,
+                    )));
+          },
+          child: Container(
+            height: GenericVars.scSize.height * 0.07,
+            width: double.infinity,
+            // padding: const EdgeInsets.symmetric(horizontal: 10),
+            decoration: const BoxDecoration(
+                border: Border.symmetric(
+                    horizontal: BorderSide(
+                        width: 0.3,
+                        color: Color.fromARGB(255, 151, 144, 144)))),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.square,
+                  color: widget.barIconColor ??
+                      AppColors.defaultCategoryBarIconColor,
+                  size: 20,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  "ভিডিও গ্যালারি",
+                  style: TextStyle(
+                      fontSize:
+                          Theme.of(context).textTheme.titleMedium!.fontSize,
+                      color: widget.barTextColor ?? AppColors.categoryNameColor,
+                      fontWeight: FontWeight.bold),
+                ),
+                Icon(
+                  Icons.arrow_right,
+                  color: widget.barIconColor ??
+                      AppColors.defaultCategoryBarIconColor,
+                )
+              ],
+            ),
           ),
         ),
         Container(
@@ -122,11 +134,8 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
                             context,
                             MaterialPageRoute(
                               builder: (ctx) => DetailedVideoPostView(
-                                  categoryName: "Video",
-                                  videoUrl: GenericVars.getVideoData[index]
-                                      ['url']!,
-                                  videoTitle: GenericVars
-                                      .getVideoData[index + 1]['title']!),
+                                id: widget.ids[index],
+                              ),
                             ));
                       },
                       child: Card(
@@ -158,12 +167,13 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
                                                         padding:
                                                             const EdgeInsets
                                                                 .symmetric(
-                                                                horizontal: 40,
+                                                                horizontal: 0,
                                                                 vertical: 40),
                                                         child: Image.asset(
                                                           alignment:
                                                               Alignment.center,
-                                                          "assets/images/dhakaprokash_logo.png",
+                                                          ApiConstant
+                                                              .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                                                         ),
                                                       ),
                                           )),
@@ -187,10 +197,11 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
                                 child: Text(
                                   GenericVars.getVideoData[index]['title']!,
                                   textAlign: TextAlign.center,
+                                  maxLines: 2,
                                   style: TextStyle(
                                       fontSize: 15,
                                       color: Colors.white,
-                                      // overflow: TextOverflow.ellipsis,
+                                      overflow: TextOverflow.ellipsis,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: GenericVars.currenFontFamily),
                                 ),

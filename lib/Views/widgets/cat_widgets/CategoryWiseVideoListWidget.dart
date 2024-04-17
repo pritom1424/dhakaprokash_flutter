@@ -1,26 +1,26 @@
-import 'package:dummy_app/Models/dhaka_prokash_photo_model.dart';
+import 'package:dummy_app/Models/dhaka_prokash_vid_total.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
+
 import 'package:dummy_app/Views/pages/newspage_view/detailedvideopost_view.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:dummy_app/Utils/api_constants.dart';
 
-class CategoryVideoListWidget extends StatefulWidget {
+class CategoryWiseVideoListWidget extends StatefulWidget {
   //final List<DhakaProkashPhotoModel> dhakaprokashModels;
+  final CategoryVideo categoryVideo;
   final int itemCount;
   final bool isHeadSectionShow;
   final bool didDescriptionShow;
   final bool isScroll;
   final double elevation;
   final double? itemHeight;
-  const CategoryVideoListWidget(
+  const CategoryWiseVideoListWidget(
       {super.key,
       required this.itemCount,
+      required this.categoryVideo,
       // required this.dhakaprokashModels,
       required this.isHeadSectionShow,
       required this.didDescriptionShow,
@@ -29,11 +29,11 @@ class CategoryVideoListWidget extends StatefulWidget {
       this.itemHeight});
 
   @override
-  State<CategoryVideoListWidget> createState() =>
+  State<CategoryWiseVideoListWidget> createState() =>
       _CategoryPhotoGridWidgetState();
 }
 
-class _CategoryPhotoGridWidgetState extends State<CategoryVideoListWidget> {
+class _CategoryPhotoGridWidgetState extends State<CategoryWiseVideoListWidget> {
   late ScrollController scController;
   @override
   void initState() {
@@ -51,13 +51,14 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double cellHeight = 0.3;
-    double listPadding = 0;
+    double cellHeight = 0.32;
+    double listPadding = 10;
     return Column(
       children: [
         if (widget.isHeadSectionShow)
           Container(
             height: GenericVars.scSize.height * 0.07,
+            padding: EdgeInsets.symmetric(horizontal: 8),
             width: double.infinity,
             // padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: const BoxDecoration(
@@ -76,7 +77,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoListWidget> {
                   width: 10,
                 ),
                 Text(
-                  "ভিডিও গ্যালারি",
+                  widget.categoryVideo.category.nameBn ?? "",
                   style: TextStyle(
                       fontSize:
                           Theme.of(context).textTheme.titleMedium!.fontSize,
@@ -104,16 +105,14 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoListWidget> {
                               context,
                               MaterialPageRoute(
                                 builder: (ctx) => DetailedVideoPostView(
-                                    categoryName: "Video",
-                                    videoUrl: GenericVars.getVideoData[index]
-                                        ['url']!,
-                                    videoTitle: GenericVars.getVideoData[index]
-                                        ['title']!),
+                                  id: widget.categoryVideo.videos[index].id ??
+                                      -1,
+                                ),
                               ));
                         },
                         child: Card(
                           elevation: widget.elevation,
-                          margin: EdgeInsets.all(0),
+                          margin: EdgeInsets.all(5),
                           child: Container(
                             //    margin: EdgeInsets.only(bottom: listPadding),
                             padding: EdgeInsets.only(bottom: listPadding),
@@ -121,7 +120,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoListWidget> {
                                 color: Colors.white,
                                 border: Border(
                                     bottom: BorderSide(
-                                        width: 8, color: Colors.grey))),
+                                        width: 5, color: Colors.grey))),
                             // padding: EdgeInsets.only(bottom: listPadding),
 
                             height: GenericVars.scSize.height *
@@ -140,8 +139,8 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoListWidget> {
                                             child: Image.network(
                                               width: double.infinity,
                                               alignment: Alignment.center,
-                                              "https://img.youtube.com/vi/${YoutubePlayer.convertUrlToId(GenericVars.getVideoData[index]['url']!)}/0.jpg",
-                                              fit: BoxFit.cover,
+                                              "https://admin.dhakaprokash24.com/media/videoImages/${widget.categoryVideo.videos[index].imgBgPath}",
+                                              fit: BoxFit.contain,
                                               filterQuality: FilterQuality.low,
                                               loadingBuilder: (context, child,
                                                       loadingProgress) =>
@@ -151,13 +150,13 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoListWidget> {
                                                           padding:
                                                               const EdgeInsets
                                                                   .symmetric(
-                                                                  horizontal:
-                                                                      40,
-                                                                  vertical: 40),
+                                                                  horizontal: 8,
+                                                                  vertical: 8),
                                                           child: Image.asset(
                                                             alignment: Alignment
                                                                 .center,
-                                                            "assets/images/dhakaprokash_logo.png",
+                                                            ApiConstant
+                                                                .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                                                           ),
                                                         ),
                                             )),
@@ -180,10 +179,11 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoListWidget> {
 
                                 ///here
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 15, right: 10, left: 10),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 5),
                                   child: Text(
-                                    GenericVars.getVideoData[index]['title']!,
+                                    widget.categoryVideo.videos[index].title ??
+                                        "",
                                     textAlign: TextAlign.start,
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,

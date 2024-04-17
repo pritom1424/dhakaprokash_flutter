@@ -50,24 +50,6 @@ class DetailedPostView extends StatelessWidget {
     //List<Content> currentContainer = [];
 
     int gridItemCount = 4;
-    List<Content> currentElementList(
-        List<Content> allList, int id, int itemNumber) {
-      List<Content> currentContainer = [];
-      int first =
-          (allList.indexWhere((element) => element.contentId == id) + 1) <
-                  allList.length
-              ? allList.indexWhere((element) => element.contentId == id) + 1
-              : 0;
-
-      currentContainer.clear();
-
-      currentContainer = List.from(allList.sublist(first))
-        ..addAll(allList.sublist(0, first));
-
-      currentContainer = currentContainer.sublist(0, itemNumber);
-      print("Current Container $currentContainer");
-      return currentContainer;
-    }
 
     //for test only
     if (Provider.of<DetailPageController>(context, listen: false)
@@ -100,11 +82,22 @@ class DetailedPostView extends StatelessWidget {
                               //   height: GenericVars.scSize.height * 0.6,
 
                               child: MainHeadPostTile(
+                                postLink:
+                                    "/${snap.data!.detailsContent.category.catSlug}/${snap.data!.detailsContent.subcategory.subcatSlug ?? (snap.data!.detailsContent.contentType == 1 ? 'news' : 'article')}/${snap.data!.detailsContent.contentId}",
+                                authorName: snap.data!.detailsContent.author
+                                        .authorNameBn ??
+                                    "ঢাকাপ্রকাশ ডেস্ক",
+                                authorSlug: snap.data!.detailsContent.author
+                                        .authorSlug ??
+                                    "dhaka-prokash-desk",
                                 id: id,
-                                tags: snap.data!.detailsContent.tags.split(","),
+                                tags: (snap.data!.detailsContent.tags != null)
+                                    ? snap.data!.detailsContent.tags!.split(",")
+                                    : [],
                                 imageCaption:
                                     snap.data!.detailsContent.imgBgCaption,
-                                dateTime: snap.data!.detailsContent.createdAt,
+                                dateTime: snap.data!.detailsContent.createdAt ??
+                                    DateTime.now(),
                                 url:
                                     "https://admin.dhakaprokash24.com/media/content/images/${snap.data!.detailsContent.imgBgPath}",
                                 title: snap.data!.detailsContent.contentHeading,
@@ -116,12 +109,14 @@ class DetailedPostView extends StatelessWidget {
                             ),
                             //main post decription
                             Padding(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     vertical: 5, horizontal: 5),
                                 child: MainArticleTile(
                                   articleItems: [
                                     HtmlWidget(
-                                      snap.data!.detailsContent.contentDetails,
+                                      snap.data!.detailsContent
+                                              .contentDetails ??
+                                          "",
                                     ),
                                   ],
                                 )),
@@ -130,76 +125,31 @@ class DetailedPostView extends StatelessWidget {
 
                             //post tag tile
                             PostTagTile(
-                              tagList:
-                                  snap.data!.detailsContent.tags.split(","),
+                              tagList: (snap.data!.detailsContent.tags != null)
+                                  ? snap.data!.detailsContent.tags!.split(",")
+                                  : [],
                               crossAxisCount: 3,
                             ),
                             //comment button
 
-                            /*  Consumer<DetailPageController>(
-                              builder: (ctx, snap, _) => (snap.IsCommentClick)
-                                  ? const Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 5),
-                                      child: CommentSectionWidget(),
-                                    )
-                                  : Container(
-                                      height: GenericVars.scSize.height * 0.07,
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 10),
-                                      child: SizedBox.expand(
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            Provider.of<DetailPageController>(
-                                                    context,
-                                                    listen: false)
-                                                .commentClick();
-                                          },
-                                          child: Text("Comment",
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.white)),
-                                          style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.blue,
-                                              foregroundColor: Colors.white),
-                                        ),
-                                      ),
-                                    ),
-                            ), */
-
-                            /* CategoryGridWidgetMore(
-                              dhakaprokashModels: List.generate(
-                                  snap
-                                      .data!
-                                      .moreDetailContent[snap
-                                          .data!.moreDetailContent
-                                          .indexWhere((element) =>
-                                              element.contentId == id)]
-                                      .morecatwisePost
-                                      .length,
-                                  (index) => snap
-                                      .data!
-                                      .moreDetailContent[snap
-                                          .data!.moreDetailContent
-                                          .indexWhere((element) =>
-                                              element.contentId == id)]
-                                      .morecatwisePost[index]),
-                              categoryName:
-                                  snap.data!.detailsContent.category.catNameBn,
-                              itemCount: snap
-                                  .data!
-                                  .moreDetailContent[
-                                      snap.data!.moreDetailContent.indexWhere(
-                                          (element) => element.contentId == id)]
-                                  .morecatwisePost
-                                  .length,
-                              didAxisHorizontal: false,
-                              crossAxisCount: 2,
-                              didDescriptionShow: false,
-                              isScroll: false,
-                              elevation: 0,
-                              itemHeight: 0.23,
-                            ), */
+                            FutureBuilder(
+                                future: detailPageController.loadMoreCatPost(
+                                    snap.data!.detailsContent.catId ?? -1,
+                                    snap.data!.detailsContent.contentId ?? -1),
+                                builder: (ctx, snapMore) => (snapMore.hasData)
+                                    ? CategoryGridWidgetMore(
+                                        dhakaprokashModels: snapMore.data!,
+                                        categoryName: snap.data!.detailsContent
+                                                .category.catNameBn ??
+                                            "",
+                                        itemCount:
+                                            snapMore.data!.contents.length,
+                                        didAxisHorizontal: false,
+                                        crossAxisCount: 2,
+                                        didDescriptionShow: false,
+                                        isScroll: false,
+                                        elevation: 0)
+                                    : SizedBox.shrink()),
 
                             HomePageFooter()
                           ],

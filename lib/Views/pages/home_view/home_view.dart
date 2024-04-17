@@ -12,7 +12,7 @@ import 'package:dummy_app/Views/pages/contact_view/contact_view.dart';
 import 'package:dummy_app/Views/pages/custom_appdrawer.dart';
 import 'package:dummy_app/Views/pages/favorites_view/favoritesnews_view.dart';
 import 'package:dummy_app/Views/pages/my%20app/myapp_view.dart';
-import 'package:dummy_app/Views/pages/popular_view/popularnews_view.dart';
+import 'package:dummy_app/Views/pages/latest_view/latestnews_view.dart';
 import 'package:dummy_app/Views/pages/searchtoNewpage.dart';
 
 import 'package:dummy_app/Views/widgets/app_bar.dart';
@@ -65,7 +65,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     _showScrollToTop = false;
     return [
       homeBaseWidgetVer2(),
-      PopularNewsView(),
+      LatestNewsView(),
       CategoryVideoView(),
       FavoritesNewsView(),
       SearchToNewPage(),
@@ -124,6 +124,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                 builder: (ctx, offset, _) => Visibility(
                   visible: _showScrollToTop,
                   child: FloatingActionButton(
+                    mini: true,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50)),
                     backgroundColor: AppColors.logoColorDeep,
@@ -138,7 +139,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                       );
                     },
                     child: const Icon(
-                      size: 40,
+                      size: 30,
                       Icons.arrow_upward,
                     ),
                   ),
@@ -210,13 +211,13 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                     didHeadSectionShow: true,
                                     listItemLength: 5,
                                     didFloat: false), */
-            CategoryVideoGridWidget(
+            /*   CategoryVideoGridWidget(
                 itemCount: GenericVars.getVideoData.length,
                 didAxisHorizontal: true,
                 crossAxisCount: 1,
                 didDescriptionShow: true,
                 isScroll: true,
-                elevation: 5),
+                elevation: 5), */
 
             TabBar(controller: tabController, isScrollable: false, tabs: const [
               Tab(
@@ -787,7 +788,9 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                           builder: (ctx, snap) =>
                               (snap.connectionState == ConnectionState.waiting)
                                   ? LoaderWidget()
-                                  : const CategoryVideoGridWidget(
+                                  : CategoryVideoGridWidget(
+                                      ids: snap.data!,
+                                      itemHeight: 0.34,
                                       itemCount: 5,
                                       didAxisHorizontal: true,
                                       crossAxisCount: 1,
@@ -1005,7 +1008,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                 crossAxisCount: 2,
                                 didDescriptionShow: false,
                                 isScroll: false,
-                                itemHeight: 0.23,
+                                itemHeight: 0.24,
                                 elevation: 0)
                             : LoaderWidget(),
 
@@ -1336,10 +1339,14 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                         const HomePageFooter()
                       ]),
                     )
-                  : Center(
-                      child: Text(
-                        "কোনো তথ্য পাওয়া যায় নি",
-                        style: Theme.of(context).textTheme.bodyLarge,
+                  : Container(
+                      height: GenericVars.scSize.height * 0.8,
+                      width: double.infinity,
+                      child: Center(
+                        child: Text(
+                          "কোনো তথ্য পাওয়া যায় নি",
+                          //style: Theme.of(context).textTheme.bodyLarge,
+                        ),
                       ),
                     ),
         ),

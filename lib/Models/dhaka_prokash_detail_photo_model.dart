@@ -11,12 +11,12 @@ String detailPhotoModelToJson(DetailPhotoModel data) =>
     json.encode(data.toJson());
 
 class DetailPhotoModel {
-  String albumName;
-  DateTime createdAt;
-  DateTime updatedAt;
-  String shortDescription;
-  String catName;
-  String catSlug;
+  String? albumName;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? shortDescription;
+  String? catName;
+  String? catSlug;
   List<PhotoGallery> photoGalleries;
 
   DetailPhotoModel({
@@ -43,8 +43,10 @@ class DetailPhotoModel {
 
   Map<String, dynamic> toJson() => {
         "album_name": albumName,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at":
+            createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+        "updated_at":
+            updatedAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
         "short_description": shortDescription,
         "cat_name": catName,
         "cat_slug": catSlug,
@@ -54,13 +56,13 @@ class DetailPhotoModel {
 }
 
 class PhotoGallery {
-  int id;
-  int albumId;
-  String photo;
-  String photoCapture;
-  String featureImage;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? id;
+  int? albumId;
+  String? photo;
+  String? photoCapture;
+  String? featureImage;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   PhotoGallery({
     required this.id,
@@ -88,7 +90,9 @@ class PhotoGallery {
         "photo": photo,
         "photo_capture": photoCapture,
         "feature_image": featureImage,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at":
+            createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+        "updated_at":
+            updatedAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
       };
 }
