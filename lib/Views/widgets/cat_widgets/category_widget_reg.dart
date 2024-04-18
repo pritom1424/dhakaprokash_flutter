@@ -208,33 +208,33 @@ class CategoryWidgetRegular extends StatelessWidget {
                         children: [
                           Expanded(
                             child: ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                child: Image.network(
-                                  "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[0].imgBgPath.toString()}",
-                                  fit: BoxFit.fill,
-                                  filterQuality: FilterQuality.low,
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: CircularProgressIndicator(),
-                                    // Image.asset(
-                                    //   ApiConstant.imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
-                                    // ),
-                                  ),
-                                  loadingBuilder: (context, child,
-                                          loadingProgress) =>
-                                      (loadingProgress == null)
-                                          ? child
-                                          : Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 40),
-                                              child: Image.asset(
-                                                "assets/images/dhakaprokash_logo.png",
-                                              ),
+                              borderRadius: BorderRadius.circular(5),
+                              child: Image.network(
+                                "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[0].imgBgPath.toString()}",
+                                fit: BoxFit.cover,
+                                filterQuality: FilterQuality.low,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: CircularProgressIndicator(),
+                                  // Image.asset(
+                                  //   ApiConstant.imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
+                                  // ),
+                                ),
+                                loadingBuilder: (context, child,
+                                        loadingProgress) =>
+                                    (loadingProgress == null)
+                                        ? child
+                                        : Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 40),
+                                            child: Image.asset(
+                                              "assets/images/dhakaprokash_logo.png",
                                             ),
-                                )),
+                                          ),
+                              ),
+                            ),
                           ),
                           Text(
                             dhakaprokashModels[0].contentHeading!,

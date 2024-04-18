@@ -26,6 +26,7 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailedPostView extends StatelessWidget {
   /* final String url, title, description, categoryName;
@@ -64,6 +65,29 @@ class DetailedPostView extends StatelessWidget {
 
     DetailPageController detailPageController =
         Provider.of(context, listen: false);
+    String mailSchema = "mailto";
+    String websiteSchema = "https";
+    Future<void> launchLink(String schema, String link) async {
+      final Uri launchUri = Uri(scheme: schema, path: link);
+      //final Uri launchWebUri = Uri.parse(link);
+      // final Uri currentURi = launchUri;
+      if (schema.contains(websiteSchema)) {
+        if (!await launchUrl(Uri.parse(link))) throw 'Could not launch $link';
+      } else {
+        if (!await launchUrl(launchUri)) throw 'Could not launch $link';
+        /* if (await canLaunchUrl(launchUri)) {
+          await launchUrl(launchUri, mode: LaunchMode.externalApplication);
+        } else {
+          throw 'Could not launch $launchUri';
+        } */
+      }
+    }
+
+    String removeUnnecessaryHtmlTags(String htmlString) {
+      return htmlString.replaceAll(
+          RegExp(r'<p style=\"text-align: justify;\">&nbsp;</p>'), '');
+    }
+
     return Scaffold(
       appBar: AppbarDefault(),
       body: Padding(
@@ -110,10 +134,17 @@ class DetailedPostView extends StatelessWidget {
                             ),
                             //main post decription
                             HtmlWidget(
-                                snap.data!.detailsContent.contentDetails ?? "",
-                                customWidgetBuilder: (element) {
-                              if (!element.classes.contains("image")) {
-                                /*  print(
+                              removeUnnecessaryHtmlTags(snap
+                                  .data!.detailsContent.contentDetails
+                                  .toString()),
+                              //snap.data!.detailsContent.contentDetails ?? "",
+                              onTapUrl: (url) async {
+                                await launchLink(websiteSchema, url);
+                                return true;
+                              },
+                              customWidgetBuilder: (element) {
+                                if (!element.classes.contains("image")) {
+                                  /*  print(
                                     "element attr: ${element.children.toString() + "name"}");
                                 if (element.children
                                     .toString()
@@ -128,23 +159,34 @@ class DetailedPostView extends StatelessWidget {
                                   Bidi.stripHtmlIfNeeded(element.text),
                                   textAlign: TextAlign.justify,
                                 ); */
-                                return null;
-                              }
+                                  return null;
+                                }
 
-                              return Column(
-                                children: [
-                                  Image.network(
-                                      element.children[0].attributes['src']!,
-                                      fit: BoxFit.cover),
-                                  SizedBox(
-                                    height: 2,
-                                  ),
-                                  Text(snap.data!.detailsContent.imgBgCaption ??
-                                      ""),
-                                  Divider()
-                                ],
-                              );
-                            }),
+                                return Column(
+                                  children: [
+                                    Image.network(
+                                        element.children[0].attributes['src']!,
+                                        fit: BoxFit.cover),
+                                    SizedBox(
+                                      height: 2,
+                                    ),
+                                    Text(snap.data!.detailsContent
+                                            .imgBgCaption ??
+                                        ""),
+                                    Divider()
+                                  ],
+                                );
+                              },
+                              onErrorBuilder: (context, error, stackTrace) =>
+                                  Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: CircularProgressIndicator(),
+                                // Image.asset(
+                                //   ApiConstant.imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
+                                // ),
+                              ),
+                            ),
                             /* Padding(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 5, horizontal: 0),

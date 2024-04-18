@@ -141,6 +141,15 @@ class CategoryWidgetRecent extends StatelessWidget {
                                                 "assets/images/dhakaprokash_logo.png",
                                               ),
                                             ),
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: CircularProgressIndicator(),
+                                    // Image.asset(
+                                    //   ApiConstant.imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
+                                    // ),
+                                  ),
                                 )),
                           ),
                           Align(
@@ -224,6 +233,15 @@ class CategoryWidgetRecent extends StatelessWidget {
                                                 "assets/images/dhakaprokash_logo.png",
                                               ),
                                             ),
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: CircularProgressIndicator(),
+                                    // Image.asset(
+                                    //   ApiConstant.imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
+                                    // ),
+                                  ),
                                 )),
                           ),
                           Expanded(

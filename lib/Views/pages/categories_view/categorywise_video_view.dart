@@ -31,7 +31,7 @@ class CategryWiseVideo extends StatefulWidget {
 }
 
 class _CategryWiseVideoState extends State<CategryWiseVideo> {
-  int itm = 20;
+  int itm = 10;
   int addMore = 10;
   bool isVisible = true;
   final bool isHeadSectionShow = false;
@@ -77,7 +77,7 @@ class _CategryWiseVideoState extends State<CategryWiseVideo> {
                               elevation: elevation),
                           Visibility(
                             visible: (snapShot.data!.videos.length >= itm &&
-                                    itm < snapShot.data!.totalVideos)
+                                    itm < 30)
                                 ? true
                                 : false,
                             child: GestureDetector(
