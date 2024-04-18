@@ -120,7 +120,7 @@ class GenericVars {
   };
   static String currentSearchString = "";
   static String currenFontFamily =
-      "Lal_Salu_Normal"; //"Nikosh"; //"TiroBangla-Regular";
+      "Ruposhi_Bangla"; //"Nikosh"; //"TiroBangla-Regular";
   // "Lal_Salu_Normal"; //"BongobondhuUnicode-Regular";
   // "Shonar_Bangla"; //"NotoSerifBengali"; //"Bangla_Kolom";
   //"SolaimanLipi"; //"Raleway"//"Ruposhi_Bangla";
@@ -132,28 +132,33 @@ class GenericVars {
     {
       "title": "সংযমের মাসেও সংযম হারাচ্ছেনিত্যপণ্যের দাম",
       "category": "জাতীয়",
-      "url": "https://youtu.be/m2G8mkNq008?si=WLrQbMPmxfkj1RrP"
+      "url": "https://youtu.be/m2G8mkNq008?si=WLrQbMPmxfkj1RrP",
+      "img_bg_path": ""
     },
     {
       "title": "রমজানের ক্লান্ত দুুপুরে রাজধানীতে স্বস্তির বৃষ্টি",
       "category": "জাতীয়",
-      "url": "https://youtu.be/Cjb5GBCdkOg?si=ZgjPPPJZuppgFZDV"
+      "url": "https://youtu.be/Cjb5GBCdkOg?si=ZgjPPPJZuppgFZDV",
+      "img_bg_path": ""
     },
     {
       "title": "মেট্রোরেলের নতুন সময়সূচি",
       "category": "জাতীয়",
-      "url": "https://youtu.be/vt-SA67KnLY?si=4kGT_QKd-DKO_CKp"
+      "url": "https://youtu.be/vt-SA67KnLY?si=4kGT_QKd-DKO_CKp",
+      "img_bg_path": ""
     },
     {
       "title":
           "উৎকণ্ঠায় এমভি আব্দুল্লাহর প্রধান প্রকৌশলী সাইদুজ্জামানের পরিবার",
       "category": "জাতীয়",
-      "url": "https://youtu.be/DJRtsOhU9tY?si=nWBd9J76eBaQUEpX"
+      "url": "https://youtu.be/DJRtsOhU9tY?si=nWBd9J76eBaQUEpX",
+      "img_bg_path": "",
     },
     {
       "title": "ইতিহাসের নিদর্শন হবিগঞ্জের শংকরপাশা শাহী মসজিদ",
       "category": "পর্যটন",
-      "url": "https://youtu.be/mtNSv33biI8?si=dFrZRufrmjFSSlOl"
+      "url": "https://youtu.be/mtNSv33biI8?si=dFrZRufrmjFSSlOl",
+      "img_bg_path": ""
     },
   ];
 

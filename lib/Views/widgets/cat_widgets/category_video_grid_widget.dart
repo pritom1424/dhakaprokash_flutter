@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dummy_app/Utils/api_constants.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:dummy_app/Views/pages/categories_view/categorywise_video_view.dart';
 
 class CategoryVideoGridWidget extends StatefulWidget {
   //final List<DhakaProkashPhotoModel> dhakaprokashModels;
@@ -22,6 +23,7 @@ class CategoryVideoGridWidget extends StatefulWidget {
   final double? itemHeight;
   final Color? barIconColor, barTextColor;
   final List<int> ids;
+  final double? ratio;
   const CategoryVideoGridWidget(
       {super.key,
       required this.itemCount,
@@ -34,7 +36,8 @@ class CategoryVideoGridWidget extends StatefulWidget {
       this.itemHeight,
       this.barIconColor,
       this.barTextColor,
-      required this.ids});
+      required this.ids,
+      this.ratio});
 
   @override
   State<CategoryVideoGridWidget> createState() =>
@@ -66,7 +69,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
         GestureDetector(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => const CategoryVideoView(
+                builder: (ctx) => CategryWiseVideo(
                       isEnableAppbar: true,
                     )));
           },
@@ -108,7 +111,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
           ),
         ),
         Container(
-          height: GenericVars.scSize.height * cellHeight,
+          height: GenericVars.scSize.height * (widget.itemHeight ?? cellHeight),
           child: RawScrollbar(
             thumbVisibility: true,
             trackVisibility: true,
@@ -124,6 +127,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: widget.crossAxisCount,
                   mainAxisSpacing: mainAxisSpacing,
+                  childAspectRatio: (widget.ratio != null) ? widget.ratio! : 1,
                 ),
                 scrollDirection: (widget.didAxisHorizontal)
                     ? Axis.horizontal
@@ -141,10 +145,12 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
                       child: Card(
                         elevation: widget.elevation,
                         child: Container(
-                          color: Colors.black,
-                          height: GenericVars.scSize.height * cellHeight,
+                          color: Colors.white,
+                          height: GenericVars.scSize.height *
+                              (widget.itemHeight ?? cellHeight),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
                                 child: Stack(
@@ -156,8 +162,9 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
                                               BorderRadius.circular(5),
                                           child: Image.network(
                                             alignment: Alignment.center,
-                                            "https://img.youtube.com/vi/${YoutubePlayer.convertUrlToId(GenericVars.getVideoData[index]['url']!)}/0.jpg",
-                                            fit: BoxFit.fill,
+                                            "https://admin.dhakaprokash24.com/media/videoImages/${GenericVars.getVideoData[index]['img_bg_path']}",
+                                            //"https://img.youtube.com/vi/${YoutubePlayer.convertUrlToId(GenericVars.getVideoData[index]['url']!)}/0.jpg",
+                                            fit: BoxFit.cover,
                                             filterQuality: FilterQuality.low,
                                             loadingBuilder: (context, child,
                                                     loadingProgress) =>
@@ -182,9 +189,13 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
                                       child: Align(
                                           alignment: Alignment.center,
                                           child: CircleAvatar(
+                                              radius: 25,
                                               backgroundColor: Colors.red,
                                               foregroundColor: Colors.white,
-                                              child: Icon(Icons.play_arrow))),
+                                              child: Icon(
+                                                Icons.play_arrow,
+                                                size: 35,
+                                              ))),
                                     )
                                   ],
                                 ),
@@ -196,11 +207,12 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
                                     horizontal: 5, vertical: 0),
                                 child: Text(
                                   GenericVars.getVideoData[index]['title']!,
-                                  textAlign: TextAlign.center,
+                                  textAlign: TextAlign.start,
                                   maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.white,
+                                      fontSize: 20,
+                                      color: Colors.black,
                                       overflow: TextOverflow.ellipsis,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: GenericVars.currenFontFamily),

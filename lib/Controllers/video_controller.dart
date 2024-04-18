@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dummy_app/Models/dhaka_prokash_all_video_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_single_vid_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_vid_total.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
@@ -38,6 +39,21 @@ class VideoProvider with ChangeNotifier {
 
     DhakaProkashVidTotal jsonResponse =
         dhakaProkashVidTotalFromJson(utf8.decode(response.bodyBytes));
+
+    return jsonResponse;
+  }
+
+  Future<DhakaProkashAllVideo> getLatestAllVideos(int amount) async {
+    final url =
+        Uri.parse("https://www.dhakaprokash24.com//api/v1/video/latestvideo");
+
+    Map<String, dynamic> data = {"take": amount};
+
+    final response = await http.post(url,
+        body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
+
+    DhakaProkashAllVideo jsonResponse =
+        dhakaProkashAllVideoFromJson(utf8.decode(response.bodyBytes));
 
     return jsonResponse;
   }

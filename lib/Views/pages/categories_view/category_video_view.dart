@@ -1,4 +1,4 @@
-import 'package:dummy_app/Controllers/homepage_controller.dart';
+/* import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 
@@ -71,3 +71,4 @@ class CategoryVideoView extends StatelessWidget {
             )));
   }
 }
+ */

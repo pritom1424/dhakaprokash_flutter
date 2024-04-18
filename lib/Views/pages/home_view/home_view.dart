@@ -39,6 +39,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:provider/provider.dart';
+import 'package:dummy_app/Views/pages/categories_view/categorywise_video_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -55,6 +56,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
   late TabController tabController;
   bool didNavButtonGlow = false;
   final tabBarItem = 5;
+  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   // List<Widget> _navViewsNew(HomepageController homepageController,
   //     ScrollController scrollController) {
@@ -66,7 +68,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     return [
       homeBaseWidgetVer2(),
       LatestNewsView(),
-      CategoryVideoView(),
+      CategryWiseVideo(),
+      //CategoryVideoView(),
       FavoritesNewsView(),
       SearchToNewPage(),
       //  ContactView(),
@@ -118,6 +121,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     print(
         "currentNumber:${Provider.of<HomepageController>(context, listen: false).photoShowNumber}");
     return Scaffold(
+        key: scaffoldKey,
         floatingActionButton: (_selectedNavIndex == 0)
             ? ValueListenableBuilder(
                 valueListenable: _scrollOffset,
@@ -149,7 +153,64 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
         floatingActionButtonLocation: (_selectedNavIndex == 0)
             ? FloatingActionButtonLocation.endFloat
             : null,
-        appBar: (_selectedNavIndex != 5) ? AppbarDefault() : null,
+        appBar: (_selectedNavIndex != 5)
+            ? AppBar(
+                centerTitle: true,
+                leading: IconButton(
+                    onPressed: () {
+                      // Scaffold.of(context).openDrawer();
+                      scaffoldKey.currentState!.openDrawer();
+                    },
+                    tooltip:
+                        MaterialLocalizations.of(context).openAppDrawerTooltip,
+                    icon: Icon(
+                      Icons.menu,
+                      size: 32,
+                      // color: Colors.red,
+                    )),
+                title: Container(
+                  width: GenericVars.scSize.width * 0.45,
+                  /*  decoration: BoxDecoration(boxShadow: [
+  BoxShadow(
+      color: Colors.black.withOpacity(0.075),
+      spreadRadius: 5,
+      blurRadius: 7,
+      offset: Offset(0, 3),
+      blurStyle: BlurStyle.normal // changes position of shadow
+      ),
+]), */
+                  child: Image.asset(
+                    "assets/images/dhakaprokash_logo.png",
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                /* bottom: PreferredSize(
+  preferredSize: Size.fromHeight(kToolbarHeight * 0.1),
+  child: DigitalClockWidget()), */
+                actions: [
+                  // Notification Icon
+                  Badge(
+                    largeSize: 13,
+                    label: Text(
+                      "0",
+                      style: TextStyle(fontSize: 10),
+                    ),
+                    offset: Offset(-12, 6),
+                    child: IconButton(
+                      icon: const Icon(
+                        size: 23,
+                        CupertinoIcons.bell,
+                        // Icons.notifications_none_outlined,
+                        color: AppColors.logoColorDeep,
+                      ),
+                      onPressed: () {
+                        // Handle notification icon tap
+                      },
+                    ),
+                  ),
+                ],
+              )
+            : null,
         drawer: CustomAppDrawer(), //AppDrawer(),
         onDrawerChanged: (isOpened) {
           if (isOpened) {
@@ -370,7 +431,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                 categoryName: "খেলা",
                                 didMoreButtonShow: true,
                                 didHeadSectionShow: true,
-                                listItemLength: 4,
+                                listItemLength: 5,
                                 didFloat: false)
                             : SizedBox.shrink()),
             //entertainment
@@ -386,7 +447,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                 categoryName: "বিনোদন",
                                 didMoreButtonShow: true,
                                 didHeadSectionShow: true,
-                                listItemLength: 4,
+                                listItemLength: 5,
                                 didFloat: false)
                             : SizedBox.shrink()),
             //photo gallery
@@ -790,13 +851,15 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                   ? LoaderWidget()
                                   : CategoryVideoGridWidget(
                                       ids: snap.data!,
-                                      itemHeight: 0.34,
+                                      itemHeight: 0.30,
                                       itemCount: 5,
                                       didAxisHorizontal: true,
                                       crossAxisCount: 1,
                                       didDescriptionShow: true,
                                       isScroll: true,
-                                      elevation: 5),
+                                      elevation: 5,
+                                      ratio: 3 / 4,
+                                    ),
                         ),
 
                         Container(
@@ -974,7 +1037,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         categoryName: "খেলা",
                                         didMoreButtonShow: true,
                                         didHeadSectionShow: true,
-                                        listItemLength: 4,
+                                        listItemLength: 5,
                                         didFloat: false)
                                     : SizedBox.shrink()),
                         //entertainment
@@ -990,7 +1053,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         categoryName: "বিনোদন",
                                         didMoreButtonShow: true,
                                         didHeadSectionShow: true,
-                                        listItemLength: 4,
+                                        listItemLength: 5,
                                         didFloat: false)
                                     : SizedBox.shrink()),
                         //photo gallery
@@ -1050,7 +1113,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didDescriptionShow: true,
                                         isScroll: true,
                                         elevation: 5,
-                                        itemHeight: 0.4,
+                                        itemHeight: 0.32,
+                                        ratio: 4 / 5,
                                       )
                                     : SizedBox.shrink()),
                         //crime
@@ -1087,7 +1151,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didDescriptionShow: true,
                                         isScroll: true,
                                         elevation: 5,
-                                        itemHeight: 0.4,
+                                        itemHeight: 0.32,
+                                        ratio: 4 / 5,
                                       )
                                     : SizedBox.shrink()),
                         //religion
@@ -1314,7 +1379,9 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didDescriptionShow: true,
                                         isScroll: true,
                                         elevation: 5,
-                                        itemHeight: 0.4,
+                                        itemHeight: 0.28,
+                                        ratio: 2 / 3,
+                                        maxLine: 1,
                                       )
                                     : SizedBox.shrink()),
 

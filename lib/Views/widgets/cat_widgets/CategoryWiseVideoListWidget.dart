@@ -1,3 +1,4 @@
+import 'package:dummy_app/Models/dhaka_prokash_all_video_model.dart';
 import 'package:dummy_app/Models/dhaka_prokash_vid_total.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
@@ -10,7 +11,8 @@ import 'package:dummy_app/Utils/api_constants.dart';
 
 class CategoryWiseVideoListWidget extends StatefulWidget {
   //final List<DhakaProkashPhotoModel> dhakaprokashModels;
-  final CategoryVideo categoryVideo;
+  //final CategoryVideo categoryVideo;
+  final DhakaProkashAllVideo dhakaProkashAllVideo;
   final int itemCount;
   final bool isHeadSectionShow;
   final bool didDescriptionShow;
@@ -20,7 +22,8 @@ class CategoryWiseVideoListWidget extends StatefulWidget {
   const CategoryWiseVideoListWidget(
       {super.key,
       required this.itemCount,
-      required this.categoryVideo,
+      required this.dhakaProkashAllVideo,
+      // required this.categoryVideo,
       // required this.dhakaprokashModels,
       required this.isHeadSectionShow,
       required this.didDescriptionShow,
@@ -77,7 +80,8 @@ class _CategoryPhotoGridWidgetState extends State<CategoryWiseVideoListWidget> {
                   width: 10,
                 ),
                 Text(
-                  widget.categoryVideo.category.nameBn ?? "",
+                  "ভিডিও গ্যালারি",
+                  //  widget.categoryVideo.category.nameBn ?? "",
                   style: TextStyle(
                       fontSize:
                           Theme.of(context).textTheme.titleMedium!.fontSize,
@@ -105,8 +109,10 @@ class _CategoryPhotoGridWidgetState extends State<CategoryWiseVideoListWidget> {
                               context,
                               MaterialPageRoute(
                                 builder: (ctx) => DetailedVideoPostView(
-                                  id: widget.categoryVideo.videos[index].id ??
-                                      -1,
+                                  id: widget.dhakaProkashAllVideo.videos[index]
+                                      .id /* widget.categoryVideo.videos[index].id ??
+                                      -1 */
+                                  ,
                                 ),
                               ));
                         },
@@ -139,7 +145,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryWiseVideoListWidget> {
                                             child: Image.network(
                                               width: double.infinity,
                                               alignment: Alignment.center,
-                                              "https://admin.dhakaprokash24.com/media/videoImages/${widget.categoryVideo.videos[index].imgBgPath}",
+                                              "https://admin.dhakaprokash24.com/media/videoImages/${widget.dhakaProkashAllVideo.videos[index].imgBgPath}", //widget.dhakaProkashAllVideo.videos[index]//widget.categoryVideo.videos[index].imgBgPath
                                               fit: BoxFit.contain,
                                               filterQuality: FilterQuality.low,
                                               loadingBuilder: (context, child,
@@ -182,8 +188,12 @@ class _CategoryPhotoGridWidgetState extends State<CategoryWiseVideoListWidget> {
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 5),
                                   child: Text(
-                                    widget.categoryVideo.videos[index].title ??
-                                        "",
+                                    widget.dhakaProkashAllVideo.videos[index]
+                                            .title ??
+                                        "ভিডিও"
+                                    /* widget.categoryVideo.videos[index].title ??
+                                        "" */
+                                    ,
                                     textAlign: TextAlign.start,
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
