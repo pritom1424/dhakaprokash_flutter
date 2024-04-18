@@ -220,6 +220,13 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                                     .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                                               ),
                                             ),
+                                  errorBuilder: (context, error, stackTrace) => Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: CircularProgressIndicator(),
+                                    // Image.asset(
+                                    //   ApiConstant.imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
+                                    // ),
+                                  ),
                                 )),
                           ),
                           Expanded(

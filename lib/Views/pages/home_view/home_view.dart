@@ -10,6 +10,7 @@ import 'package:dummy_app/Views/pages/categories_view/category_video_view.dart';
 
 import 'package:dummy_app/Views/pages/contact_view/contact_view.dart';
 import 'package:dummy_app/Views/pages/custom_appdrawer.dart';
+import 'package:dummy_app/Views/pages/custom_appdrawer.dart';
 import 'package:dummy_app/Views/pages/favorites_view/favoritesnews_view.dart';
 import 'package:dummy_app/Views/pages/my%20app/myapp_view.dart';
 import 'package:dummy_app/Views/pages/latest_view/latestnews_view.dart';
@@ -55,6 +56,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
   late TabController tabController;
   bool didNavButtonGlow = false;
   final tabBarItem = 5;
+  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   // List<Widget> _navViewsNew(HomepageController homepageController,
   //     ScrollController scrollController) {
@@ -118,6 +120,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     print(
         "currentNumber:${Provider.of<HomepageController>(context, listen: false).photoShowNumber}");
     return Scaffold(
+        key: scaffoldKey,
         floatingActionButton: (_selectedNavIndex == 0)
             ? ValueListenableBuilder(
                 valueListenable: _scrollOffset,
@@ -149,8 +152,68 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
         floatingActionButtonLocation: (_selectedNavIndex == 0)
             ? FloatingActionButtonLocation.endFloat
             : null,
-        appBar: (_selectedNavIndex != 5) ? AppbarDefault() : null,
-        drawer: CustomAppDrawer(), //AppDrawer(),
+        appBar: (_selectedNavIndex != 5) ?
+        AppBar(
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: () {
+              // Scaffold.of(context).openDrawer();
+              scaffoldKey.currentState!.openDrawer();
+            },
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            icon: Icon(
+              Icons.menu,
+              size: 36,
+              // color: Colors.red,
+            )),
+
+          title: Container(
+            width: GenericVars.scSize.width * 0.45,
+            /*  decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+              color: Colors.black.withOpacity(0.075),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3),
+              blurStyle: BlurStyle.normal // changes position of shadow
+              ),
+        ]), */
+            child: Image.asset(
+              "assets/images/dhakaprokash_logo.png",
+              fit: BoxFit.fill,
+            ),
+          ),
+          /* bottom: PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight * 0.1),
+          child: DigitalClockWidget()), */
+          actions: [
+            // Notification Icon
+            Badge(
+              largeSize: 13,
+              label: Text(
+                "0",
+                style: TextStyle(fontSize: 10),
+              ),
+              offset: Offset(-12, 6),
+              child: IconButton(
+                icon: const Icon(
+                  size: 22,
+                  CupertinoIcons.bell,
+                  // Icons.notifications_none_outlined,
+                  color: AppColors.logoColorDeep,
+                ),
+                onPressed: () {
+                  // Handle notification icon tap
+                },
+              ),
+            ),
+          ],
+        ):
+        null,
+
+
+        drawer: CustomAppDrawer(),
+        drawerEdgeDragWidth: 20.00,//AppDrawer(),
         onDrawerChanged: (isOpened) {
           if (isOpened) {
             GenericVars.isAppdrawerGlow = true;
