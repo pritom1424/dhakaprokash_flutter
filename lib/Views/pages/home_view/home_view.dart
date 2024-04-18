@@ -851,7 +851,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                   ? LoaderWidget()
                                   : CategoryVideoGridWidget(
                                       ids: snap.data!,
-                                      itemHeight: 0.30,
+                                      itemHeight: 0.32,
                                       itemCount: 5,
                                       didAxisHorizontal: true,
                                       crossAxisCount: 1,

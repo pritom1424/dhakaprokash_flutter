@@ -175,7 +175,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryVideoGridWidget> {
                                                             const EdgeInsets
                                                                 .symmetric(
                                                                 horizontal: 0,
-                                                                vertical: 40),
+                                                                vertical: 8),
                                                         child: Image.asset(
                                                           alignment:
                                                               Alignment.center,
