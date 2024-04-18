@@ -118,7 +118,7 @@ class CategoryWidgetRegular extends StatelessWidget {
                 width: double.infinity,
                 height: (didFloat)
                     ? GenericVars.scSize.height * 0.35
-                    : GenericVars.scSize.height * 0.40,
+                    : GenericVars.scSize.height * 0.35,
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 child: (didFloat)
                     ? Stack(
@@ -204,14 +204,14 @@ class CategoryWidgetRegular extends StatelessWidget {
                       )
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(5),
                                 child: Image.network(
                                   "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[0].imgBgPath.toString()}",
-                                  fit: BoxFit.fitWidth,
+                                  fit: BoxFit.fill,
                                   filterQuality: FilterQuality.low,
                                   loadingBuilder: (context, child,
                                           loadingProgress) =>
@@ -227,9 +227,17 @@ class CategoryWidgetRegular extends StatelessWidget {
                                             ),
                                 )),
                           ),
-                          Expanded(
+                          Text(
+                            dhakaprokashModels[0].contentHeading!,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                          /* Expanded(
                             child: Container(
-                              child: Column(
+                              /*title+date */ child: 
+
+Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -272,9 +280,9 @@ class CategoryWidgetRegular extends StatelessWidget {
                                     ],
                                   )
                                 ],
-                              ),
+                              ), 
                             ),
-                          )
+                          ) */
                         ],
                       ),
               ),

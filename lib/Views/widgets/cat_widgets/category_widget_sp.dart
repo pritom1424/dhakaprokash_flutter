@@ -109,7 +109,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
                 width: double.infinity,
                 height: (didFloat)
                     ? GenericVars.scSize.height * 0.45
-                    : GenericVars.scSize.height * 0.45,
+                    : GenericVars.scSize.height * 0.40,
                 padding: const EdgeInsets.symmetric(vertical: 2),
                 child: (didFloat)
                     ? Stack(
@@ -205,7 +205,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(5),
                                 child: Image.network(
                                   "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[0].imgBgPath.toString()}",
-                                  fit: BoxFit.fitWidth,
+                                  fit: BoxFit.cover,
                                   filterQuality: FilterQuality.low,
                                   loadingBuilder: (context, child,
                                           loadingProgress) =>
@@ -229,7 +229,14 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                   ),
                                 )),
                           ),
-                          Expanded(
+                          Text(
+                            dhakaprokashModels[0].contentHeading!,
+                            style: Theme.of(context).textTheme.titleMedium,
+                            textAlign: TextAlign.start,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
+                          /*  Expanded(
                             child: Container(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -276,7 +283,7 @@ class CategoryWidgetSpecial extends StatelessWidget {
                                 ],
                               ),
                             ),
-                          )
+                          ) */
                         ],
                       ),
               ),
