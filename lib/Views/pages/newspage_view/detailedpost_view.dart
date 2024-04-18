@@ -46,6 +46,15 @@ class DetailedPostView extends StatelessWidget {
     required this.id,
   });
 
+  // String originalString = '<p style=\"text-align: justify;\">&nbsp;</p>\r\n';
+  // String filteredString = originalString.replaceAll('<p style=\"text-align: justify;\">&nbsp;</p>\r\n', '');
+
+// Now you can use filteredString in your Flutter code
+
+  String removeUnnecessaryHtmlTags(String htmlString) {
+    return htmlString.replaceAll(RegExp(r'<p style=\"text-align: justify;\">&nbsp;</p>'), '');
+  }
+
   @override
   Widget build(BuildContext context) {
     //List<Content> currentContainer = [];
@@ -110,10 +119,11 @@ class DetailedPostView extends StatelessWidget {
                             ),
                             //main post decription
                             HtmlWidget(
-                                snap.data!.detailsContent.contentDetails ?? "",
+                                removeUnnecessaryHtmlTags(snap.data!.detailsContent.contentDetails.toString()),
+                                // snap.data!.detailsContent.contentDetails ?? "",
                                 customWidgetBuilder: (element) {
-                              if (!element.classes.contains("image")) {
-                                /*  print(
+                                  if (!element.classes.contains("image")) {
+                                    /*  print(
                                     "element attr: ${element.children.toString() + "name"}");
                                 if (element.children
                                     .toString()
@@ -128,23 +138,26 @@ class DetailedPostView extends StatelessWidget {
                                   Bidi.stripHtmlIfNeeded(element.text),
                                   textAlign: TextAlign.justify,
                                 ); */
-                                return null;
-                              }
+                                    return null;
+                                  }
 
-                              return Column(
-                                children: [
-                                  Image.network(
-                                      element.children[0].attributes['src']!,
-                                      fit: BoxFit.cover),
-                                  SizedBox(
-                                    height: 2,
-                                  ),
-                                  Text(snap.data!.detailsContent.imgBgCaption ??
-                                      ""),
-                                  Divider()
-                                ],
-                              );
-                            }),
+                                  return Column(
+                                    children: [
+                                      Image.network(
+                                        element.children[0].attributes['src']!,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      SizedBox(
+                                        height: 2,
+                                      ),
+                                      Text(snap.data!.detailsContent.imgBgCaption ??
+                                          ""),
+                                      Divider()
+                                    ],
+                                  );
+                                }
+                            ),
+
                             /* Padding(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 5, horizontal: 0),
@@ -200,7 +213,8 @@ class DetailedPostView extends StatelessWidget {
                       )
                     : Center(
                         child: Text("কোনো তথ্য পাওয়া যায় নি!"),
-                      )),
+                      )
+        ),
       ),
     );
   }
