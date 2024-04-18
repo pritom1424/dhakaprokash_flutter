@@ -213,6 +213,15 @@ class CategoryWidgetRegular extends StatelessWidget {
                                   "https://admin.dhakaprokash24.com/media/content/images/${dhakaprokashModels[0].imgBgPath.toString()}",
                                   fit: BoxFit.fill,
                                   filterQuality: FilterQuality.low,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: CircularProgressIndicator(),
+                                    // Image.asset(
+                                    //   ApiConstant.imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
+                                    // ),
+                                  ),
                                   loadingBuilder: (context, child,
                                           loadingProgress) =>
                                       (loadingProgress == null)

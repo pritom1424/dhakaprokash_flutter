@@ -120,7 +120,8 @@ class HomepageController with ChangeNotifier {
             (element) =>
                 GenericVars.newspaperCategoriesLink[element] ==
                 jsonResponse[index].slug),
-        "url": "https://www.youtube.com/watch?v=${jsonResponse[index].code}"
+        "url": "https://www.youtube.com/watch?v=${jsonResponse[index].code}",
+        "img_bg_path": jsonResponse[index].imgBgPath ?? ""
       };
     });
     return ids;

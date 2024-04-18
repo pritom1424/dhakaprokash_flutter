@@ -28,6 +28,8 @@ class CategoryGridWidgetRegular extends StatefulWidget {
   final double? itemHeight;
   final bool? isReplace;
   final Color? barIconColor, barTextColor;
+  final double? ratio;
+  final int? maxLine;
 
   const CategoryGridWidgetRegular(
       {super.key,
@@ -42,7 +44,9 @@ class CategoryGridWidgetRegular extends StatefulWidget {
       this.isReplace,
       this.itemHeight,
       this.barIconColor,
-      this.barTextColor});
+      this.barTextColor,
+      this.maxLine,
+      this.ratio});
 
   @override
   State<CategoryGridWidgetRegular> createState() => _CategoryGridWidgetState();
@@ -77,12 +81,13 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetRegular> {
               ? AlwaysScrollableScrollPhysics()
               : NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: widget.crossAxisCount,
-            mainAxisSpacing: mainAxisSpacing,
-          ),
+              crossAxisCount: widget.crossAxisCount,
+              mainAxisSpacing: mainAxisSpacing,
+              childAspectRatio: widget.ratio ?? 1),
           scrollDirection:
               (widget.didAxisHorizontal) ? Axis.horizontal : Axis.vertical,
           itemBuilder: (ctx, index) => CategoryGridTile(
+                maxLine: widget.maxLine,
                 isReplace: widget.isReplace,
                 id: widget.dhakaprokashModels[index].contentId ?? -1,
                 isScroll: widget.isScroll,

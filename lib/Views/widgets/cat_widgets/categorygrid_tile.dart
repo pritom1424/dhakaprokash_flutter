@@ -7,6 +7,7 @@ import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import 'package:intl/intl.dart';
 
@@ -23,6 +24,7 @@ class CategoryGridTile extends StatefulWidget {
 
   final bool isScroll;
   final bool? isReplace;
+  final int? maxLine;
 
   const CategoryGridTile(
       {super.key,
@@ -35,7 +37,8 @@ class CategoryGridTile extends StatefulWidget {
       required this.elevation,
       required this.id,
       this.isReplace,
-      required this.isScroll});
+      required this.isScroll,
+      this.maxLine});
 
   @override
   State<CategoryGridTile> createState() => _CategoryGridTileState();
@@ -75,34 +78,42 @@ class _CategoryGridTileState extends State<CategoryGridTile> {
             //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               //Category News Image
-              Expanded(
-                flex: 3,
-                child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: Image.network(
-                        widget.imagePath,
-                        fit: BoxFit.contain,
-                        filterQuality: FilterQuality.low,
-                        loadingBuilder: (context, child, loadingProgress) =>
-                            (loadingProgress == null)
-                                ? child
-                                : Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8),
-                                    child: Image.asset(
-                                      ApiConstant
-                                          .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
-                                    ),
+              Container(
+                  decoration: BoxDecoration(
+                    //color: Colors.black,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Image.network(
+                      widget.imagePath,
+                      fit: BoxFit.cover,
+                      filterQuality: FilterQuality.low,
+                      loadingBuilder: (context, child, loadingProgress) =>
+                          (loadingProgress == null)
+                              ? child
+                              : Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Image.asset(
+                                    ApiConstant
+                                        .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                                   ),
-                      ),
-                    )),
-              ),
+                                ),
+                    ),
+                  )),
               Expanded(
+                child: Text(
+                  widget.newsTitle,
+                  maxLines: widget.maxLine ?? 2,
+                  overflow: TextOverflow.ellipsis,
+                  // "${StringLimiter().limitString(widget.newsTitle, 30)}",
+                  style: (widget.isScroll)
+                      ? Theme.of(context).textTheme.titleMedium
+                      : Theme.of(context).textTheme.titleSmall,
+                ),
+              ),
+              /*  Expanded(
                 flex: 1,
                 //  margin: EdgeInsets.symmetric(vertical: 20),
                 child: Text(
@@ -114,7 +125,7 @@ class _CategoryGridTileState extends State<CategoryGridTile> {
                       ? Theme.of(context).textTheme.titleMedium
                       : Theme.of(context).textTheme.titleSmall,
                 ),
-              ),
+              ), */
               //Category News Description s+ Date
               /*  Expanded(
                 child: Container(

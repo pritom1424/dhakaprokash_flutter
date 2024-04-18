@@ -23,6 +23,7 @@ import 'package:dummy_app/Views/widgets/loader_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 
@@ -108,18 +109,60 @@ class DetailedPostView extends StatelessWidget {
                               ),
                             ),
                             //main post decription
-                            Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 5),
-                                child: MainArticleTile(
+                            HtmlWidget(
+                                snap.data!.detailsContent.contentDetails ?? "",
+                                customWidgetBuilder: (element) {
+                              if (!element.classes.contains("image")) {
+                                /*  print(
+                                    "element attr: ${element.children.toString() + "name"}");
+                                if (element.children
+                                    .toString()
+                                    .contains('img')) {
+                                  print(
+                                      "elem :${element.children[0].attributes['src']}");
+                                  return Image.network(
+                                      element.children[0].attributes['src']!);
+                                }
+                                print("only text ${element.text}");
+                                return Text(
+                                  Bidi.stripHtmlIfNeeded(element.text),
+                                  textAlign: TextAlign.justify,
+                                ); */
+                                return null;
+                              }
+
+                              return Column(
+                                children: [
+                                  Image.network(
+                                      element.children[0].attributes['src']!,
+                                      fit: BoxFit.cover),
+                                  SizedBox(
+                                    height: 2,
+                                  ),
+                                  Text(snap.data!.detailsContent.imgBgCaption ??
+                                      ""),
+                                  Divider()
+                                ],
+                              );
+                            }),
+                            /* Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5, horizontal: 0),
+                              child: HtmlWidget(
+                                snap.data!.detailsContent.contentDetails ?? "",
+                              ), /*  MainArticleTile(
                                   articleItems: [
+                                    /* Text(Bidi.stripHtmlIfNeeded(snap.data!
+                                            .detailsContent.contentDetails ??
+                                        "")) */
                                     HtmlWidget(
                                       snap.data!.detailsContent
                                               .contentDetails ??
                                           "",
                                     ),
                                   ],
-                                )),
+                                ) */
+                            ), */
                             //Line divider
                             Divider(),
 

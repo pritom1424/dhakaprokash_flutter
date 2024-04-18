@@ -130,7 +130,12 @@ flutter:
       - asset: assets/fonts/Shonar.ttf
     - family: Nikosh
       fonts:
-      - asset: assets/fonts/Nikosh.ttf         
+      - asset: assets/fonts/Nikosh.ttf
+
+    - family: Lohit-Bengali
+      fonts:
+      - asset: assets/fonts/Lohit-Bengali.ttf  
+               
   
       #  - asset: assets/fonts/RobotoMono-Bold.ttf
        #   weight: 700

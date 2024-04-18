@@ -99,7 +99,7 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.normal,
                   fontFamily: GenericVars.currenFontFamily,
                   color: Colors.black,
-                  fontSize: 16, //20, //16,
+                  fontSize: 18, //20, //16,
                 ),
                 headlineMedium: TextStyle(
                   fontWeight: FontWeight.normal,

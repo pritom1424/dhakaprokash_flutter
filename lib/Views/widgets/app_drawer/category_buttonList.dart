@@ -4,6 +4,7 @@ import 'package:dummy_app/Views/pages/categories_view/category_video_view.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:dummy_app/Views/pages/latest_view/latestnews_view.dart';
 import 'package:flutter/material.dart';
+import 'package:dummy_app/Views/pages/categories_view/categorywise_video_view.dart';
 
 class CategoryButtonList extends StatefulWidget {
   final List<String> foundCategories;
@@ -82,9 +83,11 @@ class _CategoryButtonListState extends State<CategoryButtonList> {
                               MaterialPageRoute(builder: (ctx) {
                             if (widget.foundCategories[index] ==
                                 "ভিজ্যুয়াল মিডিয়া") {
-                              return const CategoryVideoView(
+                              return CategryWiseVideo(
                                 isEnableAppbar: true,
-                              );
+                              ); /* const CategoryVideoView(
+                                isEnableAppbar: true,
+                              ); */
                             } else if (widget.foundCategories[index] ==
                                 "সর্বশেষ") {
                               return const LatestNewsView(

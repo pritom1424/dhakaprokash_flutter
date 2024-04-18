@@ -54,7 +54,7 @@ class AppbarDefault extends StatelessWidget implements PreferredSize {
           offset: Offset(-12, 6),
           child: IconButton(
             icon: const Icon(
-              size: 22,
+              size: 23,
               CupertinoIcons.bell,
               // Icons.notifications_none_outlined,
               color: AppColors.logoColorDeep,
