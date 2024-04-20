@@ -141,7 +141,7 @@ class CategoryListTile extends StatelessWidget {
                             ),
                   errorBuilder: (context, error, stackTrace) => Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: CircularProgressIndicator(),
+                    child: Center(child: CircularProgressIndicator()),
                     // Image.asset(
                     //   ApiConstant.imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                     // ),

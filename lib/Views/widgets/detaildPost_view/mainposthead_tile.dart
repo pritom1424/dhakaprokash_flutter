@@ -174,8 +174,8 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
                               currentBookmark ? Colors.blue : Colors.red,
                           content: Text(
                             (currentBookmark)
-                                ? "News added to the favorites!"
-                                : "News removed from the favorites!",
+                                ? "বার্তাটি বুকমার্ক করা হয়েছে!"
+                                : "বার্তাটি বুকমার্ক থেকে মুছে দেয়া হয়েছে!",
                             textAlign: TextAlign.center,
                           )));
                     },

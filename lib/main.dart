@@ -11,7 +11,6 @@ import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
 
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-import 'package:dummy_app/Utils/scroll_controller.dart';
 
 import 'package:dummy_app/Views/pages/splash_screen.dart';
 import 'package:dummy_app/database/database_helper.dart';
@@ -39,9 +38,6 @@ void main() async {
       ),
       ChangeNotifierProvider(
         create: (_) => HomepageController(),
-      ),
-      ChangeNotifierProvider(
-        create: (_) => ScrollControl(),
       ),
       ChangeNotifierProvider(create: (_) => VideoProvider()),
       ChangeNotifierProvider(create: (_) => DetailPageController()),

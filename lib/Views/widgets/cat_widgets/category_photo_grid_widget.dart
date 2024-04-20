@@ -185,8 +185,9 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                                               padding:
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 10),
-                                              child:
-                                                  CircularProgressIndicator(),
+                                              child: Center(
+                                                  child:
+                                                      CircularProgressIndicator()),
                                               // Image.asset(
                                               //   ApiConstant.imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                                               // ),

@@ -12,31 +12,31 @@ String dhakaProkashAllVideoToJson(DhakaProkashAllVideo data) =>
 
 class DhakaProkashAllVideo {
   List<Video> videos;
-  int totalVideos;
+  int total;
 
   DhakaProkashAllVideo({
     required this.videos,
-    required this.totalVideos,
+    required this.total,
   });
 
   factory DhakaProkashAllVideo.fromJson(Map<String, dynamic> json) =>
       DhakaProkashAllVideo(
         videos: List<Video>.from(json["videos"].map((x) => Video.fromJson(x))),
-        totalVideos: json["total_videos"],
+        total: json["total"],
       );
 
   Map<String, dynamic> toJson() => {
         "videos": List<dynamic>.from(videos.map((x) => x.toJson())),
-        "total_videos": totalVideos,
+        "total": total,
       };
 }
 
 class Video {
   int id;
-  String? title;
-  String? code;
-  String? imgBgPath;
-  DateTime? createdAt;
+  String title;
+  String code;
+  String imgBgPath;
+  DateTime createdAt;
 
   Video({
     required this.id,
@@ -59,7 +59,6 @@ class Video {
         "title": title,
         "code": code,
         "img_bg_path": imgBgPath,
-        "created_at":
-            createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+        "created_at": createdAt.toIso8601String(),
       };
 }

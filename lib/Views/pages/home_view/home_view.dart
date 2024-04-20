@@ -6,6 +6,7 @@ import 'package:dummy_app/Utils/api_constants.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
+import 'package:dummy_app/Utils/scroll_controller.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_video_view.dart';
 
 import 'package:dummy_app/Views/pages/contact_view/contact_view.dart';
@@ -52,11 +53,14 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
   int _selectedNavIndex = 0;
   bool _showScrollToTop = false;
   late ScrollController _scrollController;
+  late ScrollController _scrollController1;
+
   final ValueNotifier<double> _scrollOffset = ValueNotifier<double>(0.0);
   late TabController tabController;
   bool didNavButtonGlow = false;
   final tabBarItem = 5;
   var scaffoldKey = GlobalKey<ScaffoldState>();
+  double _lastScrollOffset = 100;
 
   // List<Widget> _navViewsNew(HomepageController homepageController,
   //     ScrollController scrollController) {
@@ -87,7 +91,9 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
   @override
   void initState() {
     _scrollController = ScrollController();
+    _scrollController1 = ScrollController(initialScrollOffset: 0.0);
     _scrollController.addListener(_updateScrollOffset);
+    //_scrollController1.addListener(_scrollListener);
     _showScrollToTop = false;
     tabController = TabController(length: 2, vsync: this);
     var bookmarkController =
@@ -112,6 +118,33 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     } else {
       _showScrollToTop = false;
     }
+    //_scrollListener();
+    // _scrollListener();
+    //ScrollControl().customscrollListener(_scrollController, 20000);
+  }
+
+  void _scrollListener() {
+    double currentScrollOffset = _scrollController.offset;
+    if (currentScrollOffset <= _lastScrollOffset) {
+      _slowScrollDown(_lastScrollOffset);
+    } else {
+      _lastScrollOffset = currentScrollOffset;
+      _lastScrollOffset += 300;
+    }
+  }
+
+  void _slowScrollDown(double _lastScOffset) {
+    double maxScrollExtent = _scrollController.position.maxScrollExtent;
+
+    if (_lastScOffset > maxScrollExtent) {
+      _lastScOffset = maxScrollExtent;
+    } else {
+      _scrollController.animateTo(
+        _lastScOffset,
+        duration: Duration(milliseconds: 50), // Adjust duration as needed
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
   @override
@@ -120,111 +153,113 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
     print(
         "currentNumber:${Provider.of<HomepageController>(context, listen: false).photoShowNumber}");
-    return Scaffold(
-        key: scaffoldKey,
-        floatingActionButton: (_selectedNavIndex == 0)
-            ? ValueListenableBuilder(
-                valueListenable: _scrollOffset,
-                builder: (ctx, offset, _) => Visibility(
-                  visible: _showScrollToTop,
-                  child: FloatingActionButton(
-                    mini: true,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50)),
-                    backgroundColor: AppColors.logoColorDeep,
-                    foregroundColor: Colors.white,
-                    elevation: 10,
-                    onPressed: () {
-// Scroll to the top logic here
-                      _scrollController.animateTo(
-                        0.0,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeInOut,
-                      );
-                    },
-                    child: const Icon(
-                      size: 30,
-                      Icons.arrow_upward,
-                    ),
-                  ),
-                ),
-              )
-            : null,
-        floatingActionButtonLocation: (_selectedNavIndex == 0)
-            ? FloatingActionButtonLocation.endFloat
-            : null,
-        appBar: (_selectedNavIndex != 5)
-            ? AppBar(
-                centerTitle: true,
-                leading: IconButton(
-                    onPressed: () {
-                      // Scaffold.of(context).openDrawer();
-                      scaffoldKey.currentState!.openDrawer();
-                    },
-                    tooltip:
-                        MaterialLocalizations.of(context).openAppDrawerTooltip,
-                    icon: Icon(
-                      Icons.menu,
-                      size: 32,
-                      // color: Colors.red,
-                    )),
-                title: Container(
-                  width: GenericVars.scSize.width * 0.45,
-                  /*  decoration: BoxDecoration(boxShadow: [
-  BoxShadow(
-      color: Colors.black.withOpacity(0.075),
-      spreadRadius: 5,
-      blurRadius: 7,
-      offset: Offset(0, 3),
-      blurStyle: BlurStyle.normal // changes position of shadow
-      ),
-]), */
-                  child: Image.asset(
-                    "assets/images/dhakaprokash_logo.png",
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                /* bottom: PreferredSize(
-  preferredSize: Size.fromHeight(kToolbarHeight * 0.1),
-  child: DigitalClockWidget()), */
-                actions: [
-                  // Notification Icon
-                  Badge(
-                    largeSize: 13,
-                    label: Text(
-                      "0",
-                      style: TextStyle(fontSize: 10),
-                    ),
-                    offset: Offset(-12, 6),
-                    child: IconButton(
-                      icon: const Icon(
-                        size: 23,
-                        CupertinoIcons.bell,
-                        // Icons.notifications_none_outlined,
-                        color: AppColors.logoColorDeep,
-                      ),
+    return SafeArea(
+      child: Scaffold(
+          key: scaffoldKey,
+          floatingActionButton: (_selectedNavIndex == 0)
+              ? ValueListenableBuilder(
+                  valueListenable: _scrollOffset,
+                  builder: (ctx, offset, _) => Visibility(
+                    visible: _showScrollToTop,
+                    child: FloatingActionButton(
+                      mini: true,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50)),
+                      backgroundColor: AppColors.logoColorDeep,
+                      foregroundColor: Colors.white,
+                      elevation: 10,
                       onPressed: () {
-                        // Handle notification icon tap
+                        // Scroll to the top logic here
+                        _scrollController.animateTo(
+                          0.0,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut,
+                        );
                       },
+                      child: const Icon(
+                        size: 30,
+                        Icons.arrow_upward,
+                      ),
                     ),
                   ),
-                ],
-              )
-            : null,
-        drawer: CustomAppDrawer(), //AppDrawer(),
-        onDrawerChanged: (isOpened) {
-          if (isOpened) {
-            GenericVars.isAppdrawerGlow = true;
-          } else {
-            GenericVars.isAppdrawerGlow = false;
-          }
-        },
-//navigation bar
-        bottomNavigationBar: NavBarWidget(
-          currentIndex: _selectedNavIndex,
-          onTap: _onNavigationTap,
+                )
+              : null,
+          floatingActionButtonLocation: (_selectedNavIndex == 0)
+              ? FloatingActionButtonLocation.endFloat
+              : null,
+          appBar: (_selectedNavIndex != 5)
+              ? AppBar(
+                  centerTitle: true,
+                  leading: IconButton(
+                      onPressed: () {
+                        // Scaffold.of(context).openDrawer();
+                        scaffoldKey.currentState!.openDrawer();
+                      },
+                      tooltip: MaterialLocalizations.of(context)
+                          .openAppDrawerTooltip,
+                      icon: Icon(
+                        Icons.menu,
+                        size: 32,
+                        // color: Colors.red,
+                      )),
+                  title: Container(
+                    width: GenericVars.scSize.width * 0.45,
+                    /*  decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+        color: Colors.black.withOpacity(0.075),
+        spreadRadius: 5,
+        blurRadius: 7,
+        offset: Offset(0, 3),
+        blurStyle: BlurStyle.normal // changes position of shadow
         ),
-        body: _NavViews()[_selectedNavIndex]);
+      ]), */
+                    child: Image.asset(
+                      "assets/images/dhakaprokash_logo.png",
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  /* bottom: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight * 0.1),
+        child: DigitalClockWidget()), */
+                  actions: [
+                    // Notification Icon
+                    Badge(
+                      largeSize: 13,
+                      label: Text(
+                        "0",
+                        style: TextStyle(fontSize: 10),
+                      ),
+                      offset: Offset(-12, 6),
+                      child: IconButton(
+                        icon: const Icon(
+                          size: 23,
+                          CupertinoIcons.bell,
+                          // Icons.notifications_none_outlined,
+                          color: AppColors.logoColorDeep,
+                        ),
+                        onPressed: () {
+                          // Handle notification icon tap
+                        },
+                      ),
+                    ),
+                  ],
+                )
+              : null,
+          drawer: CustomAppDrawer(), //AppDrawer(),
+          onDrawerChanged: (isOpened) {
+            if (isOpened) {
+              GenericVars.isAppdrawerGlow = true;
+            } else {
+              GenericVars.isAppdrawerGlow = false;
+            }
+          },
+          //navigation bar
+          bottomNavigationBar: NavBarWidget(
+            currentIndex: _selectedNavIndex,
+            onTap: _onNavigationTap,
+          ),
+          body: _NavViews()[_selectedNavIndex]),
+    );
   }
 
   Widget homeBaseWidget() {
@@ -815,6 +850,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         controller: _scrollController,
+        physics: ScrollPhysics(),
         child: FutureBuilder(
           future: homepageController.loadAllSpItems(),
           builder: (ctx, homeSpSnapShot) => (homeSpSnapShot.connectionState ==
@@ -903,7 +939,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                     : (snap.hasData)
                                         ? CategoryTabWidget(
                                             dhakaProkashModels: snap.data!,
-                                            catName: "সর্বশেষ",
+                                            catName: GenericVars.tabNames[0],
                                             itemNumber: tabBarItem,
                                           )
                                         : SizedBox.shrink()),
@@ -918,7 +954,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                     : (snap.hasData)
                                         ? CategoryTabWidget(
                                             dhakaProkashModels: snap.data!,
-                                            catName: "জনপ্রিয়",
+                                            catName: GenericVars
+                                                .tabNames[1], //"জনপ্রিয়",
                                             itemNumber: tabBarItem,
                                           )
                                         : SizedBox.shrink()),

@@ -41,6 +41,12 @@ class _LatestNewsViewState extends State<LatestNewsView> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     RecentPageController recentPageController =
         Provider.of<RecentPageController>(context, listen: false);
@@ -83,7 +89,7 @@ class _LatestNewsViewState extends State<LatestNewsView> {
                                       didFloat: false),
                                   GestureDetector(
                                     onTap: () {
-                                      AddMore(100);
+                                      AddMore(2000);
                                     },
                                     child: Container(
                                       width: double.infinity,

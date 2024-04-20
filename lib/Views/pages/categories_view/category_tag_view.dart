@@ -116,7 +116,7 @@ class _CategoryTagnAuthorViewState extends State<CategoryTagnAuthorView> {
                                     : false,
                                 child: GestureDetector(
                                   onTap: () {
-                                    AddMore(100); //snapShot.data!.totalPost
+                                    AddMore(2000); //snapShot.data!.totalPost
                                   },
                                   child: Container(
                                     width: double.infinity,

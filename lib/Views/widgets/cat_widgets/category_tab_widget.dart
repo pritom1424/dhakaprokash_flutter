@@ -1,5 +1,6 @@
 import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
+import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/categorytab_tile.dart';
@@ -34,11 +35,18 @@ class CategoryTabWidget extends StatelessWidget {
         GestureDetector(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (ctx) => CategoryView(
-                      isPost: true,
-                      categoryName: catName,
-                      catSlug: dhakaProkashModels[0].catSlug,
-                    )));
+                builder: (ctx) => (catName == GenericVars.tabNames[1])
+                    ? CategoryView(
+                        isPost: true,
+                        categoryName: catName,
+                        catSlug: dhakaProkashModels[0].catSlug,
+                        maxItem: 30,
+                      )
+                    : CategoryView(
+                        isPost: true,
+                        categoryName: catName,
+                        catSlug: dhakaProkashModels[0].catSlug,
+                      )));
           },
           child: Container(
             width: double.infinity,

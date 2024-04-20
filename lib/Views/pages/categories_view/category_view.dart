@@ -19,11 +19,13 @@ class CategoryView extends StatefulWidget {
   final String categoryName;
   final String? catSlug;
   final bool? isPost;
+  final int? maxItem;
   const CategoryView({
     super.key,
     required this.categoryName,
     required this.catSlug,
     this.isPost,
+    this.maxItem,
   });
 
   @override
@@ -96,12 +98,15 @@ class _CategoryViewState extends State<CategoryView> {
                                 didFloat: false),
 
                             Visibility(
-                              visible: (snapShot.data!.contents.length >= itm)
-                                  ? true
-                                  : false,
+                              visible: (widget.maxItem != null)
+                                  ? (snapShot.data!.contents.length >= itm &&
+                                      itm < widget.maxItem!)
+                                  : (snapShot.data!.contents.length >= itm)
+                                      ? true
+                                      : false,
                               child: GestureDetector(
                                 onTap: () {
-                                  AddMore(snapShot.data!.totalPost ?? 100);
+                                  AddMore(snapShot.data!.totalPost ?? 2000);
                                 },
                                 child: Container(
                                   width: double.infinity,

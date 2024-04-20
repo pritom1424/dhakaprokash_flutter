@@ -69,7 +69,7 @@ class _CategryWiseVideoState extends State<CategryWiseVideo> {
                       child: Column(
                         children: [
                           CategoryWiseVideoListWidget(
-                              itemCount: snapShot.data!.videos.length,
+                              itemCount: itm,
                               dhakaProkashAllVideo: snapShot.data!,
                               isHeadSectionShow: isHeadSectionShow,
                               didDescriptionShow: didDescriptionShow,
@@ -77,12 +77,12 @@ class _CategryWiseVideoState extends State<CategryWiseVideo> {
                               elevation: elevation),
                           Visibility(
                             visible: (snapShot.data!.videos.length >= itm &&
-                                    itm < 30)
+                                    itm < snapShot.data!.total)
                                 ? true
                                 : false,
                             child: GestureDetector(
                               onTap: () {
-                                AddMore(snapShot.data!.totalVideos);
+                                AddMore(snapShot.data!.total);
                               },
                               child: Container(
                                 width: double.infinity,

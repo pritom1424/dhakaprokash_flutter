@@ -29,7 +29,7 @@ class FollowPostBar extends StatelessWidget {
     ScaffoldMessenger.of(ctx).showSnackBar(const SnackBar(
       duration: Duration(seconds: 1),
       content: Text(
-        'Link copied to clipboard',
+        'লিংকটি কপি করা হয়েছে',
         textAlign: TextAlign.center,
       ),
       backgroundColor: Colors.blue,

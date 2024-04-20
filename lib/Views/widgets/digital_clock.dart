@@ -1,4 +1,4 @@
-import 'package:dummy_app/Utils/app_colors.dart';
+/* import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/bangla_calendar/bongabdo.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:flutter/material.dart';
@@ -104,3 +104,4 @@ class DigitalClockWidget extends StatelessWidget {
     );*/
   }
 }
+ */

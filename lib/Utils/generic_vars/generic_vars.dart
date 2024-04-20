@@ -128,6 +128,8 @@ class GenericVars {
   static double scrollOffset = 0;
 
   static String currentPageVideoLink = "";
+  static List<String> tabNames = ["সর্বশেষ", "জনপ্রিয়"];
+
   static List<Map<String, String>> getVideoData = [
     {
       "title": "সংযমের মাসেও সংযম হারাচ্ছেনিত্যপণ্যের দাম",

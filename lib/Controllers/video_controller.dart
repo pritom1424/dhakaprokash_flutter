@@ -45,12 +45,14 @@ class VideoProvider with ChangeNotifier {
 
   Future<DhakaProkashAllVideo> getLatestAllVideos(int amount) async {
     final url =
-        Uri.parse("https://www.dhakaprokash24.com//api/v1/video/latestvideo");
+        Uri.parse("https://dhakaprokash24.com/api/v1/video/latestvideos");
 
-    Map<String, dynamic> data = {"take": amount};
+    /* Map<String, dynamic> data = {"take": amount};
 
     final response = await http.post(url,
-        body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
+        body: jsonEncode(data), headers: {'Content-Type': 'application/json'}); */
+
+    final response = await http.get(url);
 
     DhakaProkashAllVideo jsonResponse =
         dhakaProkashAllVideoFromJson(utf8.decode(response.bodyBytes));
