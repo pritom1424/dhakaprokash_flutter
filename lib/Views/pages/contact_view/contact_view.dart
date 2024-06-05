@@ -1,11 +1,10 @@
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-import 'package:dummy_app/Views/widgets/app_bar.dart';
+
 import 'package:dummy_app/Views/widgets/follow_social.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:url_launcher/url_launcher.dart';
-import 'package:http/http.dart' as http;
 
 class ContactView extends StatelessWidget {
   const ContactView({super.key});
@@ -29,7 +28,7 @@ class ContactView extends StatelessWidget {
     }
 
     return Container(
-      color: Color.fromARGB(255, 235, 233, 227),
+      color: const Color.fromARGB(255, 235, 233, 227),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +41,7 @@ class ContactView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Image.asset(
                     "assets/images/dhakaprokash_logo.png",
                     width: GenericVars.scSize.width * 0.6, // Adjust as needed
@@ -50,7 +49,7 @@ class ContactView extends StatelessWidget {
                   ),
                 ),
                 RichText(
-                  text: TextSpan(
+                  text: const TextSpan(
                       text: "ভারপ্রাপ্ত সম্পাদক: ",
                       style: TextStyle(color: Colors.black),
                       children: [
@@ -69,7 +68,7 @@ class ContactView extends StatelessWidget {
                                 fontWeight: FontWeight.bold))
                       ]),
                 ),
-                Padding(
+                const Padding(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     child: Text(
                         "৯৩, কাজী নজরুল ইসলাম এভিনিউ, (ষষ্ঠ তলা)\nকারওয়ান বাজার, ঢাকা-১২১৫।")),
@@ -77,7 +76,7 @@ class ContactView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 5),
+                      padding: const EdgeInsets.symmetric(vertical: 5),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -85,12 +84,12 @@ class ContactView extends StatelessWidget {
                             "নিউজরুম",
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
-                          Text("+৮৮০৯৬১৩৩৩১০১০"),
+                          const Text("+৮৮০৯৬১৩৩৩১০১০"),
                         ],
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 0.5),
+                      padding: const EdgeInsets.symmetric(vertical: 0.5),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -98,7 +97,7 @@ class ContactView extends StatelessWidget {
                             "মার্কেটিং",
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
-                          Text("+৮৮০৯৬১৩৩৩২০২০"),
+                          const Text("+৮৮০৯৬১৩৩৩২০২০"),
                         ],
                       ),
                     ),
@@ -108,22 +107,22 @@ class ContactView extends StatelessWidget {
                     onTap: () {
                       launchLink(mailSchema, 'newsroom@dhakaprokash24.com');
                     },
-                    child: Text(
+                    child: const Text(
                       'newsroom@dhakaprokash24.com',
-                      style: TextStyle(
-                          color: const Color.fromARGB(255, 24, 110, 180)),
+                      style:
+                          TextStyle(color: Color.fromARGB(255, 24, 110, 180)),
                     )),
                 GestureDetector(
                     onTap: () {
                       launchLink(mailSchema, "marketking@dhakaprokash24.com");
                     },
-                    child: Text(
+                    child: const Text(
                       'marketking@dhakaprokash24.com',
-                      style: TextStyle(
-                          color: const Color.fromARGB(255, 24, 110, 180)),
+                      style:
+                          TextStyle(color: Color.fromARGB(255, 24, 110, 180)),
                     )),
                 Padding(
-                  padding: EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Text(
                     "Website",
                     style: Theme.of(context).textTheme.bodyLarge,
@@ -133,12 +132,12 @@ class ContactView extends StatelessWidget {
                     onTap: () {
                       launchLink(websiteSchema, 'https://dhakaprokash24.com');
                     },
-                    child: Text(
+                    child: const Text(
                       'dhakaprokash24.com',
-                      style: TextStyle(
-                          color: const Color.fromARGB(255, 24, 110, 180)),
+                      style:
+                          TextStyle(color: Color.fromARGB(255, 24, 110, 180)),
                     )),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: FollowSocialWidget(fontSize: 25, iconRadius: 18),
                 ),

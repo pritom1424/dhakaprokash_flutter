@@ -13,8 +13,6 @@ import 'package:dummy_app/Views/widgets/cat_widgets/categorylist_tile.dart';
 
 import 'package:flutter/material.dart';
 
-import 'package:intl/intl.dart';
-
 class CategoryWidgetRegular extends StatelessWidget {
   final String categoryName;
   final List<DhakaProkashRegularModel> dhakaprokashModels;

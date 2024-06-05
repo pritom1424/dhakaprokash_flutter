@@ -1,13 +1,3 @@
-import 'package:dummy_app/Controllers/bookmark_controller.dart';
-import 'package:dummy_app/Controllers/category_controller.dart';
-import 'package:dummy_app/Controllers/detailpage_controller.dart';
-import 'package:dummy_app/Controllers/homepage_controller.dart';
-import 'package:dummy_app/Controllers/login_controller.dart';
-import 'package:dummy_app/Controllers/recent_page_controller.dart';
-
-import 'package:dummy_app/Controllers/registration_controller.dart';
-import 'package:dummy_app/Controllers/searchpage_controller.dart';
-import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
 
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
@@ -17,8 +7,8 @@ import 'package:dummy_app/database/database_helper.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart' as ds;
 
 var kColorScheme = ColorScheme.fromSeed(
@@ -30,24 +20,9 @@ void main() async {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await ds.initializeDateFormatting('bn');
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => LoginProvider()),
-      ChangeNotifierProvider(
-        create: (_) => RegistrationProvider(),
-      ),
-      ChangeNotifierProvider(
-        create: (_) => HomepageController(),
-      ),
-      ChangeNotifierProvider(create: (_) => VideoProvider()),
-      ChangeNotifierProvider(create: (_) => DetailPageController()),
-      ChangeNotifierProvider(create: (_) => BookmarkController()),
-      ChangeNotifierProvider(create: (_) => SearchPageController()),
-      ChangeNotifierProvider(create: (_) => CategoryViewController()),
-      ChangeNotifierProvider(create: (_) => RecentPageController()),
-    ],
-    child: const MyApp(),
-  ));
+  runApp(
+    ProviderScope(child: const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -74,17 +49,17 @@ class MyApp extends StatelessWidget {
                   fontSize: 35, //40, //35
                 ),
                 titleMedium: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontFamily: GenericVars.currenFontFamily,
-                  color: kColorScheme.onSecondaryContainer,
-                  fontSize: 25,
-                ),
+                    fontWeight: FontWeight.bold,
+                    fontFamily: GenericVars.currenFontFamily,
+                    color: kColorScheme.onSecondaryContainer,
+                    fontSize: 25 //25 //22,
+                    ),
                 titleSmall: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontFamily: GenericVars.currenFontFamily,
-                  color: kColorScheme.onSecondaryContainer,
-                  fontSize: 17,
-                ),
+                    fontWeight: FontWeight.bold,
+                    fontFamily: GenericVars.currenFontFamily,
+                    color: kColorScheme.onSecondaryContainer,
+                    fontSize: 17 //17 //15,
+                    ),
                 bodyLarge: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontFamily: GenericVars.currenFontFamily,
@@ -92,11 +67,11 @@ class MyApp extends StatelessWidget {
                   fontSize: 25,
                 ),
                 bodyMedium: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontFamily: GenericVars.currenFontFamily,
-                  color: Colors.black,
-                  fontSize: 18, //20, //16,
-                ),
+                    fontWeight: FontWeight.normal,
+                    fontFamily: GenericVars.currenFontFamily,
+                    color: Colors.black,
+                    fontSize: 18 //18, //20, //16 //15,
+                    ),
                 headlineMedium: TextStyle(
                   fontWeight: FontWeight.normal,
                   fontFamily: GenericVars.currenFontFamily,

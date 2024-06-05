@@ -1,6 +1,5 @@
-import 'package:dummy_app/Controllers/video_controller.dart';
-
 import 'package:dummy_app/Models/search_model.dart';
+import 'package:dummy_app/Utils/Controllers/all_controllers.dart';
 
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/dummy_tags.dart';
@@ -13,11 +12,11 @@ import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/categorylist_tile.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
-class CategoryWidgetSearch extends StatelessWidget {
+class CategoryWidgetSearch extends ConsumerWidget {
   final String categoryName;
   final List<DhakaprokashSearchModel> dhakaprokashModels;
 
@@ -40,8 +39,8 @@ class CategoryWidgetSearch extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final double itemHeight = 0.13;
+  Widget build(BuildContext context, WidgetRef ref) {
+    const double itemHeight = 0.13;
     var tags = DummyTags().categoryTags[categoryName];
     return Container(
       //category home widget column startted
@@ -102,8 +101,7 @@ class CategoryWidgetSearch extends StatelessWidget {
           if (didHeadSectionShow)
             GestureDetector(
               onTap: () {
-                Provider.of<VideoProvider>(context, listen: false)
-                    .pauseVideoState();
+                ref.watch(videoController).pauseVideoState();
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (ctx) => DetailedPostView(
                           id: dhakaprokashModels[0].contentId ?? -1,
@@ -112,11 +110,11 @@ class CategoryWidgetSearch extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                     border: (!didFloat)
-                        ? Border(
+                        ? const Border(
                             bottom: BorderSide(
                                 width: 0.3,
                                 color: Color.fromARGB(255, 136, 135, 135)))
-                        : Border(
+                        : const Border(
                             bottom: BorderSide(
                                 width: 0, color: Colors.transparent))),
                 width: double.infinity,
@@ -151,7 +149,7 @@ class CategoryWidgetSearch extends StatelessWidget {
                                       Container(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10),
-                                    child: CircularProgressIndicator(),
+                                    child: const CircularProgressIndicator(),
                                     // Image.asset(
                                     //   ApiConstant.imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                                     // ),
@@ -170,9 +168,11 @@ class CategoryWidgetSearch extends StatelessWidget {
                                     color: Colors.white,
                                     border: Border.all(
                                       width: 0.5,
-                                      color: Color.fromARGB(255, 129, 127, 127),
+                                      color: const Color.fromARGB(
+                                          255, 129, 127, 127),
                                     )),
-                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
@@ -243,7 +243,7 @@ class CategoryWidgetSearch extends StatelessWidget {
                                       Container(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10),
-                                    child: CircularProgressIndicator(),
+                                    child: const CircularProgressIndicator(),
                                     // Image.asset(
                                     //   ApiConstant.imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                                     // ),
@@ -279,11 +279,11 @@ class CategoryWidgetSearch extends StatelessWidget {
                                   ),
                                   Row(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Icons.alarm,
                                         size: 15,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 5,
                                       ),
                                       Text(
@@ -307,12 +307,12 @@ class CategoryWidgetSearch extends StatelessWidget {
 
 //part 3//Category News Lists
           if (didHeadSectionShow)
-            Container(
+            SizedBox(
               height:
                   GenericVars.scSize.height * itemHeight * (listItemLength - 1),
               // padding: EdgeInsets.symmetric(horizontal: 15),
               child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: listItemLength - 1,
                   shrinkWrap: true,
                   itemBuilder: (ctx, index) {
@@ -329,11 +329,11 @@ class CategoryWidgetSearch extends StatelessWidget {
                   }),
             ),
           if (!didHeadSectionShow)
-            Container(
+            SizedBox(
               height: GenericVars.scSize.height * itemHeight * (listItemLength),
               // padding: EdgeInsets.symmetric(horizontal: 15),
               child: ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: listItemLength,
                   shrinkWrap: true,
                   itemBuilder: (ctx, index) {

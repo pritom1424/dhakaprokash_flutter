@@ -1,9 +1,10 @@
 // pass
 
 import 'package:dummy_app/Controllers/login_controller.dart';
+import 'package:dummy_app/Utils/Controllers/all_controllers.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PasswordField extends StatelessWidget {
   PasswordField({Key? key, required this.focusNode}) : super(key: key);
@@ -13,26 +14,27 @@ class PasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LoginProvider>(builder: (context, provider, child) {
+    return Consumer(builder: (context, provider, child) {
       return ValueListenableBuilder(
           valueListenable: _obSecurePassword,
           builder: (context, value, child) {
             return SizedBox(
               height: GenericVars.scSize.height * 0.07,
               child: TextFormField(
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+                style: const TextStyle(
+                    fontSize: 18, fontWeight: FontWeight.normal),
                 autofocus: false,
                 obscureText: _obSecurePassword.value,
                 focusNode: focusNode,
                 obscuringCharacter: "*",
                 decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
+                  focusedBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey, width: 0.3)),
-                  enabledBorder: OutlineInputBorder(
+                  enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey, width: 0.3)),
                   hintText: 'Password',
                   labelText: 'Password',
-                  labelStyle: TextStyle(fontSize: 18, color: Colors.grey),
+                  labelStyle: const TextStyle(fontSize: 18, color: Colors.grey),
                   prefixIcon:
                       const Icon(Icons.lock_open_rounded, color: Colors.grey),
                   suffixIcon: InkWell(
@@ -44,7 +46,7 @@ class PasswordField extends StatelessWidget {
                           : Icons.visibility)),
                 ),
                 onChanged: (value) {
-                  provider.setPassword(value);
+                  provider.watch(loginController).setPassword(value);
                 },
               ),
             );

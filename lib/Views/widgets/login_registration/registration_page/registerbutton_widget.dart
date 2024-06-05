@@ -1,19 +1,20 @@
-import 'package:dummy_app/Controllers/registration_controller.dart';
+import 'package:dummy_app/Utils/Controllers/all_controllers.dart';
 
 import 'package:dummy_app/Utils/components/round_button.dart';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class RegButtonWidget extends StatelessWidget {
   RegButtonWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RegistrationProvider>(builder: (context, provider, child) {
+    return Consumer(builder: (context, provider, child) {
       return RoundButton(
         title: 'Register',
-        loading: provider.loginLoading ? true : false,
+        loading:
+            provider.watch(registrationController).loginLoading ? true : false,
         onPress: () {
           /* Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (ctx) => LoginForm())); */

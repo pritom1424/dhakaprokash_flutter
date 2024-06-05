@@ -1,7 +1,7 @@
-import 'package:dummy_app/Controllers/registration_controller.dart';
+import 'package:dummy_app/Utils/Controllers/all_controllers.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PasswordRegField extends StatelessWidget {
   PasswordRegField({Key? key, required this.focusNode}) : super(key: key);
@@ -11,7 +11,7 @@ class PasswordRegField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RegistrationProvider>(builder: (context, provider, child) {
+    return Consumer(builder: (context, provider, child) {
       return ValueListenableBuilder(
           valueListenable: _obSecurePassword,
           builder: (context, value, child) {
@@ -47,7 +47,7 @@ class PasswordRegField extends StatelessWidget {
                           : Icons.visibility)),
                 ),
                 onChanged: (value) {
-                  provider.setPassword(value);
+                  provider.watch(registrationController).setPassword(value);
                 },
               ),
             );

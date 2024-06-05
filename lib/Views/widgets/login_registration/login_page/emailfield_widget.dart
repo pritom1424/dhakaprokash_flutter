@@ -1,10 +1,11 @@
 // Email
 
 import 'package:dummy_app/Controllers/login_controller.dart';
+import 'package:dummy_app/Utils/Controllers/all_controllers.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EmailField extends StatelessWidget {
   final FocusNode focusNode, passwordFocusNode;
@@ -14,7 +15,7 @@ class EmailField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LoginProvider>(builder: (context, provider, child) {
+    return Consumer(builder: (context, provider, _) {
       return SizedBox(
         height: GenericVars.scSize.height * 0.07,
         child: TextFormField(
@@ -39,7 +40,7 @@ class EmailField extends StatelessWidget {
           },
           onChanged: (value) {
             print(value);
-            provider.setEmail(value);
+            provider.watch(loginController).setEmail(value);
           },
         ),
       );

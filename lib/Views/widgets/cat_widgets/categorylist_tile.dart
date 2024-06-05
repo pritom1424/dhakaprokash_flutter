@@ -1,13 +1,13 @@
 import 'package:dummy_app/Controllers/video_controller.dart';
+import 'package:dummy_app/Utils/Controllers/all_controllers.dart';
 import 'package:dummy_app/Utils/api_constants.dart';
 
-import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CategoryListTile extends StatelessWidget {
+class CategoryListTile extends ConsumerWidget {
   final int id;
   final String imagePath, newsTitle;
 
@@ -25,11 +25,11 @@ class CategoryListTile extends StatelessWidget {
       this.updateDateTime});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     Size scSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-        Provider.of<VideoProvider>(context, listen: false).pauseVideoState();
+        ref.watch(videoController).pauseVideoState();
 
         Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => DetailedPostView(
@@ -69,53 +69,6 @@ class CategoryListTile extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleSmall,
                   textAlign: TextAlign.left,
                 ),
-
-                /*  Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      //newsTitle,
-                      newsTitle,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      // StringLimiter().limitString(newsTitle, 50),
-                      style: Theme.of(context).textTheme.titleSmall,
-                      textAlign: TextAlign.left,
-                    ),
-                     Row(
-                      children: [
-                        const Icon(
-                          Icons.alarm,
-                          size: 15,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          "প্রকাশঃ ${DateFormatter().defaultFormat(dateTime)}",
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                      ],
-                    ),
-                    if (updateDateTime != null)
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.alarm,
-                            size: 15,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "আপডেটঃ ${DateFormatter().defaultFormat(updateDateTime!)}",
-                            style: Theme.of(context).textTheme.labelSmall,
-                          ),
-                        ],
-                      )
-                  ],
-                ), */
               ),
             ),
 //Category News Image
@@ -141,7 +94,7 @@ class CategoryListTile extends StatelessWidget {
                             ),
                   errorBuilder: (context, error, stackTrace) => Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Center(child: CircularProgressIndicator()),
+                    child: const Center(child: CircularProgressIndicator()),
                     // Image.asset(
                     //   ApiConstant.imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                     // ),

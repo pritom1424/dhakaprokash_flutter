@@ -1,8 +1,8 @@
-import 'package:dummy_app/Controllers/registration_controller.dart';
+import 'package:dummy_app/Utils/Controllers/all_controllers.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NameRegField extends StatelessWidget {
   final FocusNode focusNode, passwordFocusNode;
@@ -12,7 +12,7 @@ class NameRegField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RegistrationProvider>(builder: (context, provider, child) {
+    return Consumer(builder: (context, provider, child) {
       return SizedBox(
         height: GenericVars.scSize.height * 0.07,
         child: TextFormField(
@@ -39,7 +39,7 @@ class NameRegField extends StatelessWidget {
             Utils.fieldFocusChange(context, focusNode, passwordFocusNode);
           },
           onChanged: (value) {
-            provider.setName(value);
+            provider.watch(registrationController).setName(value);
           },
         ),
       );

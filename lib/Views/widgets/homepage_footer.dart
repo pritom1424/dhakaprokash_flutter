@@ -50,6 +50,8 @@ class HomePageFooter extends StatelessWidget {
                   ),
                 ),
                 RichText(
+                  //  textScaler: TextScaler.linear(1.3),
+                  //   maxLines: 3,
                   text: TextSpan(
                       text: "ভারপ্রাপ্ত সম্পাদক: ",
                       style: TextStyle(

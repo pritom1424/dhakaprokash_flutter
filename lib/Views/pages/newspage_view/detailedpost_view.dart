@@ -1,70 +1,38 @@
-import 'dart:convert';
+import 'package:dummy_app/Utils/Controllers/all_controllers.dart';
 
-import 'package:dummy_app/Controllers/detailpage_controller.dart';
-import 'package:dummy_app/Controllers/homepage_controller.dart';
-import 'package:dummy_app/Models/dhaka_prokash_cat_model.dart';
-import 'package:dummy_app/Models/dhaka_prokash_details_more.dart';
-import 'package:dummy_app/Models/dhaka_prokash_reg_model.dart';
-
-import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/widgets/app_bar.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/category_widget_more.dart';
-import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_reg.dart';
-import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_reg_total.dart';
-import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_widget_sp.dart';
 
-import 'package:dummy_app/Views/widgets/detaildPost_view/comment_section.dart';
-import 'package:dummy_app/Views/widgets/detaildPost_view/main_article_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/mainposthead_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/posttag_tile.dart';
 import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-import 'package:intl/intl.dart';
 
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DetailedPostView extends StatelessWidget {
-  /* final String url, title, description, categoryName;
-  final String? imageCaption;
-  final DateTime dateTime; */
+class DetailedPostView extends ConsumerWidget {
   final int id;
-  // final List<String> tags;
 
   const DetailedPostView({
     super.key,
-    /*   required this.url,
-    required this.title,
-    required this.description,
-    required this.categoryName,
-    required this.dateTime,
-    required this.imageCaption,
-    required this.tags, */
     required this.id,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     //List<Content> currentContainer = [];
 
     int gridItemCount = 4;
-
     //for test only
-    if (Provider.of<DetailPageController>(context, listen: false)
-        .IsCommentClick) {
-      Provider.of<DetailPageController>(context, listen: false)
-          .notCommentClick();
+    if (ref.watch(detailPageController).IsCommentClick) {
+      ref.watch(detailPageController).notCommentClick();
     }
 
-    HomepageController homepageController =
-        Provider.of<HomepageController>(context, listen: false);
-
-    DetailPageController detailPageController =
-        Provider.of(context, listen: false);
     String mailSchema = "mailto";
     String websiteSchema = "https";
     Future<void> launchLink(String schema, String link) async {
@@ -93,7 +61,7 @@ class DetailedPostView extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8),
         child: FutureBuilder(
-            future: detailPageController.loadDeatilPost(id),
+            future: ref.watch(detailPageController).loadDeatilPost(id),
             builder: (context, snap) => (snap.connectionState ==
                     ConnectionState.waiting)
                 ? LoaderWidget()
@@ -103,34 +71,30 @@ class DetailedPostView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             //main post head tile
-                            Container(
-                              //   height: GenericVars.scSize.height * 0.6,
-
-                              child: MainHeadPostTile(
-                                postLink:
-                                    "/${snap.data!.detailsContent.category.catSlug}/${snap.data!.detailsContent.subcategory.subcatSlug ?? (snap.data!.detailsContent.contentType == 1 ? 'news' : 'article')}/${snap.data!.detailsContent.contentId}",
-                                authorName: snap.data!.detailsContent.author
-                                        .authorNameBn ??
-                                    "ঢাকাপ্রকাশ ডেস্ক",
-                                authorSlug: snap.data!.detailsContent.author
-                                        .authorSlug ??
-                                    "dhaka-prokash-desk",
-                                id: id,
-                                tags: (snap.data!.detailsContent.tags != null)
-                                    ? snap.data!.detailsContent.tags!.split(",")
-                                    : [],
-                                imageCaption:
-                                    snap.data!.detailsContent.imgBgCaption,
-                                dateTime: snap.data!.detailsContent.createdAt ??
-                                    DateTime.now(),
-                                url:
-                                    "https://admin.dhakaprokash24.com/media/content/images/${snap.data!.detailsContent.imgBgPath}",
-                                title: snap.data!.detailsContent.contentHeading,
-                                categoryname: snap
-                                    .data!.detailsContent.category.catNameBn,
-                                description:
-                                    snap.data!.detailsContent.contentDetails,
-                              ),
+                            MainHeadPostTile(
+                              postLink:
+                                  "/${snap.data!.detailsContent.category.catSlug}/${snap.data!.detailsContent.subcategory.subcatSlug ?? (snap.data!.detailsContent.contentType == 1 ? 'news' : 'article')}/${snap.data!.detailsContent.contentId}",
+                              authorName: snap.data!.detailsContent.author
+                                      .authorNameBn ??
+                                  "ঢাকাপ্রকাশ ডেস্ক",
+                              authorSlug:
+                                  snap.data!.detailsContent.author.authorSlug ??
+                                      "dhaka-prokash-desk",
+                              id: id,
+                              tags: (snap.data!.detailsContent.tags != null)
+                                  ? snap.data!.detailsContent.tags!.split(",")
+                                  : [],
+                              imageCaption:
+                                  snap.data!.detailsContent.imgBgCaption,
+                              dateTime: snap.data!.detailsContent.createdAt ??
+                                  DateTime.now(),
+                              url:
+                                  "https://admin.dhakaprokash24.com/media/content/images/${snap.data!.detailsContent.imgBgPath}",
+                              title: snap.data!.detailsContent.contentHeading,
+                              categoryname:
+                                  snap.data!.detailsContent.category.catNameBn,
+                              description:
+                                  snap.data!.detailsContent.contentDetails,
                             ),
                             //main post decription
                             HtmlWidget(
@@ -167,13 +131,13 @@ class DetailedPostView extends StatelessWidget {
                                     Image.network(
                                         element.children[0].attributes['src']!,
                                         fit: BoxFit.cover),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 2,
                                     ),
                                     Text(snap.data!.detailsContent
                                             .imgBgCaption ??
                                         ""),
-                                    Divider()
+                                    const Divider()
                                   ],
                                 );
                               },
@@ -181,7 +145,7 @@ class DetailedPostView extends StatelessWidget {
                                   Container(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 10),
-                                child: CircularProgressIndicator(),
+                                child: const CircularProgressIndicator(),
                                 // Image.asset(
                                 //   ApiConstant.imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                                 // ),
@@ -206,7 +170,7 @@ class DetailedPostView extends StatelessWidget {
                                 ) */
                             ), */
                             //Line divider
-                            Divider(),
+                            const Divider(),
 
                             //post tag tile
                             PostTagTile(
@@ -218,9 +182,12 @@ class DetailedPostView extends StatelessWidget {
                             //comment button
 
                             FutureBuilder(
-                                future: detailPageController.loadMoreCatPost(
-                                    snap.data!.detailsContent.catId ?? -1,
-                                    snap.data!.detailsContent.contentId ?? -1),
+                                future: ref
+                                    .watch(detailPageController)
+                                    .loadMoreCatPost(
+                                        snap.data!.detailsContent.catId ?? -1,
+                                        snap.data!.detailsContent.contentId ??
+                                            -1),
                                 builder: (ctx, snapMore) => (snapMore.hasData)
                                     ? CategoryGridWidgetMore(
                                         dhakaprokashModels: snapMore.data!,
@@ -234,13 +201,13 @@ class DetailedPostView extends StatelessWidget {
                                         didDescriptionShow: false,
                                         isScroll: false,
                                         elevation: 0)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
 
-                            HomePageFooter()
+                            const HomePageFooter()
                           ],
                         ),
                       )
-                    : Center(
+                    : const Center(
                         child: Text("কোনো তথ্য পাওয়া যায় নি!"),
                       )),
       ),

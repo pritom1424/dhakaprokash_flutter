@@ -3,14 +3,14 @@ import 'package:dummy_app/Utils/api_constants.dart';
 
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
+import 'package:dummy_app/Views/pages/favorites_view/favoritesnews_view.dart';
 
 import 'package:dummy_app/Views/widgets/cat_widgets/favlist_tile.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/deskview_bar.dart';
 import 'package:dummy_app/Views/widgets/detaildPost_view/followpost_bar.dart';
 
 import 'package:flutter/material.dart';
-
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -74,98 +74,98 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
 
   @override
   Widget build(BuildContext context) {
-    var bookmarkController =
-        Provider.of<BookmarkController>(context, listen: false);
-    currentBookmark =
-        bookmarkController.FavList.any((element) => element.id == widget.id);
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        /* physics: NeverScrollableScrollPhysics(),  */ children: [
-          //category name
+    return Consumer(builder: (ctx, ref, _) {
+      currentBookmark = ref
+          .watch(bookmarkController)
+          .FavList
+          .any((element) => element.id == widget.id);
+      return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          /* physics: NeverScrollableScrollPhysics(),  */ children: [
+            //category name
 
-          Container(
-              padding: const EdgeInsets.symmetric(vertical: 2),
-              alignment: Alignment.centerLeft,
-              //Tag Button
-              child: TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (ctx) => CategoryView(
-                            categoryName: widget.categoryname ?? "category",
-                            catSlug: GenericVars
-                                .newspaperCategoriesLink[widget.categoryname],
-                          )));
-                },
-                child: Text(
-                  widget.categoryname ?? "category",
-                  style: const TextStyle(
-                      color: Color.fromARGB(255, 24, 112, 184),
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline),
-                ),
-              )),
-//title
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5),
+            Container(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                alignment: Alignment.centerLeft,
+                //Tag Button
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (ctx) => CategoryView(
+                              categoryName: widget.categoryname ?? "category",
+                              catSlug: GenericVars
+                                  .newspaperCategoriesLink[widget.categoryname],
+                            )));
+                  },
+                  child: Text(
+                    widget.categoryname ?? "category",
+                    style: const TextStyle(
+                        color: Color.fromARGB(255, 24, 112, 184),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline),
+                  ),
+                )),
+            //title
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Text(
+                widget.title ?? "title",
+                style: Theme.of(context).textTheme.headlineLarge,
+                textAlign: TextAlign.start,
+              ),
+            ),
+            /*  Container(
+            height: GenericVars.scSize.height * 0.12,
+            padding: EdgeInsets.only(top: 2, bottom: 5),
             child: Text(
-              widget.title ?? "title",
+              widget.title,
               style: Theme.of(context).textTheme.headlineLarge,
               textAlign: TextAlign.start,
             ),
-          ),
-          /*  Container(
-        height: GenericVars.scSize.height * 0.12,
-        padding: EdgeInsets.only(top: 2, bottom: 5),
-        child: Text(
-          widget.title,
-          style: Theme.of(context).textTheme.headlineLarge,
-          textAlign: TextAlign.start,
-        ),
-      ), */
-//desk view
+          ), */
+            //desk view
 
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: DeskViewBar(
-              title: widget.authorName,
-              slug: widget.authorSlug,
-              dateTime: widget.dateTime,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: DeskViewBar(
+                title: widget.authorName,
+                slug: widget.authorSlug,
+                dateTime: widget.dateTime,
+              ),
             ),
-          ),
-//follow bar
-          Container(
-              height: GenericVars.scSize.height * 0.05,
-              child: Row(children: [
-                FollowPostBar(
-                  iconRadius: 12,
-                  link: widget.postLink,
-                ),
-                const Spacer(),
-                Consumer<BookmarkController>(
-                    builder: (context, bController, _) {
-                  return IconButton(
+            //follow bar
+            Container(
+                height: GenericVars.scSize.height * 0.05,
+                child: Row(children: [
+                  FollowPostBar(
+                    iconRadius: 12,
+                    link: widget.postLink,
+                  ),
+                  const Spacer(),
+                  IconButton(
                     onPressed: () async {
                       // setState(() {
                       currentBookmark = !currentBookmark;
                       if (currentBookmark) {
-                        await bookmarkController.addToList(FavListTile(
-                            id: widget.id,
-                            tags: widget.tags ?? [],
-                            imageCaption: widget.imageCaption ?? "",
-                            imagePath: widget.url ?? "",
-                            newsTitle: widget.title ?? "title",
-                            newsDescription:
-                                widget.description ?? "description",
-                            dateTime: widget.dateTime,
-                            categoryName: widget.categoryname ?? "category",
-                            itemHeight: 0.17));
+                        await ref.watch(bookmarkController).addToList(
+                            FavListTile(
+                                id: widget.id,
+                                tags: widget.tags ?? [],
+                                imageCaption: widget.imageCaption ?? "",
+                                imagePath: widget.url ?? "",
+                                newsTitle: widget.title ?? "title",
+                                newsDescription:
+                                    widget.description ?? "description",
+                                dateTime: widget.dateTime,
+                                categoryName: widget.categoryname ?? "category",
+                                itemHeight: 0.17));
                       } else {
-                        bookmarkController.removeFromList(widget.id);
+                        ref.watch(bookmarkController).removeFromList(widget.id);
                       }
 
                       /*     GenericVars.favoritesList.removeWhere(
-                                (element) => element.imagePath == widget.url); */
+                                    (element) => element.imagePath == widget.url); */
                       // });
                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -182,72 +182,72 @@ class _MainHeadPostTileState extends State<MainHeadPostTile> {
                     icon: (currentBookmark)
                         ? Icon(Icons.bookmark_add)
                         : Icon(Icons.bookmark_add_outlined),
-                  );
-                })
-              ])),
-//News Post Image
-          Container(
-            // height: GenericVars.scSize.height * 0.3,
-            padding: EdgeInsets.symmetric(vertical: 5),
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Image.network(
-                    widget.url ?? "",
-                    fit: BoxFit.contain,
-                    filterQuality: FilterQuality.low,
-                    loadingBuilder: (context, child, loadingProgress) =>
-                        (loadingProgress == null)
-                            ? child
-                            : Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 5),
-                                child: Image.asset(
-                                  ApiConstant
-                                      .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
+                  )
+                ])),
+            //News Post Image
+            Container(
+              // height: GenericVars.scSize.height * 0.3,
+              padding: EdgeInsets.symmetric(vertical: 5),
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: Image.network(
+                      widget.url ?? "",
+                      fit: BoxFit.contain,
+                      filterQuality: FilterQuality.low,
+                      loadingBuilder: (context, child, loadingProgress) =>
+                          (loadingProgress == null)
+                              ? child
+                              : Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 5),
+                                  child: Image.asset(
+                                    ApiConstant
+                                        .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
+                                  ),
                                 ),
-                              ),
-                  ),
-
-                  /*    Image.network(
-                    widget.url ?? "",
-                    fit: BoxFit.contain,
-                    filterQuality: FilterQuality.low,
-                  ), */
-                ),
-                if (widget.imageCaption != null)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Text(
-                      widget.imageCaption!,
-                      style: TextStyle(color: Colors.black, fontSize: 15),
                     ),
-                  ),
-                Divider()
-              ],
-            ),
-          ),
-          //Main News Post
 
-          /*  RichText(
-          text: TextSpan(children: [
-        TextSpan(
-            text: "$boldDescription\n\n",
-            style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.black)),
-        TextSpan(
-            text: description,
-            style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.normal,
-                color: Colors.black))
-      ])) */
-        ]);
+                    /*    Image.network(
+                        widget.url ?? "",
+                        fit: BoxFit.contain,
+                        filterQuality: FilterQuality.low,
+                      ), */
+                  ),
+                  if (widget.imageCaption != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Text(
+                        widget.imageCaption!,
+                        style: TextStyle(color: Colors.black, fontSize: 15),
+                      ),
+                    ),
+                  Divider()
+                ],
+              ),
+            ),
+            //Main News Post
+
+            /*  RichText(
+              text: TextSpan(children: [
+            TextSpan(
+                text: "$boldDescription\n\n",
+                style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black)),
+            TextSpan(
+                text: description,
+                style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.black))
+          ])) */
+          ]);
+    });
   }
 }

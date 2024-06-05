@@ -1,13 +1,14 @@
 import 'package:dummy_app/Controllers/bookmark_controller.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-import 'package:dummy_app/Views/widgets/loader_widget.dart';
-import 'package:dummy_app/database/database_helper.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final bookmarkController = ChangeNotifierProvider<BookmarkController>((ref) {
+  return BookmarkController();
+});
 
 class FavoritesNewsView extends StatefulWidget {
   const FavoritesNewsView({
@@ -41,9 +42,9 @@ class _FavoritesNewsViewState extends State<FavoritesNewsView> {
               ),
               automaticallyImplyLeading: false,
             ),
-            Consumer<BookmarkController>(
+            Consumer(
                 child: SliverToBoxAdapter(
-                  child: Container(
+                  child: SizedBox(
                     height: GenericVars.scSize.height * 0.6,
                     width: double.infinity,
                     child: const Center(
@@ -55,15 +56,22 @@ class _FavoritesNewsViewState extends State<FavoritesNewsView> {
                   ),
                 ),
                 builder: (context, snap, ch) {
-                  return (snap.FavList.isEmpty)
+                  return (snap.watch(bookmarkController).FavList.isEmpty)
                       ? ch!
                       : SliverList(
                           delegate: SliverChildListDelegate([
                           Container(
-                              padding: EdgeInsets.symmetric(horizontal: 15),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 15),
                               child: Column(
-                                  children: List.generate(snap.FavList.length,
-                                      (index) => snap.FavList[index])))
+                                  children: List.generate(
+                                      snap
+                                          .watch(bookmarkController)
+                                          .FavList
+                                          .length,
+                                      (index) => snap
+                                          .watch(bookmarkController)
+                                          .FavList[index])))
                         ]));
                 })
           ],

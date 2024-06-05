@@ -36,7 +36,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   http: ^1.2.1
-  provider: ^6.1.2
   intl: ^0.19.0
   url_launcher: ^6.2.5
   youtube_player_flutter: ^9.0.0
@@ -47,6 +46,7 @@ dependencies:
   loading_animation_widget: ^1.2.1
   sqflite: ^2.3.2
   path: ^1.9.0
+  flutter_riverpod: ^2.5.1
  
 
 
@@ -101,9 +101,18 @@ flutter:
       fonts:
       - asset: assets/fonts/Lal_Salu_Normal.ttf
 
+    - family: Adorsho_Lipi
+      fonts:
+      - asset: assets/fonts/AdorshoLipi.ttf
 
-
-
+    - family: NikoshBAN
+      fonts:
+      - asset: assets/fonts/NikoshBAN.ttf
+    
+    - family: Ekushey_Lal_Salu_Normal
+      fonts:
+      - asset: assets/fonts/Ekushey_Lal_Salu_Normal.ttf
+    
                
   
       #  - asset: assets/fonts/RobotoMono-Bold.ttf

@@ -1,34 +1,36 @@
 // loginButton
 
 import 'package:dummy_app/Controllers/login_controller.dart';
+import 'package:dummy_app/Utils/Controllers/all_controllers.dart';
 import 'package:dummy_app/Utils/app_validators.dart';
 import 'package:dummy_app/Utils/components/round_button.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginButtonWidget extends StatelessWidget {
   LoginButtonWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LoginProvider>(builder: (context, provider, child) {
+    return Consumer(builder: (context, provider, _) {
       return RoundButton(
         title: 'Login',
-        loading: provider.loginLoading ? true : false,
+        loading: provider.watch(loginController).loginLoading ? true : false,
         onPress: () {
-          if (provider.email.isEmpty) {
+          if (provider.watch(loginController).email.isEmpty) {
             // Utils.flushBarErrorMessage('Please enter email', context);
-          } else if (AppValidator.emailValidator(provider.email.toString())) {
+          } else if (AppValidator.emailValidator(
+              provider.watch(loginController).email.toString())) {
             // Utils.flushBarErrorMessage('Please enter valid email', context);
-          } else if (provider.password.isEmpty) {
+          } else if (provider.watch(loginController).password.isEmpty) {
             // Utils.flushBarErrorMessage('Please enter password', context);
-          } else if (provider.password.length < 6) {
+          } else if (provider.watch(loginController).password.length < 6) {
             // Utils.flushBarErrorMessage(
             //     'Please enter 6 digit password', context);
           } else {
             Map data = {
-              'email': provider.email.toString(),
-              'password': provider.password.toString(),
+              'email': provider.watch(loginController).email.toString(),
+              'password': provider.watch(loginController).password.toString(),
             };
 
             // Map data = {
@@ -36,7 +38,7 @@ class LoginButtonWidget extends StatelessWidget {
             //   'password' : 'cityslicka',
             // };
 
-            provider.loginApi(data).then((value) {
+            provider.watch(loginController).loginApi(data).then((value) {
               if (value!['code'] == 200) {
                 FocusNode().unfocus();
               } else {

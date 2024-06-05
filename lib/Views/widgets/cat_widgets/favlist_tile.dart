@@ -1,13 +1,13 @@
-import 'package:dummy_app/Controllers/video_controller.dart';
+import 'package:dummy_app/Utils/Controllers/all_controllers.dart';
 import 'package:dummy_app/Utils/api_constants.dart';
 import 'package:dummy_app/Utils/generic_methods/StringLimiter.dart';
 import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
 import 'package:dummy_app/Views/pages/newspage_view/detailedpost_view.dart';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FavListTile extends StatelessWidget {
+class FavListTile extends ConsumerWidget {
   final int id;
   final String imagePath, newsTitle, newsDescription, categoryName;
 
@@ -28,13 +28,12 @@ class FavListTile extends StatelessWidget {
       required this.id});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     Size scSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-        Provider.of<VideoProvider>(context, listen: false).pauseVideoState();
-        print(
-            "Video Pause: ${Provider.of<VideoProvider>(context, listen: false).IsVideoPause}");
+        ref.watch(videoController).pauseVideoState();
+
         Navigator.of(context).push(MaterialPageRoute(
             builder: (ctx) => DetailedPostView(
                   id: id,
@@ -43,18 +42,10 @@ class FavListTile extends StatelessWidget {
       child: Container(
         height: scSize.height * itemHeight,
         width: double.infinity,
-        decoration: BoxDecoration(
-          border: const Border(
+        decoration: const BoxDecoration(
+          border: Border(
               bottom: BorderSide(
                   width: 0.3, color: Color.fromARGB(255, 136, 135, 135))),
-          /* boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
-          ], */
         ),
 //Category News Row Started
         child: Row(
@@ -63,7 +54,7 @@ class FavListTile extends StatelessWidget {
             Expanded(
               //flex: 5,
               child: Container(
-                padding: EdgeInsets.only(right: 5, top: 2),
+                padding: const EdgeInsets.only(right: 5, top: 2),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,7 +96,7 @@ class FavListTile extends StatelessWidget {
                             ),
                   errorBuilder: (context, error, stackTrace) => Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Center(child: CircularProgressIndicator()),
+                    child: const Center(child: CircularProgressIndicator()),
                     // Image.asset(
                     //   ApiConstant.imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
                     // ),

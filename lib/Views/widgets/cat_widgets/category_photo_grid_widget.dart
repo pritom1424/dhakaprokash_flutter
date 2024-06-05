@@ -1,13 +1,10 @@
-import 'package:dummy_app/Controllers/homepage_controller.dart';
 import 'package:dummy_app/Models/dhaka_prokash_photo_model.dart';
 import 'package:dummy_app/Utils/api_constants.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_photo_view.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 
 class CategoryPhotoGridWidget extends StatefulWidget {
   final List<DhakaProkashPhotoModel> dhakaprokashModels;
@@ -72,9 +69,6 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
 
   @override
   Widget build(BuildContext context) {
-    HomepageController homecontroller =
-        Provider.of<HomepageController>(context, listen: true);
-
     double cellHeight = 0.3;
     double mainAxisSpacing = 10;
     return Column(
@@ -176,7 +170,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                                                                 horizontal: 40),
                                                         child: Image.asset(
                                                           ApiConstant
-                                                              .imagePlaceHolder /* "assets/images/dhakaprokash_logo.png" */,
+                                                              .imagePlaceHolder,
                                                         ),
                                                       ),
                                             errorBuilder:
@@ -185,7 +179,7 @@ class _CategoryPhotoGridWidgetState extends State<CategoryPhotoGridWidget> {
                                               padding:
                                                   const EdgeInsets.symmetric(
                                                       horizontal: 10),
-                                              child: Center(
+                                              child: const Center(
                                                   child:
                                                       CircularProgressIndicator()),
                                               // Image.asset(

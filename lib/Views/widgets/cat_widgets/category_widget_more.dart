@@ -1,6 +1,5 @@
-import 'package:dummy_app/Controllers/video_controller.dart';
-
 import 'package:dummy_app/Models/dhaka_prokash_details_more.dart';
+import 'package:dummy_app/Utils/Controllers/all_controllers.dart';
 
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/dummy_tags.dart';
@@ -11,8 +10,7 @@ import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/categorygrid_tile.dart';
 
 import 'package:flutter/material.dart';
-
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CategoryGridWidgetMore extends StatefulWidget {
   final String categoryName;
@@ -55,14 +53,14 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetMore> {
   @override
   void initState() {
     scController = ScrollController();
-    // TODO: implement initState
+
     super.initState();
   }
 
   @override
   void dispose() {
     scController.dispose();
-    // TODO: implement dispose
+
     super.dispose();
   }
 
@@ -74,8 +72,8 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetMore> {
           controller: scController,
           itemCount: widget.itemCount,
           physics: (widget.isScroll)
-              ? AlwaysScrollableScrollPhysics()
-              : NeverScrollableScrollPhysics(),
+              ? const AlwaysScrollableScrollPhysics()
+              : const NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: widget.crossAxisCount,
             mainAxisSpacing: mainAxisSpacing,
@@ -99,17 +97,15 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetMore> {
               ));
     }
 
-    return Container(
-      //category home widget column startted
-      child: Column(
+    return Consumer(builder: (ctx, ref, _) {
+      return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           //part 1//categoryname + More Button section
 
           GestureDetector(
             onTap: () {
-              Provider.of<VideoProvider>(context, listen: false)
-                  .pauseVideoState();
+              ref.watch(videoController).pauseVideoState();
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (ctx) => CategoryView(
                         categoryName: widget.categoryName,
@@ -133,7 +129,7 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetMore> {
                         AppColors.defaultCategoryBarIconColor,
                     size: 20,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text(
@@ -156,7 +152,7 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetMore> {
           ),
 
           //part 3//Category News Lists
-          Container(
+          SizedBox(
             height: (widget.didAxisHorizontal)
                 ? GenericVars.scSize.height * (widget.itemHeight ?? cellHeight)
                 : GenericVars.scSize.height *
@@ -166,14 +162,14 @@ class _CategoryGridWidgetState extends State<CategoryGridWidgetMore> {
                 ? RawScrollbar(
                     thumbColor: Colors.black45,
                     thickness: 5,
-                    radius: Radius.circular(10),
+                    radius: const Radius.circular(10),
                     controller: scController,
                     thumbVisibility: true,
                     child: gridWidget())
                 : gridWidget(),
           )
         ],
-      ),
-    );
+      );
+    });
   }
 }

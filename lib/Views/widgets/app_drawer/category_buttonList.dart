@@ -1,11 +1,9 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-import 'package:dummy_app/Views/pages/categories_view/category_video_view.dart';
 import 'package:dummy_app/Views/pages/categories_view/category_view.dart';
 import 'package:dummy_app/Views/pages/latest_view/latestnews_view.dart';
 import 'package:flutter/material.dart';
 import 'package:dummy_app/Views/pages/categories_view/categorywise_video_view.dart';
-import 'package:flutter/widgets.dart';
 
 class CategoryButtonList extends StatefulWidget {
   final List<String> foundCategories;

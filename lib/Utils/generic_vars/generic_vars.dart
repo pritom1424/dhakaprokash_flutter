@@ -1,5 +1,4 @@
 import 'package:dummy_app/Utils/api_constants.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class GenericVars {
@@ -119,11 +118,8 @@ class GenericVars {
     "সারাদেশ ডেস্ক": null,
   };
   static String currentSearchString = "";
-  static String currenFontFamily =
-      "Lal_Salu_Normal"; //"Nikosh"; //"TiroBangla-Regular";
-  // "Lal_Salu_Normal"; //"BongobondhuUnicode-Regular";
-  // "Shonar_Bangla"; //"NotoSerifBengali"; //"Bangla_Kolom";
-  //"SolaimanLipi"; //"Raleway"//"Ruposhi_Bangla";
+  static String currenFontFamily = "Ekushey_Lal_Salu_Normal"; //"Adorsho_Lipi";
+  /* "Lal_Salu_Normal";  Adorsho_Lipi NikoshBAN Ekushey_Lal_Salu_Normal*/
 
   static double scrollOffset = 0;
 

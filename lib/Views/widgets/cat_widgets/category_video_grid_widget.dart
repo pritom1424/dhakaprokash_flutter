@@ -1,13 +1,11 @@
 import 'package:dummy_app/Utils/app_colors.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-import 'package:dummy_app/Views/pages/categories_view/category_video_view.dart';
 
 import 'package:dummy_app/Views/pages/newspage_view/detailedvideopost_view.dart';
-import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'package:dummy_app/Utils/api_constants.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
 import 'package:dummy_app/Views/pages/categories_view/categorywise_video_view.dart';
 
 class CategoryVideoGridWidget extends StatefulWidget {

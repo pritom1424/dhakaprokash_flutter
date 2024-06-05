@@ -1,22 +1,15 @@
-import 'package:dummy_app/Controllers/bookmark_controller.dart';
 import 'package:dummy_app/Controllers/homepage_controller.dart';
 
-import 'package:dummy_app/Controllers/video_controller.dart';
 import 'package:dummy_app/Utils/api_constants.dart';
 import 'package:dummy_app/Utils/app_colors.dart';
-import 'package:dummy_app/Utils/generic_methods/dateformatter.dart';
-import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
-import 'package:dummy_app/Utils/scroll_controller.dart';
-import 'package:dummy_app/Views/pages/categories_view/category_video_view.dart';
 
-import 'package:dummy_app/Views/pages/contact_view/contact_view.dart';
+import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
+
 import 'package:dummy_app/Views/pages/custom_appdrawer.dart';
 import 'package:dummy_app/Views/pages/favorites_view/favoritesnews_view.dart';
 import 'package:dummy_app/Views/pages/my%20app/myapp_view.dart';
 import 'package:dummy_app/Views/pages/latest_view/latestnews_view.dart';
 import 'package:dummy_app/Views/pages/searchtoNewpage.dart';
-
-import 'package:dummy_app/Views/widgets/app_bar.dart';
 
 import 'package:dummy_app/Views/widgets/cat_widgets/category_photo_grid_widget.dart';
 import 'package:dummy_app/Views/widgets/cat_widgets/category_tab_widget.dart';
@@ -33,51 +26,50 @@ import 'package:dummy_app/Views/widgets/homepage_footer.dart';
 import 'package:dummy_app/Views/widgets/loader_widget.dart';
 
 import 'package:dummy_app/Views/widgets/navbar_widget.dart';
-import 'package:dummy_app/database/database_helper.dart';
+
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-import 'package:provider/provider.dart';
 import 'package:dummy_app/Views/pages/categories_view/categorywise_video_view.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeView extends StatefulWidget {
+final homepageController = ChangeNotifierProvider<HomepageController>((ref) {
+  return HomepageController();
+});
+
+class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  ConsumerState createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
+class _HomeViewState extends ConsumerState with TickerProviderStateMixin {
   int _selectedNavIndex = 0;
   bool _showScrollToTop = false;
   late ScrollController _scrollController;
-  late ScrollController _scrollController1;
 
   final ValueNotifier<double> _scrollOffset = ValueNotifier<double>(0.0);
   late TabController tabController;
   bool didNavButtonGlow = false;
   final tabBarItem = 5;
   var scaffoldKey = GlobalKey<ScaffoldState>();
-  double _lastScrollOffset = 100;
 
   // List<Widget> _navViewsNew(HomepageController homepageController,
   //     ScrollController scrollController) {
   //   return [homeBaseWidgetCopy(homepageController, scrollController)];
   // }
 
-  List<Widget> _NavViews() {
+  List<Widget> _navViews() {
     _showScrollToTop = false;
     return [
       homeBaseWidgetVer2(),
-      LatestNewsView(),
-      CategryWiseVideo(),
-      //CategoryVideoView(),
-      FavoritesNewsView(),
-      SearchToNewPage(),
-      //  ContactView(),
-      MyAppView()
+      const LatestNewsView(),
+      const CategryWiseVideo(),
+      const FavoritesNewsView(),
+      const SearchToNewPage(),
+      const MyAppView()
     ];
   }
 
@@ -91,15 +83,14 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
   @override
   void initState() {
     _scrollController = ScrollController();
-    _scrollController1 = ScrollController(initialScrollOffset: 0.0);
+
     _scrollController.addListener(_updateScrollOffset);
     //_scrollController1.addListener(_scrollListener);
     _showScrollToTop = false;
     tabController = TabController(length: 2, vsync: this);
-    var bookmarkController =
-        Provider.of<BookmarkController>(context, listen: false);
-    bookmarkController.getFromList();
-    Provider.of<HomepageController>(context, listen: false).loadAllPhotoItems();
+
+    ref.read(bookmarkController).getFromList();
+    ref.read(homepageController).loadAllPhotoItems();
     super.initState();
   }
 
@@ -107,7 +98,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
   void dispose() {
     _scrollController.dispose();
     tabController.dispose();
-    // TODO: implement dispose
+
     super.dispose();
   }
 
@@ -123,36 +114,10 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
     //ScrollControl().customscrollListener(_scrollController, 20000);
   }
 
-  void _scrollListener() {
-    double currentScrollOffset = _scrollController.offset;
-    if (currentScrollOffset <= _lastScrollOffset) {
-      _slowScrollDown(_lastScrollOffset);
-    } else {
-      _lastScrollOffset = currentScrollOffset;
-      _lastScrollOffset += 300;
-    }
-  }
-
-  void _slowScrollDown(double _lastScOffset) {
-    double maxScrollExtent = _scrollController.position.maxScrollExtent;
-
-    if (_lastScOffset > maxScrollExtent) {
-      _lastScOffset = maxScrollExtent;
-    } else {
-      _scrollController.animateTo(
-        _lastScOffset,
-        duration: Duration(milliseconds: 50), // Adjust duration as needed
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     GenericVars.scSize = MediaQuery.of(context).size;
 
-    print(
-        "currentNumber:${Provider.of<HomepageController>(context, listen: false).photoShowNumber}");
     return SafeArea(
       child: Scaffold(
           key: scaffoldKey,
@@ -197,12 +162,12 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                       },
                       tooltip: MaterialLocalizations.of(context)
                           .openAppDrawerTooltip,
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.menu,
                         size: 32,
                         // color: Colors.red,
                       )),
-                  title: Container(
+                  title: SizedBox(
                     width: GenericVars.scSize.width * 0.45,
                     /*  decoration: BoxDecoration(boxShadow: [
         BoxShadow(
@@ -225,11 +190,11 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                     // Notification Icon
                     Badge(
                       largeSize: 13,
-                      label: Text(
+                      label: const Text(
                         "0",
                         style: TextStyle(fontSize: 10),
                       ),
-                      offset: Offset(-12, 6),
+                      offset: const Offset(-12, 6),
                       child: IconButton(
                         icon: const Icon(
                           size: 23,
@@ -245,7 +210,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                   ],
                 )
               : null,
-          drawer: CustomAppDrawer(), //AppDrawer(),
+          drawer: const CustomAppDrawer(), //AppDrawer(),
           onDrawerChanged: (isOpened) {
             if (isOpened) {
               GenericVars.isAppdrawerGlow = true;
@@ -258,14 +223,11 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
             currentIndex: _selectedNavIndex,
             onTap: _onNavigationTap,
           ),
-          body: _NavViews()[_selectedNavIndex]),
+          body: _navViews()[_selectedNavIndex]),
     );
   }
 
-  Widget homeBaseWidget() {
-    HomepageController homepageController =
-        Provider.of<HomepageController>(context);
-
+  /*  Widget homeBaseWidget() {
     return Scrollbar(
       thumbVisibility: true,
       controller: _scrollController,
@@ -277,43 +239,22 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Column(children: [
             FutureBuilder(
-                future: homepageController.loadAllSpItems(),
+                future: ref.watch(homepageController).loadAllSpItems(),
                 builder: (ctx, homePageSnapShot) {
                   return (homePageSnapShot.connectionState ==
                           ConnectionState.waiting)
                       ? const LoaderWidget()
                       : (homePageSnapShot.hasData)
                           ? CategoryWidgetSpecial(
-                              dhakaprokashModels: homepageController.Items,
+                              dhakaprokashModels:
+                                  ref.watch(homepageController).Items,
                               categoryName: 'সর্বশেষ',
                               didMoreButtonShow: false,
                               didHeadSectionShow: true,
                               listItemLength: 5,
                               didFloat: false)
-                          : SizedBox.shrink();
-                  /*  
-                          const Center(
-                              child: Text(
-                                  "কোনো তথ্য নেই! একটু পর আবার চেষ্টা করুন"),
-                            ); */
+                          : const SizedBox.shrink();
                 }),
-
-            /* CategoryVideoWidget(
-                                    didPause: Provider.of<VideoProvider>(context)
-                                        .IsVideoPause,
-                                    dhakaprokashModels: homepageController.Items,
-                                    categoryName: "ভিজ্যুয়াল মিডিয়া",
-                                    didMoreButtonShow: false,
-                                    didHeadSectionShow: true,
-                                    listItemLength: 5,
-                                    didFloat: false), */
-            /*   CategoryVideoGridWidget(
-                itemCount: GenericVars.getVideoData.length,
-                didAxisHorizontal: true,
-                crossAxisCount: 1,
-                didDescriptionShow: true,
-                isScroll: true,
-                elevation: 5), */
 
             TabBar(controller: tabController, isScrollable: false, tabs: const [
               Tab(
@@ -328,37 +269,42 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                   GenericVars.scSize.height * 0.09,
               child: TabBarView(controller: tabController, children: [
                 FutureBuilder(
-                    future: homepageController.loadAllRegTabItemsPost(
-                        ApiConstant.homeLatestPostLink, tabBarItem),
+                    future: ref
+                        .watch(homepageController)
+                        .loadAllRegTabItemsPost(
+                            ApiConstant.homeLatestPostLink, tabBarItem),
                     builder: (ctx, snap) =>
                         (snap.connectionState == ConnectionState.waiting)
-                            ? LoaderWidget()
+                            ? const LoaderWidget()
                             : (snap.hasData)
                                 ? CategoryTabWidget(
                                     dhakaProkashModels: snap.data!,
                                     catName: "সর্বশেষ",
                                     itemNumber: tabBarItem,
                                   )
-                                : SizedBox.shrink()),
+                                : const SizedBox.shrink()),
                 FutureBuilder(
-                    future: homepageController.loadAllRegTabItemsPost(
-                        ApiConstant.homePopularPostLink, tabBarItem),
+                    future: ref
+                        .watch(homepageController)
+                        .loadAllRegTabItemsPost(
+                            ApiConstant.homePopularPostLink, tabBarItem),
                     builder: (ctx, snap) =>
                         (snap.connectionState == ConnectionState.waiting)
-                            ? LoaderWidget()
+                            ? const LoaderWidget()
                             : (snap.hasData)
                                 ? CategoryTabWidget(
                                     dhakaProkashModels: snap.data!,
                                     catName: "জনপ্রিয়",
                                     itemNumber: tabBarItem,
                                   )
-                                : SizedBox.shrink()),
+                                : const SizedBox.shrink()),
               ]),
             ),
 
             CategoryGridWidgetSpecial(
               didHeadSectionShow: false,
-              dhakaprokashModels: homepageController.Items.sublist(5),
+              dhakaprokashModels:
+                  ref.watch(homepageController).Items.sublist(5),
               categoryName: "সর্বশেষ",
               itemCount: 6,
               didAxisHorizontal: false,
@@ -371,11 +317,12 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
             //national
 
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.nationalCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
-                        ? LoaderWidget()
+                        ? const LoaderWidget()
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
@@ -388,11 +335,12 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
             //politics
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.politicsCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
-                        ? LoaderWidget()
+                        ? const LoaderWidget()
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
@@ -401,14 +349,15 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                 didHeadSectionShow: true,
                                 listItemLength: 4,
                                 didFloat: false)
-                            : SizedBox.shrink()),
+                            : const SizedBox.shrink()),
             //economics
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.ecomonomicsCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
-                        ? LoaderWidget()
+                        ? const LoaderWidget()
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
@@ -417,14 +366,15 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                 didHeadSectionShow: true,
                                 listItemLength: 4,
                                 didFloat: false)
-                            : SizedBox.shrink()),
+                            : const SizedBox.shrink()),
             //international
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.internationalCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
-                        ? LoaderWidget()
+                        ? const LoaderWidget()
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
@@ -436,11 +386,12 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             : SizedBox.shrink()),
             //health
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.specialReportCategoryLink),
                 builder: (ctx, snap) => (snap.connectionState ==
                         ConnectionState.waiting)
-                    ? LoaderWidget()
+                    ? const LoaderWidget()
                     : (snap.hasData)
                         ? CategoryWidgetRegular(
                             dhakaprokashModels: snap.data!,
@@ -455,7 +406,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                         : SizedBox.shrink()),
             //sports
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.sportsCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
@@ -471,7 +423,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             : SizedBox.shrink()),
             //entertainment
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.entertainmentCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
@@ -487,10 +440,10 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             : SizedBox.shrink()),
             //photo gallery
             FutureBuilder(
-                future: homepageController.loadAllPhotoItems(),
+                future: ref.watch(homepageController).loadAllPhotoItems(),
                 builder: (ctx, snap) {
                   return (snap.connectionState == ConnectionState.waiting)
-                      ? LoaderWidget()
+                      ? const LoaderWidget()
                       : (snap.hasData)
                           ? CategoryPhotoGridWidget(
                               scrollController: _scrollController,
@@ -502,12 +455,13 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                               isScroll: false,
                               itemHeight: 0.23,
                               elevation: 0)
-                          : SizedBox.shrink();
+                          : const SizedBox.shrink();
                 }),
 
             //saradesh
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.saradeshCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
@@ -528,7 +482,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
             //Court Law
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.courtLawLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
@@ -548,11 +503,12 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             : SizedBox.shrink()),
             //crime
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.crimeCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
-                        ? LoaderWidget()
+                        ? const LoaderWidget()
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
@@ -561,11 +517,12 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                 didHeadSectionShow: true,
                                 listItemLength: 4,
                                 didFloat: false)
-                            : SizedBox.shrink()),
+                            : const SizedBox.shrink()),
 
             //lifestyle
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.lifeStyleCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
@@ -585,7 +542,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             : SizedBox.shrink()),
             //religion
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.religionCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
@@ -601,7 +559,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             : SizedBox.shrink()),
             //health
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.healthCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
@@ -621,7 +580,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             : SizedBox.shrink()),
             //education
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.educationCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
@@ -637,7 +597,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             : SizedBox.shrink()),
             //art-culture
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.artCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
@@ -654,7 +615,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
             //science-tech
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.scinenceTechCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
@@ -675,7 +637,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
 
             //career
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.careerCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
@@ -691,7 +654,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             : SizedBox.shrink()),
             //campus
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.campusCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
@@ -707,7 +671,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             : SizedBox.shrink()),
             //child
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.childCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
@@ -723,7 +688,8 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             : SizedBox.shrink()),
             //motivation
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.motivationCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
@@ -739,11 +705,12 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             : SizedBox.shrink()),
             //prbash
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.probashCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
-                        ? LoaderWidget()
+                        ? const LoaderWidget()
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
@@ -755,11 +722,12 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                             : SizedBox.shrink()),
             //corporate
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.corporateCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
-                        ? LoaderWidget()
+                        ? const LoaderWidget()
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
@@ -768,14 +736,15 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                 didHeadSectionShow: true,
                                 listItemLength: 3,
                                 didFloat: false)
-                            : SizedBox.shrink()),
+                            : const SizedBox.shrink()),
             //literature
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.literatureCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
-                        ? LoaderWidget()
+                        ? const LoaderWidget()
                         : (snap.hasData)
                             ? CategoryGridWidgetRegular(
                                 dhakaprokashModels: snap.data!,
@@ -792,11 +761,12 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
             //motamot
 
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.opinionCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
-                        ? LoaderWidget()
+                        ? const LoaderWidget()
                         : (snap.hasData)
                             ? CategoryGridWidgetRegular(
                                 dhakaprokashModels: snap.data!,
@@ -814,11 +784,12 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
             //special article
 
             FutureBuilder(
-                future: homepageController
+                future: ref
+                    .watch(homepageController)
                     .loadAllRegItems(ApiConstant.specialArticleCategoryLink),
                 builder: (ctx, snap) =>
                     (snap.connectionState == ConnectionState.waiting)
-                        ? LoaderWidget()
+                        ? const LoaderWidget()
                         : (snap.hasData)
                             ? CategoryWidgetRegular(
                                 dhakaprokashModels: snap.data!,
@@ -827,7 +798,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                 didHeadSectionShow: true,
                                 listItemLength: 3,
                                 didFloat: false)
-                            : SizedBox.shrink()),
+                            : const SizedBox.shrink()),
 
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
@@ -837,12 +808,9 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
         ),
       ),
     );
-  }
+  } */
 
   Widget homeBaseWidgetVer2() {
-    HomepageController homepageController =
-        Provider.of<HomepageController>(context);
-
     return Scrollbar(
       thumbVisibility: true,
       controller: _scrollController,
@@ -850,21 +818,22 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       child: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         controller: _scrollController,
-        physics: ScrollPhysics(),
+        physics: const ScrollPhysics(),
         child: FutureBuilder(
-          future: homepageController.loadAllSpItems(),
+          future: ref.watch(homepageController).loadAllSpItems(),
           builder: (ctx, homeSpSnapShot) => (homeSpSnapShot.connectionState ==
                   ConnectionState.waiting)
-              ? Container(
+              ? SizedBox(
                   height: GenericVars.scSize.height * 0.8,
                   width: double.infinity,
-                  child: Center(child: LoaderWidget()))
+                  child: const Center(child: LoaderWidget()))
               : (homeSpSnapShot.hasData)
                   ? Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: Column(children: [
                         CategoryWidgetSpecial(
-                            dhakaprokashModels: homepageController.Items,
+                            dhakaprokashModels:
+                                ref.watch(homepageController).Items,
                             categoryName: 'স্পেশাল টপ',
                             didMoreButtonShow: false,
                             didHeadSectionShow: true,
@@ -881,10 +850,12 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                       listItemLength: 5,
                                       didFloat: false), */
                         FutureBuilder(
-                          future: homepageController.loadHomeVideosPost(10),
+                          future: ref
+                              .watch(homepageController)
+                              .loadHomeVideosPost(10),
                           builder: (ctx, snap) =>
                               (snap.connectionState == ConnectionState.waiting)
-                                  ? LoaderWidget()
+                                  ? const LoaderWidget()
                                   : CategoryVideoGridWidget(
                                       ids: snap.data!,
                                       itemHeight: 0.32,
@@ -929,28 +900,30 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                           child:
                               TabBarView(controller: tabController, children: [
                             FutureBuilder(
-                                future:
-                                    homepageController.loadAllRegTabItemsPost(
+                                future: ref
+                                    .watch(homepageController)
+                                    .loadAllRegTabItemsPost(
                                         ApiConstant.homeLatestPostLink,
                                         tabBarItem),
                                 builder: (ctx, snap) => (snap.connectionState ==
                                         ConnectionState.waiting)
-                                    ? LoaderWidget()
+                                    ? const LoaderWidget()
                                     : (snap.hasData)
                                         ? CategoryTabWidget(
                                             dhakaProkashModels: snap.data!,
                                             catName: GenericVars.tabNames[0],
                                             itemNumber: tabBarItem,
                                           )
-                                        : SizedBox.shrink()),
+                                        : const SizedBox.shrink()),
                             FutureBuilder(
-                                future:
-                                    homepageController.loadAllRegTabItemsPost(
+                                future: ref
+                                    .watch(homepageController)
+                                    .loadAllRegTabItemsPost(
                                         ApiConstant.homePopularPostLink,
                                         tabBarItem),
                                 builder: (ctx, snap) => (snap.connectionState ==
                                         ConnectionState.waiting)
-                                    ? LoaderWidget()
+                                    ? const LoaderWidget()
                                     : (snap.hasData)
                                         ? CategoryTabWidget(
                                             dhakaProkashModels: snap.data!,
@@ -958,14 +931,14 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                                 .tabNames[1], //"জনপ্রিয়",
                                             itemNumber: tabBarItem,
                                           )
-                                        : SizedBox.shrink()),
+                                        : const SizedBox.shrink()),
                           ]),
                         ),
 
                         CategoryGridWidgetSpecial(
                           didHeadSectionShow: false,
                           dhakaprokashModels:
-                              homepageController.Items.sublist(5),
+                              ref.watch(homepageController).Items.sublist(5),
                           categoryName: "স্পেশাল টপ",
                           itemCount: 6,
                           didAxisHorizontal: false,
@@ -978,11 +951,13 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                         //national
 
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.nationalCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.nationalCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -991,15 +966,17 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 4,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
 
                         //politics
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.politicsCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.politicsCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1008,14 +985,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 4,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //economics
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.ecomonomicsCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.ecomonomicsCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1024,14 +1003,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 4,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //international
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.internationalCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.internationalCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1040,14 +1021,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 4,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //health
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.specialReportCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.specialReportCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1060,14 +1043,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         bartextColor: AppColors
                                             .defaultCategoryBarIconColor,
                                       )
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //sports
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.sportsCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.sportsCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1076,14 +1061,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 5,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //entertainment
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.entertainmentCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.entertainmentCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1092,33 +1079,38 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 5,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //photo gallery
 
-                        homepageController.photoes.isNotEmpty &&
-                                homepageController.photoes != null
+                        ref.watch(homepageController).photoes.isNotEmpty &&
+                                ref.watch(homepageController).photoes != null
                             ? CategoryPhotoGridWidget(
                                 scrollController: _scrollController,
-                                totalPhotoItems:
-                                    homepageController.photoes.length,
+                                totalPhotoItems: ref
+                                    .watch(homepageController)
+                                    .photoes
+                                    .length,
                                 // itemCount: Provider.of<HomepageController>(ctx, listen: false).photoShowNumber,
 
-                                dhakaprokashModels: homepageController.photoes,
+                                dhakaprokashModels:
+                                    ref.watch(homepageController).photoes,
                                 didAxisHorizontal: false,
                                 crossAxisCount: 2,
                                 didDescriptionShow: false,
                                 isScroll: false,
                                 itemHeight: 0.24,
                                 elevation: 0)
-                            : LoaderWidget(),
+                            : const LoaderWidget(),
 
                         //saradesh
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.saradeshCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.saradeshCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryGridWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1131,15 +1123,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         elevation: 0,
                                         itemHeight: 0.23,
                                       )
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
 
                         //Court Law
                         FutureBuilder(
-                            future: homepageController
+                            future: ref
+                                .watch(homepageController)
                                 .loadAllRegItems(ApiConstant.courtLawLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryGridWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1153,14 +1146,15 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         itemHeight: 0.32,
                                         ratio: 4 / 5,
                                       )
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //crime
                         FutureBuilder(
-                            future: homepageController
+                            future: ref
+                                .watch(homepageController)
                                 .loadAllRegItems(ApiConstant.crimeCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1169,15 +1163,17 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 4,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
 
                         //lifestyle
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.lifeStyleCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.lifeStyleCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryGridWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1191,14 +1187,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         itemHeight: 0.32,
                                         ratio: 4 / 5,
                                       )
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //religion
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.religionCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.religionCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1207,14 +1205,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 4,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //health
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.healthCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.healthCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryGridWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1227,14 +1227,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         elevation: 0,
                                         itemHeight: 0.23,
                                       )
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //education
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.educationCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.educationCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1243,14 +1245,15 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 4,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //art-culture
                         FutureBuilder(
-                            future: homepageController
+                            future: ref
+                                .watch(homepageController)
                                 .loadAllRegItems(ApiConstant.artCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1259,15 +1262,17 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 4,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
 
                         //science-tech
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.scinenceTechCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.scinenceTechCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryGridWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1280,15 +1285,17 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         elevation: 0,
                                         itemHeight: 0.23,
                                       )
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
 
                         //career
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.careerCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.careerCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1297,14 +1304,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 5,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //campus
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.campusCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.campusCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1313,14 +1322,15 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 3,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //child
                         FutureBuilder(
-                            future: homepageController
+                            future: ref
+                                .watch(homepageController)
                                 .loadAllRegItems(ApiConstant.childCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1329,14 +1339,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 3,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //motivation
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.motivationCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.motivationCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1345,14 +1357,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 3,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //prbash
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.probashCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.probashCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1361,14 +1375,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 3,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //corporate
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.corporateCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.corporateCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1377,14 +1393,16 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 3,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //literature
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.literatureCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.literatureCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryGridWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1397,15 +1415,17 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         elevation: 0,
                                         itemHeight: 0.23,
                                       )
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
                         //motamot
 
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.opinionCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.opinionCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryGridWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1420,16 +1440,18 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         ratio: 2 / 3,
                                         maxLine: 1,
                                       )
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
 
                         //special article
 
                         FutureBuilder(
-                            future: homepageController.loadAllRegItems(
-                                ApiConstant.specialArticleCategoryLink),
+                            future: ref
+                                .watch(homepageController)
+                                .loadAllRegItems(
+                                    ApiConstant.specialArticleCategoryLink),
                             builder: (ctx, snap) => (snap.connectionState ==
                                     ConnectionState.waiting)
-                                ? LoaderWidget()
+                                ? const LoaderWidget()
                                 : (snap.hasData)
                                     ? CategoryWidgetRegular(
                                         dhakaprokashModels: snap.data!,
@@ -1438,15 +1460,15 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                                         didHeadSectionShow: true,
                                         listItemLength: 3,
                                         didFloat: false)
-                                    : SizedBox.shrink()),
+                                    : const SizedBox.shrink()),
 
                         const HomePageFooter()
                       ]),
                     )
-                  : Container(
+                  : SizedBox(
                       height: GenericVars.scSize.height * 0.8,
                       width: double.infinity,
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           "কোনো তথ্য পাওয়া যায় নি",
                           //style: Theme.of(context).textTheme.bodyLarge,

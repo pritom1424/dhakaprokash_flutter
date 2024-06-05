@@ -1,22 +1,21 @@
-import 'package:dummy_app/Controllers/registration_controller.dart';
+import 'package:dummy_app/Utils/Controllers/all_controllers.dart';
 import 'package:dummy_app/Utils/generic_vars/generic_vars.dart';
 import 'package:dummy_app/Utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PhoneRegField extends StatelessWidget {
   final FocusNode focusNode, passwordFocusNode;
   const PhoneRegField(
-      {Key? key, required this.focusNode, required this.passwordFocusNode})
-      : super(key: key);
+      {super.key, required this.focusNode, required this.passwordFocusNode});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RegistrationProvider>(builder: (context, provider, child) {
+    return Consumer(builder: (context, provider, child) {
       return SizedBox(
         height: GenericVars.scSize.height * 0.07,
         child: TextFormField(
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
           autofocus: false,
           keyboardType: TextInputType.number,
           focusNode: focusNode,
@@ -40,7 +39,7 @@ class PhoneRegField extends StatelessWidget {
           },
           onChanged: (value) {
             print(value);
-            provider.setPhone(value);
+            provider.watch(registrationController).setPhone(value);
           },
         ),
       );
